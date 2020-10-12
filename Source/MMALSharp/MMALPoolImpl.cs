@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using MMALSharp.Common.Utility;
 using MMALSharp.Native;
+using MMALSharp.Native.Pool;
 using MMALSharp.Ports;
 using static MMALSharp.MmalNativeExceptionHelper;
 
@@ -9,7 +10,7 @@ namespace MMALSharp
 {
     public unsafe class MmalPoolImpl : MmalObject, IBufferPool
     {
-        public MMAL_POOL_T* Ptr { get; }
+        public MmalPoolType* Ptr { get; }
 
         public IBufferQueue Queue { get; }
         public uint HeadersNum => Ptr->HeadersNum;
@@ -22,7 +23,7 @@ namespace MMALSharp
             Queue = new MmalQueueImpl((*Ptr).Queue);
         }
 
-        public MmalPoolImpl(MMAL_POOL_T* ptr)
+        public MmalPoolImpl(MmalPoolType* ptr)
         {
             MmalLog.Logger.LogDebug($"Creating buffer pool from existing instance.");
 
@@ -32,7 +33,7 @@ namespace MMALSharp
 
         public override bool CheckState() => Ptr != null && (IntPtr)Ptr != IntPtr.Zero;
 
-        public void Resize(uint numHeaders, uint size) => MmalCheck(MmalPool.mmal_pool_resize(Ptr, numHeaders, size), "Unable to resize pool");
+        public void Resize(uint numHeaders, uint size) => MmalCheck(MmalPool.Resize(Ptr, numHeaders, size), "Unable to resize pool");
 
         public override void Dispose()
         {
@@ -41,6 +42,6 @@ namespace MMALSharp
             base.Dispose();
         }
 
-        void Destroy() => MmalPool.mmal_pool_destroy(Ptr);
+        void Destroy() => MmalPool.Destroy(Ptr);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using MMALSharp.Native.Pool;
 
 namespace MMALSharp.Native.Connection
 {
@@ -13,7 +14,7 @@ namespace MMALSharp.Native.Connection
         public uint Flags;
         public MMAL_PORT_T* Input;
         public MMAL_PORT_T* Output;
-        public MMAL_POOL_T* Pool;
+        public MmalPoolType* Pool;
         public MMAL_QUEUE_T* Queue;
         public char* Name;
         public long TimeSetup;
@@ -21,7 +22,7 @@ namespace MMALSharp.Native.Connection
         public long TimeDisable;
 
         public MmalConnectionType(IntPtr userData, IntPtr callback, uint isEnabled, uint flags, MMAL_PORT_T* input, MMAL_PORT_T* output,
-            MMAL_POOL_T* pool, MMAL_QUEUE_T* queue, char* name, long timeSetup, long timeEnable, long timeDisable)
+            MmalPoolType* pool, MMAL_QUEUE_T* queue, char* name, long timeSetup, long timeEnable, long timeDisable)
         {
             UserData = userData;
             Callback = callback;
