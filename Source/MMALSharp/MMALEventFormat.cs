@@ -3,12 +3,13 @@ using System;
 using System.Runtime.InteropServices;
 using MMALSharp.Common;
 using MMALSharp.Native.Events;
+using MMALSharp.Native.Format;
 
 namespace MMALSharp
 {
     public unsafe class MmalEventFormat : IBufferEvent
     {
-        public MMAL_ES_FORMAT_T* Ptr { get; }
+        public MmalEsFormat* Ptr { get; }
 
         public string FourCC => MmalEncodingHelpers.ParseEncoding(Format.Encoding).EncodingName;
 
@@ -34,14 +35,14 @@ namespace MMALSharp
 
         public int FramerateDen => Format.Es->Video.FrameRate.Den;
 
-        MMAL_ES_FORMAT_T Format { get; }
+        MmalEsFormat Format { get; }
 
-        public MmalEventFormat(MMAL_ES_FORMAT_T format)
+        public MmalEventFormat(MmalEsFormat format)
         {
             Format = format;
         }
 
-        public MmalEventFormat(MMAL_ES_FORMAT_T format, MMAL_ES_FORMAT_T* ptr)
+        public MmalEventFormat(MmalEsFormat format, MmalEsFormat* ptr)
         {
             Format = format;
             Ptr = ptr;
@@ -50,7 +51,7 @@ namespace MMALSharp
         internal static MmalEventFormat GetEventFormat(IBuffer buffer)
         {
             var ev = MmalEvents.GetChanged(buffer.Ptr);
-            return new MmalEventFormat(Marshal.PtrToStructure<MMAL_ES_FORMAT_T>((IntPtr)ev->Format), ev->Format);
+            return new MmalEventFormat(Marshal.PtrToStructure<MmalEsFormat>((IntPtr)ev->Format), ev->Format);
         }
     }
 }

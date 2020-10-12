@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Component;
+using MMALSharp.Native.Format;
 
 namespace MMALSharp.Native
 {
@@ -93,7 +94,7 @@ namespace MMALSharp.Native
         MmalPort.MmalPortTypeT type;
         ushort index, indexAll;
         int isEnabled;
-        MMAL_ES_FORMAT_T* format;
+        MmalEsFormat* format;
         int bufferNumMin, bufferSizeMin, bufferAlignmentMin, bufferNumRecommended, bufferSizeRecommended, bufferNum, bufferSize;
         MmalComponentType* component;
         IntPtr userData;
@@ -105,7 +106,7 @@ namespace MMALSharp.Native
         public ushort Index => index;
         public ushort IndexAll => indexAll;
         public int IsEnabled => isEnabled;
-        public MMAL_ES_FORMAT_T* Format => format;
+        public MmalEsFormat* Format => format;
         public int BufferNumMin => bufferNumMin;
         public int BufferSizeMin => bufferSizeMin;
         public int BufferAlignmentMin => bufferAlignmentMin;
@@ -141,7 +142,7 @@ namespace MMALSharp.Native
         public uint Capabilities => capabilities;
 
         public MMAL_PORT_T(IntPtr priv, char* name, MmalPort.MmalPortTypeT type, ushort index, ushort indexAll,
-                           int isEnabled, MMAL_ES_FORMAT_T* format, int bufferNumMin, int bufferSizeMin, int bufferAlignmentMin,
+                           int isEnabled, MmalEsFormat* format, int bufferNumMin, int bufferSizeMin, int bufferAlignmentMin,
                            int bufferNumRecommended, int bufferSizeRecommended, int bufferNum, int bufferSize, MmalComponentType* component,
                            IntPtr userData, uint capabilities)
         {

@@ -5,6 +5,7 @@ using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Native;
+using MMALSharp.Native.Format;
 
 namespace MMALSharp.Ports
 {
@@ -28,7 +29,7 @@ namespace MMALSharp.Ports
         int BufferSizeRecommended { get; }
         int BufferNum { get; }
         int BufferSize { get; }
-        MMAL_ES_FORMAT_T Format { get; }
+        MmalEsFormat Format { get; }
         Resolution Resolution { get; }
         Rectangle Crop { get; }
         double FrameRate { get; }

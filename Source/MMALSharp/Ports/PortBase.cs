@@ -9,6 +9,7 @@ using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Native;
 using MMALSharp.Native.Component;
+using MMALSharp.Native.Format;
 using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp.Ports
@@ -47,7 +48,7 @@ namespace MMALSharp.Ports
             internal set => Ptr->BufferSize = value;
         }
 
-        public MMAL_ES_FORMAT_T Format => *Ptr->Format;
+        public MmalEsFormat Format => *Ptr->Format;
 
         public abstract Resolution Resolution { get; internal set; }
 
@@ -164,25 +165,25 @@ namespace MMALSharp.Ports
         public void ShallowCopy(IPort destination)
         {
             MmalLog.Logger.LogDebug($"{Name}: Shallow copy port format.");
-            MmalFormat.mmal_format_copy(destination.Ptr->Format, Ptr->Format);
+            MmalFormat.CopyFormat(destination.Ptr->Format, Ptr->Format);
         }
 
         public void ShallowCopy(IBufferEvent eventFormatSource)
         {
             MmalLog.Logger.LogDebug($"{Name}: Shallow copy event format.");
-            MmalFormat.mmal_format_copy(Ptr->Format, eventFormatSource.Ptr);
+            MmalFormat.CopyFormat(Ptr->Format, eventFormatSource.Ptr);
         }
 
         public void FullCopy(IPort destination)
         {
             MmalLog.Logger.LogDebug($"{Name}: Full copy port format.");
-            MmalFormat.mmal_format_full_copy(destination.Ptr->Format, Ptr->Format);
+            MmalFormat.CopyFull(destination.Ptr->Format, Ptr->Format);
         }
 
         public void FullCopy(IBufferEvent eventFormatSource)
         {
             MmalLog.Logger.LogDebug($"{Name}: Full copy event format.");
-            MmalFormat.mmal_format_full_copy(Ptr->Format, eventFormatSource.Ptr);
+            MmalFormat.CopyFull(Ptr->Format, eventFormatSource.Ptr);
         }
 
         public void Flush()
@@ -277,7 +278,7 @@ namespace MMALSharp.Ports
 
         public void ExtraDataAlloc(int size)
         {
-            MmalCheck(MmalFormat.mmal_format_extradata_alloc(Ptr->Format, (uint)size), $"{Name}: Unable to alloc extradata.");
+            MmalCheck(MmalFormat.AllocExtradata(Ptr->Format, (uint)size), $"{Name}: Unable to alloc extradata.");
         }
     }
 }

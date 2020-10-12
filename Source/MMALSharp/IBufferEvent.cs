@@ -1,10 +1,11 @@
 ﻿using MMALSharp.Native;
+using MMALSharp.Native.Format;
 
 namespace MMALSharp
 {
     public interface IBufferEvent
     {
-        unsafe MMAL_ES_FORMAT_T* Ptr { get; }
+        unsafe MmalEsFormat* Ptr { get; }
         string FourCC { get; }
         int Bitrate { get; }
         int Width { get; }

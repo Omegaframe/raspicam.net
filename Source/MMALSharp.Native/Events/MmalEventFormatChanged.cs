@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using MMALSharp.Native.Format;
 
 namespace MMALSharp.Native.Events
 {
@@ -13,9 +14,9 @@ namespace MMALSharp.Native.Events
 
         public uint BufferNumRecommended;
 
-        public MMAL_ES_FORMAT_T* Format;
+        public MmalEsFormat* Format;
 
-        public MmalEventFormatChanged(uint bufferSizeMin, uint bufferNumMin, uint bufferSizeRecommended, uint bufferNumRecommended, MMAL_ES_FORMAT_T* format)
+        public MmalEventFormatChanged(uint bufferSizeMin, uint bufferNumMin, uint bufferSizeRecommended, uint bufferNumRecommended, MmalEsFormat* format)
         {
             BufferSizeMin = bufferSizeMin;
             BufferNumMin = bufferNumMin;
