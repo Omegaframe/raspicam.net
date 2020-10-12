@@ -1,6 +1,7 @@
 ﻿using System;
 using MMALSharp.Components;
 using MMALSharp.Native;
+using MMALSharp.Native.Buffer;
 
 namespace MMALSharp.Ports.Inputs
 {
@@ -10,6 +11,6 @@ namespace MMALSharp.Ports.Inputs
 
         public OverlayPort(IPort copyFrom) : base((IntPtr)copyFrom.Ptr, copyFrom.ComponentReference, copyFrom.Guid) { }
 
-        internal override void NativeInputPortCallback(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer) { }
+        internal override void NativeInputPortCallback(MMAL_PORT_T* port, MmalBufferHeader* buffer) { }
     }
 }

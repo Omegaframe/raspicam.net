@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Internal;
 
 namespace MMALSharp.Native
@@ -11,7 +12,7 @@ namespace MMALSharp.Native
         public static int MmalEventParameterChanged = "EPCH".ToFourCc();
 
         [DllImport("libmmal.so", EntryPoint = "mmal_event_format_changed_get", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMAL_EVENT_FORMAT_CHANGED_T* mmal_event_format_changed_get(MMAL_BUFFER_HEADER_T* buffer);
+        public static extern unsafe MMAL_EVENT_FORMAT_CHANGED_T* mmal_event_format_changed_get(MmalBufferHeader* buffer);
     }
 
     [StructLayout(LayoutKind.Sequential)]

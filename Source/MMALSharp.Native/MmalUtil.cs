@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using MMALSharp.Native.Buffer;
 
 namespace MMALSharp.Native
 {
@@ -104,7 +105,7 @@ namespace MMALSharp.Native
         public static extern unsafe void mmal_port_parameter_free(MMAL_PARAMETER_HEADER_T* header);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_buffer_header_copy_header", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe void mmal_buffer_header_copy_header(MMAL_BUFFER_HEADER_T* dest, MMAL_BUFFER_HEADER_T* src);
+        public static extern unsafe void mmal_buffer_header_copy_header(MmalBufferHeader* dest, MmalBufferHeader* src);
                 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_pool_create", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe MMAL_POOL_T* mmal_port_pool_create(MMAL_PORT_T* port, int headers, int payload_size);

@@ -6,6 +6,7 @@ using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Extensions;
 using MMALSharp.Native;
+using MMALSharp.Native.Buffer;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Processing.Handlers;
 
@@ -70,7 +71,7 @@ namespace MMALSharp.Ports.Outputs
             CallbackHandler = new VideoOutputCallbackHandler(this, (IVideoCaptureHandler)handler, null);
         }
 
-        internal override void NativeOutputPortCallback(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)
+        internal override void NativeOutputPortCallback(MMAL_PORT_T* port, MmalBufferHeader* buffer)
         {
             if (MmalCameraConfig.Debug)
                 MmalLog.Logger.LogDebug($"{Name}: In native {nameof(SplitterVideoPort)} output callback");

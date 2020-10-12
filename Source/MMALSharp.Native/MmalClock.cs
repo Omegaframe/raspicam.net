@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Internal;
 
 namespace MMALSharp.Native
@@ -137,19 +138,19 @@ namespace MMALSharp.Native
     public unsafe struct MMAL_CLOCK_EVENT_T
     {
         uint id, magic;
-        MMAL_BUFFER_HEADER_T* buffer;
+        MmalBufferHeader* buffer;
         uint padding0;
         MMAL_CLOCK_EVENT_DATA data;
         long padding1;
 
         public uint Id => id;
         public uint Magic => magic;
-        public MMAL_BUFFER_HEADER_T* Buffer => buffer;
+        public MmalBufferHeader* Buffer => buffer;
         public uint Padding0 => padding0;
         public MMAL_CLOCK_EVENT_DATA Data => data;
         public long Padding1 => padding1;
 
-        public MMAL_CLOCK_EVENT_T(uint id, uint magic, MMAL_BUFFER_HEADER_T* buffer, uint padding0, MMAL_CLOCK_EVENT_DATA data, long padding1)
+        public MMAL_CLOCK_EVENT_T(uint id, uint magic, MmalBufferHeader* buffer, uint padding0, MMAL_CLOCK_EVENT_DATA data, long padding1)
         {
             this.id = id;
             this.magic = magic;

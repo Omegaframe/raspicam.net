@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using MMALSharp.Native.Buffer;
 
 namespace MMALSharp.Native
 {
@@ -9,7 +10,7 @@ namespace MMALSharp.Native
         public delegate void MmalPoolAllocatorFreeT(IntPtr ptr, IntPtr ptr2);
 
         // typedef - Pointer to MMAL_POOL_T struct * Pointer to MMAL_BUFFER_HEADER_T struct * Pointer to void -> Returns MMAL_BOOL_T struct
-        public unsafe delegate int MMAL_POOL_BH_CB_T(MMAL_POOL_T* pool, MMAL_BUFFER_HEADER_T* buffer);
+        public unsafe delegate int MMAL_POOL_BH_CB_T(MMAL_POOL_T* pool, MmalBufferHeader* buffer);
 
         // MMAL_POOL_T*
         [DllImport("libmmal.so", EntryPoint = "mmal_pool_create", CallingConvention = CallingConvention.Cdecl)]

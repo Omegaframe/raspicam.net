@@ -28,7 +28,7 @@ namespace MMALSharp
 
         MalCamera()
         {
-            BcmHost.bcm_host_init();
+            BcmHost.Initialize();
 
             Camera = new MmalCameraComponent();
         }
@@ -338,7 +338,7 @@ namespace MMALSharp
             tempList.ForEach(c => c.Dispose());
             Camera.Dispose();
 
-            BcmHost.bcm_host_deinit();
+            BcmHost.Uninitialize();
         }
 
         async Task RefreshAnnotations(int msInterval, CancellationToken cancellationToken)

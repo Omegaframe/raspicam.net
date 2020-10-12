@@ -1,4 +1,4 @@
-﻿using MMALSharp.Native;
+﻿using MMALSharp.Native.Buffer;
 
 namespace MMALSharp.Extensions
 {

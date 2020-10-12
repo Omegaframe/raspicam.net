@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using MMALSharp.Native.Buffer;
 
 namespace MMALSharp.Native
 {
@@ -9,22 +10,22 @@ namespace MMALSharp.Native
         public static extern unsafe MMAL_QUEUE_T* mmal_queue_create();
 
         [DllImport("libmmal.so", EntryPoint = "mmal_queue_put", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe void mmal_queue_put(MMAL_QUEUE_T* ptr, MMAL_BUFFER_HEADER_T* header);
+        public static extern unsafe void mmal_queue_put(MMAL_QUEUE_T* ptr, MmalBufferHeader* header);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_queue_put_back", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe void mmal_queue_put_back(MMAL_QUEUE_T* ptr, MMAL_BUFFER_HEADER_T* header);
+        public static extern unsafe void mmal_queue_put_back(MMAL_QUEUE_T* ptr, MmalBufferHeader* header);
 
         // MMAL_QUEUE_T*
         [DllImport("libmmal.so", EntryPoint = "mmal_queue_get", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMAL_BUFFER_HEADER_T* mmal_queue_get(MMAL_QUEUE_T* ptr);
+        public static extern unsafe MmalBufferHeader* mmal_queue_get(MMAL_QUEUE_T* ptr);
 
         // MMAL_QUEUE_T*
         [DllImport("libmmal.so", EntryPoint = "mmal_queue_wait", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMAL_BUFFER_HEADER_T* mmal_queue_wait(MMAL_QUEUE_T* ptr);
+        public static extern unsafe MmalBufferHeader* mmal_queue_wait(MMAL_QUEUE_T* ptr);
 
         // MMAL_QUEUE_T*
         [DllImport("libmmal.so", EntryPoint = "mmal_queue_timedwait", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMAL_BUFFER_HEADER_T* mmal_queue_timedwait(MMAL_QUEUE_T* ptr, int waitms);
+        public static extern unsafe MmalBufferHeader* mmal_queue_timedwait(MMAL_QUEUE_T* ptr, int waitms);
         
         [DllImport("libmmal.so", EntryPoint = "mmal_queue_length", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe uint mmal_queue_length(MMAL_QUEUE_T* ptr);
@@ -37,14 +38,14 @@ namespace MMALSharp.Native
     public unsafe struct MMAL_QUEUE_T
     {
         uint length;
-        MMAL_BUFFER_HEADER_T* first;
-        MMAL_BUFFER_HEADER_T** last;
+        MmalBufferHeader* first;
+        MmalBufferHeader** last;
 
         public uint Length => length;
-        public MMAL_BUFFER_HEADER_T* First => first;
-        public MMAL_BUFFER_HEADER_T** Last => last;
+        public MmalBufferHeader* First => first;
+        public MmalBufferHeader** Last => last;
 
-        public MMAL_QUEUE_T(uint length, MMAL_BUFFER_HEADER_T* first, MMAL_BUFFER_HEADER_T** last)
+        public MMAL_QUEUE_T(uint length, MmalBufferHeader* first, MmalBufferHeader** last)
         {
             this.length = length;
             this.first = first;

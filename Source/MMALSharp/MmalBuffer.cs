@@ -7,13 +7,14 @@ using Microsoft.Extensions.Logging;
 using MMALSharp.Common.Utility;
 using MMALSharp.Extensions;
 using MMALSharp.Native;
+using MMALSharp.Native.Buffer;
 using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp
 {
     public unsafe class MmalBuffer : MmalObject, IBuffer
     {
-        public byte* Data => Ptr->data;
+        public byte* Data => Ptr->Data;
         public uint Cmd => Ptr->Cmd;
         public uint AllocSize => Ptr->AllocSize;
         public uint Length => Ptr->Length;
@@ -21,12 +22,12 @@ namespace MMALSharp
         public uint Flags => Ptr->Flags;
         public long Pts => Ptr->Pts;
         public long Dts => Ptr->Dts;
-        public MMAL_BUFFER_HEADER_TYPE_SPECIFIC_T Type => Marshal.PtrToStructure<MMAL_BUFFER_HEADER_TYPE_SPECIFIC_T>(Ptr->Type);
+        public MmalBufferHeaderTypeSpecific Type => Marshal.PtrToStructure<MmalBufferHeaderTypeSpecific>(Ptr->Type);
         public List<MmalBufferProperties> Properties { get; }
         public List<int> Events { get; }
-        public MMAL_BUFFER_HEADER_T* Ptr { get; }
+        public MmalBufferHeader* Ptr { get; }
 
-        public MmalBuffer(MMAL_BUFFER_HEADER_T* ptr)
+        public MmalBuffer(MmalBufferHeader* ptr)
         {
             Ptr = ptr;
             Properties = new List<MmalBufferProperties>();
@@ -84,21 +85,21 @@ namespace MMALSharp
             if (MmalCameraConfig.Debug)
                 MmalLog.Logger.LogDebug("Getting data from buffer");
 
-            MmalCheck(Native.MmalBuffer.mmal_buffer_header_mem_lock(Ptr), "Unable to lock buffer header.");
+            MmalCheck(Native.Buffer.MmalBuffer.MemLock(Ptr), "Unable to lock buffer header.");
 
             try
             {
-                var ps = Ptr->data + Offset;
+                var ps = Ptr->Data + Offset;
                 var buffer = new byte[(int)Ptr->Length];
                 Marshal.Copy((IntPtr)ps, buffer, 0, buffer.Length);
-                Native.MmalBuffer.mmal_buffer_header_mem_unlock(Ptr);
+                Native.Buffer.MmalBuffer.MemUnlock(Ptr);
 
                 return buffer;
             }
             catch
             {
                 // If something goes wrong, unlock the header.
-                Native.MmalBuffer.mmal_buffer_header_mem_unlock(Ptr);
+                Native.Buffer.MmalBuffer.MemUnlock(Ptr);
                 MmalLog.Logger.LogWarning("Unable to handle data. Returning null.");
                 return null;
             }
@@ -109,20 +110,20 @@ namespace MMALSharp
             if (MmalCameraConfig.Debug)
                 MmalLog.Logger.LogDebug($"Reading {length} bytes into buffer");
 
-            Ptr->length = (uint)length;
-            Ptr->dts = Ptr->pts = MmalUtil.MmalTimeUnknown;
-            Ptr->offset = 0;
+            Ptr->Length = (uint)length;
+            Ptr->Dts = Ptr->Pts = MmalUtil.MmalTimeUnknown;
+            Ptr->Offset = 0;
 
             if (eof)
-                Ptr->flags = (uint)MmalBufferProperties.MmalBufferHeaderFlagEos;
+                Ptr->Flags = (uint)MmalBufferProperties.MmalBufferHeaderFlagEos;
 
-            Marshal.Copy(source, 0, (IntPtr)Ptr->data, length);
+            Marshal.Copy(source, 0, (IntPtr)Ptr->Data, length);
         }
 
         public void Acquire()
         {
             if (CheckState())
-                Native.MmalBuffer.mmal_buffer_header_acquire(Ptr);
+                Native.Buffer.MmalBuffer.HeaderAcquire(Ptr);
         }
 
         public void Release()
@@ -132,7 +133,7 @@ namespace MMALSharp
                 if (MmalCameraConfig.Debug)
                     MmalLog.Logger.LogDebug("Releasing buffer.");
 
-                Native.MmalBuffer.mmal_buffer_header_release(Ptr);
+                Native.Buffer.MmalBuffer.HeaderRelease(Ptr);
             }
             else
             {
@@ -145,7 +146,7 @@ namespace MMALSharp
         public void Reset()
         {
             if (CheckState())
-                Native.MmalBuffer.mmal_buffer_header_reset(Ptr);
+                Native.Buffer.MmalBuffer.HeaderReset(Ptr);
         }
 
         void InitialiseProperties()

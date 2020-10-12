@@ -18,7 +18,7 @@ namespace MMALSharp
 
         MmalStandalone()
         {
-            BcmHost.bcm_host_init();
+            BcmHost.Initialize();
         }
 
         public async Task ProcessAsync(IDownstreamComponent initialComponent, CancellationToken cancellationToken = default)
@@ -97,7 +97,7 @@ namespace MMALSharp
 
             tempList.ForEach(c => c.Dispose());
 
-            BcmHost.bcm_host_deinit();
+            BcmHost.Uninitialize();
         }
 
         List<IDownstreamComponent> PopulateProcessingList(IDownstreamComponent initialComponent)

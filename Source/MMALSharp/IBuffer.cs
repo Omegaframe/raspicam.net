@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using MMALSharp.Native;
+using MMALSharp.Native.Buffer;
 
 namespace MMALSharp
 {
@@ -12,10 +12,10 @@ namespace MMALSharp
         uint Flags { get; }
         long Pts { get; }
         long Dts { get; }
-        MMAL_BUFFER_HEADER_TYPE_SPECIFIC_T Type { get; }
+        MmalBufferHeaderTypeSpecific Type { get; }
         List<MmalBufferProperties> Properties { get; }
         List<int> Events { get; }
-        unsafe MMAL_BUFFER_HEADER_T* Ptr { get; }
+        unsafe MmalBufferHeader* Ptr { get; }
 
         void PrintProperties();
         void ParseEvents();

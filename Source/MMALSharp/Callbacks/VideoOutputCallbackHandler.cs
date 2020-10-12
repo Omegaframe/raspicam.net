@@ -5,6 +5,7 @@ using MMALSharp.Common.Utility;
 using MMALSharp.Config;
 using MMALSharp.Extensions;
 using MMALSharp.Native;
+using MMALSharp.Native.Buffer;
 using MMALSharp.Ports.Outputs;
 using MMALSharp.Processing.Handlers;
 using MMALSharp.Processing.Processors.Motion;

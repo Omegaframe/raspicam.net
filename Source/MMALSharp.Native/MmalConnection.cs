@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using MMALSharp.Native.Buffer;
 
 namespace MMALSharp.Native
 {
@@ -33,7 +34,7 @@ namespace MMALSharp.Native
         public static extern unsafe MmalUtil.MmalStatusT mmal_connection_disable(MMAL_CONNECTION_T* connection);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_connection_event_format_changed", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalUtil.MmalStatusT mmal_connection_event_format_changed(MMAL_CONNECTION_T* connection, MMAL_BUFFER_HEADER_T* buffer);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_connection_event_format_changed(MMAL_CONNECTION_T* connection, MmalBufferHeader* buffer);
     }
 
     [StructLayout(LayoutKind.Sequential)]

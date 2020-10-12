@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using MMALSharp.Native.Buffer;
 
 namespace MMALSharp.Native
 {
@@ -25,7 +26,7 @@ namespace MMALSharp.Native
 
         // typedef - Pointer to MMAL_PORT_T * Pointer to MMAL_BUFFER_HEADER_T -> Returns void
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public unsafe delegate void MMAL_PORT_BH_CB_T(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer);
+        public unsafe delegate void MMAL_PORT_BH_CB_T(MMAL_PORT_T* port, MmalBufferHeader* buffer);
 
         // MMAL_PORT_T* port * MMAL_PORT_BH_CB_T cb -> Returns MMAL_STATUS_T
         [DllImport("libmmal.so", EntryPoint = "mmal_port_enable", CallingConvention = CallingConvention.Cdecl)]
@@ -55,7 +56,7 @@ namespace MMALSharp.Native
 
         // MMAL_PORT_T* port * MMAL_BUFFER_HEADER_T* header
         [DllImport("libmmal.so", EntryPoint = "mmal_port_send_buffer", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalUtil.MmalStatusT mmal_port_send_buffer(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* header);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_port_send_buffer(MMAL_PORT_T* port, MmalBufferHeader* header);
 
         // MMAL_PORT_T* port * MMAL_PORT_T* port2
         [DllImport("libmmal.so", EntryPoint = "mmal_port_connect", CallingConvention = CallingConvention.Cdecl)]
