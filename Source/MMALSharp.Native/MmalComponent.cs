@@ -5,7 +5,6 @@ namespace MMALSharp.Native
 {
     public static class MmalComponent
     {
-        // name: char* * comp: MMAL_COMPONENT_T** 
         [DllImport("libmmal.so", EntryPoint = "mmal_component_create", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe MmalUtil.MmalStatusT mmal_component_create(string name, IntPtr* comp);
 

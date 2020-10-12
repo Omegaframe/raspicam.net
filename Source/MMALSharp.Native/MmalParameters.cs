@@ -187,16 +187,16 @@ namespace MMALSharp.Native
 
         MmalCoreStatsDir dir;
         int reset;
-        MMAL_CORE_STATISTICS_T stats;
+        MmalCoreStatistics stats;
 
         public MmalCoreStatsDir Dir => this.dir;
 
         public int Reset => this.reset;
 
-        public MMAL_CORE_STATISTICS_T Stats => this.stats;
+        public MmalCoreStatistics Stats => this.stats;
 
         public MMAL_PARAMETER_CORE_STATISTICS_T(MMAL_PARAMETER_HEADER_T hdr, MmalCoreStatsDir dir, int reset,
-                                                MMAL_CORE_STATISTICS_T stats)
+                                                MmalCoreStatistics stats)
         {
             this.Hdr = hdr;
             this.dir = dir;

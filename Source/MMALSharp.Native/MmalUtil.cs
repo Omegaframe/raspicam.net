@@ -81,7 +81,7 @@ namespace MMALSharp.Native
         public static extern unsafe MmalStatusT mmal_util_camera_use_stc_timestamp(MMAL_PORT_T* port, MmalCameraStcModeT mode);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_util_get_core_port_stats", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusT mmal_util_get_core_port_stats(MMAL_PORT_T* port, MmalCoreStatsDir dir, int reset, ref MMAL_CORE_STATISTICS_T stats);
+        public static extern unsafe MmalStatusT mmal_util_get_core_port_stats(MMAL_PORT_T* port, MmalCoreStatsDir dir, int reset, ref MmalCoreStatistics stats);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_status_to_string", CallingConvention = CallingConvention.Cdecl)]
         public static extern string mmal_status_to_string(MmalStatusT status);
