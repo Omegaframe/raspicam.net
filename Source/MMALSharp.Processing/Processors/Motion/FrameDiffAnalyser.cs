@@ -84,20 +84,20 @@ namespace MMALSharp.Processors.Motion
 
             if (!FullTestFrame)
             {
-                if (context.Eos)
+                if (context.IsEos)
                 {
                     FullTestFrame = true;
                     PrepareTestFrame();
-                    MMALLog.Logger.LogDebug("EOS reached for test frame.");
+                    MmalLog.Logger.LogDebug("EOS reached for test frame.");
                 }
             }
             else
             {
-                MMALLog.Logger.LogDebug("Have full test frame.");
+                MmalLog.Logger.LogDebug("Have full test frame.");
 
                 if (FullFrame && !TestFrameExpired())
                 {
-                    MMALLog.Logger.LogDebug("Have full frame, checking for changes.");
+                    MmalLog.Logger.LogDebug("Have full frame, checking for changes.");
 
                     CheckForChanges(OnDetect);
                 }
@@ -173,12 +173,12 @@ namespace MMALSharp.Processors.Motion
             PixelFormat format = default;
 
             // RGB16 doesn't appear to be supported by GDI?
-            if (ImageContext.PixelFormat == MMALEncoding.RGB24)
+            if (ImageContext.PixelFormat == MmalEncoding.Rgb24)
             {
                 return 24;
             }
 
-            if (ImageContext.PixelFormat == MMALEncoding.RGB32 || ImageContext.PixelFormat == MMALEncoding.RGBA)
+            if (ImageContext.PixelFormat == MmalEncoding.Rgb32 || ImageContext.PixelFormat == MmalEncoding.Rgba)
             {
                 return 32;
             }
@@ -227,7 +227,7 @@ namespace MMALSharp.Processors.Motion
                 return false;
             }
 
-            MMALLog.Logger.LogDebug("Have full frame, updating test frame.");
+            MmalLog.Logger.LogDebug("Have full frame, updating test frame.");
             PrepareTestFrame();
             return true;
         }
@@ -238,7 +238,7 @@ namespace MMALSharp.Processors.Motion
 
             if (diff >= MotionConfig.Threshold)
             {
-                MMALLog.Logger.LogInformation($"Motion detected! Frame difference {diff}.");
+                MmalLog.Logger.LogInformation($"Motion detected! Frame difference {diff}.");
                 onDetect();
             }
         }

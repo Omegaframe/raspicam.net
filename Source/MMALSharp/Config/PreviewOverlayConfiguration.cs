@@ -18,6 +18,6 @@ namespace MMALSharp.Config
         /// The encoding of the static resource. Can be one of the following: YUV, RGB, RGBA, BGR, BGRA.
         /// If left null, we will try to work out the encoding based on the size of the image (3 bytes for RGB, 4 bytes for RGBA).
         /// </summary>
-        public MMALEncoding Encoding { get; set; }
+        public MmalEncoding Encoding { get; set; }
     }
 }

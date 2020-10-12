@@ -64,7 +64,7 @@ namespace MMALSharp.Ports.Outputs
                 catch
                 {
                     // If commit fails using new settings, attempt to reset using old temp MMAL_VIDEO_FORMAT_T.
-                    MMALLog.Logger.LogWarning($"{Name}: Commit of output port failed. Attempting to reset values.");
+                    MmalLog.Logger.LogWarning($"{Name}: Commit of output port failed. Attempting to reset values.");
                     Ptr->Format->Es->Video = tempVid;
                     Commit();
                 }
@@ -76,7 +76,7 @@ namespace MMALSharp.Ports.Outputs
                 }
 
                 if (MMALCameraConfig.VideoColorSpace != null &&
-                    MMALCameraConfig.VideoColorSpace.EncType == MMALEncoding.EncodingType.ColorSpace)
+                    MMALCameraConfig.VideoColorSpace.EncType == MmalEncoding.EncodingType.ColorSpace)
                 {
                     VideoColorSpace = MMALCameraConfig.VideoColorSpace;
                 }
@@ -140,7 +140,7 @@ namespace MMALSharp.Ports.Outputs
         {
             if (ConnectedReference != null)
             {
-                MMALLog.Logger.LogWarning($"{Name}: A connection has already been established on this port");
+                MmalLog.Logger.LogWarning($"{Name}: A connection has already been established on this port");
                 return ConnectedReference;
             }
 
@@ -175,12 +175,12 @@ namespace MMALSharp.Ports.Outputs
                 {
                     if (!Enabled)
                     {
-                        MMALLog.Logger.LogDebug($"{Name}: Port not enabled.");
+                        MmalLog.Logger.LogDebug($"{Name}: Port not enabled.");
                     }
 
                     if (BufferPool == null)
                     {
-                        MMALLog.Logger.LogDebug($"{Name}: Buffer pool null.");
+                        MmalLog.Logger.LogDebug($"{Name}: Buffer pool null.");
                     }
                 }
                 
@@ -194,7 +194,7 @@ namespace MMALSharp.Ports.Outputs
                     }
                     else
                     {
-                        MMALLog.Logger.LogWarning($"{Name}: Buffer null. Continuing.");
+                        MmalLog.Logger.LogWarning($"{Name}: Buffer null. Continuing.");
                     }
                 }
             }
@@ -205,7 +205,7 @@ namespace MMALSharp.Ports.Outputs
                     newBuffer.Release();
                 }
 
-                MMALLog.Logger.LogWarning($"{Name}: Unable to send buffer header. {e.Message}");
+                MmalLog.Logger.LogWarning($"{Name}: Unable to send buffer header. {e.Message}");
             }
         }
 
@@ -232,7 +232,7 @@ namespace MMALSharp.Ports.Outputs
                 
                 if (CallbackHandler == null)
                 {
-                    MMALLog.Logger.LogWarning($"{Name}: Callback null");
+                    MmalLog.Logger.LogWarning($"{Name}: Callback null");
 
                     EnablePort(IntPtr.Zero);
                 }
@@ -258,7 +258,7 @@ namespace MMALSharp.Ports.Outputs
         /// </summary>
         public void Start()
         {
-            MMALLog.Logger.LogDebug($"{Name}: Starting output port.");
+            MmalLog.Logger.LogDebug($"{Name}: Starting output port.");
             Trigger = new TaskCompletionSource<bool>();
             Enable();
         }
@@ -271,7 +271,7 @@ namespace MMALSharp.Ports.Outputs
         internal virtual void NativeOutputPortCallback(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)
         {
             if (MMALCameraConfig.Debug)            
-                MMALLog.Logger.LogDebug($"{Name}: In native output callback");            
+                MmalLog.Logger.LogDebug($"{Name}: In native output callback");            
             
             var bufferImpl = new MMALBufferImpl(buffer);
 
@@ -295,7 +295,7 @@ namespace MMALSharp.Ports.Outputs
             // If this buffer signals the end of data stream, allow waiting thread to continue.
             if (eos || failed)
             {
-                MMALLog.Logger.LogDebug($"{Name}: End of stream. Signaling completion...");
+                MmalLog.Logger.LogDebug($"{Name}: End of stream. Signaling completion...");
                 
                 Task.Run(() => { Trigger.SetResult(true); });
             }

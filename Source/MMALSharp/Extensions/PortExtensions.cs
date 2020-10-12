@@ -34,7 +34,7 @@ namespace MMALSharp.Extensions
                 throw new PiCameraError($"Could not find parameter {key}");
             }
 
-            MMALLog.Logger.LogDebug($"Getting parameter {t.ParamName}");
+            MmalLog.Logger.LogDebug($"Getting parameter {t.ParamName}");
 
             try
             {
@@ -70,7 +70,7 @@ namespace MMALSharp.Extensions
             }
             catch
             {
-                MMALLog.Logger.LogWarning($"Unable to get port parameter {t.ParamName}");
+                MmalLog.Logger.LogWarning($"Unable to get port parameter {t.ParamName}");
                 throw;
             }
         }
@@ -151,7 +151,7 @@ namespace MMALSharp.Extensions
                 throw new PiCameraError($"Could not find parameter {key}");
             }
 
-            MMALLog.Logger.LogDebug($"Setting parameter {t.ParamName}");
+            MmalLog.Logger.LogDebug($"Setting parameter {t.ParamName}");
 
             try
             {
@@ -185,7 +185,7 @@ namespace MMALSharp.Extensions
             }
             catch
             {
-                MMALLog.Logger.LogWarning($"Unable to set port parameter {t.ParamName}");
+                MmalLog.Logger.LogWarning($"Unable to set port parameter {t.ParamName}");
                 throw;
             }
         }
@@ -221,7 +221,7 @@ namespace MMALSharp.Extensions
             MMALCheck(MMALPort.mmal_port_parameter_set(port.Ptr, &stereo.Hdr), "Unable to set Stereo mode");
         }
 
-        internal static void CheckSupportedEncoding(this IPort port, MMALEncoding encoding)
+        internal static void CheckSupportedEncoding(this IPort port, MmalEncoding encoding)
         {
             var encodings = port.GetSupportedEncodings();
 
@@ -238,12 +238,12 @@ namespace MMALSharp.Extensions
 
             foreach (int enc in encodings)
             {
-                if (enc == Helpers.FourCCFromString("BGR3"))
+                if (enc == Helpers.FourCcFromString("BGR3"))
                 {
                     break;
                 }
 
-                if (enc == Helpers.FourCCFromString("RGB3"))
+                if (enc == Helpers.FourCcFromString("RGB3"))
                 {
                     newFirmware = 1;
                 }

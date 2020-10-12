@@ -10,7 +10,7 @@ namespace MMALSharp.Demo
 
         public abstract void Operations();
         
-        protected Tuple<MMALEncoding, MMALEncoding> ParsePixelFormat()
+        protected Tuple<MmalEncoding, MmalEncoding> ParsePixelFormat()
         {
             Console.WriteLine("\nPlease select an image format.");
             var format = Console.ReadLine();
@@ -32,7 +32,7 @@ namespace MMALSharp.Demo
                 this.ParsePixelFormat();
             }
             
-            return new Tuple<MMALEncoding, MMALEncoding>(parsedFormat, parsedPixelFormat);
+            return new Tuple<MmalEncoding, MmalEncoding>(parsedFormat, parsedPixelFormat);
         }
     }
 }

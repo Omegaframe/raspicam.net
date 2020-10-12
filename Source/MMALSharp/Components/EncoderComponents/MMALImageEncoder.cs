@@ -120,7 +120,7 @@ namespace MMALSharp.Components
             }
             catch
             {
-                MMALLog.Logger.LogWarning("Attempt to retrieve sensor name failed.");
+                MmalLog.Logger.LogWarning("Attempt to retrieve sensor name failed.");
             }
 
             List<ExifTag> defaultTags = new List<ExifTag>

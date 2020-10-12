@@ -10,12 +10,12 @@ namespace MMALSharp.Ports
         /// <summary>
         /// The encoding type this output port will send data in.
         /// </summary>
-        public MMALEncoding EncodingType { get; }
+        public MmalEncoding EncodingType { get; }
 
         /// <summary>
         /// The pixel format this output port will send data in.
         /// </summary>
-        public MMALEncoding PixelFormat { get; }
+        public MmalEncoding PixelFormat { get; }
 
         /// <summary>
         /// The input/output width value.
@@ -95,8 +95,8 @@ namespace MMALSharp.Ports
         /// <param name="bufferSize">Requested size of buffer headers.</param>
         /// <param name="crop">The Region of Interest requested.</param>
         public MMALPortConfig(
-            MMALEncoding encodingType,
-            MMALEncoding pixelFormat,
+            MmalEncoding encodingType,
+            MmalEncoding pixelFormat,
             int quality = 0,
             int bitrate = 0,
             DateTime? timeout = null,

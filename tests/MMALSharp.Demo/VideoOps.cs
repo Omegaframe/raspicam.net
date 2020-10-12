@@ -30,7 +30,7 @@ namespace MMALSharp.Demo
             Program.OperationsHandler();
         }
         
-        private void TakeVideoOperations(MMALEncoding encoding, MMALEncoding pixelFormat)
+        private void TakeVideoOperations(MmalEncoding encoding, MmalEncoding pixelFormat)
         {
             Console.WriteLine("\nPlease enter a file extension.");
             var extension = Console.ReadLine();
@@ -50,7 +50,7 @@ namespace MMALSharp.Demo
             this.TakeVideoManual(extension, encoding, pixelFormat, intBitrate, intSeconds).GetAwaiter().GetResult();
         }
         
-        private async Task TakeVideoManual(string extension, MMALEncoding encoding, MMALEncoding pixelFormat, int bitrate, int seconds)
+        private async Task TakeVideoManual(string extension, MmalEncoding encoding, MmalEncoding pixelFormat, int bitrate, int seconds)
         {            
             using (var vidCaptureHandler = new VideoStreamCaptureHandler($"/home/pi/videos/", extension))
             using (var vidEncoder = new MMALVideoEncoder())

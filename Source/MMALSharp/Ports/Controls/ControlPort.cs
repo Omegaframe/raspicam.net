@@ -29,7 +29,7 @@ namespace MMALSharp.Ports.Controls
 
             IntPtr ptrCallback = Marshal.GetFunctionPointerForDelegate(NativeCallback);
 
-            MMALLog.Logger.LogDebug($"{Name}: Enabling control port.");
+            MmalLog.Logger.LogDebug($"{Name}: Enabling control port.");
 
             EnablePort(ptrCallback);
         }
@@ -51,29 +51,29 @@ namespace MMALSharp.Ports.Controls
                 {
                     var settings = (MMAL_PARAMETER_CAMERA_SETTINGS_T*)data;
 
-                    MMALLog.Logger.LogDebug($"{Name}: Analog gain num {settings->AnalogGain.Num}");
-                    MMALLog.Logger.LogDebug($"{Name}: Analog gain den {settings->AnalogGain.Den}");
-                    MMALLog.Logger.LogDebug($"{Name}: Exposure {settings->Exposure}");
-                    MMALLog.Logger.LogDebug($"{Name}: Focus position {settings->FocusPosition}");
+                    MmalLog.Logger.LogDebug($"{Name}: Analog gain num {settings->AnalogGain.Num}");
+                    MmalLog.Logger.LogDebug($"{Name}: Analog gain den {settings->AnalogGain.Den}");
+                    MmalLog.Logger.LogDebug($"{Name}: Exposure {settings->Exposure}");
+                    MmalLog.Logger.LogDebug($"{Name}: Focus position {settings->FocusPosition}");
                 }
             }
             else if (buffer->Cmd == MMALEvents.MMAL_EVENT_ERROR)
             {
-                MMALLog.Logger.LogInformation($"{Name}: Error buffer event returned. If using camera, check all connections, including the Sunny one on the camera board.");
+                MmalLog.Logger.LogInformation($"{Name}: Error buffer event returned. If using camera, check all connections, including the Sunny one on the camera board.");
             }
             else
             {
-                MMALLog.Logger.LogInformation($"{Name}: Received unexpected camera control callback event");
+                MmalLog.Logger.LogInformation($"{Name}: Received unexpected camera control callback event");
             }
 
             if (MMALCameraConfig.Debug)
-                MMALLog.Logger.LogDebug($"{Name}: In native control callback.");
+                MmalLog.Logger.LogDebug($"{Name}: In native control callback.");
 
             var bufferImpl = new MMALBufferImpl(buffer);
 
             if (!bufferImpl.CheckState())
             {
-                MMALLog.Logger.LogWarning($"{Name}: Received null control buffer.");
+                MmalLog.Logger.LogWarning($"{Name}: Received null control buffer.");
                 return;
             }
 
@@ -85,7 +85,7 @@ namespace MMALSharp.Ports.Controls
             CallbackHandler.Callback(bufferImpl);
 
             if (MMALCameraConfig.Debug)
-                MMALLog.Logger.LogDebug($"{Name}: Releasing buffer.");
+                MmalLog.Logger.LogDebug($"{Name}: Releasing buffer.");
 
             bufferImpl.Release();
         }

@@ -10,12 +10,12 @@ namespace MMALSharp.Ports
         /// <summary>
         /// The encoding type this output port will send data in.
         /// </summary>
-        MMALEncoding EncodingType { get; }
+        MmalEncoding EncodingType { get; }
 
         /// <summary>
         /// The pixel format this output port will send data in.
         /// </summary>
-        MMALEncoding PixelFormat { get; }
+        MmalEncoding PixelFormat { get; }
 
         /// <summary>
         /// User provided width of output frame.

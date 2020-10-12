@@ -6,10 +6,10 @@ namespace MMALSharp.Tests
     public class TestMember
     {
         public string Extension { get; set; }
-        public MMALEncoding EncodingType { get; set; }
-        public MMALEncoding PixelFormat { get; set; }
+        public MmalEncoding EncodingType { get; set; }
+        public MmalEncoding PixelFormat { get; set; }
 
-        public TestMember(string extension, MMALEncoding encodingType, MMALEncoding pixelFormat)
+        public TestMember(string extension, MmalEncoding encodingType, MmalEncoding pixelFormat)
         {
             this.Extension = extension;
             this.EncodingType = encodingType;

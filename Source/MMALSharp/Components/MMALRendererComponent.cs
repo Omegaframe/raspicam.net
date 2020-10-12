@@ -43,7 +43,7 @@ namespace MMALSharp.Components
         /// <inheritdoc />
         public override void PrintComponent()
         {
-            MMALLog.Logger.LogInformation($"Component: Null sink renderer");
+            MmalLog.Logger.LogInformation($"Component: Null sink renderer");
         }
     }
 
@@ -162,7 +162,7 @@ namespace MMALSharp.Components
         /// <inheritdoc />
         public override void PrintComponent()
         {
-            MMALLog.Logger.LogInformation($"Component: Video renderer");
+            MmalLog.Logger.LogInformation($"Component: Video renderer");
         }
 
         /// <inheritdoc />
@@ -199,13 +199,13 @@ namespace MMALSharp.Components
         /// <summary>
         /// A list of supported encodings for overlay image data.
         /// </summary>
-        public readonly IReadOnlyCollection<MMALEncoding> AllowedEncodings = new ReadOnlyCollection<MMALEncoding>(new List<MMALEncoding>
+        public readonly IReadOnlyCollection<MmalEncoding> AllowedEncodings = new ReadOnlyCollection<MmalEncoding>(new List<MmalEncoding>
         {
-            MMALEncoding.I420,
-            MMALEncoding.RGB24,
-            MMALEncoding.RGBA,
-            MMALEncoding.BGR24,
-            MMALEncoding.BGRA
+            MmalEncoding.I420,
+            MmalEncoding.Rgb24,
+            MmalEncoding.Rgba,
+            MmalEncoding.Bgr24,
+            MmalEncoding.BGra
         });
 
         /// <summary>
@@ -246,9 +246,9 @@ namespace MMALSharp.Components
                 var planeLength = Math.Floor((double)planeSize.Width * planeSize.Height);
 
                 if (Math.Floor(sourceLength / planeLength) == 3)                
-                    config.Encoding = MMALEncoding.RGB24;                
+                    config.Encoding = MmalEncoding.Rgb24;                
                 else if (Math.Floor(sourceLength / planeLength) == 4)                
-                    config.Encoding = MMALEncoding.RGBA;                
+                    config.Encoding = MmalEncoding.Rgba;                
                 else                
                     throw new PiCameraError("Unable to determine encoding from image size.");                
             }
@@ -286,7 +286,7 @@ namespace MMALSharp.Components
 
             if (buffer == null)
             {
-                MMALLog.Logger.LogWarning("Received null buffer when updating overlay.");
+                MmalLog.Logger.LogWarning("Received null buffer when updating overlay.");
                 return;
             }
 

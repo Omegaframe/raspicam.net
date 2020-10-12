@@ -16,6 +16,7 @@ using System.Text;
 using MMALSharp.Processors;
 using System.IO;
 using System.Drawing.Imaging;
+using MMALSharp.Processing;
 
 namespace MMALSharp.Tests
 {
@@ -28,7 +29,7 @@ namespace MMALSharp.Tests
 
         [Theory]
         [MemberData(nameof(BasicImageData.Data), MemberType = typeof(BasicImageData))]
-        public async Task SharpenKernelProcessor(string extension, MMALEncoding encodingType, MMALEncoding pixelFormat)
+        public async Task SharpenKernelProcessor(string extension, MmalEncoding encodingType, MmalEncoding pixelFormat)
         {
             TestHelper.BeginTest("SharpenKernelProcessor", encodingType.EncodingName, pixelFormat.EncodingName);
             TestHelper.SetConfigurationDefaults();
@@ -66,7 +67,7 @@ namespace MMALSharp.Tests
 
         [Theory]
         [MemberData(nameof(BasicImageData.Data), MemberType = typeof(BasicImageData))]
-        public async Task EdgeDetectionKernelProcessor(string extension, MMALEncoding encodingType, MMALEncoding pixelFormat)
+        public async Task EdgeDetectionKernelProcessor(string extension, MmalEncoding encodingType, MmalEncoding pixelFormat)
         {
             TestHelper.BeginTest("EdgeDetectionKernelProcessor", encodingType.EncodingName, pixelFormat.EncodingName);
             TestHelper.SetConfigurationDefaults();
@@ -104,7 +105,7 @@ namespace MMALSharp.Tests
 
         [Theory]
         [MemberData(nameof(BasicImageData.Data), MemberType = typeof(BasicImageData))]
-        public async Task GaussianBlurKernelProcessor(string extension, MMALEncoding encodingType, MMALEncoding pixelFormat)
+        public async Task GaussianBlurKernelProcessor(string extension, MmalEncoding encodingType, MmalEncoding pixelFormat)
         {
             TestHelper.BeginTest("GaussianBlurKernelProcessor", encodingType.EncodingName, pixelFormat.EncodingName);
             TestHelper.SetConfigurationDefaults();
@@ -155,7 +156,7 @@ namespace MMALSharp.Tests
             {
                 Fixture.MMALCamera.ConfigureCameraSettings();
 
-                var portConfig = new MMALPortConfig(MMALEncoding.JPEG, MMALEncoding.I420, quality: 90);
+                var portConfig = new MMALPortConfig(MmalEncoding.Jpeg, MmalEncoding.I420, quality: 90);
 
                 imgEncoder.ConfigureOutputPort(portConfig, imgCaptureHandler);
 
@@ -167,7 +168,7 @@ namespace MMALSharp.Tests
 
                 imgCaptureHandler.Manipulate(context =>
                 {
-                    context.StripBayerMetadata(CameraVersion.OV5647);
+                    context.StripBayerMetadata(CameraVersion.Ov5647);
                 }, ImageFormat.Jpeg);
 
                 // Camera warm up time

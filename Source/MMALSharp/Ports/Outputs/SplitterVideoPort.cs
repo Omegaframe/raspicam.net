@@ -41,7 +41,7 @@ namespace MMALSharp.Ports.Outputs
                 catch
                 {
                     // If commit fails using new settings, attempt to reset using old temp MMAL_VIDEO_FORMAT_T.
-                    MMALLog.Logger.LogWarning($"{Name}: Commit of output port failed. Attempting to reset values.");
+                    MmalLog.Logger.LogWarning($"{Name}: Commit of output port failed. Attempting to reset values.");
                     Ptr->Format->Es->Video = tempVid;
                     Commit();
                 }
@@ -52,7 +52,7 @@ namespace MMALSharp.Ports.Outputs
                     this.SetParameter(MMALParametersCommon.MMAL_PARAMETER_ZERO_COPY, true);
                 }
 
-                if (MMALCameraConfig.VideoColorSpace != null && MMALCameraConfig.VideoColorSpace.EncType == MMALEncoding.EncodingType.ColorSpace)
+                if (MMALCameraConfig.VideoColorSpace != null && MMALCameraConfig.VideoColorSpace.EncType == MmalEncoding.EncodingType.ColorSpace)
                     VideoColorSpace = MMALCameraConfig.VideoColorSpace;
 
                 if (config.Bitrate > 0)
@@ -73,7 +73,7 @@ namespace MMALSharp.Ports.Outputs
         internal override void NativeOutputPortCallback(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)
         {
             if (MMALCameraConfig.Debug)
-                MMALLog.Logger.LogDebug($"{Name}: In native {nameof(SplitterVideoPort)} output callback");
+                MmalLog.Logger.LogDebug($"{Name}: In native {nameof(SplitterVideoPort)} output callback");
 
             base.NativeOutputPortCallback(port, buffer);
         }

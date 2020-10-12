@@ -23,9 +23,9 @@ namespace MMALSharp.Callbacks
         public virtual ProcessResult CallbackWithResult(IBuffer buffer)
         {
             if (MMALCameraConfig.Debug)
-                MMALLog.Logger.LogDebug($"In managed {this.WorkingPort.PortType.GetPortType()} callback");
+                MmalLog.Logger.LogDebug($"In managed {this.WorkingPort.PortType.GetPortType()} callback");
 
-            MMALLog.Logger.LogInformation($"Feeding: {Helpers.ConvertBytesToMegabytes(buffer.AllocSize)}. Total processed: {this.CaptureHandler?.TotalProcessed()}.");
+            MmalLog.Logger.LogInformation($"Feeding: {Helpers.ConvertBytesToMegabytes(buffer.AllocSize)}. Total processed: {this.CaptureHandler?.TotalProcessed()}.");
 
             return CaptureHandler?.Process(buffer.AllocSize);
         }

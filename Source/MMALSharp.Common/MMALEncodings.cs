@@ -6,144 +6,123 @@ using MMALSharp.Common.Utility;
 
 namespace MMALSharp.Common
 {
-    public static class MMALEncodingHelpers
+    public static class MmalEncodingHelpers
     {
-        /// <summary>
-        /// Gets a list of all supported encodings.
-        /// Call <see cref="PortExtensions.GetSupportedEncodings"/> to get supported encodings for a specific port.
-        /// </summary>
-        public static IReadOnlyCollection<MMALEncoding> EncodingList { get; } = new ReadOnlyCollection<MMALEncoding>(new List<MMALEncoding>
+        public static IReadOnlyCollection<MmalEncoding> EncodingList { get; } = new ReadOnlyCollection<MmalEncoding>(new List<MmalEncoding>
         {
-            MMALEncoding.H264,
-            MMALEncoding.MVC,
-            MMALEncoding.H263,
-            MMALEncoding.MP4V,
-            MMALEncoding.MP2V,
-            MMALEncoding.MP1V,
-            MMALEncoding.WMV3,
-            MMALEncoding.WMV2,
-            MMALEncoding.WMV1,
-            MMALEncoding.WVC1,
-            MMALEncoding.VP8,
-            MMALEncoding.VP7,
-            MMALEncoding.VP6,
-            MMALEncoding.THEORA,
-            MMALEncoding.SPARK,
-            MMALEncoding.MJPEG,
-            MMALEncoding.JPEG,
-            MMALEncoding.GIF,
-            MMALEncoding.PNG,
-            MMALEncoding.PPM,
-            MMALEncoding.TGA,
-            MMALEncoding.BMP,
-            MMALEncoding.I420,
-            MMALEncoding.I420_SLICE,
-            MMALEncoding.YV12,
-            MMALEncoding.I422,
-            MMALEncoding.I422_SLICE,
-            MMALEncoding.YUYV,
-            MMALEncoding.YVYU,
-            MMALEncoding.UYVY,
-            MMALEncoding.VYUY,
-            MMALEncoding.NV12,
-            MMALEncoding.NV21,
-            MMALEncoding.ARGB,
-            MMALEncoding.RGBA,
-            MMALEncoding.ABGR,
-            MMALEncoding.BGRA,
-            MMALEncoding.RGB16,
-            MMALEncoding.RGB24,
-            MMALEncoding.RGB32,
-            MMALEncoding.BGR16,
-            MMALEncoding.BGR24,
-            MMALEncoding.BGR32,
-            MMALEncoding.BAYER_SBGGR10P,
-            MMALEncoding.BAYER_SBGGR8,
-            MMALEncoding.BAYER_SBGGR12P,
-            MMALEncoding.BAYER_SBGGR16,
-            MMALEncoding.BAYER_SBGGR10DPCM8,
-            MMALEncoding.YUVUV128,
-            MMALEncoding.YUV10COL,
-            MMALEncoding.OPAQUE,
-            MMALEncoding.EGL_IMAGE,
-            MMALEncoding.PCM_UNSIGNED_BE,
-            MMALEncoding.PCM_UNSIGNED_LE,
-            MMALEncoding.PCM_SIGNED_BE,
-            MMALEncoding.PCM_SIGNED_LE,
-            MMALEncoding.PCM_FLOAT_BE,
-            MMALEncoding.PCM_FLOAT_LE,
-            MMALEncoding.PCM_UNSIGNED,
-            MMALEncoding.PCM_SIGNED,
-            MMALEncoding.PCM_FLOAT,
-            MMALEncoding.MP4A,
-            MMALEncoding.MPGA,
-            MMALEncoding.ALAW,
-            MMALEncoding.MULAW,
-            MMALEncoding.ADPCM_MS,
-            MMALEncoding.ADPCM_IMA_MS,
-            MMALEncoding.ADPCM_SWF,
-            MMALEncoding.WMA1,
-            MMALEncoding.WMA2,
-            MMALEncoding.WMAP,
-            MMALEncoding.WMAL,
-            MMALEncoding.WMAV,
-            MMALEncoding.AMRNB,
-            MMALEncoding.AMRWB,
-            MMALEncoding.AMRWBP,
-            MMALEncoding.AC3,
-            MMALEncoding.EAC3,
-            MMALEncoding.DTS,
-            MMALEncoding.MLP,
-            MMALEncoding.FLAC,
-            MMALEncoding.VORBIS,
-            MMALEncoding.SPEEX,
-            MMALEncoding.ATRAC3,
-            MMALEncoding.ATRACX,
-            MMALEncoding.ATRACL,
-            MMALEncoding.MIDI,
-            MMALEncoding.EVRC,
-            MMALEncoding.NELLYMOSER,
-            MMALEncoding.QCELP,
-            MMALEncoding.MP4V_DIVX_DRM,
-            MMALEncoding.VARIANT_H264_DEFAULT,
-            MMALEncoding.VARIANT_H264_AVC1,
-            MMALEncoding.VARIANT_H264_RAW,
-            MMALEncoding.VARIANT_MP4A_DEFAULT,
-            MMALEncoding.VARIANT_MP4A_ADTS,
-            MMALEncoding.MMAL_COLOR_SPACE_UNKNOWN,
-            MMALEncoding.MMAL_COLOR_SPACE_ITUR_BT601,
-            MMALEncoding.MMAL_COLOR_SPACE_ITUR_BT709,
-            MMALEncoding.MMAL_COLOR_SPACE_JPEG_JFIF,
-            MMALEncoding.MMAL_COLOR_SPACE_FCC,
-            MMALEncoding.MMAL_COLOR_SPACE_SMPTE240M,
-            MMALEncoding.MMAL_COLOR_SPACE_BT470_2_M,
-            MMALEncoding.MMAL_COLOR_SPACE_BT470_2_BG,
-            MMALEncoding.MMAL_COLOR_SPACE_JFIF_Y16_255,
-            MMALEncoding.MMAL_COLOR_SPACE_REC2020
+            MmalEncoding.H264,
+            MmalEncoding.Mvc,
+            MmalEncoding.H263,
+            MmalEncoding.Mp4V,
+            MmalEncoding.Mp2V,
+            MmalEncoding.Mp1V,
+            MmalEncoding.Wmv3,
+            MmalEncoding.Wmv2,
+            MmalEncoding.Wmv1,
+            MmalEncoding.Wvc1,
+            MmalEncoding.Vp8,
+            MmalEncoding.Vp7,
+            MmalEncoding.Vp6,
+            MmalEncoding.Theora,
+            MmalEncoding.Spark,
+            MmalEncoding.MJpeg,
+            MmalEncoding.Jpeg,
+            MmalEncoding.Gif,
+            MmalEncoding.Png,
+            MmalEncoding.Ppm,
+            MmalEncoding.Tga,
+            MmalEncoding.Bmp,
+            MmalEncoding.I420,
+            MmalEncoding.I420Slice,
+            MmalEncoding.Yv12,
+            MmalEncoding.I422,
+            MmalEncoding.I422Slice,
+            MmalEncoding.YUyv,
+            MmalEncoding.YVyu,
+            MmalEncoding.UYvy,
+            MmalEncoding.VYuy,
+            MmalEncoding.Nv12,
+            MmalEncoding.Nv21,
+            MmalEncoding.ARgb,
+            MmalEncoding.Rgba,
+            MmalEncoding.ABgr,
+            MmalEncoding.BGra,
+            MmalEncoding.Rgb16,
+            MmalEncoding.Rgb24,
+            MmalEncoding.Rgb32,
+            MmalEncoding.Bgr16,
+            MmalEncoding.Bgr24,
+            MmalEncoding.Bgr32,
+            MmalEncoding.BayerSbggr10P,
+            MmalEncoding.BayerSbggr8,
+            MmalEncoding.BayerSbggr12P,
+            MmalEncoding.BayerSbggr16,
+            MmalEncoding.BayerSbggr10Dpcm8,
+            MmalEncoding.Yuvuv128,
+            MmalEncoding.Yuv10Col,
+            MmalEncoding.Opaque,
+            MmalEncoding.EglImage,
+            MmalEncoding.PcmUnsignedBe,
+            MmalEncoding.PcmUnsignedLe,
+            MmalEncoding.PcmSignedBe,
+            MmalEncoding.PcmSignedLe,
+            MmalEncoding.PcmFloatBe,
+            MmalEncoding.PcmFloatLe,
+            MmalEncoding.PcmUnsigned,
+            MmalEncoding.PcmSigned,
+            MmalEncoding.PcmFloat,
+            MmalEncoding.Mp4A,
+            MmalEncoding.MpgA,
+            MmalEncoding.Alaw,
+            MmalEncoding.Mulaw,
+            MmalEncoding.AdpcmMs,
+            MmalEncoding.AdpcmImaMs,
+            MmalEncoding.AdpcmSwf,
+            MmalEncoding.Wma1,
+            MmalEncoding.Wma2,
+            MmalEncoding.Wmap,
+            MmalEncoding.Wmal,
+            MmalEncoding.Wmav,
+            MmalEncoding.Amrnb,
+            MmalEncoding.Amrwb,
+            MmalEncoding.Amrwbp,
+            MmalEncoding.Ac3,
+            MmalEncoding.Eac3,
+            MmalEncoding.Dts,
+            MmalEncoding.Mlp,
+            MmalEncoding.Flac,
+            MmalEncoding.Vorbis,
+            MmalEncoding.Speex,
+            MmalEncoding.Atrac3,
+            MmalEncoding.Atracx,
+            MmalEncoding.Atracl,
+            MmalEncoding.Midi,
+            MmalEncoding.Evrc,
+            MmalEncoding.Nellymoser,
+            MmalEncoding.Qcelp,
+            MmalEncoding.Mp4VDivxDrm,
+            MmalEncoding.VariantH264Default,
+            MmalEncoding.VariantH264Avc1,
+            MmalEncoding.VariantH264Raw,
+            MmalEncoding.VariantMp4ADefault,
+            MmalEncoding.VariantMp4AAdts,
+            MmalEncoding.MmalColorSpaceUnknown,
+            MmalEncoding.MmalColorSpaceIturBt601,
+            MmalEncoding.MmalColorSpaceIturBt709,
+            MmalEncoding.MmalColorSpaceJpegJfif,
+            MmalEncoding.MmalColorSpaceFcc,
+            MmalEncoding.MmalColorSpaceSmpte240M,
+            MmalEncoding.MmalColorSpaceBt4702M,
+            MmalEncoding.MmalColorSpaceBt4702Bg,
+            MmalEncoding.MmalColorSpaceJfifY16255,
+            MmalEncoding.MmalColorSpaceRec2020
         });
 
-        /// <summary>
-        /// Parses an integer encoding value to an MMALEncoding object.
-        /// </summary>
-        /// <param name="encodingType">The encoding type value.</param>
-        /// <returns>The MMALEncoding object</returns>
-        public static MMALEncoding ParseEncoding(this int encodingType)
-        {
-            return EncodingList.FirstOrDefault(c => c.EncodingVal == encodingType);
-        }
-
-        /// <summary>
-        /// Parses a string encoding name to an MMALEncoding object.
-        /// </summary>
-        /// <param name="encodingName">The encoding type name.</param>
-        /// <returns>The MMALEncoding object</returns>
-        public static MMALEncoding ParseEncoding(this string encodingName)
-        {
-            return EncodingList.FirstOrDefault(c => c.EncodingName.TrimEnd().Equals(encodingName, StringComparison.InvariantCultureIgnoreCase));
-        }
+        public static MmalEncoding ParseEncoding(this int encodingType) => EncodingList.FirstOrDefault(c => c.EncodingVal == encodingType);
+        public static MmalEncoding ParseEncoding(this string encodingName) => EncodingList.FirstOrDefault(c => c.EncodingName.TrimEnd().Equals(encodingName, StringComparison.InvariantCultureIgnoreCase));
     }
 
-    public class MMALEncoding
+    public class MmalEncoding
     {
         public enum EncodingType
         {
@@ -156,161 +135,144 @@ namespace MMALSharp.Common
         }
 
         public int EncodingVal { get; }
-
         public string EncodingName { get; }
-
         public EncodingType EncType { get; }
 
         public override string ToString()
         {
-            var type = string.Empty;
-            
-            switch (EncType)
+            var type = EncType switch
             {
-                case EncodingType.Audio:
-                    type = "Audio";
-                    break;
-                case EncodingType.Image:
-                    type = "Image";
-                    break;
-                case EncodingType.Internal:
-                    type = "Internal";
-                    break;
-                case EncodingType.PixelFormat:
-                    type = "Pixel Format";
-                    break;
-                case EncodingType.Video:
-                    type = "Video";
-                    break;
-            }
-            
+                EncodingType.Audio => "Audio",
+                EncodingType.Image => "Image",
+                EncodingType.Internal => "Internal",
+                EncodingType.PixelFormat => "Pixel Format",
+                EncodingType.Video => "Video",
+                _ => string.Empty
+            };
+
             return $"Name: {EncodingName}. FourCC: {EncodingVal}. Type: {type}";
         }
-            
-        MMALEncoding(string s, EncodingType type)
+
+        MmalEncoding(string s, EncodingType type)
         {
-            EncodingVal = Helpers.FourCCFromString(s);
+            EncodingVal = Helpers.FourCcFromString(s);
             EncodingName = s;
             EncType = type;
         }
 
-        MMALEncoding(int val, string name, EncodingType type)
+        MmalEncoding(int val, string name, EncodingType type)
         {
             EncodingVal = val;
             EncodingName = name;
             EncType = type;
         }
 
-        public static readonly MMALEncoding H264 = new MMALEncoding("H264", EncodingType.Video);
-        public static readonly MMALEncoding MVC = new MMALEncoding("MVC ", EncodingType.Video);
-        public static readonly MMALEncoding H263 = new MMALEncoding("H263", EncodingType.Video);
-        public static readonly MMALEncoding MP4V = new MMALEncoding("MP4V", EncodingType.Video);
-        public static readonly MMALEncoding MP2V = new MMALEncoding("MP2V", EncodingType.Video);
-        public static readonly MMALEncoding MP1V = new MMALEncoding("MP1V", EncodingType.Video);
-        public static readonly MMALEncoding WMV3 = new MMALEncoding("WMV3", EncodingType.Video);
-        public static readonly MMALEncoding WMV2 = new MMALEncoding("WMV2", EncodingType.Video);
-        public static readonly MMALEncoding WMV1 = new MMALEncoding("WMV1", EncodingType.Video);
-        public static readonly MMALEncoding WVC1 = new MMALEncoding("WVC1", EncodingType.Video);
-        public static readonly MMALEncoding VP8 = new MMALEncoding("VP8 ", EncodingType.Video);
-        public static readonly MMALEncoding VP7 = new MMALEncoding("VP7 ", EncodingType.Video);
-        public static readonly MMALEncoding VP6 = new MMALEncoding("VP6 ", EncodingType.Video);
-        public static readonly MMALEncoding THEORA = new MMALEncoding("THEO", EncodingType.Video);
-        public static readonly MMALEncoding SPARK = new MMALEncoding("SPRK", EncodingType.Video);
-        public static readonly MMALEncoding MJPEG = new MMALEncoding("MJPG", EncodingType.Video);
-        public static readonly MMALEncoding JPEG = new MMALEncoding("JPEG", EncodingType.Image);
-        public static readonly MMALEncoding GIF = new MMALEncoding("GIF ", EncodingType.Image);
-        public static readonly MMALEncoding PNG = new MMALEncoding("PNG ", EncodingType.Image);
-        public static readonly MMALEncoding PPM = new MMALEncoding("PPM ", EncodingType.Image);
-        public static readonly MMALEncoding TGA = new MMALEncoding("TGA ", EncodingType.Image);
-        public static readonly MMALEncoding BMP = new MMALEncoding("BMP ", EncodingType.Image);
-        public static readonly MMALEncoding I420 = new MMALEncoding("I420", EncodingType.PixelFormat);
-        public static readonly MMALEncoding I420_SLICE = new MMALEncoding("S420", EncodingType.PixelFormat);
-        public static readonly MMALEncoding YV12 = new MMALEncoding("YV12", EncodingType.PixelFormat);
-        public static readonly MMALEncoding I422 = new MMALEncoding("I422", EncodingType.PixelFormat);
-        public static readonly MMALEncoding I422_SLICE = new MMALEncoding("S422", EncodingType.PixelFormat);
-        public static readonly MMALEncoding YUYV = new MMALEncoding("YUYV", EncodingType.PixelFormat);
-        public static readonly MMALEncoding YVYU = new MMALEncoding("YVYU", EncodingType.PixelFormat);
-        public static readonly MMALEncoding UYVY = new MMALEncoding("UYVY", EncodingType.PixelFormat);
-        public static readonly MMALEncoding VYUY = new MMALEncoding("VYUY", EncodingType.PixelFormat);
-        public static readonly MMALEncoding NV12 = new MMALEncoding("NV12", EncodingType.PixelFormat);
-        public static readonly MMALEncoding NV21 = new MMALEncoding("NV21", EncodingType.PixelFormat);
-        public static readonly MMALEncoding ARGB = new MMALEncoding("ARGB", EncodingType.PixelFormat);
-        public static readonly MMALEncoding RGBA = new MMALEncoding("RGBA", EncodingType.PixelFormat);
-        public static readonly MMALEncoding ABGR = new MMALEncoding("ABGR", EncodingType.PixelFormat);
-        public static readonly MMALEncoding BGRA = new MMALEncoding("BGRA", EncodingType.PixelFormat);
-        public static readonly MMALEncoding RGB16 = new MMALEncoding("RGB2", EncodingType.PixelFormat);
-        public static readonly MMALEncoding RGB24 = new MMALEncoding("RGB3", EncodingType.PixelFormat);
-        public static readonly MMALEncoding RGB32 = new MMALEncoding("RGB4", EncodingType.PixelFormat);
-        public static readonly MMALEncoding BGR16 = new MMALEncoding("BGR2", EncodingType.PixelFormat);
-        public static readonly MMALEncoding BGR24 = new MMALEncoding("BGR3", EncodingType.PixelFormat);
-        public static readonly MMALEncoding BGR32 = new MMALEncoding("BGR4", EncodingType.PixelFormat);
-        public static readonly MMALEncoding BAYER_SBGGR10P = new MMALEncoding("pBAA", EncodingType.PixelFormat);
-        public static readonly MMALEncoding BAYER_SBGGR8 = new MMALEncoding("BA81", EncodingType.PixelFormat);
-        public static readonly MMALEncoding BAYER_SBGGR12P = new MMALEncoding("BY12", EncodingType.PixelFormat);
-        public static readonly MMALEncoding BAYER_SBGGR16 = new MMALEncoding("BYR2", EncodingType.PixelFormat);
-        public static readonly MMALEncoding BAYER_SBGGR10DPCM8 = new MMALEncoding("bBA8", EncodingType.PixelFormat);
-        public static readonly MMALEncoding YUVUV128 = new MMALEncoding("SAND", EncodingType.PixelFormat);
-        public static readonly MMALEncoding YUV10COL = new MMALEncoding("Y10C", EncodingType.PixelFormat);
+        public static readonly MmalEncoding H264 = new MmalEncoding("H264", EncodingType.Video);
+        public static readonly MmalEncoding Mvc = new MmalEncoding("MVC ", EncodingType.Video);
+        public static readonly MmalEncoding H263 = new MmalEncoding("H263", EncodingType.Video);
+        public static readonly MmalEncoding Mp4V = new MmalEncoding("MP4V", EncodingType.Video);
+        public static readonly MmalEncoding Mp2V = new MmalEncoding("MP2V", EncodingType.Video);
+        public static readonly MmalEncoding Mp1V = new MmalEncoding("MP1V", EncodingType.Video);
+        public static readonly MmalEncoding Wmv3 = new MmalEncoding("WMV3", EncodingType.Video);
+        public static readonly MmalEncoding Wmv2 = new MmalEncoding("WMV2", EncodingType.Video);
+        public static readonly MmalEncoding Wmv1 = new MmalEncoding("WMV1", EncodingType.Video);
+        public static readonly MmalEncoding Wvc1 = new MmalEncoding("WVC1", EncodingType.Video);
+        public static readonly MmalEncoding Vp8 = new MmalEncoding("VP8 ", EncodingType.Video);
+        public static readonly MmalEncoding Vp7 = new MmalEncoding("VP7 ", EncodingType.Video);
+        public static readonly MmalEncoding Vp6 = new MmalEncoding("VP6 ", EncodingType.Video);
+        public static readonly MmalEncoding Theora = new MmalEncoding("THEO", EncodingType.Video);
+        public static readonly MmalEncoding Spark = new MmalEncoding("SPRK", EncodingType.Video);
+        public static readonly MmalEncoding MJpeg = new MmalEncoding("MJPG", EncodingType.Video);
+        public static readonly MmalEncoding Jpeg = new MmalEncoding("JPEG", EncodingType.Image);
+        public static readonly MmalEncoding Gif = new MmalEncoding("GIF ", EncodingType.Image);
+        public static readonly MmalEncoding Png = new MmalEncoding("PNG ", EncodingType.Image);
+        public static readonly MmalEncoding Ppm = new MmalEncoding("PPM ", EncodingType.Image);
+        public static readonly MmalEncoding Tga = new MmalEncoding("TGA ", EncodingType.Image);
+        public static readonly MmalEncoding Bmp = new MmalEncoding("BMP ", EncodingType.Image);
+        public static readonly MmalEncoding I420 = new MmalEncoding("I420", EncodingType.PixelFormat);
+        public static readonly MmalEncoding I420Slice = new MmalEncoding("S420", EncodingType.PixelFormat);
+        public static readonly MmalEncoding Yv12 = new MmalEncoding("YV12", EncodingType.PixelFormat);
+        public static readonly MmalEncoding I422 = new MmalEncoding("I422", EncodingType.PixelFormat);
+        public static readonly MmalEncoding I422Slice = new MmalEncoding("S422", EncodingType.PixelFormat);
+        public static readonly MmalEncoding YUyv = new MmalEncoding("YUYV", EncodingType.PixelFormat);
+        public static readonly MmalEncoding YVyu = new MmalEncoding("YVYU", EncodingType.PixelFormat);
+        public static readonly MmalEncoding UYvy = new MmalEncoding("UYVY", EncodingType.PixelFormat);
+        public static readonly MmalEncoding VYuy = new MmalEncoding("VYUY", EncodingType.PixelFormat);
+        public static readonly MmalEncoding Nv12 = new MmalEncoding("NV12", EncodingType.PixelFormat);
+        public static readonly MmalEncoding Nv21 = new MmalEncoding("NV21", EncodingType.PixelFormat);
+        public static readonly MmalEncoding ARgb = new MmalEncoding("ARGB", EncodingType.PixelFormat);
+        public static readonly MmalEncoding Rgba = new MmalEncoding("RGBA", EncodingType.PixelFormat);
+        public static readonly MmalEncoding ABgr = new MmalEncoding("ABGR", EncodingType.PixelFormat);
+        public static readonly MmalEncoding BGra = new MmalEncoding("BGRA", EncodingType.PixelFormat);
+        public static readonly MmalEncoding Rgb16 = new MmalEncoding("RGB2", EncodingType.PixelFormat);
+        public static readonly MmalEncoding Rgb24 = new MmalEncoding("RGB3", EncodingType.PixelFormat);
+        public static readonly MmalEncoding Rgb32 = new MmalEncoding("RGB4", EncodingType.PixelFormat);
+        public static readonly MmalEncoding Bgr16 = new MmalEncoding("BGR2", EncodingType.PixelFormat);
+        public static readonly MmalEncoding Bgr24 = new MmalEncoding("BGR3", EncodingType.PixelFormat);
+        public static readonly MmalEncoding Bgr32 = new MmalEncoding("BGR4", EncodingType.PixelFormat);
+        public static readonly MmalEncoding BayerSbggr10P = new MmalEncoding("pBAA", EncodingType.PixelFormat);
+        public static readonly MmalEncoding BayerSbggr8 = new MmalEncoding("BA81", EncodingType.PixelFormat);
+        public static readonly MmalEncoding BayerSbggr12P = new MmalEncoding("BY12", EncodingType.PixelFormat);
+        public static readonly MmalEncoding BayerSbggr16 = new MmalEncoding("BYR2", EncodingType.PixelFormat);
+        public static readonly MmalEncoding BayerSbggr10Dpcm8 = new MmalEncoding("bBA8", EncodingType.PixelFormat);
+        public static readonly MmalEncoding Yuvuv128 = new MmalEncoding("SAND", EncodingType.PixelFormat);
+        public static readonly MmalEncoding Yuv10Col = new MmalEncoding("Y10C", EncodingType.PixelFormat);
 
-        /// <summary>
-        /// An opaque buffer is a Broadcom specific format that references a GPU internal bitmap. It is typed as <see cref="EncodingType.Internal"/>.
-        /// </summary>
-        /// <remarks>https://www.raspberrypi.org/forums/viewtopic.php?t=53698</remarks>
-        public static readonly MMALEncoding OPAQUE = new MMALEncoding("OPQV", EncodingType.Internal);
-        public static readonly MMALEncoding EGL_IMAGE = new MMALEncoding("EGLI", EncodingType.PixelFormat);
-        public static readonly MMALEncoding PCM_UNSIGNED_BE = new MMALEncoding("PCMU", EncodingType.PixelFormat);
-        public static readonly MMALEncoding PCM_UNSIGNED_LE = new MMALEncoding("pcmu", EncodingType.PixelFormat);
-        public static readonly MMALEncoding PCM_SIGNED_BE = new MMALEncoding("PCMS", EncodingType.PixelFormat);
-        public static readonly MMALEncoding PCM_SIGNED_LE = new MMALEncoding("pcms", EncodingType.PixelFormat);
-        public static readonly MMALEncoding PCM_FLOAT_BE = new MMALEncoding("PCMF", EncodingType.PixelFormat);
-        public static readonly MMALEncoding PCM_FLOAT_LE = new MMALEncoding("pcmf", EncodingType.PixelFormat);
-        public static readonly MMALEncoding PCM_UNSIGNED = PCM_UNSIGNED_LE;
-        public static readonly MMALEncoding PCM_SIGNED = PCM_SIGNED_LE;
-        public static readonly MMALEncoding PCM_FLOAT = PCM_FLOAT_LE;
-        public static readonly MMALEncoding MP4A = new MMALEncoding("MP4A", EncodingType.Audio);
-        public static readonly MMALEncoding MPGA = new MMALEncoding("MPGA", EncodingType.Audio);
-        public static readonly MMALEncoding ALAW = new MMALEncoding("ALAW", EncodingType.Audio);
-        public static readonly MMALEncoding MULAW = new MMALEncoding("ULAW", EncodingType.Audio);
-        public static readonly MMALEncoding ADPCM_MS = new MMALEncoding("MS\x00\x02", EncodingType.Audio);
-        public static readonly MMALEncoding ADPCM_IMA_MS = new MMALEncoding("MS\x00\x01", EncodingType.Audio);
-        public static readonly MMALEncoding ADPCM_SWF = new MMALEncoding("ASWF", EncodingType.Audio);
-        public static readonly MMALEncoding WMA1 = new MMALEncoding("WMA1", EncodingType.Audio);
-        public static readonly MMALEncoding WMA2 = new MMALEncoding("WMA2", EncodingType.Audio);
-        public static readonly MMALEncoding WMAP = new MMALEncoding("WMAP", EncodingType.Audio);
-        public static readonly MMALEncoding WMAL = new MMALEncoding("WMAL", EncodingType.Audio);
-        public static readonly MMALEncoding WMAV = new MMALEncoding("WMAV", EncodingType.Audio);
-        public static readonly MMALEncoding AMRNB = new MMALEncoding("AMRN", EncodingType.Audio);
-        public static readonly MMALEncoding AMRWB = new MMALEncoding("AMRW", EncodingType.Audio);
-        public static readonly MMALEncoding AMRWBP = new MMALEncoding("AMRP", EncodingType.Audio);
-        public static readonly MMALEncoding AC3 = new MMALEncoding("AC3 ", EncodingType.Audio);
-        public static readonly MMALEncoding EAC3 = new MMALEncoding("EAC3", EncodingType.Audio);
-        public static readonly MMALEncoding DTS = new MMALEncoding("DTS ", EncodingType.Audio);
-        public static readonly MMALEncoding MLP = new MMALEncoding("MLP ", EncodingType.Audio);
-        public static readonly MMALEncoding FLAC = new MMALEncoding("FLAC", EncodingType.Audio);
-        public static readonly MMALEncoding VORBIS = new MMALEncoding("VORB", EncodingType.Audio);
-        public static readonly MMALEncoding SPEEX = new MMALEncoding("SPX ", EncodingType.Audio);
-        public static readonly MMALEncoding ATRAC3 = new MMALEncoding("ATR3", EncodingType.Audio);
-        public static readonly MMALEncoding ATRACX = new MMALEncoding("ATRX", EncodingType.Audio);
-        public static readonly MMALEncoding ATRACL = new MMALEncoding("ATRL", EncodingType.Audio);
-        public static readonly MMALEncoding MIDI = new MMALEncoding("MIDI", EncodingType.Audio);
-        public static readonly MMALEncoding EVRC = new MMALEncoding("EVRC", EncodingType.Audio);
-        public static readonly MMALEncoding NELLYMOSER = new MMALEncoding("NELY", EncodingType.Audio);
-        public static readonly MMALEncoding QCELP = new MMALEncoding("QCEL", EncodingType.Audio);
-        public static readonly MMALEncoding MP4V_DIVX_DRM = new MMALEncoding("M4VD", EncodingType.Video);
-        public static readonly MMALEncoding VARIANT_H264_DEFAULT = new MMALEncoding(0, "VARIANT_H264_DEFAULT", EncodingType.Video);
-        public static readonly MMALEncoding VARIANT_H264_AVC1 = new MMALEncoding("AVC1", EncodingType.Video);
-        public static readonly MMALEncoding VARIANT_H264_RAW = new MMALEncoding("RAW ", EncodingType.Video);
-        public static readonly MMALEncoding VARIANT_MP4A_DEFAULT = new MMALEncoding(0, "VARIANT_MP4A_DEFAULT", EncodingType.Video);
-        public static readonly MMALEncoding VARIANT_MP4A_ADTS = new MMALEncoding("ADTS", EncodingType.Video);
-        public static readonly MMALEncoding MMAL_COLOR_SPACE_UNKNOWN = new MMALEncoding(0, "MMAL_COLOR_SPACE_UNKNOWN", EncodingType.ColorSpace);
-        public static readonly MMALEncoding MMAL_COLOR_SPACE_ITUR_BT601 = new MMALEncoding("Y601", EncodingType.ColorSpace);
-        public static readonly MMALEncoding MMAL_COLOR_SPACE_ITUR_BT709 = new MMALEncoding("Y709", EncodingType.ColorSpace);
-        public static readonly MMALEncoding MMAL_COLOR_SPACE_JPEG_JFIF = new MMALEncoding("YJFI", EncodingType.ColorSpace);
-        public static readonly MMALEncoding MMAL_COLOR_SPACE_FCC = new MMALEncoding("YFCC", EncodingType.ColorSpace);
-        public static readonly MMALEncoding MMAL_COLOR_SPACE_SMPTE240M = new MMALEncoding("Y240", EncodingType.ColorSpace);
-        public static readonly MMALEncoding MMAL_COLOR_SPACE_BT470_2_M = new MMALEncoding("Y__M", EncodingType.ColorSpace);
-        public static readonly MMALEncoding MMAL_COLOR_SPACE_BT470_2_BG = new MMALEncoding("Y_BG", EncodingType.ColorSpace);
-        public static readonly MMALEncoding MMAL_COLOR_SPACE_JFIF_Y16_255 = new MMALEncoding("YY16", EncodingType.ColorSpace);
-        public static readonly MMALEncoding MMAL_COLOR_SPACE_REC2020 = new MMALEncoding("2020", EncodingType.ColorSpace);
+        public static readonly MmalEncoding Opaque = new MmalEncoding("OPQV", EncodingType.Internal);
+        public static readonly MmalEncoding EglImage = new MmalEncoding("EGLI", EncodingType.PixelFormat);
+        public static readonly MmalEncoding PcmUnsignedBe = new MmalEncoding("PCMU", EncodingType.PixelFormat);
+        public static readonly MmalEncoding PcmUnsignedLe = new MmalEncoding("pcmu", EncodingType.PixelFormat);
+        public static readonly MmalEncoding PcmSignedBe = new MmalEncoding("PCMS", EncodingType.PixelFormat);
+        public static readonly MmalEncoding PcmSignedLe = new MmalEncoding("pcms", EncodingType.PixelFormat);
+        public static readonly MmalEncoding PcmFloatBe = new MmalEncoding("PCMF", EncodingType.PixelFormat);
+        public static readonly MmalEncoding PcmFloatLe = new MmalEncoding("pcmf", EncodingType.PixelFormat);
+        public static readonly MmalEncoding PcmUnsigned = PcmUnsignedLe;
+        public static readonly MmalEncoding PcmSigned = PcmSignedLe;
+        public static readonly MmalEncoding PcmFloat = PcmFloatLe;
+        public static readonly MmalEncoding Mp4A = new MmalEncoding("MP4A", EncodingType.Audio);
+        public static readonly MmalEncoding MpgA = new MmalEncoding("MPGA", EncodingType.Audio);
+        public static readonly MmalEncoding Alaw = new MmalEncoding("ALAW", EncodingType.Audio);
+        public static readonly MmalEncoding Mulaw = new MmalEncoding("ULAW", EncodingType.Audio);
+        public static readonly MmalEncoding AdpcmMs = new MmalEncoding("MS\x00\x02", EncodingType.Audio);
+        public static readonly MmalEncoding AdpcmImaMs = new MmalEncoding("MS\x00\x01", EncodingType.Audio);
+        public static readonly MmalEncoding AdpcmSwf = new MmalEncoding("ASWF", EncodingType.Audio);
+        public static readonly MmalEncoding Wma1 = new MmalEncoding("WMA1", EncodingType.Audio);
+        public static readonly MmalEncoding Wma2 = new MmalEncoding("WMA2", EncodingType.Audio);
+        public static readonly MmalEncoding Wmap = new MmalEncoding("WMAP", EncodingType.Audio);
+        public static readonly MmalEncoding Wmal = new MmalEncoding("WMAL", EncodingType.Audio);
+        public static readonly MmalEncoding Wmav = new MmalEncoding("WMAV", EncodingType.Audio);
+        public static readonly MmalEncoding Amrnb = new MmalEncoding("AMRN", EncodingType.Audio);
+        public static readonly MmalEncoding Amrwb = new MmalEncoding("AMRW", EncodingType.Audio);
+        public static readonly MmalEncoding Amrwbp = new MmalEncoding("AMRP", EncodingType.Audio);
+        public static readonly MmalEncoding Ac3 = new MmalEncoding("AC3 ", EncodingType.Audio);
+        public static readonly MmalEncoding Eac3 = new MmalEncoding("EAC3", EncodingType.Audio);
+        public static readonly MmalEncoding Dts = new MmalEncoding("DTS ", EncodingType.Audio);
+        public static readonly MmalEncoding Mlp = new MmalEncoding("MLP ", EncodingType.Audio);
+        public static readonly MmalEncoding Flac = new MmalEncoding("FLAC", EncodingType.Audio);
+        public static readonly MmalEncoding Vorbis = new MmalEncoding("VORB", EncodingType.Audio);
+        public static readonly MmalEncoding Speex = new MmalEncoding("SPX ", EncodingType.Audio);
+        public static readonly MmalEncoding Atrac3 = new MmalEncoding("ATR3", EncodingType.Audio);
+        public static readonly MmalEncoding Atracx = new MmalEncoding("ATRX", EncodingType.Audio);
+        public static readonly MmalEncoding Atracl = new MmalEncoding("ATRL", EncodingType.Audio);
+        public static readonly MmalEncoding Midi = new MmalEncoding("MIDI", EncodingType.Audio);
+        public static readonly MmalEncoding Evrc = new MmalEncoding("EVRC", EncodingType.Audio);
+        public static readonly MmalEncoding Nellymoser = new MmalEncoding("NELY", EncodingType.Audio);
+        public static readonly MmalEncoding Qcelp = new MmalEncoding("QCEL", EncodingType.Audio);
+        public static readonly MmalEncoding Mp4VDivxDrm = new MmalEncoding("M4VD", EncodingType.Video);
+        public static readonly MmalEncoding VariantH264Default = new MmalEncoding(0, "VARIANT_H264_DEFAULT", EncodingType.Video);
+        public static readonly MmalEncoding VariantH264Avc1 = new MmalEncoding("AVC1", EncodingType.Video);
+        public static readonly MmalEncoding VariantH264Raw = new MmalEncoding("RAW ", EncodingType.Video);
+        public static readonly MmalEncoding VariantMp4ADefault = new MmalEncoding(0, "VARIANT_MP4A_DEFAULT", EncodingType.Video);
+        public static readonly MmalEncoding VariantMp4AAdts = new MmalEncoding("ADTS", EncodingType.Video);
+        public static readonly MmalEncoding MmalColorSpaceUnknown = new MmalEncoding(0, "MMAL_COLOR_SPACE_UNKNOWN", EncodingType.ColorSpace);
+        public static readonly MmalEncoding MmalColorSpaceIturBt601 = new MmalEncoding("Y601", EncodingType.ColorSpace);
+        public static readonly MmalEncoding MmalColorSpaceIturBt709 = new MmalEncoding("Y709", EncodingType.ColorSpace);
+        public static readonly MmalEncoding MmalColorSpaceJpegJfif = new MmalEncoding("YJFI", EncodingType.ColorSpace);
+        public static readonly MmalEncoding MmalColorSpaceFcc = new MmalEncoding("YFCC", EncodingType.ColorSpace);
+        public static readonly MmalEncoding MmalColorSpaceSmpte240M = new MmalEncoding("Y240", EncodingType.ColorSpace);
+        public static readonly MmalEncoding MmalColorSpaceBt4702M = new MmalEncoding("Y__M", EncodingType.ColorSpace);
+        public static readonly MmalEncoding MmalColorSpaceBt4702Bg = new MmalEncoding("Y_BG", EncodingType.ColorSpace);
+        public static readonly MmalEncoding MmalColorSpaceJfifY16255 = new MmalEncoding("YY16", EncodingType.ColorSpace);
+        public static readonly MmalEncoding MmalColorSpaceRec2020 = new MmalEncoding("2020", EncodingType.ColorSpace);
     }
 }

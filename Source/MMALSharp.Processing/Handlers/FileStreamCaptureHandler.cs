@@ -41,7 +41,7 @@ namespace MMALSharp.Handlers
         /// </summary>
         public FileStreamCaptureHandler()
         {
-            MMALLog.Logger.LogDebug($"{nameof(FileStreamCaptureHandler)} empty ctor invoked, no file will be written");
+            MmalLog.Logger.LogDebug($"{nameof(FileStreamCaptureHandler)} empty ctor invoked, no file will be written");
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace MMALSharp.Handlers
             Directory = directory.TrimEnd('/');
             Extension = extension.TrimStart('.');
 
-            MMALLog.Logger.LogDebug($"{nameof(FileStreamCaptureHandler)} created for directory {Directory} and extension {Extension}");
+            MmalLog.Logger.LogDebug($"{nameof(FileStreamCaptureHandler)} created for directory {Directory} and extension {Extension}");
 
             System.IO.Directory.CreateDirectory(Directory);
 
@@ -95,7 +95,7 @@ namespace MMALSharp.Handlers
 
             Extension = ext;
 
-            MMALLog.Logger.LogDebug($"{nameof(FileStreamCaptureHandler)} created for directory {Directory} and extension {Extension}");
+            MmalLog.Logger.LogDebug($"{nameof(FileStreamCaptureHandler)} created for directory {Directory} and extension {Extension}");
 
             _customFilename = true;
 

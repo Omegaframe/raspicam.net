@@ -20,7 +20,7 @@ namespace MMALSharp
 
             if (!CheckState())
             {
-                MMALLog.Logger.LogWarning("Buffer retrieved null.");
+                MmalLog.Logger.LogWarning("Buffer retrieved null.");
                 return null;
             }
 
@@ -29,7 +29,7 @@ namespace MMALSharp
 
         public override void Dispose()
         {
-            MMALLog.Logger.LogDebug("Disposing queue.");
+            MmalLog.Logger.LogDebug("Disposing queue.");
             Destroy();
             base.Dispose();
         }

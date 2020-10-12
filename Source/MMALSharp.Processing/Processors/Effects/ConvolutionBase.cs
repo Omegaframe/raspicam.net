@@ -36,7 +36,7 @@ namespace MMALSharp.Processors.Effects
                     ImageLockMode.ReadWrite,
                     bmp.PixelFormat);
 
-                if (context.Raw)
+                if (context.IsRaw)
                     InitBitmapData(context, bmpData);
 
                 pNative = bmpData.Scan0;
@@ -75,7 +75,7 @@ namespace MMALSharp.Processors.Effects
 
                 Task.WaitAll(t1, t2, t3, t4);
 
-                if (context.Raw && context.StoreFormat == null)
+                if (context.IsRaw && context.StoreFormat == null)
                 {
                     store = new byte[bytes];
                     Marshal.Copy(pNative, store, 0, bytes);
@@ -83,7 +83,7 @@ namespace MMALSharp.Processors.Effects
 
                 bmp.UnlockBits(bmpData);
 
-                if (!context.Raw || context.StoreFormat != null)
+                if (!context.IsRaw || context.StoreFormat != null)
                 {
                     using (var ms2 = new MemoryStream())
                     {
@@ -99,19 +99,19 @@ namespace MMALSharp.Processors.Effects
 
         private Bitmap LoadBitmap(ImageContext imageContext, MemoryStream stream)
         {
-            if (!imageContext.Raw)
+            if (!imageContext.IsRaw)
                 return new Bitmap(stream);
 
             PixelFormat format = default;
 
             // RGB16 doesn't appear to be supported by GDI?
-            if (imageContext.PixelFormat == MMALEncoding.RGB24)
+            if (imageContext.PixelFormat == MmalEncoding.Rgb24)
                 format = PixelFormat.Format24bppRgb;
 
-            if (imageContext.PixelFormat == MMALEncoding.RGB32)
+            if (imageContext.PixelFormat == MmalEncoding.Rgb32)
                 format = PixelFormat.Format32bppRgb;
 
-            if (imageContext.PixelFormat == MMALEncoding.RGBA)
+            if (imageContext.PixelFormat == MmalEncoding.Rgba)
                 format = PixelFormat.Format32bppArgb;
 
             if (format == default)

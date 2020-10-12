@@ -77,7 +77,7 @@ namespace MMALSharp
         {
             foreach (IOutputPort port in Outputs.Where(o => o.ConnectedReference != null))
             {
-                MMALLog.Logger.LogDebug($"Disabling connection between {Name} and {port.ConnectedReference.DownstreamComponent.Name}");
+                MmalLog.Logger.LogDebug($"Disabling connection between {Name} and {port.ConnectedReference.DownstreamComponent.Name}");
 
                 // This component has an output port connected to another component.
                 port.ConnectedReference.DownstreamComponent.DisableConnections();
@@ -92,7 +92,7 @@ namespace MMALSharp
         /// </summary>
         public virtual void PrintComponent()
         {
-            MMALLog.Logger.LogInformation($"Component: {Name}");
+            MmalLog.Logger.LogInformation($"Component: {Name}");
 
             var sb = new StringBuilder();
 
@@ -122,7 +122,7 @@ namespace MMALSharp
                 }
             }
 
-            MMALLog.Logger.LogInformation(sb.ToString());
+            MmalLog.Logger.LogInformation(sb.ToString());
         }
 
         /// <summary>
@@ -133,19 +133,19 @@ namespace MMALSharp
             if (!CheckState())
                 return;
 
-            MMALLog.Logger.LogDebug($"Disposing component {Name}.");
+            MmalLog.Logger.LogDebug($"Disposing component {Name}.");
 
             // See if any pools need disposing before destroying component.
             foreach (var port in Inputs.Where(i => i.BufferPool != null))
             {
-                MMALLog.Logger.LogDebug("Destroying port pool");
+                MmalLog.Logger.LogDebug("Destroying port pool");
 
                 port.DestroyPortPool();
             }
 
             foreach (var port in Outputs.Where(i => i.BufferPool != null))
             {
-                MMALLog.Logger.LogDebug("Destroying port pool");
+                MmalLog.Logger.LogDebug("Destroying port pool");
 
                 port.DestroyPortPool();
             }
@@ -153,7 +153,7 @@ namespace MMALSharp
             DisableComponent();
             DestroyComponent();
 
-            MMALLog.Logger.LogDebug("Completed disposal...");
+            MmalLog.Logger.LogDebug("Completed disposal...");
 
             base.Dispose();
         }
@@ -203,14 +203,14 @@ namespace MMALSharp
             // See if any pools need disposing before destroying component.
             foreach (var port in Inputs.Where(i => i.BufferPool != null))
             {
-                MMALLog.Logger.LogDebug("Destroying input port pool.");
+                MmalLog.Logger.LogDebug("Destroying input port pool.");
 
                 port.DestroyPortPool();
             }
 
             foreach (var port in Outputs.Where(i => i.BufferPool != null))
             {
-                MMALLog.Logger.LogDebug("Destroying output port pool.");
+                MmalLog.Logger.LogDebug("Destroying output port pool.");
 
                 port.DestroyPortPool();
             }

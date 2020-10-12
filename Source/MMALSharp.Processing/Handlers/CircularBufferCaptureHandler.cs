@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using MMALSharp.Common;
 using MMALSharp.Common.Utility;
+using MMALSharp.Processing;
 
 namespace MMALSharp.Handlers
 {
@@ -44,9 +45,9 @@ namespace MMALSharp.Handlers
             }
             else
             {
-                if (context.Encoding == MMALEncoding.H264)
+                if (context.Encoding == MmalEncoding.H264)
                 {
-                    _receivedIFrame = context.IFrame;
+                    _receivedIFrame = context.IsIFrame;
                 }
 
                 if (Buffer.Size > 0)
@@ -86,22 +87,14 @@ namespace MMALSharp.Handlers
 
             _recordToFileStream = true;
 
-            if (initRecording != null)
-                initRecording.Invoke();
+            initRecording?.Invoke();
 
-            if (cancellationToken != CancellationToken.None)
-            {
-                try
-                {
-                    await cancellationToken.AsTask().ConfigureAwait(false);
-                }
-                catch (TaskCanceledException)
-                {
-                    // normal, but capture here because we may be running in the async void lambda (onDetect)
-                }
+            if (cancellationToken == CancellationToken.None)
+                return;
 
-                StopRecording();
-            }
+            try { await Task.Delay(-1, cancellationToken).ConfigureAwait(false); } catch (TaskCanceledException) {/* catch */ }
+
+            StopRecording();
         }
 
         public void StopRecording()
@@ -109,7 +102,7 @@ namespace MMALSharp.Handlers
             if (CurrentStream == null)
                 throw new InvalidOperationException($"Recording unavailable, {nameof(CircularBufferCaptureHandler)} was not created with output-file arguments");
 
-            MMALLog.Logger.LogInformation("Stop recording.");
+            MmalLog.Logger.LogInformation("Stop recording.");
 
             _recordToFileStream = false;
             _receivedIFrame = false;

@@ -14,7 +14,7 @@ namespace MMALSharp.Demo
             Console.WriteLine("\nPicture Operations:");
             
             Console.WriteLine("1.    Take Picture");
-            Console.WriteLine("2.    Raw Capture");
+            Console.WriteLine("2.    IsRaw Capture");
             Console.WriteLine("3.    Resize Component");
 
             var key = Console.ReadKey();
@@ -36,7 +36,7 @@ namespace MMALSharp.Demo
             Program.OperationsHandler();
         }
         
-        private void TakePictureOperations(MMALEncoding encoding, MMALEncoding pixelFormat)
+        private void TakePictureOperations(MmalEncoding encoding, MmalEncoding pixelFormat)
         {
             Console.WriteLine("\nPlease enter a file extension.");
             var extension = Console.ReadLine();
@@ -50,7 +50,7 @@ namespace MMALSharp.Demo
             this.TakeRawSensor(extension).GetAwaiter().GetResult();
         }
         
-        private void TakeResizeOperations(MMALEncoding encoding, MMALEncoding pixelFormat)
+        private void TakeResizeOperations(MmalEncoding encoding, MmalEncoding pixelFormat)
         {
             Console.WriteLine("\nPlease enter a file extension.");
             var extension = Console.ReadLine();
@@ -72,7 +72,7 @@ namespace MMALSharp.Demo
             this.ResizePicture(extension, encoding, pixelFormat, intWidth, intHeight).GetAwaiter().GetResult();
         }
         
-        private async Task TakePictureManual(string extension, MMALEncoding encoding, MMALEncoding pixelFormat)
+        private async Task TakePictureManual(string extension, MmalEncoding encoding, MmalEncoding pixelFormat)
         {
             using (var imgCaptureHandler = new ImageStreamCaptureHandler("/home/pi/images/", extension))
             using (var imgEncoder = new MMALImageEncoder())
@@ -101,7 +101,7 @@ namespace MMALSharp.Demo
             }
         }
         
-        private async Task ResizePicture(string extension, MMALEncoding encoding, MMALEncoding pixelFormat, int width, int height)
+        private async Task ResizePicture(string extension, MmalEncoding encoding, MmalEncoding pixelFormat, int width, int height)
         {
             using (var imgCaptureHandler = new ImageStreamCaptureHandler("/home/pi/images/", extension))
             using (var resizer = new MMALResizerComponent())

@@ -1,4 +1,5 @@
 ﻿using MMALSharp.Common;
+using MMALSharp.Processing;
 using MMALSharp.Processors.Bayer;
 
 namespace MMALSharp.Processors

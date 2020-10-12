@@ -3,28 +3,21 @@ using System;
 
 namespace MMALSharp.Common.Utility
 {
-    public static class MMALLog
+    public static class MmalLog
     {
-        /// <summary>
-        /// Gets the global logger component.
-        /// </summary>
-        public static ILogger Logger => _logger;
-        static readonly MMALLogger _logger = new MMALLogger();
+        public static ILogger Logger { get; set; } = new MmalLogger();
 
-        /// <summary>
-        /// Responsible for getting/setting the working LoggerFactory.
-        /// </summary>
         public static ILoggerFactory LoggerFactory
         {
-            get => _logger.LoggerFactory;
-            set => _logger.LoggerFactory = value;
+            get => ((MmalLogger)Logger).LoggerFactory;
+            set => ((MmalLogger)Logger).LoggerFactory = value;
         }
 
-        private class MMALLogger : ILogger
+        class MmalLogger : ILogger
         {
             public ILoggerFactory LoggerFactory
             {
-                get { return _loggerFactory; }
+                get => _loggerFactory;
                 set
                 {
                     _loggerFactory = value;
@@ -37,7 +30,6 @@ namespace MMALSharp.Common.Utility
             ILogger Logger => _logger ??= _loggerFactory?.CreateLogger("MMALSharp");
 
             IDisposable ILogger.BeginScope<TState>(TState state) => Logger?.BeginScope(state);
-
             bool ILogger.IsEnabled(LogLevel logLevel) => Logger?.IsEnabled(logLevel) ?? false;
 
             void ILogger.Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)

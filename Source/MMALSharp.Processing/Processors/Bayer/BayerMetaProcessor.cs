@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using MMALSharp.Common;
+using MMALSharp.Processing;
 
 namespace MMALSharp.Processors
 {
@@ -40,11 +41,11 @@ namespace MMALSharp.Processors
             
             switch (CameraVersion)
             {
-                case CameraVersion.OV5647:
+                case CameraVersion.Ov5647:
                     array = new byte[BayerMetaLengthV1];
                     Array.Copy(context.Data, context.Data.Length - BayerMetaLengthV1, array, 0, BayerMetaLengthV1);
                     break;
-                case CameraVersion.IMX219:
+                case CameraVersion.Imx219:
                     array = new byte[BayerMetaLengthV2];
                     Array.Copy(context.Data, context.Data.Length - BayerMetaLengthV2, array, 0, BayerMetaLengthV2);
                     break;

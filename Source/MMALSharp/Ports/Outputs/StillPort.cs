@@ -39,14 +39,14 @@ namespace MMALSharp.Ports.Outputs
         {
             base.Configure(config, copyFrom, handler);
 
-            if (config != null && config.EncodingType == MMALEncoding.JPEG)
+            if (config != null && config.EncodingType == MmalEncoding.Jpeg)
                 this.SetParameter(MMALParametersCamera.MMAL_PARAMETER_JPEG_Q_FACTOR, config.Quality);
         }
 
         internal override void NativeOutputPortCallback(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)
         {
             if (MMALCameraConfig.Debug)
-                MMALLog.Logger.LogDebug($"{Name}: In native {nameof(StillPort)} output callback");
+                MmalLog.Logger.LogDebug($"{Name}: In native {nameof(StillPort)} output callback");
 
             base.NativeOutputPortCallback(port, buffer);
         }

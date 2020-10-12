@@ -122,7 +122,7 @@ namespace MMALSharp.Components
 
             MMALBootstrapper.DownstreamComponents.Remove(this);
 
-            MMALLog.Logger.LogDebug($"Remaining components in pipeline: {MMALBootstrapper.DownstreamComponents.Count}");
+            MmalLog.Logger.LogDebug($"Remaining components in pipeline: {MMALBootstrapper.DownstreamComponents.Count}");
 
             base.Dispose();
         }
@@ -135,13 +135,13 @@ namespace MMALSharp.Components
             // Close any connection held by this component
             foreach (var input in Inputs.Where(i => i.ConnectedReference != null))
             {
-                MMALLog.Logger.LogDebug($"Removing {input.ConnectedReference}");
+                MmalLog.Logger.LogDebug($"Removing {input.ConnectedReference}");
                 input.ConnectedReference.Dispose();
             }
 
             foreach (var output in Outputs.Where(o => o.ConnectedReference != null))
             {
-                MMALLog.Logger.LogDebug($"Removing {output.ConnectedReference}");
+                MmalLog.Logger.LogDebug($"Removing {output.ConnectedReference}");
                 output.ConnectedReference.Dispose();
             }
         }

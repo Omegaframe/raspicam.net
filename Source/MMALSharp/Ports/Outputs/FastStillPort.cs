@@ -52,7 +52,7 @@ namespace MMALSharp.Ports.Outputs
         internal override void NativeOutputPortCallback(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)
         {
             if (MMALCameraConfig.Debug)
-                MMALLog.Logger.LogDebug($"{Name}: In native {nameof(FastStillPort)} output callback.");
+                MmalLog.Logger.LogDebug($"{Name}: In native {nameof(FastStillPort)} output callback.");
 
             var bufferImpl = new MMALBufferImpl(buffer);
 
@@ -72,7 +72,7 @@ namespace MMALSharp.Ports.Outputs
             // If this buffer signals the end of data stream, allow waiting thread to continue.
             if (ComponentReference.ForceStopProcessing || failed)
             {
-                MMALLog.Logger.LogDebug($"{Name}: Signaling completion of continuous still frame capture...");
+                MmalLog.Logger.LogDebug($"{Name}: Signaling completion of continuous still frame capture...");
                 Task.Run(() => { Trigger.SetResult(true); });
             }
         }

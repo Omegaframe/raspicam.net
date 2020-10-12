@@ -28,7 +28,7 @@ namespace MMALSharp.Tests
                     .AddNLog("NLog.config");
             });
 
-            MMALLog.LoggerFactory = loggerFactory;
+            MmalLog.LoggerFactory = loggerFactory;
         }
 
         public void CheckAndAssertFilepath(string filepath)

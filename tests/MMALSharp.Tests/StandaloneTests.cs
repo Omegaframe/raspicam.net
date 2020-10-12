@@ -57,7 +57,7 @@ namespace MMALSharp.Tests
             {
                 Fixture.MMALCamera.ConfigureCameraSettings();
 
-                var portConfig = new MMALPortConfig(MMALEncoding.JPEG, MMALEncoding.RGB24, quality: 90);
+                var portConfig = new MMALPortConfig(MmalEncoding.Jpeg, MmalEncoding.Rgb24, quality: 90);
 
                 imgEncoder.ConfigureOutputPort(portConfig, imgCaptureHandler);
 
@@ -83,8 +83,8 @@ namespace MMALSharp.Tests
             using (var imgDecoder = new MMALImageDecoder())
             {
                 // We do not pass the resolution to the input port. Doing so will cause a MMAL exception.
-                var inputConfig = new MMALPortConfig(MMALEncoding.JPEG, MMALEncoding.RGB24, zeroCopy: true);
-                var outputConfig = new MMALPortConfig(MMALEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
+                var inputConfig = new MMALPortConfig(MmalEncoding.Jpeg, MmalEncoding.Rgb24, zeroCopy: true);
+                var outputConfig = new MMALPortConfig(MmalEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
 
                 // Create our component pipeline.
                 imgDecoder.ConfigureInputPort(inputConfig, inputCaptureHandler)
@@ -103,8 +103,8 @@ namespace MMALSharp.Tests
             using (var outputCaptureHandler = new ImageStreamCaptureHandler("/home/pi/images/", "bmp"))
             using (var imgEncoder = new MMALImageEncoder())
             {
-                var inputConfig = new MMALPortConfig(MMALEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
-                var outputConfig = new MMALPortConfig(MMALEncoding.BMP, MMALEncoding.I420, width: 640, height: 480, zeroCopy: true);
+                var inputConfig = new MMALPortConfig(MmalEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
+                var outputConfig = new MMALPortConfig(MmalEncoding.Bmp, MmalEncoding.I420, width: 640, height: 480, zeroCopy: true);
 
                 imgEncoder.ConfigureInputPort(inputConfig, inputCaptureHandler)
                     .ConfigureOutputPort<FileEncodeOutputPort>(0, outputConfig, outputCaptureHandler);
@@ -136,7 +136,7 @@ namespace MMALSharp.Tests
             {
                 Fixture.MMALCamera.ConfigureCameraSettings();
 
-                var portConfig = new MMALPortConfig(MMALEncoding.H264, MMALEncoding.I420, quality: 0, bitrate: MMALVideoEncoder.MaxBitrateLevel4);
+                var portConfig = new MMALPortConfig(MmalEncoding.H264, MmalEncoding.I420, quality: 0, bitrate: MMALVideoEncoder.MaxBitrateLevel4);
 
                 vidEncoder.ConfigureOutputPort(portConfig, videoCaptureHandler);
 
@@ -165,8 +165,8 @@ namespace MMALSharp.Tests
             using (var vidDecoder = new MMALVideoDecoder())
             {
                 // Set the input/output resolutions to match what is set in the tests defaults method.
-                var inputConfig = new MMALPortConfig(MMALEncoding.H264, null, width: 640, height: 480,  framerate: 25, zeroCopy: true);
-                var outputConfig = new MMALPortConfig(MMALEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
+                var inputConfig = new MMALPortConfig(MmalEncoding.H264, null, width: 640, height: 480,  framerate: 25, zeroCopy: true);
+                var outputConfig = new MMALPortConfig(MmalEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
 
                 // Create our component pipeline.
                 vidDecoder.ConfigureInputPort(inputConfig, inputCaptureHandler)
@@ -185,8 +185,8 @@ namespace MMALSharp.Tests
             using (var outputCaptureHandler = new VideoStreamCaptureHandler("/home/pi/videos/", "mjpeg"))
             using (var vidEncoder = new MMALVideoEncoder())
             {
-                var inputConfig = new MMALPortConfig(MMALEncoding.I420, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
-                var outputConfig = new MMALPortConfig(MMALEncoding.MJPEG, MMALEncoding.I420, width: 640, height: 480, framerate: 25, zeroCopy: true);
+                var inputConfig = new MMALPortConfig(MmalEncoding.I420, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
+                var outputConfig = new MMALPortConfig(MmalEncoding.MJpeg, MmalEncoding.I420, width: 640, height: 480, framerate: 25, zeroCopy: true);
 
                 vidEncoder.ConfigureInputPort(inputConfig, inputCaptureHandler)
                     .ConfigureOutputPort<FileEncodeOutputPort>(0, outputConfig, outputCaptureHandler);
@@ -216,7 +216,7 @@ namespace MMALSharp.Tests
             {
                 Fixture.MMALCamera.ConfigureCameraSettings();
 
-                var portConfig = new MMALPortConfig(MMALEncoding.H264, MMALEncoding.I420, bitrate: MMALVideoEncoder.MaxBitrateLevel4);
+                var portConfig = new MMALPortConfig(MmalEncoding.H264, MmalEncoding.I420, bitrate: MMALVideoEncoder.MaxBitrateLevel4);
 
                 vidEncoder.ConfigureOutputPort(portConfig, videoCaptureHandler);
 
@@ -245,8 +245,8 @@ namespace MMALSharp.Tests
             using (var vidDecoder = new MMALVideoDecoder())
             {
                 // Set the input/output resolutions to match what is set in the tests defaults method.
-                var inputConfig = new MMALPortConfig(MMALEncoding.H264, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
-                var outputConfig = new MMALPortConfig(MMALEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
+                var inputConfig = new MMALPortConfig(MmalEncoding.H264, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
+                var outputConfig = new MMALPortConfig(MmalEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
 
                 // Create our component pipeline.
                 vidDecoder.ConfigureInputPort(inputConfig, inputCaptureHandler)
@@ -275,11 +275,11 @@ namespace MMALSharp.Tests
             {
                 // You will notice here that we are setting the resolution against the splitter's input port. This is necessary to
                 // tell this component the resolution of the data that it's going to be receiving.
-                var splitterInputConfig = new MMALPortConfig(MMALEncoding.I420, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
+                var splitterInputConfig = new MMALPortConfig(MmalEncoding.I420, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
                 var splitterOutputConfig = new MMALPortConfig(null, null, width: 640, height: 480, zeroCopy: true);
 
-                var inputConfig = new MMALPortConfig(MMALEncoding.I420, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
-                var outputConfig = new MMALPortConfig(MMALEncoding.MJPEG, MMALEncoding.I420, width: 640, height: 480, framerate: 25, zeroCopy: true);
+                var inputConfig = new MMALPortConfig(MmalEncoding.I420, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
+                var outputConfig = new MMALPortConfig(MmalEncoding.MJpeg, MmalEncoding.I420, width: 640, height: 480, framerate: 25, zeroCopy: true);
 
                 splitter.ConfigureInputPort(splitterInputConfig, inputCaptureHandler)
                         .ConfigureOutputPort(0, splitterOutputConfig, null);
@@ -329,7 +329,7 @@ namespace MMALSharp.Tests
             {
                 Fixture.MMALCamera.ConfigureCameraSettings();
 
-                var portConfig = new MMALPortConfig(MMALEncoding.H264, MMALEncoding.I420, 0, MMALVideoEncoder.MaxBitrateLevel4, null);
+                var portConfig = new MMALPortConfig(MmalEncoding.H264, MmalEncoding.I420, 0, MMALVideoEncoder.MaxBitrateLevel4, null);
 
                 vidEncoder.ConfigureOutputPort(portConfig, videoCaptureHandler);
 
@@ -364,14 +364,14 @@ namespace MMALSharp.Tests
             using (var imgEncoder3 = new MMALVideoEncoder())
             using (var imgEncoder4 = new MMALVideoEncoder())
             {
-                var splitterInputConfig = new MMALPortConfig(MMALEncoding.I420, null, framerate: 25, zeroCopy: true);
+                var splitterInputConfig = new MMALPortConfig(MmalEncoding.I420, null, framerate: 25, zeroCopy: true);
                 var splitterOutputConfig = new MMALPortConfig(null, null, zeroCopy: true);
 
-                var decoderInputConfig = new MMALPortConfig(MMALEncoding.H264, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
-                var decoderOutputConfig = new MMALPortConfig(MMALEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
+                var decoderInputConfig = new MMALPortConfig(MmalEncoding.H264, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
+                var decoderOutputConfig = new MMALPortConfig(MmalEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
 
-                var encoderInputConfig = new MMALPortConfig(MMALEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
-                var encoderOutputConfig = new MMALPortConfig(MMALEncoding.H264, MMALEncoding.I420, width: 640, height: 480, framerate: 25, zeroCopy: true);
+                var encoderInputConfig = new MMALPortConfig(MmalEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
+                var encoderOutputConfig = new MMALPortConfig(MmalEncoding.H264, MmalEncoding.I420, width: 640, height: 480, framerate: 25, zeroCopy: true);
 
                 imgDecoder.ConfigureInputPort(decoderInputConfig, inputCaptureHandler)
                     .ConfigureOutputPort(0, decoderOutputConfig, null);
@@ -428,7 +428,7 @@ namespace MMALSharp.Tests
             {
                 Fixture.MMALCamera.ConfigureCameraSettings();
 
-                var portConfig = new MMALPortConfig(MMALEncoding.H264, MMALEncoding.I420, 0, MMALVideoEncoder.MaxBitrateLevel4, null);
+                var portConfig = new MMALPortConfig(MmalEncoding.H264, MmalEncoding.I420, 0, MMALVideoEncoder.MaxBitrateLevel4, null);
 
                 vidEncoder.ConfigureOutputPort(portConfig, videoCaptureHandler);
 
@@ -464,18 +464,18 @@ namespace MMALSharp.Tests
             using (var imgEncoder4 = new MMALVideoEncoder())
             using (var resizer = new MMALResizerComponent())
             {
-                var splitterInputConfig = new MMALPortConfig(MMALEncoding.I420, null, framerate: 25, zeroCopy: true);
+                var splitterInputConfig = new MMALPortConfig(MmalEncoding.I420, null, framerate: 25, zeroCopy: true);
                 var splitterOutputConfig = new MMALPortConfig(null, null, zeroCopy: true);
 
                 // Resize from 640x480 to 320x120.
-                var resizerInputConfig = new MMALPortConfig(MMALEncoding.I420, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
+                var resizerInputConfig = new MMALPortConfig(MmalEncoding.I420, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
                 var resizerOutputConfig = new MMALPortConfig(null, null, width: 320, height: 120, zeroCopy: true);
 
-                var decoderInputConfig = new MMALPortConfig(MMALEncoding.H264, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
-                var decoderOutputConfig = new MMALPortConfig(MMALEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
+                var decoderInputConfig = new MMALPortConfig(MmalEncoding.H264, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
+                var decoderOutputConfig = new MMALPortConfig(MmalEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
 
-                var encoderInputConfig = new MMALPortConfig(MMALEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
-                var encoderOutputConfig = new MMALPortConfig(MMALEncoding.H264, MMALEncoding.I420, width: 640, height: 480, framerate: 25, zeroCopy: true);
+                var encoderInputConfig = new MMALPortConfig(MmalEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
+                var encoderOutputConfig = new MMALPortConfig(MmalEncoding.H264, MmalEncoding.I420, width: 640, height: 480, framerate: 25, zeroCopy: true);
 
                 imgDecoder.ConfigureInputPort(decoderInputConfig, inputCaptureHandler)
                     .ConfigureOutputPort(0, decoderOutputConfig, null);

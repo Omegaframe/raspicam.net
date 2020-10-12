@@ -36,7 +36,7 @@ namespace MMALSharp.Tests
                 Fixture.MMALCamera.ConfigureCameraSettings();
 
                 // Use the resizer to resize 1080p to 640x480.
-                var portConfig = new MMALPortConfig(MMALEncoding.I420, MMALEncoding.I420, width: 640, height: 480);
+                var portConfig = new MMALPortConfig(MmalEncoding.I420, MmalEncoding.I420, width: 640, height: 480);
 
                 resizer.ConfigureOutputPort<VideoPort>(0, portConfig, vidCaptureHandler);
 
@@ -73,10 +73,10 @@ namespace MMALSharp.Tests
             {
                 Fixture.MMALCamera.ConfigureCameraSettings();
 
-                var splitterPortConfig = new MMALPortConfig(MMALEncoding.I420, MMALEncoding.I420);
+                var splitterPortConfig = new MMALPortConfig(MmalEncoding.I420, MmalEncoding.I420);
 
                 // Create our component pipeline.         
-                splitter.ConfigureInputPort(new MMALPortConfig(MMALEncoding.OPAQUE, MMALEncoding.I420, 0), Fixture.MMALCamera.Camera.VideoPort, null);
+                splitter.ConfigureInputPort(new MMALPortConfig(MmalEncoding.Opaque, MmalEncoding.I420, 0), Fixture.MMALCamera.Camera.VideoPort, null);
                 splitter.ConfigureOutputPort(0, splitterPortConfig, vidCaptureHandler);
                
                 // Create our component pipeline.         
@@ -113,11 +113,11 @@ namespace MMALSharp.Tests
             {
                 Fixture.MMALCamera.ConfigureCameraSettings();
 
-                var splitterPortConfig = new MMALPortConfig(MMALEncoding.OPAQUE, MMALEncoding.I420);
-                var resizerPortConfig = new MMALPortConfig(MMALEncoding.I420, MMALEncoding.I420, width: 1024, height: 768, timeout: DateTime.Now.AddSeconds(15));
+                var splitterPortConfig = new MMALPortConfig(MmalEncoding.Opaque, MmalEncoding.I420);
+                var resizerPortConfig = new MMALPortConfig(MmalEncoding.I420, MmalEncoding.I420, width: 1024, height: 768, timeout: DateTime.Now.AddSeconds(15));
 
                 // Create our component pipeline.         
-                splitter.ConfigureInputPort(new MMALPortConfig(MMALEncoding.OPAQUE, MMALEncoding.I420), Fixture.MMALCamera.Camera.VideoPort, null);
+                splitter.ConfigureInputPort(new MMALPortConfig(MmalEncoding.Opaque, MmalEncoding.I420), Fixture.MMALCamera.Camera.VideoPort, null);
                 splitter.ConfigureOutputPort(0, splitterPortConfig, null);
                 
                 resizer.ConfigureOutputPort<VideoPort>(0, resizerPortConfig, vidCaptureHandler);

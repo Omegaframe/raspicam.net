@@ -47,12 +47,12 @@ namespace MMALSharp.Ports
         /// <summary>
         /// The MMALEncoding encoding type that this port will process data in. Helpful for retrieving encoding name/FourCC value.
         /// </summary>
-        public MMALEncoding EncodingType { get; internal set; }
+        public MmalEncoding EncodingType { get; internal set; }
 
         /// <summary>
         /// The MMALEncoding pixel format that this port will process data in. Helpful for retrieving encoding name/FourCC value.
         /// </summary>
-        public MMALEncoding PixelFormat { get; internal set; }
+        public MmalEncoding PixelFormat { get; internal set; }
 
         /// <summary>
         /// The config for this port.
@@ -168,7 +168,7 @@ namespace MMALSharp.Ports
         /// <summary>
         /// The working video color space, specific to video ports.
         /// </summary>
-        public MMALEncoding VideoColorSpace
+        public MmalEncoding VideoColorSpace
         {
             get => Ptr->Format->Es->Video.ColorSpace.ParseEncoding();
             internal set => Ptr->Format->Es->Video.ColorSpace = value.EncodingVal;
@@ -285,7 +285,7 @@ namespace MMALSharp.Ports
         /// <exception cref="MMALException"/>
         public void EnablePort(IntPtr callback)
         {
-            MMALLog.Logger.LogDebug($"{Name}: Enabling port.");
+            MmalLog.Logger.LogDebug($"{Name}: Enabling port.");
             MMALCheck(MMALPort.mmal_port_enable(Ptr, callback), $"{Name}: Unable to enable port.");
         }
 
@@ -299,7 +299,7 @@ namespace MMALSharp.Ports
         {
             if (Enabled)
             {
-                MMALLog.Logger.LogDebug($"{Name}: Disabling port.");
+                MmalLog.Logger.LogDebug($"{Name}: Disabling port.");
                 MMALCheck(MMALPort.mmal_port_disable(Ptr), $"{Name}: Unable to disable port.");
             }
         }
@@ -310,7 +310,7 @@ namespace MMALSharp.Ports
         /// <exception cref="MMALException"/>
         public void Commit()
         {
-            MMALLog.Logger.LogDebug($"{Name}: Committing port format changes.");
+            MmalLog.Logger.LogDebug($"{Name}: Committing port format changes.");
             MMALCheck(MMALPort.mmal_port_format_commit(Ptr), $"{Name}: Unable to commit port changes.");
         }
 
@@ -320,7 +320,7 @@ namespace MMALSharp.Ports
         /// <param name="destination">The destination port we're copying to.</param>
         public void ShallowCopy(IPort destination)
         {
-            MMALLog.Logger.LogDebug($"{Name}: Shallow copy port format.");
+            MmalLog.Logger.LogDebug($"{Name}: Shallow copy port format.");
             MMALFormat.mmal_format_copy(destination.Ptr->Format, Ptr->Format);
         }
 
@@ -330,7 +330,7 @@ namespace MMALSharp.Ports
         /// <param name="eventFormatSource">The source event format we're copying from.</param>
         public void ShallowCopy(IBufferEvent eventFormatSource)
         {
-            MMALLog.Logger.LogDebug($"{Name}: Shallow copy event format.");
+            MmalLog.Logger.LogDebug($"{Name}: Shallow copy event format.");
             MMALFormat.mmal_format_copy(Ptr->Format, eventFormatSource.Ptr);
         }
 
@@ -340,7 +340,7 @@ namespace MMALSharp.Ports
         /// <param name="destination">The destination port we're copying to.</param>
         public void FullCopy(IPort destination)
         {
-            MMALLog.Logger.LogDebug($"{Name}: Full copy port format.");
+            MmalLog.Logger.LogDebug($"{Name}: Full copy port format.");
             MMALFormat.mmal_format_full_copy(destination.Ptr->Format, Ptr->Format);
         }
 
@@ -350,7 +350,7 @@ namespace MMALSharp.Ports
         /// <param name="eventFormatSource">The source event format we're copying from.</param>
         public void FullCopy(IBufferEvent eventFormatSource)
         {
-            MMALLog.Logger.LogDebug($"{Name}: Full copy event format.");
+            MmalLog.Logger.LogDebug($"{Name}: Full copy event format.");
             MMALFormat.mmal_format_full_copy(Ptr->Format, eventFormatSource.Ptr);
         }
 
@@ -361,7 +361,7 @@ namespace MMALSharp.Ports
         /// <exception cref="MMALException"/>
         public void Flush()
         {
-            MMALLog.Logger.LogDebug($"{Name}: Flushing port buffers");
+            MmalLog.Logger.LogDebug($"{Name}: Flushing port buffers");
             MMALCheck(MMALPort.mmal_port_flush(Ptr), $"{Name}: Unable to flush port.");
         }
 
@@ -376,12 +376,12 @@ namespace MMALSharp.Ports
                 return;
 
             if (MMALCameraConfig.Debug)
-                MMALLog.Logger.LogDebug($"{Name}: Sending buffer start.");
+                MmalLog.Logger.LogDebug($"{Name}: Sending buffer start.");
 
             MMALCheck(MMALPort.mmal_port_send_buffer(Ptr, buffer.Ptr), $"{Name}: Unable to send buffer header.");
 
             if (MMALCameraConfig.Debug)
-                MMALLog.Logger.LogDebug($"{Name}: Sending buffer complete.");
+                MmalLog.Logger.LogDebug($"{Name}: Sending buffer complete.");
         }
 
         /// <summary>
@@ -397,7 +397,7 @@ namespace MMALSharp.Ports
             {
                 var buffer = BufferPool.Queue.GetBuffer();
 
-                MMALLog.Logger.LogDebug($"{Name}: Sending buffer to output port: Length {buffer.Length}.");
+                MmalLog.Logger.LogDebug($"{Name}: Sending buffer to output port: Length {buffer.Length}.");
 
                 SendBuffer(buffer);
             }
@@ -415,7 +415,7 @@ namespace MMALSharp.Ports
             {
                 var buffer = pool.Queue.GetBuffer();
 
-                MMALLog.Logger.LogDebug($"{Name}: Sending buffer to output port: Length {buffer.Length}.");
+                MmalLog.Logger.LogDebug($"{Name}: Sending buffer to output port: Length {buffer.Length}.");
 
                 SendBuffer(buffer);
             }
@@ -431,7 +431,7 @@ namespace MMALSharp.Ports
             {
                 DisablePort();
 
-                MMALLog.Logger.LogDebug($"{Name}: Releasing active buffers.");
+                MmalLog.Logger.LogDebug($"{Name}: Releasing active buffers.");
                 while (BufferPool.Queue.QueueLength() < BufferPool.HeadersNum)
                 {
                     var tempBuf = BufferPool.Queue.TimedWait(1000);
@@ -442,7 +442,7 @@ namespace MMALSharp.Ports
                     }
                     else
                     {
-                        MMALLog.Logger.LogWarning($"{Name}: Attempted to release buffer but retrieved null.");
+                        MmalLog.Logger.LogWarning($"{Name}: Attempted to release buffer but retrieved null.");
                     }
                 }
 
@@ -450,7 +450,7 @@ namespace MMALSharp.Ports
             }
             else
             {
-                MMALLog.Logger.LogDebug($"{Name}: Buffer pool already null or disposed of.");
+                MmalLog.Logger.LogDebug($"{Name}: Buffer pool already null or disposed of.");
             }
         }
 
@@ -459,7 +459,7 @@ namespace MMALSharp.Ports
         /// </summary>
         public void InitialiseBufferPool()
         {
-            MMALLog.Logger.LogDebug($"{Name}: Initialising buffer pool.");
+            MmalLog.Logger.LogDebug($"{Name}: Initialising buffer pool.");
             BufferPool = new MMALPoolImpl(this);
         }
 

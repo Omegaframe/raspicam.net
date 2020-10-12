@@ -16,7 +16,7 @@ namespace MMALSharp
 
         public MMALPoolImpl(IPort port)
         {
-            MMALLog.Logger.LogDebug($"Creating buffer pool with {port.BufferNum} buffers of size {port.BufferSize}");
+            MmalLog.Logger.LogDebug($"Creating buffer pool with {port.BufferNum} buffers of size {port.BufferSize}");
 
             Ptr = MMALUtil.mmal_port_pool_create(port.Ptr, port.BufferNum, port.BufferSize);
             Queue = new MMALQueueImpl((*Ptr).Queue);
@@ -24,7 +24,7 @@ namespace MMALSharp
 
         public MMALPoolImpl(MMAL_POOL_T* ptr)
         {
-            MMALLog.Logger.LogDebug($"Creating buffer pool from existing instance.");
+            MmalLog.Logger.LogDebug($"Creating buffer pool from existing instance.");
 
             Ptr = ptr;
             Queue = new MMALQueueImpl((*Ptr).Queue);
@@ -36,7 +36,7 @@ namespace MMALSharp
 
         public override void Dispose()
         {
-            MMALLog.Logger.LogDebug("Disposing buffer pool.");
+            MmalLog.Logger.LogDebug("Disposing buffer pool.");
             Destroy();
             base.Dispose();
         }

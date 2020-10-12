@@ -9,6 +9,7 @@ using MMALSharp.Components;
 using MMALSharp.Config;
 using MMALSharp.Extensions;
 using MMALSharp.Native;
+using MMALSharp.Utility;
 using Xunit;
 
 namespace MMALSharp.Tests
@@ -208,14 +209,14 @@ namespace MMALSharp.Tests
         [MMALTestsAttribute]
         public void SetThenGetColourFx(bool enable, byte u, byte v)
         {        
-            var color = MMALColor.FromYUVBytes(0, u, v);
+            var color = MmalColor.FromYuvBytes(0, u, v);
 
             var colFx = new ColourEffects(enable, color);
 
             MMALCameraConfig.ColourFx = colFx;
             Fixture.MMALCamera.ConfigureCameraSettings();
 
-            var uv = MMALColor.RGBToYUVBytes(Fixture.MMALCamera.Camera.GetColourFx().Color);
+            var uv = MmalColor.RgbToYuvBytes(Fixture.MMALCamera.Camera.GetColourFx().Color);
             
             Assert.True(Fixture.MMALCamera.Camera.GetColourFx().Enable == enable &&
                         uv.Item2 == u &&

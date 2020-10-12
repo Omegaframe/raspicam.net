@@ -99,7 +99,7 @@ namespace MMALSharp
         /// <inheritdoc />
         public override void Dispose()
         {
-            MMALLog.Logger.LogDebug("Disposing connection.");
+            MmalLog.Logger.LogDebug("Disposing connection.");
             OutputPort?.CloseConnection();
             InputPort?.CloseConnection();
             Destroy();
@@ -112,7 +112,7 @@ namespace MMALSharp
             if (Enabled)
                 return;
 
-            MMALLog.Logger.LogDebug($"Enabling connection between {OutputPort.Name} and {InputPort.Name}");
+            MmalLog.Logger.LogDebug($"Enabling connection between {OutputPort.Name} and {InputPort.Name}");
             MMALCheck(MMALConnection.mmal_connection_enable(Ptr), "Unable to enable connection");
         }
 
@@ -122,7 +122,7 @@ namespace MMALSharp
             if (!Enabled)
                 return;
 
-            MMALLog.Logger.LogDebug($"Disabling connection between {OutputPort.Name} and {InputPort.Name}");
+            MmalLog.Logger.LogDebug($"Disabling connection between {OutputPort.Name} and {InputPort.Name}");
             MMALCheck(MMALConnection.mmal_connection_disable(Ptr), "Unable to disable connection");
         }
 
@@ -167,7 +167,7 @@ namespace MMALSharp
         protected virtual int NativeConnectionCallback(MMAL_CONNECTION_T* connection)
         {
             if (MMALCameraConfig.Debug)
-                MMALLog.Logger.LogDebug("Inside native connection callback");
+                MmalLog.Logger.LogDebug("Inside native connection callback");
 
             var queue = new MMALQueueImpl(connection->Queue);
             var bufferImpl = queue.GetBuffer();
@@ -190,7 +190,7 @@ namespace MMALSharp
 
             if (!bufferImpl.CheckState())
             {
-                MMALLog.Logger.LogInformation("Buffer could not be obtained by connection callback");
+                MmalLog.Logger.LogInformation("Buffer could not be obtained by connection callback");
                 return (int)connection->Flags;
             }
 

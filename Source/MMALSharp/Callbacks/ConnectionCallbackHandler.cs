@@ -15,13 +15,13 @@ namespace MMALSharp.Callbacks
         public virtual void InputCallback(IBuffer buffer)
         {
             if (MMALCameraConfig.Debug)
-                MMALLog.Logger.LogDebug("Inside Managed input port connection callback");
+                MmalLog.Logger.LogDebug("Inside Managed input port connection callback");
         }
 
         public virtual void OutputCallback(IBuffer buffer)
         {
             if (MMALCameraConfig.Debug)
-                MMALLog.Logger.LogDebug("Inside Managed output port connection callback");
+                MmalLog.Logger.LogDebug("Inside Managed output port connection callback");
         }
     }
 }

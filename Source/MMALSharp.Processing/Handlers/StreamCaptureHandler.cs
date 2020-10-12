@@ -53,7 +53,7 @@ namespace MMALSharp.Handlers
                             ImageContext.Data = arr;
                             ImageContext.StoreFormat = StoreFormat;
                             
-                            MMALLog.Logger.LogDebug("Applying image processing.");
+                            MmalLog.Logger.LogDebug("Applying image processing.");
 
                             OnManipulate(new FrameProcessingContext(ImageContext));
                         }
@@ -69,7 +69,7 @@ namespace MMALSharp.Handlers
             }
             catch(Exception e)
             {
-                MMALLog.Logger.LogWarning($"Something went wrong while processing stream: {e.Message}. {e.InnerException?.Message}. {e.StackTrace}");
+                MmalLog.Logger.LogWarning($"Something went wrong while processing stream: {e.Message}. {e.InnerException?.Message}. {e.StackTrace}");
             }
         }
         
@@ -84,7 +84,7 @@ namespace MMALSharp.Handlers
         /// </summary>
         public override void Dispose()
         {
-            MMALLog.Logger.LogInformation($"Successfully processed {Helpers.ConvertBytesToMegabytes(Processed)}.");
+            MmalLog.Logger.LogInformation($"Successfully processed {Helpers.ConvertBytesToMegabytes(Processed)}.");
             CurrentStream?.Dispose();
         }
     }

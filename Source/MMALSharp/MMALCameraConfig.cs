@@ -162,12 +162,12 @@ namespace MMALSharp
         /// <summary>
         /// The camera encoding type.
         /// </summary>
-        public static MMALEncoding Encoding { get; set; } = MMALEncoding.OPAQUE;
+        public static MmalEncoding Encoding { get; set; } = MmalEncoding.Opaque;
 
         /// <summary>
         /// The camera encoding sub format.
         /// </summary>
-        public static MMALEncoding EncodingSubFormat { get; set; } = MMALEncoding.I420;
+        public static MmalEncoding EncodingSubFormat { get; set; } = MmalEncoding.I420;
 
         /// <summary>
         /// The working resolution of the camera.
@@ -237,7 +237,7 @@ namespace MMALSharp
         /// <summary>
         /// The working video color space, specific to the camera's video port. 
         /// </summary>
-        public static MMALEncoding VideoColorSpace { get; set; }
+        public static MmalEncoding VideoColorSpace { get; set; }
 
         /*
          * -----------------------------------------------------------------------------------------------------------

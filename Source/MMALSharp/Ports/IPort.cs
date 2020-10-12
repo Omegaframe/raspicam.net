@@ -43,12 +43,12 @@ namespace MMALSharp.Ports
         /// <summary>
         /// The MMALEncoding encoding type that this port will process data in. Helpful for retrieving encoding name/FourCC value.
         /// </summary>
-        MMALEncoding EncodingType { get; }
+        MmalEncoding EncodingType { get; }
 
         /// <summary>
         /// The MMALEncoding pixel format that this port will process data in. Helpful for retrieving encoding name/FourCC value.
         /// </summary>
-        MMALEncoding PixelFormat { get; }
+        MmalEncoding PixelFormat { get; }
 
         /// <summary>
         /// The config for this port.
@@ -128,7 +128,7 @@ namespace MMALSharp.Ports
         /// <summary>
         /// The working video color space, specific to video ports.
         /// </summary>
-        MMALEncoding VideoColorSpace { get; }
+        MmalEncoding VideoColorSpace { get; }
 
         /// <summary>
         /// The Region of Interest width that this port will process data in.

@@ -8,6 +8,7 @@ using MMALSharp.Components;
 using MMALSharp.Config;
 using MMALSharp.Native;
 using MMALSharp.Ports.Controls;
+using MMALSharp.Utility;
 using static MMALSharp.MMALNativeExceptionHelper;
 using static MMALSharp.Native.MMALParametersCamera;
 
@@ -185,7 +186,7 @@ namespace MMALSharp.Extensions
 
             MMALCheck(MMALPort.mmal_port_parameter_get(camera.Control.Ptr, &annotate.Hdr), "Unable to get camera annotate settings");
 
-            return MMALColor.FromYUVBytes(annotate.CustomTextY, annotate.CustomTextU, annotate.CustomTextV);
+            return MmalColor.FromYuvBytes(annotate.CustomTextY, annotate.CustomTextU, annotate.CustomTextV);
         }
 
         /// <summary>
@@ -201,14 +202,14 @@ namespace MMALSharp.Extensions
 
             MMALCheck(MMALPort.mmal_port_parameter_get(camera.Control.Ptr, &annotate.Hdr), "Unable to get camera annotate settings");
 
-            return MMALColor.FromYUVBytes(annotate.CustomBackgroundY, annotate.CustomBackgroundU, annotate.CustomBackgroundV);
+            return MmalColor.FromYuvBytes(annotate.CustomBackgroundY, annotate.CustomBackgroundU, annotate.CustomBackgroundV);
         }
         
         internal static void SetAnnotateSettings(this MMALCameraComponent camera)
         {
             if (MMALCameraConfig.Annotate != null)
             {
-                MMALLog.Logger.LogDebug("Setting annotate");
+                MmalLog.Logger.LogDebug("Setting annotate");
 
                 var sb = new StringBuilder();
 
@@ -288,7 +289,7 @@ namespace MMALSharp.Extensions
                 {
                     customTextColor = 1;
                     
-                    var yuv = MMALColor.RGBToYUVBytes(MMALCameraConfig.Annotate.TextColour);
+                    var yuv = MmalColor.RgbToYuvBytes(MMALCameraConfig.Annotate.TextColour);
                     customTextY = yuv.Item1;
                     customTextU = yuv.Item2;
                     customTextV = yuv.Item3;                                        
@@ -297,7 +298,7 @@ namespace MMALSharp.Extensions
                 if (MMALCameraConfig.Annotate.BgColour != Color.Empty)
                 {
                     customBackgroundColor = 1;
-                    var yuv = MMALColor.RGBToYUVBytes(MMALCameraConfig.Annotate.BgColour);
+                    var yuv = MmalColor.RgbToYuvBytes(MMALCameraConfig.Annotate.BgColour);
                     customBackgroundY = yuv.Item1;
                     customBackgroundU = yuv.Item2;
                     customBackgroundV = yuv.Item3;
@@ -333,7 +334,7 @@ namespace MMALSharp.Extensions
                     Marshal.FreeHGlobal(ptrV4);
                     ptrV4 = IntPtr.Zero;
                     
-                    MMALLog.Logger.LogWarning("Unable to set V4 annotation structure. Trying V3. Please update firmware to latest version.");
+                    MmalLog.Logger.LogWarning("Unable to set V4 annotation structure. Trying V3. Please update firmware to latest version.");
 
                     var str = new MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T(
                         new MMAL_PARAMETER_HEADER_T(MMAL_PARAMETER_ANNOTATE, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T>() + (arr.Length - 1)),
@@ -424,7 +425,7 @@ namespace MMALSharp.Extensions
 
         internal static void SetSaturation(this MMALCameraComponent camera, int saturation)
         {
-            MMALLog.Logger.LogDebug($"Setting saturation: {saturation}");
+            MmalLog.Logger.LogDebug($"Setting saturation: {saturation}");
 
             var value = new MMAL_RATIONAL_T(saturation, 100);
 
@@ -450,7 +451,7 @@ namespace MMALSharp.Extensions
 
         internal static void SetSharpness(this MMALCameraComponent camera, int sharpness)
         {
-            MMALLog.Logger.LogDebug($"Setting sharpness: {sharpness}");
+            MmalLog.Logger.LogDebug($"Setting sharpness: {sharpness}");
 
             var value = new MMAL_RATIONAL_T(sharpness, 100);
 
@@ -476,7 +477,7 @@ namespace MMALSharp.Extensions
 
         internal static void SetContrast(this MMALCameraComponent camera, int contrast)
         {
-            MMALLog.Logger.LogDebug($"Setting contrast: {contrast}");
+            MmalLog.Logger.LogDebug($"Setting contrast: {contrast}");
 
             var value = new MMAL_RATIONAL_T(contrast, 100);
 
@@ -507,7 +508,7 @@ namespace MMALSharp.Extensions
 
         internal static void SetBrightness(this MMALCameraComponent camera, int brightness)
         {
-            MMALLog.Logger.LogDebug($"Setting brightness: {brightness}");
+            MmalLog.Logger.LogDebug($"Setting brightness: {brightness}");
 
             var value = new MMAL_RATIONAL_T(brightness, 100);
 
@@ -539,7 +540,7 @@ namespace MMALSharp.Extensions
         /// <exception cref="ArgumentOutOfRangeException"/>
         internal static void SetISO(this MMALCameraComponent camera, int iso)
         {
-            MMALLog.Logger.LogDebug($"Setting ISO: {iso}");
+            MmalLog.Logger.LogDebug($"Setting ISO: {iso}");
 
             // 0 = auto
             if ((iso < 100 || iso > 800) && iso > 0)
@@ -562,7 +563,7 @@ namespace MMALSharp.Extensions
 
         internal static void SetVideoStabilisation(this MMALCameraComponent camera, bool vstabilisation)
         {
-            MMALLog.Logger.LogDebug($"Setting video stabilisation: {vstabilisation}");
+            MmalLog.Logger.LogDebug($"Setting video stabilisation: {vstabilisation}");
 
             camera.Control.SetParameter(MMAL_PARAMETER_VIDEO_STABILISATION, vstabilisation);
         }
@@ -584,7 +585,7 @@ namespace MMALSharp.Extensions
         /// <param name="expCompensation">The exposure compensation value.</param>
         internal static void SetExposureCompensation(this MMALCameraComponent camera, int expCompensation)
         {
-            MMALLog.Logger.LogDebug($"Setting exposure compensation: {expCompensation}");
+            MmalLog.Logger.LogDebug($"Setting exposure compensation: {expCompensation}");
 
             if (expCompensation < -10 || expCompensation > 10)
             {
@@ -612,7 +613,7 @@ namespace MMALSharp.Extensions
 
         internal static void SetExposureMode(this MMALCameraComponent camera, MMAL_PARAM_EXPOSUREMODE_T mode)
         {
-            MMALLog.Logger.LogDebug($"Setting exposure mode: {mode}");
+            MmalLog.Logger.LogDebug($"Setting exposure mode: {mode}");
 
             MMAL_PARAMETER_EXPOSUREMODE_T expMode = new MMAL_PARAMETER_EXPOSUREMODE_T(
                 new MMAL_PARAMETER_HEADER_T(MMAL_PARAMETER_EXPOSURE_MODE, Marshal.SizeOf<MMAL_PARAMETER_EXPOSUREMODE_T>()),
@@ -639,7 +640,7 @@ namespace MMALSharp.Extensions
 
         internal static void SetExposureMeteringMode(this MMALCameraComponent camera, MMAL_PARAM_EXPOSUREMETERINGMODE_T mode)
         {
-            MMALLog.Logger.LogDebug($"Setting exposure metering mode: {mode}");
+            MmalLog.Logger.LogDebug($"Setting exposure metering mode: {mode}");
 
             MMAL_PARAMETER_EXPOSUREMETERINGMODE_T expMode = new MMAL_PARAMETER_EXPOSUREMETERINGMODE_T(
                 new MMAL_PARAMETER_HEADER_T(MMAL_PARAMETER_EXP_METERING_MODE, Marshal.SizeOf<MMAL_PARAMETER_EXPOSUREMETERINGMODE_T>()),
@@ -666,7 +667,7 @@ namespace MMALSharp.Extensions
 
         internal static void SetAwbMode(this MMALCameraComponent camera, MMAL_PARAM_AWBMODE_T mode)
         {
-            MMALLog.Logger.LogDebug($"Setting AWB mode: {mode}");
+            MmalLog.Logger.LogDebug($"Setting AWB mode: {mode}");
 
             MMAL_PARAMETER_AWBMODE_T awbMode = new MMAL_PARAMETER_AWBMODE_T(
                 new MMAL_PARAMETER_HEADER_T(MMAL_PARAMETER_AWB_MODE, Marshal.SizeOf<MMAL_PARAMETER_AWBMODE_T>()),
@@ -745,7 +746,7 @@ namespace MMALSharp.Extensions
 
         internal static void SetAwbGains(this MMALCameraComponent camera, double rGain, double bGain)
         {
-            MMALLog.Logger.LogDebug($"Setting AWB gains: {rGain}, {bGain}");
+            MmalLog.Logger.LogDebug($"Setting AWB gains: {rGain}, {bGain}");
 
             if (MMALCameraConfig.AwbMode != MMAL_PARAM_AWBMODE_T.MMAL_PARAM_AWBMODE_OFF && (rGain > 0 || bGain > 0))
             {
@@ -778,7 +779,7 @@ namespace MMALSharp.Extensions
 
         internal static void SetImageFx(this MMALCameraComponent camera, MMAL_PARAM_IMAGEFX_T imageFx)
         {
-            MMALLog.Logger.LogDebug($"Setting Image FX: {imageFx}");
+            MmalLog.Logger.LogDebug($"Setting Image FX: {imageFx}");
 
             MMAL_PARAMETER_IMAGEFX_T imgFx = new MMAL_PARAMETER_IMAGEFX_T(
                 new MMAL_PARAMETER_HEADER_T(MMAL_PARAMETER_IMAGE_EFFECT, Marshal.SizeOf<MMAL_PARAMETER_IMAGEFX_T>()),
@@ -802,16 +803,16 @@ namespace MMALSharp.Extensions
 
             MMALCheck(MMALPort.mmal_port_parameter_get(camera.Control.Ptr, &colFx.Hdr), "Unable to get colour fx");
 
-            ColourEffects fx = new ColourEffects(colFx.Enable == 1, MMALColor.FromYUVBytes(0, (byte)colFx.U, (byte)colFx.V));
+            ColourEffects fx = new ColourEffects(colFx.Enable == 1, MmalColor.FromYuvBytes(0, (byte)colFx.U, (byte)colFx.V));
                         
             return fx;
         }
 
         internal static void SetColourFx(this MMALCameraComponent camera, ColourEffects colourFx)
         {
-            MMALLog.Logger.LogDebug("Setting colour effects");
+            MmalLog.Logger.LogDebug("Setting colour effects");
 
-            var uv = MMALColor.RGBToYUVBytes(colourFx.Color);
+            var uv = MmalColor.RgbToYuvBytes(colourFx.Color);
 
             MMAL_PARAMETER_COLOURFX_T colFx = new MMAL_PARAMETER_COLOURFX_T(
                 new MMAL_PARAMETER_HEADER_T(MMAL_PARAMETER_COLOUR_EFFECT, Marshal.SizeOf<MMAL_PARAMETER_COLOURFX_T>()),
@@ -836,7 +837,7 @@ namespace MMALSharp.Extensions
         {
             int rot = ((rotation % 360) / 90) * 90;
 
-            MMALLog.Logger.LogDebug($"Setting rotation: {rot}");
+            MmalLog.Logger.LogDebug($"Setting rotation: {rot}");
 
             camera.StillPort.SetParameter(MMAL_PARAMETER_ROTATION, rot);
         }
@@ -937,11 +938,11 @@ namespace MMALSharp.Extensions
 
         internal static void SetShutterSpeed(this MMALCameraComponent camera, int speed)
         {
-            MMALLog.Logger.LogDebug($"Setting shutter speed: {speed}");
+            MmalLog.Logger.LogDebug($"Setting shutter speed: {speed}");
 
             if (speed > 6000000)
             {
-                MMALLog.Logger.LogWarning("Shutter speed exceeds upper supported limit of 6000ms. Undefined behaviour may result.");
+                MmalLog.Logger.LogWarning("Shutter speed exceeds upper supported limit of 6000ms. Undefined behaviour may result.");
             }
 
             camera.Control.SetParameter(MMAL_PARAMETER_SHUTTER_SPEED, speed);

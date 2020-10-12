@@ -23,7 +23,7 @@ namespace MMALSharp.Callbacks
 
         public VideoOutputCallbackHandler(IVideoPort port, IVideoCaptureHandler handler, Split split, bool storeMotionVectors = false) : base(port, handler)
         {
-            var motionType = WorkingPort.EncodingType == MMALEncoding.H264
+            var motionType = WorkingPort.EncodingType == MmalEncoding.H264
                 ? MotionType.MotionVector
                 : MotionType.FrameDiff;
 
@@ -40,7 +40,7 @@ namespace MMALSharp.Callbacks
         public override void Callback(IBuffer buffer)
         {
             if (MMALCameraConfig.Debug)
-                MMALLog.Logger.LogDebug("In video output callback");
+                MmalLog.Logger.LogDebug("In video output callback");
 
             if (PrepareSplit && buffer.AssertProperty(MMALBufferProperties.MMAL_BUFFER_HEADER_FLAG_CONFIG))
             {
@@ -57,7 +57,7 @@ namespace MMALSharp.Callbacks
 
                 if (DateTime.Now.CompareTo(CalculateSplit()) > 0)
                 {
-                    MMALLog.Logger.LogInformation("Preparing to split.");
+                    MmalLog.Logger.LogInformation("Preparing to split.");
                     PrepareSplit = true;
                     WorkingPort.SetParameter(MMALParametersVideo.MMAL_PARAMETER_VIDEO_REQUEST_I_FRAME, true);
                 }

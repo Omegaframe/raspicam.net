@@ -64,7 +64,7 @@ namespace MMALSharp.Components
 
             var bufferSize = 0;
             
-            if (config.EncodingType == MMALEncoding.H264)            
+            if (config.EncodingType == MmalEncoding.H264)            
                 bufferSize = Math.Max(Outputs[outputPort].Ptr->BufferSizeRecommended, Outputs[outputPort].Ptr->BufferSizeMin);            
             else            
                 bufferSize = Math.Max(Outputs[outputPort].Ptr->BufferSizeRecommended, 256 << 10);            
@@ -90,7 +90,7 @@ namespace MMALSharp.Components
 
             base.ConfigureOutputPort(outputPort, config, handler);
 
-            if (Outputs[outputPort].EncodingType == MMALEncoding.H264)
+            if (Outputs[outputPort].EncodingType == MmalEncoding.H264)
             {
                 ConfigureIntraPeriod(outputPort);
 
@@ -111,13 +111,13 @@ namespace MMALSharp.Components
         }
 
         /// <summary>
-        /// Request a new IFrame to be generated from the video encoder. Only applies to H.264 encoding. 
+        /// Request a new IsIFrame to be generated from the video encoder. Only applies to H.264 encoding. 
         /// </summary>
         public void RequestIFrame()
         {
-            if (Outputs[0].EncodingType != MMALEncoding.H264)
+            if (Outputs[0].EncodingType != MmalEncoding.H264)
             {
-                MMALLog.Logger.LogWarning("Output port encoding type not set to H.264. This method has no effect.");
+                MmalLog.Logger.LogWarning("Output port encoding type not set to H.264. This method has no effect.");
                 return;
             }
 
@@ -128,7 +128,7 @@ namespace MMALSharp.Components
         {
             var bitrate = config.Bitrate;
 
-            if (Outputs[outputPort].EncodingType == MMALEncoding.H264)
+            if (Outputs[outputPort].EncodingType == MmalEncoding.H264)
             {
                 List<VideoLevel> levelList = null;
 
@@ -152,11 +152,11 @@ namespace MMALSharp.Components
                     throw new PiCameraError("Bitrate requested exceeds maximum for selected Video Level and Profile");
                 }
             }
-            else if (Outputs[outputPort].EncodingType == MMALEncoding.MJPEG)
+            else if (Outputs[outputPort].EncodingType == MmalEncoding.MJpeg)
             {
                 if (Outputs[outputPort].Bitrate > MaxBitrateMJPEG)
                 {
-                    MMALLog.Logger.LogWarning("Bitrate too high: Reducing to 25MBit/s");
+                    MmalLog.Logger.LogWarning("Bitrate too high: Reducing to 25MBit/s");
                     bitrate = MaxBitrateMJPEG;
                 }
             }
@@ -172,7 +172,7 @@ namespace MMALSharp.Components
 
         void ConfigureIntraPeriod(int outputPort)
         {
-            if (Outputs[outputPort].EncodingType == MMALEncoding.H264 && MMALCameraConfig.IntraPeriod != -1)            
+            if (Outputs[outputPort].EncodingType == MmalEncoding.H264 && MMALCameraConfig.IntraPeriod != -1)            
                 Outputs[outputPort].SetParameter(MMALParametersVideo.MMAL_PARAMETER_INTRAPERIOD, MMALCameraConfig.IntraPeriod);            
         }
 

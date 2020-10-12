@@ -5,6 +5,7 @@ using MMALSharp.Config;
 using MMALSharp.Native;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;
+using MMALSharp.Utility;
 using static MMALSharp.MMALNativeExceptionHelper;
 using static MMALSharp.Native.MMALParametersCamera;
 
@@ -50,14 +51,14 @@ namespace MMALSharp.Components
 
             MMALCheck(MMALPort.mmal_port_parameter_get(Outputs[0].Ptr, &colFx.Hdr), "Unable to get colour enhancement value.");
 
-            ColourEffects fx = new ColourEffects(colFx.Enable == 1, MMALColor.FromYUVBytes(0, (byte)colFx.U, (byte)colFx.V));
+            ColourEffects fx = new ColourEffects(colFx.Enable == 1, MmalColor.FromYuvBytes(0, (byte)colFx.U, (byte)colFx.V));
 
             return fx;
         }
 
         unsafe void SetColourEnhancementValue(ColourEffects colourFx)
         {
-            var uv = MMALColor.RGBToYUVBytes(colourFx.Color);
+            var uv = MmalColor.RgbToYuvBytes(colourFx.Color);
 
             MMAL_PARAMETER_COLOURFX_T colFx = new MMAL_PARAMETER_COLOURFX_T(
                 new MMAL_PARAMETER_HEADER_T(MMAL_PARAMETER_COLOUR_EFFECT, Marshal.SizeOf<MMAL_PARAMETER_COLOURFX_T>()),

@@ -36,21 +36,21 @@ namespace MMALSharp.Tests
             Fixture = fixture;
         }
         
-        public static List<MMALEncoding> PixelFormats = MMALEncodingHelpers.EncodingList.Where(c => c.EncType == MMALEncoding.EncodingType.PixelFormat).ToList();
+        public static List<MmalEncoding> PixelFormats = MmalEncodingHelpers.EncodingList.Where(c => c.EncType == MmalEncoding.EncodingType.PixelFormat).ToList();
 
-        private static IEnumerable<object[]> GetVideoEncoderData(MMALEncoding encodingType, string extension)
+        private static IEnumerable<object[]> GetVideoEncoderData(MmalEncoding encodingType, string extension)
         {
             var supportedEncodings = Fixture.MMALCamera.Camera.VideoPort.GetSupportedEncodings();
-            return PixelFormats.Where(c => supportedEncodings.Contains(c.EncodingVal) && c != MMALEncoding.OPAQUE).Select(pixFormat => new object[] { extension, encodingType, pixFormat }).ToList();
+            return PixelFormats.Where(c => supportedEncodings.Contains(c.EncodingVal) && c != MmalEncoding.Opaque).Select(pixFormat => new object[] { extension, encodingType, pixFormat }).ToList();
         }
 
-        private static IEnumerable<object[]> GetImageEncoderData(MMALEncoding encodingType, string extension)
+        private static IEnumerable<object[]> GetImageEncoderData(MmalEncoding encodingType, string extension)
         {
             var supportedEncodings = Fixture.MMALCamera.Camera.StillPort.GetSupportedEncodings();
-            return PixelFormats.Where(c => supportedEncodings.Contains(c.EncodingVal) && c != MMALEncoding.OPAQUE).Select(pixFormat => new object[] { extension, encodingType, pixFormat }).ToList();
+            return PixelFormats.Where(c => supportedEncodings.Contains(c.EncodingVal) && c != MmalEncoding.Opaque).Select(pixFormat => new object[] { extension, encodingType, pixFormat }).ToList();
         }
         
-        private static object[] GetEncoderData(MMALEncoding encodingType, MMALEncoding pixelFormat, string extension)
+        private static object[] GetEncoderData(MmalEncoding encodingType, MmalEncoding pixelFormat, string extension)
         {
             var supportedEncodings = Fixture.MMALCamera.Camera.StillPort.GetSupportedEncodings();
 
@@ -64,63 +64,63 @@ namespace MMALSharp.Tests
         
         #region Still image encoders
 
-        public static IEnumerable<object[]> JpegEncoderData => GetImageEncoderData(MMALEncoding.JPEG, "jpg");
+        public static IEnumerable<object[]> JpegEncoderData => GetImageEncoderData(MmalEncoding.Jpeg, "jpg");
         
-        public static IEnumerable<object[]> GifEncoderData => GetImageEncoderData(MMALEncoding.GIF, "gif");
+        public static IEnumerable<object[]> GifEncoderData => GetImageEncoderData(MmalEncoding.Gif, "gif");
         
-        public static IEnumerable<object[]> PngEncoderData => GetImageEncoderData(MMALEncoding.PNG, "png");
+        public static IEnumerable<object[]> PngEncoderData => GetImageEncoderData(MmalEncoding.Png, "png");
         
-        public static IEnumerable<object[]> PpmEncoderData => GetImageEncoderData(MMALEncoding.PPM, "ppm");
+        public static IEnumerable<object[]> PpmEncoderData => GetImageEncoderData(MmalEncoding.Ppm, "ppm");
         
-        public static IEnumerable<object[]> TgaEncoderData => GetImageEncoderData(MMALEncoding.TGA, "tga");
+        public static IEnumerable<object[]> TgaEncoderData => GetImageEncoderData(MmalEncoding.Tga, "tga");
         
-        public static IEnumerable<object[]> BmpEncoderData => GetImageEncoderData(MMALEncoding.BMP, "bmp");
+        public static IEnumerable<object[]> BmpEncoderData => GetImageEncoderData(MmalEncoding.Bmp, "bmp");
         
         #endregion
 
         #region Video encoders
 
-        public static IEnumerable<object[]> H264EncoderData => GetVideoEncoderData(MMALEncoding.H264, "avi");
+        public static IEnumerable<object[]> H264EncoderData => GetVideoEncoderData(MmalEncoding.H264, "avi");
 
-        public static IEnumerable<object[]> MvcEncoderData => GetVideoEncoderData(MMALEncoding.MVC, "mvc");
+        public static IEnumerable<object[]> MvcEncoderData => GetVideoEncoderData(MmalEncoding.Mvc, "mvc");
 
-        public static IEnumerable<object[]> H263EncoderData => GetVideoEncoderData(MMALEncoding.H263, "h263");
+        public static IEnumerable<object[]> H263EncoderData => GetVideoEncoderData(MmalEncoding.H263, "h263");
 
-        public static IEnumerable<object[]> Mp4EncoderData => GetVideoEncoderData(MMALEncoding.MP4V, "mp4");
+        public static IEnumerable<object[]> Mp4EncoderData => GetVideoEncoderData(MmalEncoding.Mp4V, "mp4");
 
-        public static IEnumerable<object[]> Mp2EncoderData => GetVideoEncoderData(MMALEncoding.MP2V, "mp2");
+        public static IEnumerable<object[]> Mp2EncoderData => GetVideoEncoderData(MmalEncoding.Mp2V, "mp2");
 
-        public static IEnumerable<object[]> Mp1EncoderData => GetVideoEncoderData(MMALEncoding.MP1V, "mp1");
+        public static IEnumerable<object[]> Mp1EncoderData => GetVideoEncoderData(MmalEncoding.Mp1V, "mp1");
 
-        public static IEnumerable<object[]> Wmv3EncoderData => GetVideoEncoderData(MMALEncoding.WMV3, "wmv");
+        public static IEnumerable<object[]> Wmv3EncoderData => GetVideoEncoderData(MmalEncoding.Wmv3, "wmv");
 
-        public static IEnumerable<object[]> Wmv2EncoderData => GetVideoEncoderData(MMALEncoding.WMV2, "wmv");
+        public static IEnumerable<object[]> Wmv2EncoderData => GetVideoEncoderData(MmalEncoding.Wmv2, "wmv");
 
-        public static IEnumerable<object[]> Wmv1EncoderData => GetVideoEncoderData(MMALEncoding.WMV1, "wmv");
+        public static IEnumerable<object[]> Wmv1EncoderData => GetVideoEncoderData(MmalEncoding.Wmv1, "wmv");
 
-        public static IEnumerable<object[]> Wvc1EncoderData => GetVideoEncoderData(MMALEncoding.WVC1, "asf");
+        public static IEnumerable<object[]> Wvc1EncoderData => GetVideoEncoderData(MmalEncoding.Wvc1, "asf");
 
-        public static IEnumerable<object[]> Vp8EncoderData => GetVideoEncoderData(MMALEncoding.VP8, "webm");
+        public static IEnumerable<object[]> Vp8EncoderData => GetVideoEncoderData(MmalEncoding.Vp8, "webm");
 
-        public static IEnumerable<object[]> Vp7EncoderData => GetVideoEncoderData(MMALEncoding.VP7, "webm");
+        public static IEnumerable<object[]> Vp7EncoderData => GetVideoEncoderData(MmalEncoding.Vp7, "webm");
 
-        public static IEnumerable<object[]> Vp6EncoderData => GetVideoEncoderData(MMALEncoding.VP6, "webm");
+        public static IEnumerable<object[]> Vp6EncoderData => GetVideoEncoderData(MmalEncoding.Vp6, "webm");
 
-        public static IEnumerable<object[]> TheoraEncoderData => GetVideoEncoderData(MMALEncoding.THEORA, "ogv");
+        public static IEnumerable<object[]> TheoraEncoderData => GetVideoEncoderData(MmalEncoding.Theora, "ogv");
 
-        public static IEnumerable<object[]> SparkEncoderData => GetVideoEncoderData(MMALEncoding.SPARK, "flv");
+        public static IEnumerable<object[]> SparkEncoderData => GetVideoEncoderData(MmalEncoding.Spark, "flv");
 
-        public static IEnumerable<object[]> MjpegEncoderData => GetVideoEncoderData(MMALEncoding.MJPEG, "mjpeg");
+        public static IEnumerable<object[]> MjpegEncoderData => GetVideoEncoderData(MmalEncoding.MJpeg, "mjpeg");
 
         #endregion
 
-        #region Raw image encode
+        #region IsRaw image encode
 
-        public static object[] Yuv420EncoderData => GetEncoderData(MMALEncoding.I420, MMALEncoding.I420, "i420");
-        public static object[] Yuv422EncoderData => GetEncoderData(MMALEncoding.I422, MMALEncoding.I422, "i422");
-        public static object[] Rgb16EncoderData => GetEncoderData(MMALEncoding.RGB16, MMALEncoding.RGB16, "rgb16");
-        public static object[] Rgb24EncoderData => GetEncoderData(MMALEncoding.RGB24, MMALEncoding.RGB24, "rgb24");
-        public static object[] RgbaEncoderData => GetEncoderData(MMALEncoding.RGBA, MMALEncoding.RGBA, "rgba");
+        public static object[] Yuv420EncoderData => GetEncoderData(MmalEncoding.I420, MmalEncoding.I420, "i420");
+        public static object[] Yuv422EncoderData => GetEncoderData(MmalEncoding.I422, MmalEncoding.I422, "i422");
+        public static object[] Rgb16EncoderData => GetEncoderData(MmalEncoding.Rgb16, MmalEncoding.Rgb16, "rgb16");
+        public static object[] Rgb24EncoderData => GetEncoderData(MmalEncoding.Rgb24, MmalEncoding.Rgb24, "rgb24");
+        public static object[] RgbaEncoderData => GetEncoderData(MmalEncoding.Rgba, MmalEncoding.Rgba, "rgba");
         
         #endregion
 

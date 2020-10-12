@@ -36,14 +36,14 @@ namespace MMALSharp.Processors
         {
             if (FullFrame)
             {
-                MMALLog.Logger.LogDebug("Clearing frame");
+                MmalLog.Logger.LogDebug("Clearing frame");
                 WorkingData.Clear();
                 FullFrame = false;
             }
 
             WorkingData.AddRange(context.Data);
 
-            if (context.Eos)            
+            if (context.IsEos)            
                 FullFrame = true;            
         }
     }

@@ -50,7 +50,7 @@ namespace MMALSharp.Ports.Outputs
         internal override void NativeOutputPortCallback(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)
         {
             if (MMALCameraConfig.Debug)
-                MMALLog.Logger.LogDebug($"{Name}: In native {nameof(VideoPort)} output callback");
+                MmalLog.Logger.LogDebug($"{Name}: In native {nameof(VideoPort)} output callback");
 
             var bufferImpl = new MMALBufferImpl(buffer);
 
@@ -66,7 +66,7 @@ namespace MMALSharp.Ports.Outputs
 
             if (eos && !Trigger.Task.IsCompleted)
             {
-                MMALLog.Logger.LogDebug($"{Name}: Timeout exceeded, triggering signal.");
+                MmalLog.Logger.LogDebug($"{Name}: Timeout exceeded, triggering signal.");
                 Task.Run(() => { Trigger.SetResult(true); });
             }
         }

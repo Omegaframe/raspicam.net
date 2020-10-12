@@ -61,7 +61,7 @@ namespace MMALSharp
             }
             else
             {
-                await Task.WhenAny(Task.WhenAll(tasks), cancellationToken.AsTask()).ConfigureAwait(false);
+                await Task.WhenAny(Task.WhenAll(tasks), Task.Delay(-1, cancellationToken)).ConfigureAwait(false);
 
                 foreach (var component in handlerComponents)
                     component.ForceStopProcessing = true;
@@ -82,8 +82,8 @@ namespace MMALSharp
 
         public void PrintPipeline(IDownstreamComponent initialComponent)
         {
-            MMALLog.Logger.LogInformation("Current pipeline:");
-            MMALLog.Logger.LogInformation(string.Empty);
+            MmalLog.Logger.LogInformation("Current pipeline:");
+            MmalLog.Logger.LogInformation(string.Empty);
 
             foreach (var component in PopulateProcessingList(initialComponent))
                 component.PrintComponent();
@@ -91,7 +91,7 @@ namespace MMALSharp
 
         public void Cleanup()
         {
-            MMALLog.Logger.LogDebug("Destroying final components");
+            MmalLog.Logger.LogDebug("Destroying final components");
 
             var tempList = new List<MMALDownstreamComponent>(MMALBootstrapper.DownstreamComponents);
 

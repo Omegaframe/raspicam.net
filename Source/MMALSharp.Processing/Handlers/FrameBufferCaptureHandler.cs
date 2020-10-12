@@ -76,7 +76,7 @@ namespace MMALSharp.Handlers
             // guard against partial frame data at startup
             if (_waitForFullFrame)
             {
-                _waitForFullFrame = !context.Eos;
+                _waitForFullFrame = !context.IsEos;
                 if (_waitForFullFrame)
                     return;
 
@@ -88,7 +88,7 @@ namespace MMALSharp.Handlers
             // accumulate frame data in the underlying memory stream
             base.Process(context);
 
-            if (context.Eos)
+            if (context.IsEos)
             {
                 // write a full frame if a request is pending
                 if (_writeFrameRequested)

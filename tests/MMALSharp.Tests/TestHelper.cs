@@ -35,9 +35,9 @@ namespace MMALSharp.Tests
             MMALCameraConfig.SensorMode = MMALSensorMode.Mode0;
             MMALCameraConfig.VideoStabilisation = true;
             MMALCameraConfig.Framerate = 10;
-            MMALCameraConfig.Encoding = MMALEncoding.OPAQUE;
-            MMALCameraConfig.EncodingSubFormat = MMALEncoding.I420;
-            MMALCameraConfig.VideoColorSpace = MMALEncoding.MMAL_COLOR_SPACE_ITUR_BT709;
+            MMALCameraConfig.Encoding = MmalEncoding.Opaque;
+            MMALCameraConfig.EncodingSubFormat = MmalEncoding.I420;
+            MMALCameraConfig.VideoColorSpace = MmalEncoding.MmalColorSpaceIturBt709;
             MMALCameraConfig.InlineMotionVectors = false;
             MMALCameraConfig.Resolution = Resolution.As03MPixel;
             MMALCameraConfig.AnalogGain = 0;
@@ -62,9 +62,9 @@ namespace MMALSharp.Tests
             }
         }
         
-        public static void BeginTest(string name) => MMALLog.Logger.LogInformation($"Running test: {name}.");
+        public static void BeginTest(string name) => MmalLog.Logger.LogInformation($"Running test: {name}.");
         
         public static void BeginTest(string name, string encodingType, string pixelFormat)
-            => MMALLog.Logger.LogInformation($"Running test: {name}. Encoding type: {encodingType}. Pixel format: {pixelFormat}.");
+            => MmalLog.Logger.LogInformation($"Running test: {name}. Encoding type: {encodingType}. Pixel format: {pixelFormat}.");
     }
 }

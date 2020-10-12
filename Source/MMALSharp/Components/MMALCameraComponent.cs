@@ -156,9 +156,9 @@ namespace MMALSharp.Components
         public override void PrintComponent()
         {
             base.PrintComponent();
-            MMALLog.Logger.LogInformation($"    Still Width: {StillPort.Resolution.Width}. Video Height: {StillPort.Resolution.Height}");
-            MMALLog.Logger.LogInformation($"    Video Width: {VideoPort.Resolution.Width}. Video Height: {VideoPort.Resolution.Height}");
-            MMALLog.Logger.LogInformation($"    Max Width: {CameraInfo.MaxWidth}. Video Height: {CameraInfo.MaxHeight}");
+            MmalLog.Logger.LogInformation($"    Still Width: {StillPort.Resolution.Width}. Video Height: {StillPort.Resolution.Height}");
+            MmalLog.Logger.LogInformation($"    Video Width: {VideoPort.Resolution.Width}. Video Height: {VideoPort.Resolution.Height}");
+            MmalLog.Logger.LogInformation($"    Max Width: {CameraInfo.MaxWidth}. Video Height: {CameraInfo.MaxHeight}");
         }
 
         /// <summary>
@@ -185,11 +185,11 @@ namespace MMALSharp.Components
 
             this.SetCameraConfig(camConfig);
 
-            MMALLog.Logger.LogDebug("Camera config set");
+            MmalLog.Logger.LogDebug("Camera config set");
 
             Control.Start();
 
-            MMALLog.Logger.LogDebug("Configuring camera parameters.");
+            MmalLog.Logger.LogDebug("Configuring camera parameters.");
 
             SetCameraParameters();
 
@@ -199,7 +199,7 @@ namespace MMALSharp.Components
 
             EnableComponent();
 
-            MMALLog.Logger.LogDebug("Camera component configured.");
+            MmalLog.Logger.LogDebug("Camera component configured.");
         }
 
         void SetSensorDefaults()
@@ -219,7 +219,7 @@ namespace MMALSharp.Components
                 height: MMALCameraConfig.Resolution.Height,
                 framerate: MMALCameraConfig.Framerate);
 
-            MMALLog.Logger.LogDebug("Commit preview");
+            MmalLog.Logger.LogDebug("Commit preview");
 
             PreviewPort.Configure(portConfig, null, null);
 
@@ -255,7 +255,7 @@ namespace MMALSharp.Components
                 bufferSize: Math.Max(VideoPort.BufferSizeRecommended, VideoPort.BufferSizeMin),
                 crop: new Rectangle(0, 0, currentWidth, currentHeight));
 
-            MMALLog.Logger.LogDebug("Commit video");
+            MmalLog.Logger.LogDebug("Commit video");
 
             VideoPort.Configure(portConfig, null, handler);
 
@@ -285,11 +285,11 @@ namespace MMALSharp.Components
 
             MMALPortConfig portConfig;
 
-            if (MMALCameraConfig.Encoding == MMALEncoding.RGB32 ||
-                MMALCameraConfig.Encoding == MMALEncoding.RGB24 ||
-                MMALCameraConfig.Encoding == MMALEncoding.RGB16)
+            if (MMALCameraConfig.Encoding == MmalEncoding.Rgb32 ||
+                MMALCameraConfig.Encoding == MmalEncoding.Rgb24 ||
+                MMALCameraConfig.Encoding == MmalEncoding.Rgb16)
             {
-                MMALLog.Logger.LogWarning("Encoding set to RGB. Setting width padding to multiple of 16.");
+                MmalLog.Logger.LogWarning("Encoding set to RGB. Setting width padding to multiple of 16.");
 
                 var resolution = MMALCameraConfig.Resolution.Pad(16, 16);
                 var encoding = MMALCameraConfig.Encoding;
@@ -298,14 +298,14 @@ namespace MMALSharp.Components
                 {
                     if (!StillPort.RgbOrderFixed())
                     {
-                        MMALLog.Logger.LogWarning("Using old firmware. Setting encoding to BGR24");
-                        encoding = MMALEncoding.BGR24;
+                        MmalLog.Logger.LogWarning("Using old firmware. Setting encoding to BGR24");
+                        encoding = MmalEncoding.Bgr24;
                     }
                 }
                 catch
                 {
-                    MMALLog.Logger.LogWarning("Using old firmware. Setting encoding to BGR24");
-                    encoding = MMALEncoding.BGR24;
+                    MmalLog.Logger.LogWarning("Using old firmware. Setting encoding to BGR24");
+                    encoding = MmalEncoding.Bgr24;
                 }
 
                 portConfig = new MMALPortConfig(
@@ -333,7 +333,7 @@ namespace MMALSharp.Components
                     crop: new Rectangle(0, 0, currentWidth, currentHeight));
             }
 
-            MMALLog.Logger.LogDebug("Commit still");
+            MmalLog.Logger.LogDebug("Commit still");
             StillPort.Configure(portConfig, null, handler);
 
             // Use Raspistill values.

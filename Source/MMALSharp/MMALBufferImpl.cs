@@ -62,23 +62,23 @@ namespace MMALSharp
         public void PrintProperties()
         {
             if (MMALCameraConfig.Debug)
-                MMALLog.Logger.LogDebug(ToString());
+                MmalLog.Logger.LogDebug(ToString());
         }
 
         /// <inheritdoc />
         public void ParseEvents()
         {
             if (Cmd == MMALEvents.MMAL_EVENT_EOS)
-                MMALLog.Logger.LogDebug("Buffer event: MMAL_EVENT_EOS");
+                MmalLog.Logger.LogDebug("Buffer event: MMAL_EVENT_EOS");
 
             if (Cmd == MMALEvents.MMAL_EVENT_ERROR)
-                MMALLog.Logger.LogDebug("Buffer event: MMAL_EVENT_ERROR");
+                MmalLog.Logger.LogDebug("Buffer event: MMAL_EVENT_ERROR");
 
             if (Cmd == MMALEvents.MMAL_EVENT_FORMAT_CHANGED)
-                MMALLog.Logger.LogDebug("Buffer event: MMAL_EVENT_FORMAT_CHANGED");
+                MmalLog.Logger.LogDebug("Buffer event: MMAL_EVENT_FORMAT_CHANGED");
 
             if (Cmd == MMALEvents.MMAL_EVENT_PARAMETER_CHANGED)
-                MMALLog.Logger.LogDebug("Buffer event: MMAL_EVENT_PARAMETER_CHANGED");
+                MmalLog.Logger.LogDebug("Buffer event: MMAL_EVENT_PARAMETER_CHANGED");
         }
 
         /// <inheritdoc />
@@ -113,7 +113,7 @@ namespace MMALSharp
         public byte[] GetBufferData()
         {
             if (MMALCameraConfig.Debug)
-                MMALLog.Logger.LogDebug("Getting data from buffer");
+                MmalLog.Logger.LogDebug("Getting data from buffer");
 
             MMALCheck(MMALBuffer.mmal_buffer_header_mem_lock(Ptr), "Unable to lock buffer header.");
 
@@ -130,7 +130,7 @@ namespace MMALSharp
             {
                 // If something goes wrong, unlock the header.
                 MMALBuffer.mmal_buffer_header_mem_unlock(Ptr);
-                MMALLog.Logger.LogWarning("Unable to handle data. Returning null.");
+                MmalLog.Logger.LogWarning("Unable to handle data. Returning null.");
                 return null;
             }
         }
@@ -139,7 +139,7 @@ namespace MMALSharp
         public void ReadIntoBuffer(byte[] source, int length, bool eof)
         {
             if (MMALCameraConfig.Debug)
-                MMALLog.Logger.LogDebug($"Reading {length} bytes into buffer");
+                MmalLog.Logger.LogDebug($"Reading {length} bytes into buffer");
 
             Ptr->length = (uint)length;
             Ptr->dts = Ptr->pts = MMALUtil.MMAL_TIME_UNKNOWN;
@@ -164,13 +164,13 @@ namespace MMALSharp
             if (CheckState())
             {
                 if (MMALCameraConfig.Debug)
-                    MMALLog.Logger.LogDebug("Releasing buffer.");
+                    MmalLog.Logger.LogDebug("Releasing buffer.");
 
                 MMALBuffer.mmal_buffer_header_release(Ptr);
             }
             else
             {
-                MMALLog.Logger.LogWarning("Buffer null, could not release.");
+                MmalLog.Logger.LogWarning("Buffer null, could not release.");
             }
 
             Dispose();

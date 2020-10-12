@@ -28,7 +28,7 @@ namespace MMALSharp.Callbacks
         public virtual void Callback(IBuffer buffer)
         {
             if (MMALCameraConfig.Debug)            
-                MMALLog.Logger.LogDebug($"In managed {WorkingPort.PortType.GetPortType()} callback");            
+                MmalLog.Logger.LogDebug($"In managed {WorkingPort.PortType.GetPortType()} callback");            
 
             long? pts = null;
 
@@ -49,17 +49,17 @@ namespace MMALSharp.Callbacks
             }
 
             if (MMALCameraConfig.Debug)            
-                MMALLog.Logger.LogDebug("Attempting to process data.");            
+                MmalLog.Logger.LogDebug("Attempting to process data.");            
             
             CaptureHandler?.Process(new ImageContext
             {
                 Data = data,
-                Eos = eos,
-                IFrame = containsIFrame,
+                IsEos = eos,
+                IsIFrame = containsIFrame,
                 Resolution = WorkingPort.Resolution,
                 Encoding = WorkingPort.EncodingType,
                 PixelFormat = WorkingPort.PixelFormat,
-                Raw = WorkingPort.EncodingType.EncType == MMALEncoding.EncodingType.PixelFormat,
+                IsRaw = WorkingPort.EncodingType.EncType == MmalEncoding.EncodingType.PixelFormat,
                 Pts = pts,
                 Stride = MMALUtil.mmal_encoding_width_to_stride(WorkingPort.PixelFormat?.EncodingVal ?? WorkingPort.EncodingType.EncodingVal, WorkingPort.Resolution.Width)
             });

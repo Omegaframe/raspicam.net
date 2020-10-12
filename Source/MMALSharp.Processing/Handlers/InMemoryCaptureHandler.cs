@@ -29,7 +29,7 @@ namespace MMALSharp.Handlers
         /// <inheritdoc />
         public override void Dispose()
         {
-            MMALLog.Logger.LogInformation($"Successfully processed {Helpers.ConvertBytesToMegabytes(_totalProcessed)}.");
+            MmalLog.Logger.LogInformation($"Successfully processed {Helpers.ConvertBytesToMegabytes(_totalProcessed)}.");
         }
         
         /// <inheritdoc />

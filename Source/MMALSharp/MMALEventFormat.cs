@@ -9,7 +9,7 @@ namespace MMALSharp
     {
         public MMAL_ES_FORMAT_T* Ptr { get; }
 
-        public string FourCC => MMALEncodingHelpers.ParseEncoding(Format.Encoding).EncodingName;
+        public string FourCC => MmalEncodingHelpers.ParseEncoding(Format.Encoding).EncodingName;
 
         public int Bitrate => Format.Bitrate;
 

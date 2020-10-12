@@ -20,7 +20,7 @@ namespace MMALSharp.Tests.Data
         {
             base.InputCallback(buffer);
 
-            MMALLog.Logger.LogInformation("In the custom input callback handler.");
+            MmalLog.Logger.LogInformation("In the custom input callback handler.");
         }
     }
 }
