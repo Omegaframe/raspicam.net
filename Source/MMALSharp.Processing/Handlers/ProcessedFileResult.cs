@@ -1,9 +1,4 @@
-﻿// <copyright file="ProcessedFileResult.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-namespace MMALSharp.Handlers
+﻿namespace MMALSharp.Handlers
 {
     /// <summary>
     /// Represents a file that contains the image data written by a capture handler.
@@ -33,9 +28,9 @@ namespace MMALSharp.Handlers
         /// <param name="extension">The file extension without the leading dot.</param>
         public ProcessedFileResult(string directory, string filename, string extension)
         {
-            this.Directory = directory;
-            this.Filename = filename;
-            this.Extension = extension;
+            Directory = directory;
+            Filename = filename;
+            Extension = extension;
         }
     }
 }

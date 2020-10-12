@@ -1,9 +1,4 @@
-﻿// <copyright file="MemoryStreamCaptureHandler.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System.IO;
+﻿using System.IO;
 
 namespace MMALSharp.Handlers
 {
@@ -17,7 +12,7 @@ namespace MMALSharp.Handlers
         /// </summary>
         public MemoryStreamCaptureHandler()
         {
-            this.CurrentStream = new MemoryStream();
+            CurrentStream = new MemoryStream();
         }
 
         /// <summary>
@@ -26,7 +21,7 @@ namespace MMALSharp.Handlers
         /// <param name="size">The capacity of the <see cref="MemoryStream"/>.</param>
         public MemoryStreamCaptureHandler(int size)
         {
-            this.CurrentStream = new MemoryStream(size);
+            CurrentStream = new MemoryStream(size);
         }
     }
 }

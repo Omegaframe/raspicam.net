@@ -1,9 +1,4 @@
-﻿// <copyright file="BayerMetaProcessor.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.Text;
 using MMALSharp.Common;
 
@@ -35,7 +30,7 @@ namespace MMALSharp.Processors
         /// <param name="camVersion">The camera version you're using.</param>
         public BayerMetaProcessor(CameraVersion camVersion)
         {
-            this.CameraVersion = camVersion;
+            CameraVersion = camVersion;
         }
 
         /// <inheritdoc />
@@ -43,7 +38,7 @@ namespace MMALSharp.Processors
         {
             byte[] array = null;
             
-            switch (this.CameraVersion)
+            switch (CameraVersion)
             {
                 case CameraVersion.OV5647:
                     array = new byte[BayerMetaLengthV1];
@@ -58,10 +53,8 @@ namespace MMALSharp.Processors
             byte[] meta = new byte[4];
             Array.Copy(array, 0, meta, 0, 4);
 
-            if (Encoding.ASCII.GetString(meta) != "BRCM")
-            {
-                throw new Exception("Could not find Bayer metadata in header");
-            }
+            if (Encoding.ASCII.GetString(meta) != "BRCM")            
+                throw new Exception("Could not find Bayer metadata in header");            
             
             context.Data = new byte[array.Length];
             Array.Copy(array, context.Data, array.Length);

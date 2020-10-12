@@ -1,8 +1,3 @@
-// <copyright file="InMemoryCaptureHandler.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using MMALSharp.Common;
@@ -28,7 +23,7 @@ namespace MMALSharp.Handlers
         /// </summary>
         public InMemoryCaptureHandler()
         {
-            this.WorkingData = new List<byte>();
+            WorkingData = new List<byte>();
         }
         
         /// <inheritdoc />
@@ -40,7 +35,7 @@ namespace MMALSharp.Handlers
         /// <inheritdoc />
         public override void Process(ImageContext context)
         {
-            this.WorkingData.AddRange(context.Data);
+            WorkingData.AddRange(context.Data);
             _totalProcessed += context.Data.Length;
             base.Process(context);
         }
@@ -51,11 +46,11 @@ namespace MMALSharp.Handlers
         /// </summary>
         public override void PostProcess()
         {
-            if (this.OnManipulate != null && this.ImageContext != null)
+            if (OnManipulate != null && ImageContext != null)
             {
-                this.ImageContext.Data = this.WorkingData.ToArray();
-                this.OnManipulate(new FrameProcessingContext(this.ImageContext));
-                this.WorkingData = new List<byte>(this.ImageContext.Data);     
+                ImageContext.Data = WorkingData.ToArray();
+                OnManipulate(new FrameProcessingContext(ImageContext));
+                WorkingData = new List<byte>(ImageContext.Data);     
             }
         }
 

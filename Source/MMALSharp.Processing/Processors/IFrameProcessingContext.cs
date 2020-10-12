@@ -1,9 +1,4 @@
-﻿// <copyright file="IFrameProcessingContext.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-namespace MMALSharp.Processors
+﻿namespace MMALSharp.Processors
 {
     /// <summary>
     /// A context to apply image processing techniques on image frames.

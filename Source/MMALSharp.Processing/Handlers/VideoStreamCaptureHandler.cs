@@ -1,9 +1,4 @@
-﻿// <copyright file="VideoStreamCaptureHandler.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.IO;
 using MMALSharp.Common;
 using MMALSharp.Processors.Motion;
@@ -34,10 +29,9 @@ namespace MMALSharp.Handlers
         /// Creates a new instance of the <see cref="VideoStreamCaptureHandler"/> class without provisions for writing to a file. Supports
         /// subclasses in which file output is optional.
         /// </summary>
-        public VideoStreamCaptureHandler()
-            : base()
+        public VideoStreamCaptureHandler() : base()
         {
-            this.StoreVideoTimestamps = false;
+            StoreVideoTimestamps = false;
         }
 
         /// <summary>
@@ -46,10 +40,9 @@ namespace MMALSharp.Handlers
         /// <param name="directory">The directory to save captured videos.</param>
         /// <param name="extension">The filename extension for saving files.</param>
         /// <param name="storeTimestamps">Store video timestamps.</param>
-        public VideoStreamCaptureHandler(string directory, string extension, bool storeTimestamps = false)
-            : base(directory, extension)
+        public VideoStreamCaptureHandler(string directory, string extension, bool storeTimestamps = false) : base(directory, extension)
         {
-            this.StoreVideoTimestamps = storeTimestamps;
+            StoreVideoTimestamps = storeTimestamps;
         }
 
         /// <summary>
@@ -57,47 +50,42 @@ namespace MMALSharp.Handlers
         /// </summary>
         /// <param name="fullPath">The absolute full path to save captured data to.</param>
         /// <param name="storeTimestamps">Store video timestamps.</param>
-        public VideoStreamCaptureHandler(string fullPath, bool storeTimestamps = false)
-            : base(fullPath)
+        public VideoStreamCaptureHandler(string fullPath, bool storeTimestamps = false) : base(fullPath)
         {
-            this.StoreVideoTimestamps = storeTimestamps;
+            StoreVideoTimestamps = storeTimestamps;
         }
 
         /// <inheritdoc />
         public override void Process(ImageContext context)
         {
-            if (this.CurrentStream == null)
-            {
+            if (CurrentStream == null)
                 return;
-            }
 
             base.Process(context);
 
-            if (this.StoreVideoTimestamps && context.Pts.HasValue)
+            if (StoreVideoTimestamps && context.Pts.HasValue)
             {
                 var str = $"{context.Pts / 1000}.{context.Pts % 1000:000}" + Environment.NewLine;
-               
-                File.AppendAllText($"{this.Directory}/{this.CurrentFilename}.pts", str);
+
+                File.AppendAllText($"{Directory}/{CurrentFilename}.pts", str);
             }
         }
 
         /// <summary>
         /// Splits the current file by closing the current stream and opening a new one.
         /// </summary>
-        public virtual void Split() => this.NewFile();
-        
+        public virtual void Split() => NewFile();
+
         /// <summary>
         /// Used to set the current working motion vector store.
         /// </summary>
         /// <param name="stream">The <see cref="FileStream"/> to write to.</param>
         public void InitialiseMotionStore(Stream stream)
         {
-            if (this.CurrentStream == null)
-            {
+            if (CurrentStream == null)
                 return;
-            }
 
-            this.MotionVectorStore = stream;
+            MotionVectorStore = stream;
         }
 
         /// <summary>
@@ -106,16 +94,16 @@ namespace MMALSharp.Handlers
         /// <param name="data">The byte array containing the motion vector data.</param>
         public void ProcessMotionVectors(byte[] data)
         {
-            if (this.MotionVectorStore != null)
+            if (MotionVectorStore != null)
             {
-                if (this.MotionVectorStore.CanWrite)
+                if (MotionVectorStore.CanWrite)
                 {
-                    this.MotionVectorStore.Write(data, 0, data.Length);
+                    MotionVectorStore.Write(data, 0, data.Length);
                 }
                 else
                 {
                     throw new IOException("Stream not writable.");
-                }                    
+                }
             }
         }
     }

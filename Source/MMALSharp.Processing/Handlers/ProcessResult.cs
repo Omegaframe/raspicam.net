@@ -1,9 +1,4 @@
-﻿// <copyright file="ProcessResult.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-namespace MMALSharp.Handlers
+﻿namespace MMALSharp.Handlers
 {
     /// <summary>
     /// Contains the user provided image data with for a process operation.

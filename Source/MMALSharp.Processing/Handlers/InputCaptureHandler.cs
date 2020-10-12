@@ -1,9 +1,4 @@
-﻿// <copyright file="InputCaptureHandler.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System.IO;
+﻿using System.IO;
 using MMALSharp.Common.Utility;
 
 namespace MMALSharp.Handlers
@@ -29,7 +24,7 @@ namespace MMALSharp.Handlers
         /// <param name="inputStream">The stream to retrieve input data from.</param>
         public InputCaptureHandler(Stream inputStream)
         {
-            this.CurrentStream = inputStream;
+            CurrentStream = inputStream;
         }
 
         /// <summary>
@@ -41,9 +36,9 @@ namespace MMALSharp.Handlers
         {
             var buffer = new byte[allocSize];
 
-            var read = this.CurrentStream.Read(buffer, 0, (int)allocSize);
+            var read = CurrentStream.Read(buffer, 0, (int)allocSize);
 
-            this.Processed += read;
+            Processed += read;
 
             if (read == 0)
             {
@@ -56,13 +51,13 @@ namespace MMALSharp.Handlers
         /// <inheritdoc />
         public void Dispose()
         {
-            this.CurrentStream?.Dispose();
+            CurrentStream?.Dispose();
         }
 
         /// <inheritdoc />
         public string TotalProcessed()
         {
-            return $"{Helpers.ConvertBytesToMegabytes(this.Processed)}";
+            return $"{Helpers.ConvertBytesToMegabytes(Processed)}";
         }
     }
 }

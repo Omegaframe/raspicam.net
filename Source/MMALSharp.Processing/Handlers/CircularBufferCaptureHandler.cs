@@ -1,9 +1,4 @@
-﻿// <copyright file="CircularBufferCaptureHandler.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -12,64 +7,39 @@ using MMALSharp.Common.Utility;
 
 namespace MMALSharp.Handlers
 {
-    /// <summary>
-    /// Represents a capture handler working as a circular buffer.
-    /// </summary>
     public sealed class CircularBufferCaptureHandler : VideoStreamCaptureHandler
     {
         private bool _recordToFileStream;
         private int _bufferSize;
         private bool _receivedIFrame;
 
-        /// <summary>
-        /// The circular buffer object responsible for storing image data.
-        /// </summary>
         public CircularBuffer<byte> Buffer { get; private set; }
 
-        /// <summary>
-        /// Creates a new instance of the <see cref="CircularBufferCaptureHandler"/> class with the specified Circular buffer capacity without file output.
-        /// </summary>
-        /// <param name="bufferSize">The buffer's size.</param>
-        public CircularBufferCaptureHandler(int bufferSize)
-            : base()
+        public CircularBufferCaptureHandler(int bufferSize) : base()
         {
             _bufferSize = bufferSize;
-            this.Buffer = new CircularBuffer<byte>(bufferSize);
+            Buffer = new CircularBuffer<byte>(bufferSize);
         }
 
-        /// <summary>
-        /// Creates a new instance of the <see cref="CircularBufferCaptureHandler"/> class with the specified Circular buffer capacity and directory/extension of the working file.
-        /// </summary>
-        /// <param name="bufferSize">The buffer's size.</param>
-        /// <param name="directory">The directory to save captured videos.</param>
-        /// <param name="extension">The filename extension for saving files.</param>
-        public CircularBufferCaptureHandler(int bufferSize, string directory, string extension)
-            : base(directory, extension) 
+        public CircularBufferCaptureHandler(int bufferSize, string directory, string extension) : base(directory, extension)
         {
             _bufferSize = bufferSize;
-            this.Buffer = new CircularBuffer<byte>(bufferSize);
+            Buffer = new CircularBuffer<byte>(bufferSize);
         }
 
-        /// <summary>
-        /// Creates a new instance of the <see cref="CircularBufferCaptureHandler"/> class with the specified Circular buffer capacity and working file path.
-        /// </summary>
-        /// <param name="bufferSize">The buffer's size.</param>
-        /// <param name="fullPath">The absolute full path to save captured data to.</param>
-        public CircularBufferCaptureHandler(int bufferSize, string fullPath)
-            : base(fullPath) 
+        public CircularBufferCaptureHandler(int bufferSize, string fullPath) : base(fullPath)
         {
             _bufferSize = bufferSize;
-            this.Buffer = new CircularBuffer<byte>(bufferSize);
+            Buffer = new CircularBuffer<byte>(bufferSize);
         }
 
-        /// <inheritdoc />
         public override void Process(ImageContext context)
         {
             if (!_recordToFileStream)
             {
                 for (var i = 0; i < context.Data.Length; i++)
                 {
-                    this.Buffer.PushBack(context.Data[i]);
+                    Buffer.PushBack(context.Data[i]);
                 }
             }
             else
@@ -79,28 +49,28 @@ namespace MMALSharp.Handlers
                     _receivedIFrame = context.IFrame;
                 }
 
-                if (this.Buffer.Size > 0)
+                if (Buffer.Size > 0)
                 {
                     // The buffer contains data.
-                    if (this.CurrentStream != null && this.CurrentStream.CanWrite)
+                    if (CurrentStream != null && CurrentStream.CanWrite)
                     {
-                        this.CurrentStream.Write(this.Buffer.ToArray(), 0, this.Buffer.Size);
+                        CurrentStream.Write(Buffer.ToArray(), 0, Buffer.Size);
                     }
 
-                    this.Processed += this.Buffer.Size;
-                    this.Buffer = new CircularBuffer<byte>(this.Buffer.Capacity);
+                    Processed += Buffer.Size;
+                    Buffer = new CircularBuffer<byte>(Buffer.Capacity);
                 }
 
-                if (this.CurrentStream != null && this.CurrentStream.CanWrite)
+                if (CurrentStream != null && CurrentStream.CanWrite)
                 {
-                    this.CurrentStream.Write(context.Data, 0, context.Data.Length);
+                    CurrentStream.Write(context.Data, 0, context.Data.Length);
                 }
 
-                this.Processed += context.Data.Length;
+                Processed += context.Data.Length;
             }
 
             // Not calling base method to stop data being written to the stream when not recording.
-            this.ImageContext = context;
+            ImageContext = context;
         }
 
         /// <summary>
@@ -111,17 +81,13 @@ namespace MMALSharp.Handlers
         /// <returns>Task representing the recording process if a CancellationToken was provided, otherwise a completed Task.</returns>
         public async Task StartRecording(Action initRecording = null, CancellationToken cancellationToken = default)
         {
-            if (this.CurrentStream == null)
-            {
+            if (CurrentStream == null)
                 throw new InvalidOperationException($"Recording unavailable, {nameof(CircularBufferCaptureHandler)} was not created with output-file arguments");
-            }
 
             _recordToFileStream = true;
 
             if (initRecording != null)
-            {
                 initRecording.Invoke();
-            }
 
             if (cancellationToken != CancellationToken.None)
             {
@@ -138,15 +104,10 @@ namespace MMALSharp.Handlers
             }
         }
 
-        /// <summary>
-        /// Call to stop recording to FileStream.
-        /// </summary>
         public void StopRecording()
         {
-            if (this.CurrentStream == null)
-            {
+            if (CurrentStream == null)
                 throw new InvalidOperationException($"Recording unavailable, {nameof(CircularBufferCaptureHandler)} was not created with output-file arguments");
-            }
 
             MMALLog.Logger.LogInformation("Stop recording.");
 
@@ -154,16 +115,14 @@ namespace MMALSharp.Handlers
             _receivedIFrame = false;
         }
 
-        /// <inheritdoc />
         public override void Dispose()
         {
-            this.CurrentStream?.Dispose();
+            CurrentStream?.Dispose();
         }
 
-        /// <inheritdoc />
         public override string TotalProcessed()
         {
-            return $"{this.Processed}";
+            return $"{Processed}";
         }
     }
 }

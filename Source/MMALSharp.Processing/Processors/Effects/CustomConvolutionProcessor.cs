@@ -1,9 +1,4 @@
-﻿// <copyright file="CustomConvolutionProcessor.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using MMALSharp.Common;
+﻿using MMALSharp.Common;
 
 namespace MMALSharp.Processors.Effects
 {
@@ -25,7 +20,7 @@ namespace MMALSharp.Processors.Effects
         /// <param name="kernelHeight">The kernel's height.</param>
         public CustomConvolutionProcessor(double[,] kernel, int kernelWidth, int kernelHeight)
         {
-            this.Kernel = kernel;
+            Kernel = kernel;
 
             _kernelWidth = kernelWidth;
             _kernelHeight = kernelHeight;
@@ -34,7 +29,7 @@ namespace MMALSharp.Processors.Effects
         /// <inheritdoc />
         public void Apply(ImageContext context)
         {
-            this.ApplyConvolution(this.Kernel, _kernelWidth, _kernelHeight, context);
+            ApplyConvolution(Kernel, _kernelWidth, _kernelHeight, context);
         }
     }
 }

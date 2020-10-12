@@ -1,9 +1,4 @@
-﻿// <copyright file="FrameDiffAnalyser.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -74,8 +69,8 @@ namespace MMALSharp.Processors.Motion
         /// <param name="onDetect">A callback when changes are detected.</param>
         public FrameDiffAnalyser(MotionConfig config, Action onDetect)
         {
-            this.MotionConfig = config;
-            this.OnDetect = onDetect;
+            MotionConfig = config;
+            OnDetect = onDetect;
 
             _testFrameAge = new Stopwatch();
         }
@@ -83,16 +78,16 @@ namespace MMALSharp.Processors.Motion
         /// <inheritdoc />
         public override void Apply(ImageContext context)
         {
-            this.ImageContext = context;
+            ImageContext = context;
 
             base.Apply(context);
 
-            if (!this.FullTestFrame)
+            if (!FullTestFrame)
             {
                 if (context.Eos)
                 {
-                    this.FullTestFrame = true;
-                    this.PrepareTestFrame();
+                    FullTestFrame = true;
+                    PrepareTestFrame();
                     MMALLog.Logger.LogDebug("EOS reached for test frame.");
                 }
             }
@@ -100,11 +95,11 @@ namespace MMALSharp.Processors.Motion
             {
                 MMALLog.Logger.LogDebug("Have full test frame.");
 
-                if (this.FullFrame && !this.TestFrameExpired())
+                if (FullFrame && !TestFrameExpired())
                 {
                     MMALLog.Logger.LogDebug("Have full frame, checking for changes.");
 
-                    this.CheckForChanges(this.OnDetect);
+                    CheckForChanges(OnDetect);
                 }
             }
         }
@@ -114,10 +109,10 @@ namespace MMALSharp.Processors.Motion
         /// </summary>
         public void ResetAnalyser()
         {
-            this.TestFrame = null;
-            this.WorkingData = new List<byte>();
-            this.FullFrame = false;
-            this.FullTestFrame = false;
+            TestFrame = null;
+            WorkingData = new List<byte>();
+            FullFrame = false;
+            FullTestFrame = false;
 
             _testFrameAge.Reset();
         }
@@ -127,10 +122,10 @@ namespace MMALSharp.Processors.Motion
             if (_firstFrame)
             {
                 // one-time collection of basic frame dimensions
-                _frameWidth = this.ImageContext.Resolution.Width;
-                _frameHeight = this.ImageContext.Resolution.Height;
-                _frameBpp = this.GetBpp() / 8;
-                _frameStride = this.ImageContext.Stride;
+                _frameWidth = ImageContext.Resolution.Width;
+                _frameHeight = ImageContext.Resolution.Height;
+                _frameBpp = GetBpp() / 8;
+                _frameStride = ImageContext.Stride;
 
                 // one-time setup of the diff cell parameters and arrays
                 int indices = (int)Math.Pow(CellDivisor, 2);
@@ -153,21 +148,21 @@ namespace MMALSharp.Processors.Motion
                     }
                 }
 
-                this.TestFrame = this.WorkingData.ToArray();
+                TestFrame = WorkingData.ToArray();
 
-                if (!string.IsNullOrWhiteSpace(this.MotionConfig.MotionMaskPathname))
+                if (!string.IsNullOrWhiteSpace(MotionConfig.MotionMaskPathname))
                 {
-                    this.PrepareMask();
+                    PrepareMask();
                 }
 
                 _firstFrame = false;
             }
             else
             {
-                this.TestFrame = this.WorkingData.ToArray();
+                TestFrame = WorkingData.ToArray();
             }
 
-            if (this.MotionConfig.TestFrameInterval != TimeSpan.Zero)
+            if (MotionConfig.TestFrameInterval != TimeSpan.Zero)
             {
                 _testFrameAge.Restart();
             }
@@ -178,12 +173,12 @@ namespace MMALSharp.Processors.Motion
             PixelFormat format = default;
 
             // RGB16 doesn't appear to be supported by GDI?
-            if (this.ImageContext.PixelFormat == MMALEncoding.RGB24)
+            if (ImageContext.PixelFormat == MMALEncoding.RGB24)
             {
                 return 24;
             }
 
-            if (this.ImageContext.PixelFormat == MMALEncoding.RGB32 || this.ImageContext.PixelFormat == MMALEncoding.RGBA)
+            if (ImageContext.PixelFormat == MMALEncoding.RGB32 || ImageContext.PixelFormat == MMALEncoding.RGBA)
             {
                 return 32;
             }
@@ -198,7 +193,7 @@ namespace MMALSharp.Processors.Motion
 
         private void PrepareMask()
         {
-            using (var fs = new FileStream(this.MotionConfig.MotionMaskPathname, FileMode.Open, FileAccess.Read))
+            using (var fs = new FileStream(MotionConfig.MotionMaskPathname, FileMode.Open, FileAccess.Read))
             using (var mask = new Bitmap(fs))
             {
                 // Verify it matches our frame dimensions
@@ -227,21 +222,21 @@ namespace MMALSharp.Processors.Motion
 
         private bool TestFrameExpired()
         {
-            if (this.MotionConfig.TestFrameInterval == TimeSpan.Zero || _testFrameAge.Elapsed < this.MotionConfig.TestFrameInterval)
+            if (MotionConfig.TestFrameInterval == TimeSpan.Zero || _testFrameAge.Elapsed < MotionConfig.TestFrameInterval)
             {
                 return false;
             }
 
             MMALLog.Logger.LogDebug("Have full frame, updating test frame.");
-            this.PrepareTestFrame();
+            PrepareTestFrame();
             return true;
         }
 
         private void CheckForChanges(Action onDetect)
         {
-            var diff = this.Analyse();
+            var diff = Analyse();
 
-            if (diff >= this.MotionConfig.Threshold)
+            if (diff >= MotionConfig.Threshold)
             {
                 MMALLog.Logger.LogInformation($"Motion detected! Frame difference {diff}.");
                 onDetect();
@@ -250,7 +245,7 @@ namespace MMALSharp.Processors.Motion
 
         private int Analyse()
         {
-            _workingData = this.WorkingData.ToArray();
+            _workingData = WorkingData.ToArray();
 
             var result = Parallel.ForEach(_cellDiff, (cell, loopState, loopIndex) => CheckDiff(loopIndex, loopState));
 

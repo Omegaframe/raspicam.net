@@ -1,8 +1,3 @@
-// <copyright file="ConvolutionBase.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -33,7 +28,7 @@ namespace MMALSharp.Processors.Effects
             byte[] store = null;
 
             using (var ms = new MemoryStream(context.Data))
-            using (var bmp = this.LoadBitmap(context, ms))
+            using (var bmp = LoadBitmap(context, ms))
             {
                 bmpData = bmp.LockBits(new Rectangle(0, 0,
                         bmp.Width,
@@ -42,9 +37,7 @@ namespace MMALSharp.Processors.Effects
                     bmp.PixelFormat);
 
                 if (context.Raw)
-                {
-                    this.InitBitmapData(context, bmpData);
-                }
+                    InitBitmapData(context, bmpData);
 
                 pNative = bmpData.Scan0;
 
@@ -65,19 +58,19 @@ namespace MMALSharp.Processors.Effects
 
                 var t1 = Task.Run(() =>
                 {
-                    this.ProcessQuadrant(quadA, bmp, bmpData, rgbValues, kernel, kernelWidth, kernelHeight, bpp);
+                    ProcessQuadrant(quadA, bmp, bmpData, rgbValues, kernel, kernelWidth, kernelHeight, bpp);
                 });
                 var t2 = Task.Run(() =>
                 {
-                    this.ProcessQuadrant(quadB, bmp, bmpData, rgbValues, kernel, kernelWidth, kernelHeight, bpp);
+                    ProcessQuadrant(quadB, bmp, bmpData, rgbValues, kernel, kernelWidth, kernelHeight, bpp);
                 });
                 var t3 = Task.Run(() =>
                 {
-                    this.ProcessQuadrant(quadC, bmp, bmpData, rgbValues, kernel, kernelWidth, kernelHeight, bpp);
+                    ProcessQuadrant(quadC, bmp, bmpData, rgbValues, kernel, kernelWidth, kernelHeight, bpp);
                 });
                 var t4 = Task.Run(() =>
                 {
-                    this.ProcessQuadrant(quadD, bmp, bmpData, rgbValues, kernel, kernelWidth, kernelHeight, bpp);
+                    ProcessQuadrant(quadD, bmp, bmpData, rgbValues, kernel, kernelWidth, kernelHeight, bpp);
                 });
 
                 Task.WaitAll(t1, t2, t3, t4);
@@ -100,41 +93,31 @@ namespace MMALSharp.Processors.Effects
                     }
                 }
             }
-            
+
             context.Data = store;
         }
 
         private Bitmap LoadBitmap(ImageContext imageContext, MemoryStream stream)
         {
-            if (imageContext.Raw)
-            {
-                PixelFormat format = default;
+            if (!imageContext.Raw)
+                return new Bitmap(stream);
 
-                // RGB16 doesn't appear to be supported by GDI?
-                if (imageContext.PixelFormat == MMALEncoding.RGB24)
-                {
-                    format = PixelFormat.Format24bppRgb;
-                }
+            PixelFormat format = default;
 
-                if (imageContext.PixelFormat == MMALEncoding.RGB32)
-                {
-                    format = PixelFormat.Format32bppRgb;
-                }
+            // RGB16 doesn't appear to be supported by GDI?
+            if (imageContext.PixelFormat == MMALEncoding.RGB24)
+                format = PixelFormat.Format24bppRgb;
 
-                if (imageContext.PixelFormat == MMALEncoding.RGBA)
-                {
-                    format = PixelFormat.Format32bppArgb;
-                }
+            if (imageContext.PixelFormat == MMALEncoding.RGB32)
+                format = PixelFormat.Format32bppRgb;
 
-                if (format == default)
-                {
-                    throw new Exception($"Unsupported pixel format for Bitmap: {imageContext.PixelFormat}.");
-                }
+            if (imageContext.PixelFormat == MMALEncoding.RGBA)
+                format = PixelFormat.Format32bppArgb;
 
-                return new Bitmap(imageContext.Resolution.Width, imageContext.Resolution.Height, format);
-            }
+            if (format == default)
+                throw new Exception($"Unsupported pixel format for Bitmap: {imageContext.PixelFormat}.");
 
-            return new Bitmap(stream);
+            return new Bitmap(imageContext.Resolution.Width, imageContext.Resolution.Height, format);
         }
 
         private void InitBitmapData(ImageContext imageContext, BitmapData bmpData)
@@ -164,9 +147,9 @@ namespace MMALSharp.Processors.Effects
                             {
                                 for (var m = 0; m < kernelHeight; m++)
                                 {
-                                    r1 += (int)(rgbValues[(this.Bound(row + m, quad.Y + quad.Height) * stride) + (this.Bound(column + l, quad.X + quad.Width) * pixelDepth)] * kernel[l, m]);
-                                    g1 += (int)(rgbValues[(this.Bound(row + m, quad.Y + quad.Height) * stride) + (this.Bound(column + l, quad.X + quad.Width) * pixelDepth) + 1] * kernel[l, m]);
-                                    b1 += (int)(rgbValues[(this.Bound(row + m, quad.Y + quad.Height) * stride) + (this.Bound(column + l, quad.X + quad.Width) * pixelDepth) + 2] * kernel[l, m]);
+                                    r1 += (int)(rgbValues[(Bound(row + m, quad.Y + quad.Height) * stride) + (Bound(column + l, quad.X + quad.Width) * pixelDepth)] * kernel[l, m]);
+                                    g1 += (int)(rgbValues[(Bound(row + m, quad.Y + quad.Height) * stride) + (Bound(column + l, quad.X + quad.Width) * pixelDepth) + 1] * kernel[l, m]);
+                                    b1 += (int)(rgbValues[(Bound(row + m, quad.Y + quad.Height) * stride) + (Bound(column + l, quad.X + quad.Width) * pixelDepth) + 2] * kernel[l, m]);
                                 }
                             }
 
@@ -184,7 +167,7 @@ namespace MMALSharp.Processors.Effects
                 }
             }
         }
-        
+
         private int Bound(int value, int endIndex)
         {
             if (value < 0)
@@ -196,7 +179,7 @@ namespace MMALSharp.Processors.Effects
             {
                 return value;
             }
-                
+
             return endIndex - 1;
         }
     }

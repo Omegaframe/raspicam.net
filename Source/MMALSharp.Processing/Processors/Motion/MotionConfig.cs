@@ -1,9 +1,4 @@
-﻿// <copyright file="MotionConfig.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 
 namespace MMALSharp.Processors.Motion
 {
@@ -37,9 +32,9 @@ namespace MMALSharp.Processors.Motion
         /// <param name="motionMaskPathname">Pathname to an optional motion-detection mask bitmap.</param>
         public MotionConfig(int threshold = 130, TimeSpan testFrameInterval = default, string motionMaskPathname = null)
         {
-            this.Threshold = threshold;
-            this.TestFrameInterval = testFrameInterval.Equals(TimeSpan.Zero) ? TimeSpan.FromSeconds(10) : testFrameInterval;
-            this.MotionMaskPathname = motionMaskPathname;
+            Threshold = threshold;
+            TestFrameInterval = testFrameInterval.Equals(TimeSpan.Zero) ? TimeSpan.FromSeconds(10) : testFrameInterval;
+            MotionMaskPathname = motionMaskPathname;
         }
     }
 }

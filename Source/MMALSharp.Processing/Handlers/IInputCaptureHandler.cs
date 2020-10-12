@@ -1,9 +1,4 @@
-﻿// <copyright file="IInputCaptureHandler.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-namespace MMALSharp.Handlers
+﻿namespace MMALSharp.Handlers
 {
     /// <summary>
     /// Represents a capture handler attached to an Input port.

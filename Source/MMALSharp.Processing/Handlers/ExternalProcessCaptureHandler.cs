@@ -1,9 +1,4 @@
-﻿// <copyright file="ExternalProcessCaptureHandler.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
@@ -32,30 +27,21 @@ namespace MMALSharp.Handlers
         /// </summary>
         protected int Processed { get; set; }
 
-        /// <summary>
-        /// Creates a new instance of <see cref="ExternalProcessCaptureHandler"/> with the specified options.
-        /// </summary>
-        /// <param name="options">Configuration options for <see cref="ExternalProcessCaptureHandler"/>.</param>
         public ExternalProcessCaptureHandler(ExternalProcessCaptureHandlerOptions options)
         {
             MMALLog.Logger.LogTrace("Starting ExternalProcessCaptureHandler");
             MMALLog.Logger.LogTrace($"  File: {options.Filename}");
             MMALLog.Logger.LogTrace($"  Args: {options.Arguments}");
-            if(options.TerminationSignals.Length == 0)
-            {
+
+            if (options.TerminationSignals.Length == 0)
                 MMALLog.Logger.LogTrace($"  Signal count: 0 (process will be killed upon Dispose)");
-            }
             else
-            {
                 MMALLog.Logger.LogTrace($"  Signal count: {options.TerminationSignals.Length}");
-            }
 
             _options = options;
 
-            if(options.EchoOutput)
-            {
+            if (options.EchoOutput)
                 _stdoutBuffer = Channel.CreateUnbounded<string>(new UnboundedChannelOptions { SingleReader = true, SingleWriter = true });
-            }
 
             var processStartInfo = new ProcessStartInfo
             {
@@ -74,7 +60,7 @@ namespace MMALSharp.Handlers
             Console.InputEncoding = Encoding.ASCII;
 
             _process.EnableRaisingEvents = true;
-            if(options.EchoOutput)
+            if (options.EchoOutput)
             {
                 _process.OutputDataReceived += WriteToBuffer;
                 _process.ErrorDataReceived += WriteToBuffer;
@@ -91,26 +77,16 @@ namespace MMALSharp.Handlers
             _process.BeginErrorReadLine();
         }
 
-        /// <summary>
-        /// Returns whether this capture handler features the split file functionality.
-        /// </summary>
-        /// <returns>True if can split.</returns>
-        public bool CanSplit() 
-            => false;
+        public bool CanSplit() => false;
 
-        /// <summary>
-        /// Not used.
-        /// </summary>
-        public void PostProcess() 
-        { }
+        public void PostProcess() { }
 
         /// <summary>
         /// Not used.
         /// </summary>
         /// <returns>A NotImplementedException.</returns>
         /// <exception cref="NotImplementedException"></exception>
-        public string GetDirectory()
-            => throw new NotImplementedException();
+        public string GetDirectory() => throw new NotImplementedException();
 
         /// <summary>
         /// Not used.
@@ -118,8 +94,7 @@ namespace MMALSharp.Handlers
         /// <param name="allocSize">N/A.</param>
         /// <returns>A NotImplementedException.</returns>
         /// <exception cref="NotImplementedException"></exception>
-        public ProcessResult Process(uint allocSize)
-            => throw new NotImplementedException();
+        public ProcessResult Process(uint _) => throw new NotImplementedException();
 
         /// <summary>
         /// Writes frame data to the StandardInput stream for processing.
@@ -131,7 +106,7 @@ namespace MMALSharp.Handlers
             {
                 _process.StandardInput.BaseStream.Write(context.Data, 0, context.Data.Length);
                 _process.StandardInput.BaseStream.Flush();
-                this.Processed += context.Data.Length;
+                Processed += context.Data.Length;
             }
             catch
             {
@@ -144,15 +119,13 @@ namespace MMALSharp.Handlers
         /// Not used.
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        public void Split()
-            => throw new NotImplementedException();
+        public void Split() => throw new NotImplementedException();
 
         /// <summary>
         /// Returns the total number of bytes processed by this capture handler.
         /// </summary>
         /// <returns>The total number of bytes processed by this capture handler.</returns>
-        public string TotalProcessed()
-            => $"{this.Processed}";
+        public string TotalProcessed() => $"{Processed}";
 
         /// <summary>
         /// Manages echoing the output buffer and handles attempts to cleanly terminate the
@@ -181,9 +154,7 @@ namespace MMALSharp.Handlers
                 foreach (var sigint in _options.TerminationSignals)
                 {
                     if (_process.HasExited)
-                    {
                         break;
-                    }
 
                     Syscall.kill(_process.Id, sigint);
                 }
@@ -193,9 +164,7 @@ namespace MMALSharp.Handlers
             var stopwatch = new Stopwatch();
             stopwatch.Start();
             while (!_process.HasExited && stopwatch.ElapsedMilliseconds < _options.DrainOutputDelayMs)
-            {
                 await Task.Delay(50).ConfigureAwait(false);
-            }
 
             MMALLog.Logger.LogTrace($"Process exited? {_process.HasExited}");
 
@@ -203,7 +172,6 @@ namespace MMALSharp.Handlers
             outputToken.Cancel();
         }
 
-        /// <inheritdoc />
         public void Dispose()
         {
             if (!_process.HasExited)
@@ -229,17 +197,14 @@ namespace MMALSharp.Handlers
                 // Technically the faster TryWrite method is guaranteed to work for an
                 // unbounded channel, but in this case non-blocking async is more important.
                 if (_stdoutBuffer != null && e.Data != null)
-                {
                     await _stdoutBuffer.Writer.WriteAsync(e.Data).ConfigureAwait(false);
-                }
             }
             catch
             { }
         }
 
         // Used when output is not echoed; the Process class requires that stdout/stderr be received.
-        private void DiscardBuffer(object sendingProcess, DataReceivedEventArgs e)
-        { }
+        private void DiscardBuffer(object sendingProcess, DataReceivedEventArgs e) { }
 
         // When console output is buffered, this asynchronously outputs the buffer without
         // blocking the Process, unlike immediate inline calls to Console.WriteLine.
@@ -247,7 +212,7 @@ namespace MMALSharp.Handlers
         {
             try
             {
-                if(_options.EchoOutput)
+                if (_options.EchoOutput)
                 {
                     while (await _stdoutBuffer.Reader.WaitToReadAsync(cancellationToken).ConfigureAwait(false))
                     {

@@ -1,9 +1,4 @@
-﻿// <copyright file="FileStreamCaptureHandler.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using MMALSharp.Common.Utility;
 using System;
 using System.Collections.Generic;
@@ -55,31 +50,31 @@ namespace MMALSharp.Handlers
         /// </summary>
         /// <param name="directory">The directory to save captured data.</param>
         /// <param name="extension">The filename extension for saving files.</param>
-        public FileStreamCaptureHandler(string directory, string extension) 
+        public FileStreamCaptureHandler(string directory, string extension)
         {
-            this.Directory = directory.TrimEnd('/');
-            this.Extension = extension.TrimStart('.');
+            Directory = directory.TrimEnd('/');
+            Extension = extension.TrimStart('.');
 
-            MMALLog.Logger.LogDebug($"{nameof(FileStreamCaptureHandler)} created for directory {this.Directory} and extension {this.Extension}");
+            MMALLog.Logger.LogDebug($"{nameof(FileStreamCaptureHandler)} created for directory {Directory} and extension {Extension}");
 
-            System.IO.Directory.CreateDirectory(this.Directory);
-            
+            System.IO.Directory.CreateDirectory(Directory);
+
             var now = DateTime.Now.ToString("dd-MMM-yy HH-mm-ss");
-            
+
             int i = 1;
 
-            var fileName = $"{this.Directory}/{now}.{this.Extension}";
+            var fileName = $"{Directory}/{now}.{Extension}";
 
             while (File.Exists(fileName))
             {
-                fileName = $"{this.Directory}/{now} {i}.{this.Extension}";
+                fileName = $"{Directory}/{now} {i}.{Extension}";
                 i++;
             }
 
             var fileInfo = new FileInfo(fileName);
 
-            this.CurrentFilename = Path.GetFileNameWithoutExtension(fileInfo.Name);
-            this.CurrentStream = File.Create(fileName);
+            CurrentFilename = Path.GetFileNameWithoutExtension(fileInfo.Name);
+            CurrentStream = File.Create(fileName);
         }
 
         /// <summary>
@@ -90,95 +85,81 @@ namespace MMALSharp.Handlers
         {
             var fileInfo = new FileInfo(fullPath);
 
-            this.Directory = fileInfo.DirectoryName;
-            this.CurrentFilename = Path.GetFileNameWithoutExtension(fileInfo.Name);
+            Directory = fileInfo.DirectoryName;
+            CurrentFilename = Path.GetFileNameWithoutExtension(fileInfo.Name);
 
             var ext = fullPath.Split('.').LastOrDefault();
-            
-            if (string.IsNullOrEmpty(ext))
-            {
-                throw new ArgumentNullException(nameof(ext), "Could not get file extension from path string.");
-            }
-            
-            this.Extension = ext;
 
-            MMALLog.Logger.LogDebug($"{nameof(FileStreamCaptureHandler)} created for directory {this.Directory} and extension {this.Extension}");
+            if (string.IsNullOrEmpty(ext))
+                throw new ArgumentNullException(nameof(ext), "Could not get file extension from path string.");
+
+            Extension = ext;
+
+            MMALLog.Logger.LogDebug($"{nameof(FileStreamCaptureHandler)} created for directory {Directory} and extension {Extension}");
 
             _customFilename = true;
 
-            System.IO.Directory.CreateDirectory(this.Directory);
+            System.IO.Directory.CreateDirectory(Directory);
 
-            this.CurrentStream = File.Create(fullPath);
+            CurrentStream = File.Create(fullPath);
         }
 
         /// <summary>
         /// Gets the filename that a FileStream points to.
         /// </summary>
         /// <returns>The filename.</returns>
-        public string GetFilename() => 
-            (this.CurrentStream != null) ? Path.GetFileNameWithoutExtension(this.CurrentStream.Name) : string.Empty;
+        public string GetFilename() => (CurrentStream != null) ? Path.GetFileNameWithoutExtension(CurrentStream.Name) : string.Empty;
 
         /// <summary>
         /// Gets the filepath that a FileStream points to.
         /// </summary>
         /// <returns>The filepath.</returns>
-        public string GetFilepath() => 
-            this.CurrentStream?.Name ?? string.Empty;
+        public string GetFilepath() =>            CurrentStream?.Name ?? string.Empty;
 
         /// <summary>
         /// Creates a new File (FileStream), assigns it to the Stream instance of this class and disposes of any existing stream. 
         /// </summary>
         public virtual void NewFile()
         {
-            if (this.CurrentStream == null)
-            {
-                return;
-            }
+            if (CurrentStream == null)            
+                return;            
 
-            this.CurrentStream?.Dispose();
+            CurrentStream?.Dispose();
 
-            string newFilename = string.Empty;
-            
+            string newFilename;
             if (_customFilename)
             {
                 // If we're taking photos from video port, we don't want to be hammering File.Exists as this is added I/O overhead. Camera can take multiple photos per second
                 // so we can't do this when filename uses the current DateTime.
                 _increment++;
-                newFilename = $"{this.Directory}/{this.CurrentFilename} {_increment}.{this.Extension}";
+                newFilename = $"{Directory}/{CurrentFilename} {_increment}.{Extension}";
             }
             else
             {
                 string tempFilename = DateTime.Now.ToString("dd-MMM-yy HH-mm-ss");
                 int i = 1;
 
-                newFilename = $"{this.Directory}/{tempFilename}.{this.Extension}";
+                newFilename = $"{Directory}/{tempFilename}.{Extension}";
 
                 while (File.Exists(newFilename))
                 {
-                    newFilename = $"{this.Directory}/{tempFilename} {i}.{this.Extension}";
+                    newFilename = $"{Directory}/{tempFilename} {i}.{Extension}";
                     i++;
                 }
             }
 
-            this.CurrentStream = File.Create(newFilename);
+            CurrentStream = File.Create(newFilename);
         }
-
-        /// <inheritdoc />
+                
         public override void PostProcess()
         {
-            if (this.CurrentStream == null)
-            {
-                return;
-            }
+            if (CurrentStream == null)            
+                return;            
 
-            this.ProcessedFiles.Add(new ProcessedFileResult(this.Directory, this.GetFilename(), this.Extension));
+            ProcessedFiles.Add(new ProcessedFileResult(Directory, GetFilename(), Extension));
             base.PostProcess();
         }
-
-        /// <inheritdoc />
-        public override string TotalProcessed()
-        {
-            return $"{this.Processed}";
-        }
+        
+        public override string TotalProcessed() => $"{Processed}";
     }
 }

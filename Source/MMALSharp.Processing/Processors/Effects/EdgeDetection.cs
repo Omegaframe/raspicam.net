@@ -1,8 +1,3 @@
-// <copyright file="EdgeDetection.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
 using MMALSharp.Common;
 
 namespace MMALSharp.Processors.Effects
@@ -101,7 +96,7 @@ namespace MMALSharp.Processors.Effects
         /// <inheritdoc />
         public void Apply(ImageContext context)
         {
-            this.ApplyConvolution(this.Kernel, KernelWidth, KernelHeight, context);
+            ApplyConvolution(Kernel, KernelWidth, KernelHeight, context);
         }
     }
 }

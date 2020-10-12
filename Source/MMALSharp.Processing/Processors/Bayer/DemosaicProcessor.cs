@@ -8,10 +8,6 @@ namespace MMALSharp.Processors.Bayer
     /// </summary>
     public class DemosaicProcessor : IFrameProcessor
     {
-        /// <inheritdoc />
-        public void Apply(ImageContext context)
-        {
-            throw new NotImplementedException();
-        }
+        public void Apply(ImageContext context) => throw new NotImplementedException();
     }
 }

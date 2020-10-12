@@ -1,9 +1,4 @@
-﻿// <copyright file="SharpenProcessor.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using MMALSharp.Common;
+﻿using MMALSharp.Common;
 
 namespace MMALSharp.Processors.Effects
 {
@@ -25,7 +20,7 @@ namespace MMALSharp.Processors.Effects
         /// <inheritdoc />
         public void Apply(ImageContext context)
         {
-            this.ApplyConvolution(_kernel, KernelWidth, KernelHeight, context);
+            ApplyConvolution(_kernel, KernelWidth, KernelHeight, context);
         }
     }
 }

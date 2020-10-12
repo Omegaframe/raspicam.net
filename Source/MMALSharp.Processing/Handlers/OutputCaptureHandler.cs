@@ -1,8 +1,3 @@
-// <copyright file="OutputCaptureHandler.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
 using System;
 using System.Drawing.Imaging;
 using MMALSharp.Common;
@@ -29,7 +24,7 @@ namespace MMALSharp.Handlers
         /// An ImageContext providing metadata for image data.
         /// </summary>
         protected ImageContext ImageContext { get; set; }
-        
+
         /// <summary>
         /// The image format to save manipulated files in.
         /// </summary>
@@ -53,15 +48,13 @@ namespace MMALSharp.Handlers
         /// <param name="context">Contains the data and metadata for an image frame.</param>
         public virtual void Process(ImageContext context)
         {
-            this.ImageContext = context;
+            ImageContext = context;
         }
 
         /// <summary>
         /// Allows us to do any further processing once the capture method has completed.
         /// </summary>
-        public virtual void PostProcess()
-        {
-        }
+        public virtual void PostProcess() { }
 
         /// <summary>
         /// Allows manipulating of the image frame.
@@ -70,8 +63,8 @@ namespace MMALSharp.Handlers
         /// <param name="storeFormat">The image format to save manipulated files in..</param>
         public void Manipulate(Action<IFrameProcessingContext> context, ImageFormat storeFormat)
         {
-            this.OnManipulate = context;
-            this.StoreFormat = storeFormat;
+            OnManipulate = context;
+            StoreFormat = storeFormat;
         }
     }
 }

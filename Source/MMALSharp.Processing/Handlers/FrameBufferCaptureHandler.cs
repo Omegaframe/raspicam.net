@@ -1,9 +1,4 @@
-﻿// <copyright file="FrameBufferCaptureHandler.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.IO;
 using MMALSharp.Common;
 using MMALSharp.Processors.Motion;
@@ -23,27 +18,18 @@ namespace MMALSharp.Handlers
         private bool _waitForFullFrame = true;
         private bool _writeFrameRequested = false;
 
-        /// <summary>
-        /// Creates a new <see cref="FrameBufferCaptureHandler"/> optionally configured to write on-demand snapshots.
-        /// </summary>
-        /// <param name="directory">Target path for image files</param>
-        /// <param name="extension">Extension for image files</param>
-        /// <param name="fileDateTimeFormat">Filename DateTime formatting string</param>
-        public FrameBufferCaptureHandler(string directory = "", string extension = "", string fileDateTimeFormat = "yyyy-MM-dd HH.mm.ss.ffff")
-            : base()
+        public FrameBufferCaptureHandler(string directory = "", string extension = "", string fileDateTimeFormat = "yyyy-MM-dd HH.mm.ss.ffff") : base()
         {
-            this.FileDirectory = directory.TrimEnd('/');
-            this.FileExtension = extension;
-            this.FileDateTimeFormat = fileDateTimeFormat;
-            Directory.CreateDirectory(this.FileDirectory);
+            FileDirectory = directory.TrimEnd('/');
+            FileExtension = extension;
+            FileDateTimeFormat = fileDateTimeFormat;
+            Directory.CreateDirectory(FileDirectory);
         }
 
         /// <summary>
         /// Creates a new <see cref="FrameBufferCaptureHandler"/> configured for motion detection using a raw video stream.
         /// </summary>
-        public FrameBufferCaptureHandler()
-            : base()
-        { }
+        public FrameBufferCaptureHandler() : base() { }
 
         /// <summary>
         /// Target directory when <see cref="WriteFrame"/> is invoked without a directory argument.
@@ -78,7 +64,7 @@ namespace MMALSharp.Handlers
         /// </summary>
         public void WriteFrame()
         {
-            if (string.IsNullOrWhiteSpace(this.FileDirectory) || string.IsNullOrWhiteSpace(this.FileDateTimeFormat))
+            if (string.IsNullOrWhiteSpace(FileDirectory) || string.IsNullOrWhiteSpace(FileDateTimeFormat))
                 throw new Exception($"The {nameof(FileDirectory)} and {nameof(FileDateTimeFormat)} must be set before calling {nameof(WriteFrame)}");
 
             _writeFrameRequested = true;
@@ -92,15 +78,12 @@ namespace MMALSharp.Handlers
             {
                 _waitForFullFrame = !context.Eos;
                 if (_waitForFullFrame)
-                {
                     return;
-                }
+
             }
 
             if (_detectingMotion)
-            {
                 _motionAnalyser.Apply(context);
-            }
 
             // accumulate frame data in the underlying memory stream
             base.Process(context);
@@ -110,12 +93,12 @@ namespace MMALSharp.Handlers
                 // write a full frame if a request is pending
                 if (_writeFrameRequested)
                 {
-                    this.WriteStreamToFile();
+                    WriteStreamToFile();
                     _writeFrameRequested = false;
                 }
 
                 // reset the stream to begin the next frame
-                this.CurrentStream.SetLength(0);
+                CurrentStream.SetLength(0);
             }
         }
 
@@ -124,7 +107,7 @@ namespace MMALSharp.Handlers
         {
             _motionConfig = config;
             _motionAnalyser = new FrameDiffAnalyser(config, onDetect);
-            this.EnableMotionDetection();
+            EnableMotionDetection();
         }
 
         /// <inheritdoc />
@@ -141,22 +124,19 @@ namespace MMALSharp.Handlers
         }
 
         /// <inheritdoc />
-        public void Split()
-        { } // Unused, but required to handle a video stream.
+        public void Split() { } // Unused, but required to handle a video stream.
 
         private void WriteStreamToFile()
         {
-            string directory = this.FileDirectory.TrimEnd('/');
-            string filename = DateTime.Now.ToString(this.FileDateTimeFormat);
-            string pathname = $"{directory}/{filename}.{this.FileExtension}";
+            string directory = FileDirectory.TrimEnd('/');
+            string filename = DateTime.Now.ToString(FileDateTimeFormat);
+            string pathname = $"{directory}/{filename}.{FileExtension}";
 
             using (var fs = new FileStream(pathname, FileMode.Create, FileAccess.Write))
-            {
                 CurrentStream.WriteTo(fs);
-            }
 
-            this.MostRecentFilename = filename;
-            this.MostRecentPathname = pathname;
+            MostRecentFilename = filename;
+            MostRecentPathname = pathname;
         }
     }
 }

@@ -1,9 +1,4 @@
-﻿// <copyright file="FrameAnalyser.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using MMALSharp.Common;
 using MMALSharp.Common.Utility;
@@ -30,7 +25,7 @@ namespace MMALSharp.Processors
         /// </summary>
         protected FrameAnalyser()
         {
-            this.WorkingData = new List<byte>();
+            WorkingData = new List<byte>();
         }
 
         /// <summary>
@@ -39,19 +34,17 @@ namespace MMALSharp.Processors
         /// <param name="context">Contains the data and metadata for an image frame.</param>
         public virtual void Apply(ImageContext context)
         {
-            if (this.FullFrame)
+            if (FullFrame)
             {
                 MMALLog.Logger.LogDebug("Clearing frame");
-                this.WorkingData.Clear();
-                this.FullFrame = false;
+                WorkingData.Clear();
+                FullFrame = false;
             }
 
-            this.WorkingData.AddRange(context.Data);
+            WorkingData.AddRange(context.Data);
 
-            if (context.Eos)
-            {
-                this.FullFrame = true;
-            }
+            if (context.Eos)            
+                FullFrame = true;            
         }
     }
 }

@@ -1,13 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>    
 	  <Description>Image Processing library for MMALSharp.</Description>
-    <AssemblyTitle>MMALSharp.Processing</AssemblyTitle>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <AssemblyName>MMALSharp.Processing</AssemblyName>
-    <PackageId>MMALSharp.Processing</PackageId>	
-    <RootNamespace>MMALSharp</RootNamespace>	
-	  <VersionPrefix>0.7.0</VersionPrefix>	
-	  <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 

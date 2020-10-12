@@ -1,9 +1,4 @@
-﻿// <copyright file="StreamCaptureHandler.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.IO;
 using Microsoft.Extensions.Logging;
 using MMALSharp.Common;
@@ -27,10 +22,10 @@ namespace MMALSharp.Handlers
         /// <inheritdoc />
         public override void Process(ImageContext context)
         {
-            this.Processed += context.Data.Length;
+            Processed += context.Data.Length;
                         
-            if (this.CurrentStream.CanWrite)
-                this.CurrentStream.Write(context.Data, 0, context.Data.Length);
+            if (CurrentStream.CanWrite)
+                CurrentStream.Write(context.Data, 0, context.Data.Length);
             else
                 throw new IOException("Stream not writable.");
 
@@ -42,32 +37,32 @@ namespace MMALSharp.Handlers
         {
             try
             {
-                if (this.CurrentStream != null && this.CurrentStream.CanRead && this.CurrentStream.Length > 0)
+                if (CurrentStream != null && CurrentStream.CanRead && CurrentStream.Length > 0)
                 {
-                    if (this.OnManipulate != null && this.ImageContext != null)
+                    if (OnManipulate != null && ImageContext != null)
                     {
                         byte[] arr = null;
 
                         using (var ms = new MemoryStream())
                         {
-                            this.CurrentStream.Position = 0;
-                            this.CurrentStream.CopyTo(ms);
+                            CurrentStream.Position = 0;
+                            CurrentStream.CopyTo(ms);
 
                             arr = ms.ToArray();
 
-                            this.ImageContext.Data = arr;
-                            this.ImageContext.StoreFormat = this.StoreFormat;
+                            ImageContext.Data = arr;
+                            ImageContext.StoreFormat = StoreFormat;
                             
                             MMALLog.Logger.LogDebug("Applying image processing.");
 
-                            this.OnManipulate(new FrameProcessingContext(this.ImageContext));
+                            OnManipulate(new FrameProcessingContext(ImageContext));
                         }
 
-                        using (var ms = new MemoryStream(this.ImageContext.Data))
+                        using (var ms = new MemoryStream(ImageContext.Data))
                         {   
-                            this.CurrentStream.SetLength(0);
-                            this.CurrentStream.Position = 0;
-                            ms.CopyTo(this.CurrentStream);
+                            CurrentStream.SetLength(0);
+                            CurrentStream.Position = 0;
+                            ms.CopyTo(CurrentStream);
                         }    
                     }
                 }
@@ -81,7 +76,7 @@ namespace MMALSharp.Handlers
         /// <inheritdoc />
         public override string TotalProcessed()
         {
-            return $"{Helpers.ConvertBytesToMegabytes(this.Processed)}";
+            return $"{Helpers.ConvertBytesToMegabytes(Processed)}";
         }
 
         /// <summary>
@@ -89,7 +84,7 @@ namespace MMALSharp.Handlers
         /// </summary>
         public override void Dispose()
         {
-            MMALLog.Logger.LogInformation($"Successfully processed {Helpers.ConvertBytesToMegabytes(this.Processed)}.");
+            MMALLog.Logger.LogInformation($"Successfully processed {Helpers.ConvertBytesToMegabytes(Processed)}.");
             CurrentStream?.Dispose();
         }
     }
