@@ -4,42 +4,15 @@ using System.Collections;
 
 namespace MMALSharp.Common
 {
-    /// <inheritdoc/>
-    /// <summary>
-    /// Credit to @joaoportela - https://github.com/joaoportela/CircullarBuffer-CSharp
-    /// Circular buffer.
-    /// 
-    /// When writing to a full buffer:
-    /// PushBack -> removes this[0] / Front()
-    /// PushFront -> removes this[Size-1] / Back()
-    /// 
-    /// this implementation is inspired by
-    /// http://www.boost.org/doc/libs/1_53_0/libs/circular_buffer/doc/circular_buffer.html
-    /// because I liked their interface.
-    /// </summary>
     public class CircularBuffer<T> : IEnumerable<T>
     {
-        private readonly T[] _buffer;
+        readonly T[] _buffer;
 
-        /// <summary>
-        /// The _start. Index of the first element in buffer.
-        /// </summary>
-        private int _start;
+        int _start;
+        int _end;
+        int _size;
 
-        /// <summary>
-        /// The _end. Index after the last element in the buffer.
-        /// </summary>
-        private int _end;
-
-        /// <summary>
-        /// The _size. Buffer size.
-        /// </summary>
-        private int _size;
-
-        public CircularBuffer(int capacity)
-            : this(capacity, new T[] { })
-        {
-        }
+        public CircularBuffer(int capacity) : this(capacity, new T[] { }) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CircularBuffer{T}"/> class.
@@ -56,19 +29,13 @@ namespace MMALSharp.Common
         public CircularBuffer(int capacity, T[] items)
         {
             if (capacity < 1)
-            {
-                throw new ArgumentException(
-                    "Circular buffer cannot have negative or zero capacity.", nameof(capacity));
-            }
+                throw new ArgumentException("Circular buffer cannot have negative or zero capacity.", nameof(capacity));
+
             if (items == null)
-            {
                 throw new ArgumentNullException(nameof(items));
-            }
+
             if (items.Length > capacity)
-            {
-                throw new ArgumentException(
-                    "Too many items to fit circular buffer", nameof(items));
-            }
+                throw new ArgumentException("Too many items to fit circular buffer", nameof(items));
 
             _buffer = new T[capacity];
 
@@ -130,27 +97,23 @@ namespace MMALSharp.Common
         {
             get
             {
-                if (IsEmpty)
-                {
-                    throw new IndexOutOfRangeException(string.Format("Cannot access index {0}. Buffer is empty", index));
-                }
-                if (index >= _size)
-                {
+                if (IsEmpty)                
+                   throw new IndexOutOfRangeException(string.Format("Cannot access index {0}. Buffer is empty", index));
+                
+                if (index >= _size)                
                     throw new IndexOutOfRangeException(string.Format("Cannot access index {0}. Buffer size is {1}", index, _size));
-                }
+                
                 int actualIndex = InternalIndex(index);
                 return _buffer[actualIndex];
             }
             set
             {
-                if (IsEmpty)
-                {
+                if (IsEmpty)                
                     throw new IndexOutOfRangeException(string.Format("Cannot access index {0}. Buffer is empty", index));
-                }
-                if (index >= _size)
-                {
+                
+                if (index >= _size)                
                     throw new IndexOutOfRangeException(string.Format("Cannot access index {0}. Buffer size is {1}", index, _size));
-                }
+                
                 int actualIndex = InternalIndex(index);
                 _buffer[actualIndex] = value;
             }
@@ -247,7 +210,6 @@ namespace MMALSharp.Common
             return newArray;
         }
 
-        #region IEnumerable<T> implementation
         public IEnumerator<T> GetEnumerator()
         {
             var segments = new ArraySegment<T>[2] { ArrayOne(), ArrayTwo() };
@@ -259,20 +221,15 @@ namespace MMALSharp.Common
                 }
             }
         }
-        #endregion
-        #region IEnumerable implementation
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return (IEnumerator)GetEnumerator();
+            return GetEnumerator();
         }
-        #endregion
 
-        private void ThrowIfEmpty(string message = "Cannot access an empty buffer.")
+        void ThrowIfEmpty(string message = "Cannot access an empty buffer.")
         {
-            if (IsEmpty)
-            {
-                throw new InvalidOperationException(message);
-            }
+            if (IsEmpty)            
+                throw new InvalidOperationException(message);            
         }
 
         /// <summary>
@@ -280,7 +237,7 @@ namespace MMALSharp.Common
         /// around if necessary.
         /// </summary>
         /// <param name="index"></param>
-        private void Increment(ref int index)
+        void Increment(ref int index)
         {
             if (++index == Capacity)
             {
@@ -293,7 +250,7 @@ namespace MMALSharp.Common
         /// around if necessary.
         /// </summary>
         /// <param name="index"></param>
-        private void Decrement(ref int index)
+        void Decrement(ref int index)
         {
             if (index == 0)
             {
@@ -311,51 +268,29 @@ namespace MMALSharp.Common
         /// <param name='index'>
         /// External index.
         /// </param>
-        private int InternalIndex(int index)
+        int InternalIndex(int index)
         {
             return _start + (index < (Capacity - _start) ? index : index - Capacity);
         }
 
-        // doing ArrayOne and ArrayTwo methods returning ArraySegment<T> as seen here: 
-        // http://www.boost.org/doc/libs/1_37_0/libs/circular_buffer/doc/circular_buffer.html#classboost_1_1circular__buffer_1957cccdcb0c4ef7d80a34a990065818d
-        // http://www.boost.org/doc/libs/1_37_0/libs/circular_buffer/doc/circular_buffer.html#classboost_1_1circular__buffer_1f5081a54afbc2dfc1a7fb20329df7d5b
-        // should help a lot with the code.
-
-        #region Array items easy access.
-        // The array is composed by at most two non-contiguous segments, 
-        // the next two methods allow easy access to those.
-
-        private ArraySegment<T> ArrayOne()
+        ArraySegment<T> ArrayOne()
         {
-            if (IsEmpty)
-            {
-                return new ArraySegment<T>(new T[0]);
-            }
-            else if (_start < _end)
-            {
-                return new ArraySegment<T>(_buffer, _start, _end - _start);
-            }
-            else
-            {
-                return new ArraySegment<T>(_buffer, _start, _buffer.Length - _start);
-            }
+            if (IsEmpty)            
+                return new ArraySegment<T>(new T[0]);            
+            else if (_start < _end)            
+                return new ArraySegment<T>(_buffer, _start, _end - _start);            
+            else            
+                return new ArraySegment<T>(_buffer, _start, _buffer.Length - _start);            
         }
 
-        private ArraySegment<T> ArrayTwo()
+        ArraySegment<T> ArrayTwo()
         {
-            if (IsEmpty)
-            {
-                return new ArraySegment<T>(new T[0]);
-            }
-            else if (_start < _end)
-            {
-                return new ArraySegment<T>(_buffer, _end, 0);
-            }
-            else
-            {
-                return new ArraySegment<T>(_buffer, 0, _end);
-            }
+            if (IsEmpty)            
+                return new ArraySegment<T>(new T[0]);            
+            else if (_start < _end)            
+                return new ArraySegment<T>(_buffer, _end, 0);            
+            else            
+                return new ArraySegment<T>(_buffer, 0, _end);            
         }
-        #endregion
     }
 }

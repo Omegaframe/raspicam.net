@@ -1,9 +1,4 @@
-﻿// <copyright file="GenericExtensions.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 
 namespace MMALSharp.Common
 {
@@ -20,18 +15,13 @@ namespace MMALSharp.Common
         /// <param name="min">The mininum inclusive value.</param>
         /// <param name="max">The maximum inclusive value.</param>
         /// <returns>A clamped representation of the initial value.</returns>
-        public static T Clamp<T>(this T val, T min, T max) 
-            where T : IComparable<T>
+        public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
         {
             if (val.CompareTo(min) < 0)
-            {
                 return min;
-            }
 
             if (val.CompareTo(max) > 0)
-            {
                 return max;
-            }
 
             return val;
         }
@@ -41,10 +31,7 @@ namespace MMALSharp.Common
         /// </summary>
         /// <param name="val">The byte value to convert.</param>
         /// <returns>The converted float value.</returns>
-        public static float ToFloat(this byte val)
-        {
-            return val / 255.0f;
-        }
+        public static float ToFloat(this byte val) => val / 255.0f;
 
         /// <summary>
         /// Converts a <see cref="float"/> value (0.0 to 1.0) to a <see cref="byte"/> value from 0 to 255.
@@ -52,9 +39,6 @@ namespace MMALSharp.Common
         /// <param name="val">The float value to convert.</param>
         /// <remarks>https://stackoverflow.com/questions/1914115/converting-color-value-from-float-0-1-to-byte-0-255</remarks>
         /// <returns>The converted byte value.</returns>
-        public static byte ToByte(this float val)
-        {
-            return (byte)(val * 255.999f);
-        }
+        public static byte ToByte(this float val) => (byte)(val * 255.999f);
     }
 }

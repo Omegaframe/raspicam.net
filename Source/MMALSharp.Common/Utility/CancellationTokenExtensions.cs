@@ -1,16 +1,8 @@
-﻿// <copyright file="CancellationTokenExtensions.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 namespace MMALSharp.Common.Utility
 {
-    /// <summary>
-    /// This class provides extensions for <see cref="CancellationToken"/>s.
-    /// </summary>
     public static class CancellationTokenExtensions
     {
         /// <summary>

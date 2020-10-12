@@ -1,9 +1,4 @@
-﻿// <copyright file="MMALEncodings.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,8 +6,6 @@ using MMALSharp.Common.Utility;
 
 namespace MMALSharp.Common
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-
     public static class MMALEncodingHelpers
     {
         /// <summary>
@@ -172,7 +165,7 @@ namespace MMALSharp.Common
         {
             var type = string.Empty;
             
-            switch (this.EncType)
+            switch (EncType)
             {
                 case EncodingType.Audio:
                     type = "Audio";
@@ -191,21 +184,21 @@ namespace MMALSharp.Common
                     break;
             }
             
-            return $"Name: {this.EncodingName}. FourCC: {this.EncodingVal}. Type: {type}";
+            return $"Name: {EncodingName}. FourCC: {EncodingVal}. Type: {type}";
         }
             
-        private MMALEncoding(string s, EncodingType type)
+        MMALEncoding(string s, EncodingType type)
         {
-            this.EncodingVal = Helpers.FourCCFromString(s);
-            this.EncodingName = s;
-            this.EncType = type;
+            EncodingVal = Helpers.FourCCFromString(s);
+            EncodingName = s;
+            EncType = type;
         }
 
-        private MMALEncoding(int val, string name, EncodingType type)
+        MMALEncoding(int val, string name, EncodingType type)
         {
-            this.EncodingVal = val;
-            this.EncodingName = name;
-            this.EncType = type;
+            EncodingVal = val;
+            EncodingName = name;
+            EncType = type;
         }
 
         public static readonly MMALEncoding H264 = new MMALEncoding("H264", EncodingType.Video);

@@ -103,22 +103,16 @@ namespace MMALSharp.Common.Utility
         /// <returns>0 if width and height are same. 1 if source width is greater than target. -1 if target greater than source.</returns>
         public int CompareTo(Resolution res)
         {
-            if (this.Width == res.Width && this.Height == res.Height)
-            {
-                return 0;
-            }
+            if (Width == res.Width && Height == res.Height)            
+                return 0;            
 
-            if (this.Width == res.Width && this.Height > res.Height)
-            {
-                return 1;
-            }
+            if (Width == res.Width && Height > res.Height)            
+                return 1;            
 
-            if (this.Width == res.Width && this.Height < res.Height)
-            {
-                return -1;
-            }
+            if (Width == res.Width && Height < res.Height)            
+                return -1;            
 
-            if (this.Width > res.Width)
+            if (Width > res.Width)
                 return 1;
 
             return -1;
@@ -130,15 +124,8 @@ namespace MMALSharp.Common.Utility
         /// <param name="width">The width to be padded to.</param>
         /// <param name="height">The height to be padded to.</param>
         /// <returns>A new <see cref="Resolution"/> struct, padded to the required width/height.</returns>
-        public Resolution Pad(int width = 32, int height = 16)
-        {
-            return new Resolution(VCOS_ALIGN_UP(this.Width, width),
-                                  VCOS_ALIGN_UP(this.Height, height));
-        }
-        
-        private int VCOS_ALIGN_UP(int value, int roundTo)
-        {
-            return (int)(Math.Ceiling(value / Convert.ToDouble(roundTo)) * roundTo);
-        }
+        public Resolution Pad(int width = 32, int height = 16) => new Resolution(VCOS_ALIGN_UP(Width, width), VCOS_ALIGN_UP(Height, height));
+
+        int VCOS_ALIGN_UP(int value, int roundTo) => (int)(Math.Ceiling(value / Convert.ToDouble(roundTo)) * roundTo);
     }
 }

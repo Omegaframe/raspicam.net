@@ -1,13 +1,5 @@
-﻿// <copyright file="Helpers.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-namespace MMALSharp.Common.Utility
+﻿namespace MMALSharp.Common.Utility
 {
-    /// <summary>
-    /// Provides general helper methods.
-    /// </summary>
     public class Helpers
     {
         /// <summary>
