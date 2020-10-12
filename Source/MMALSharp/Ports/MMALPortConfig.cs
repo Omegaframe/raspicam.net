@@ -1,18 +1,10 @@
-﻿// <copyright file="MMALPortConfig.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.Drawing;
 using MMALSharp.Common;
 using MMALSharp.Config;
 
 namespace MMALSharp.Ports
 {
-    /// <summary>
-    /// Port configuration class.
-    /// </summary>
     public class MMALPortConfig : IMMALPortConfig
     {
         /// <summary>
@@ -34,7 +26,7 @@ namespace MMALSharp.Ports
         /// The input/output height value.
         /// </summary>
         public int Height { get; }
-        
+
         /// <summary>
         /// The framerate of the outputted data.
         /// </summary>
@@ -44,17 +36,17 @@ namespace MMALSharp.Ports
         /// The quality value. Can be used with JPEG encoding (value between 1-100). Can be used with H.264 encoding which affects the quantization parameter (typical values between 10-40, see wiki for info). Set both bitrate param and quality param to 0 for variable bitrate.
         /// </summary>
         public int Quality { get; }
-        
+
         /// <summary>
         /// The bitrate we are sending data at.
         /// </summary>
         public int Bitrate { get; }
-        
+
         /// <summary>
         /// Instruct MMAL to not copy buffers to ARM memory (useful for large buffers and handling raw data).
         /// </summary>
         public bool ZeroCopy { get; }
-        
+
         /// <summary>
         /// Time that processing shall stop. Relevant for video recording.
         /// </summary>
@@ -74,7 +66,7 @@ namespace MMALSharp.Ports
         /// The Region of Interest requested.
         /// </summary>
         public Rectangle? Crop { get; }
-        
+
         /// <summary>
         /// Video split configuration object.
         /// </summary>
@@ -103,35 +95,35 @@ namespace MMALSharp.Ports
         /// <param name="bufferSize">Requested size of buffer headers.</param>
         /// <param name="crop">The Region of Interest requested.</param>
         public MMALPortConfig(
-            MMALEncoding encodingType, 
-            MMALEncoding pixelFormat, 
-            int quality = 0, 
-            int bitrate = 0, 
-            DateTime? timeout = null, 
-            Split split = null, 
+            MMALEncoding encodingType,
+            MMALEncoding pixelFormat,
+            int quality = 0,
+            int bitrate = 0,
+            DateTime? timeout = null,
+            Split split = null,
             bool storeMotionVectors = false,
-            int width = 0, 
+            int width = 0,
             int height = 0,
             double framerate = 0,
             bool zeroCopy = false,
-            int bufferNum = 0, 
-            int bufferSize = 0, 
+            int bufferNum = 0,
+            int bufferSize = 0,
             Rectangle? crop = null)
         {
-            this.EncodingType = encodingType;
-            this.PixelFormat = pixelFormat;
-            this.Width = width;
-            this.Height = height;
-            this.Framerate = framerate;
-            this.Quality = quality;
-            this.Bitrate = bitrate;
-            this.ZeroCopy = zeroCopy;
-            this.Timeout = timeout;
-            this.Split = split;
-            this.BufferNum = bufferNum;
-            this.BufferSize = bufferSize;
-            this.Crop = crop;
-            this.StoreMotionVectors = storeMotionVectors;
+            EncodingType = encodingType;
+            PixelFormat = pixelFormat;
+            Width = width;
+            Height = height;
+            Framerate = framerate;
+            Quality = quality;
+            Bitrate = bitrate;
+            ZeroCopy = zeroCopy;
+            Timeout = timeout;
+            Split = split;
+            BufferNum = bufferNum;
+            BufferSize = bufferSize;
+            Crop = crop;
+            StoreMotionVectors = storeMotionVectors;
         }
     }
 }

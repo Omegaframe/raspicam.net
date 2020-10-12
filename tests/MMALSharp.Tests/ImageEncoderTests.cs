@@ -20,6 +20,7 @@ using MMALSharp.Ports;
 using MMALSharp.Processors;
 using MMALSharp.Tests.Data;
 using Xunit;
+using MMALSharp.Extensions;
 
 namespace MMALSharp.Tests
 {

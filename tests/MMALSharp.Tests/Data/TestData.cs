@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MMALSharp.Common;
 using Xunit;
+using MMALSharp.Extensions;
 
 namespace MMALSharp.Tests
 {

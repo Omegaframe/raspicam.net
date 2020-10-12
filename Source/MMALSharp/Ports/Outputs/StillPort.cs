@@ -1,62 +1,38 @@
-﻿// <copyright file="StillPort.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using Microsoft.Extensions.Logging;
 using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
+using MMALSharp.Extensions;
 using MMALSharp.Handlers;
 using MMALSharp.Native;
 using MMALSharp.Ports.Inputs;
 
 namespace MMALSharp.Ports.Outputs
 {
-    /// <summary>
-    /// Represents a still image encoder/decoder port.
-    /// </summary>
     public unsafe class StillPort : OutputPort, IStillPort
     {
-        /// <inheritdoc />
         public override Resolution Resolution
         {
-            get => new Resolution(this.Width, this.Height);
+            get => new Resolution(Width, Height);
             internal set
             {
                 if (value.Width == 0 || value.Height == 0)
                 {
-                    this.Width = MMALCameraConfig.Resolution.Pad().Width;
-                    this.Height = MMALCameraConfig.Resolution.Pad().Height;
+                    Width = MMALCameraConfig.Resolution.Pad().Width;
+                    Height = MMALCameraConfig.Resolution.Pad().Height;
                 }
                 else
                 {
-                    this.Width = value.Pad().Width;
-                    this.Height = value.Pad().Height;
+                    Width = value.Pad().Width;
+                    Height = value.Pad().Height;
                 }
             }
         }
 
-        /// <summary>
-        /// Creates a new instance of <see cref="StillPort"/>. 
-        /// </summary>
-        /// <param name="ptr">The native pointer.</param>
-        /// <param name="comp">The component this port is associated with.</param>
-        /// <param name="guid">Managed unique identifier for this component.</param>
-        public StillPort(IntPtr ptr, IComponent comp, Guid guid)
-            : base(ptr, comp, guid)
-        {
-        }
-        
-        /// <summary>
-        /// Creates a new instance of <see cref="StillPort"/>.
-        /// </summary>
-        /// <param name="copyFrom">The port to copy data from.</param>
-        public StillPort(IPort copyFrom)
-            : base((IntPtr)copyFrom.Ptr, copyFrom.ComponentReference, copyFrom.Guid)
-        {
-        }
+        public StillPort(IntPtr ptr, IComponent comp, Guid guid) : base(ptr, comp, guid) { }
+
+        public StillPort(IPort copyFrom) : base((IntPtr)copyFrom.Ptr, copyFrom.ComponentReference, copyFrom.Guid) { }
 
         /// <inheritdoc />
         public override void Configure(IMMALPortConfig config, IInputPort copyFrom, IOutputCaptureHandler handler)
@@ -64,19 +40,15 @@ namespace MMALSharp.Ports.Outputs
             base.Configure(config, copyFrom, handler);
 
             if (config != null && config.EncodingType == MMALEncoding.JPEG)
-            {
                 this.SetParameter(MMALParametersCamera.MMAL_PARAMETER_JPEG_Q_FACTOR, config.Quality);
-            }
         }
 
         internal override void NativeOutputPortCallback(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)
         {
             if (MMALCameraConfig.Debug)
-            {
-                MMALLog.Logger.LogDebug($"{this.Name}: In native {nameof(StillPort)} output callback");
-            }
+                MMALLog.Logger.LogDebug($"{Name}: In native {nameof(StillPort)} output callback");
 
             base.NativeOutputPortCallback(port, buffer);
         }
-    }    
+    }
 }

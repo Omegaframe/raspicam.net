@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using MMALSharp.Callbacks;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
+using MMALSharp.Extensions;
 using MMALSharp.Native;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;

@@ -1,8 +1,3 @@
-// <copyright file="OutputPort.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -12,38 +7,27 @@ using MMALSharp.Callbacks;
 using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
+using MMALSharp.Extensions;
 using MMALSharp.Handlers;
 using MMALSharp.Native;
 using MMALSharp.Ports.Inputs;
 
 namespace MMALSharp.Ports.Outputs
 {
-    /// <summary>
-    /// Represents an output port.
-    /// </summary>
     public unsafe class OutputPort : PortBase<IOutputCallbackHandler>, IOutputPort
     {
         /// <inheritdoc />
         public override Resolution Resolution
         {
-            get => new Resolution(this.Width, this.Height);
+            get => new Resolution(Width, Height);
             internal set
             {
-                this.Width = value.Pad().Width;
-                this.Height = value.Pad().Height;
+                Width = value.Pad().Width;
+                Height = value.Pad().Height;
             }
         }
-        
-        /// <summary>
-        /// Creates a new instance of <see cref="OutputPort"/>. 
-        /// </summary>
-        /// <param name="ptr">The native pointer.</param>
-        /// <param name="comp">The component this port is associated with.</param>
-        /// <param name="guid">Managed unique identifier for this component.</param>
-        public OutputPort(IntPtr ptr, IComponent comp, Guid guid) 
-            : base(ptr, comp, PortType.Output, guid)
-        {
-        }
+
+        public OutputPort(IntPtr ptr, IComponent comp, Guid guid)             : base(ptr, comp, PortType.Output, guid)        {        }
 
         /// <summary>
         /// Call to configure an output port.
@@ -55,94 +39,94 @@ namespace MMALSharp.Ports.Outputs
         {
             if (config != null)
             {
-                this.PortConfig = config;
+                PortConfig = config;
 
                 copyFrom?.ShallowCopy(this);
 
                 if (config.EncodingType != null)
                 {
-                    this.NativeEncodingType = config.EncodingType.EncodingVal;
+                    NativeEncodingType = config.EncodingType.EncodingVal;
                 }
 
                 if (config.PixelFormat != null)
                 {
-                    this.NativeEncodingSubformat = config.PixelFormat.EncodingVal;
+                    NativeEncodingSubformat = config.PixelFormat.EncodingVal;
                 }
 
-                this.Par = new MMAL_RATIONAL_T(1, 1);
+                Par = new MMAL_RATIONAL_T(1, 1);
 
-                MMAL_VIDEO_FORMAT_T tempVid = this.Ptr->Format->Es->Video;
+                MMAL_VIDEO_FORMAT_T tempVid = Ptr->Format->Es->Video;
 
                 try
                 {
-                    this.Commit();
+                    Commit();
                 }
                 catch
                 {
                     // If commit fails using new settings, attempt to reset using old temp MMAL_VIDEO_FORMAT_T.
-                    MMALLog.Logger.LogWarning($"{this.Name}: Commit of output port failed. Attempting to reset values.");
-                    this.Ptr->Format->Es->Video = tempVid;
-                    this.Commit();
+                    MMALLog.Logger.LogWarning($"{Name}: Commit of output port failed. Attempting to reset values.");
+                    Ptr->Format->Es->Video = tempVid;
+                    Commit();
                 }
                 
                 if (config.ZeroCopy)
                 {
-                    this.ZeroCopy = true;
+                    ZeroCopy = true;
                     this.SetParameter(MMALParametersCommon.MMAL_PARAMETER_ZERO_COPY, true);
                 }
 
                 if (MMALCameraConfig.VideoColorSpace != null &&
                     MMALCameraConfig.VideoColorSpace.EncType == MMALEncoding.EncodingType.ColorSpace)
                 {
-                    this.VideoColorSpace = MMALCameraConfig.VideoColorSpace;
+                    VideoColorSpace = MMALCameraConfig.VideoColorSpace;
                 }
 
                 if (config.Framerate > 0)
                 {
-                    this.FrameRate = config.Framerate;
+                    FrameRate = config.Framerate;
                 }
 
                 if (config.Bitrate > 0)
                 {
-                    this.Bitrate = config.Bitrate;
+                    Bitrate = config.Bitrate;
                 }
                 
-                this.EncodingType = config.EncodingType;
-                this.PixelFormat = config.PixelFormat;
+                EncodingType = config.EncodingType;
+                PixelFormat = config.PixelFormat;
 
                 if (config.Width > 0 && config.Height > 0)
                 {
                     if (config.Crop.HasValue)
                     {
-                        this.Crop = config.Crop.Value;
+                        Crop = config.Crop.Value;
                     }
                     else
                     {
-                        this.Crop = new Rectangle(0, 0, config.Width, config.Height);
+                        Crop = new Rectangle(0, 0, config.Width, config.Height);
                     }
 
-                    this.Resolution = new Resolution(config.Width, config.Height);
+                    Resolution = new Resolution(config.Width, config.Height);
                 }
                 else
                 {
                     // Use config or don't set depending on port type.
-                    this.Resolution = new Resolution(0, 0);
+                    Resolution = new Resolution(0, 0);
 
                     // Certain resolution overrides set to global config Video/Still resolutions so check here if the width and height are greater than 0.
-                    if (this.Resolution.Width > 0 && this.Resolution.Height > 0)
+                    if (Resolution.Width > 0 && Resolution.Height > 0)
                     {
-                        this.Crop = new Rectangle(0, 0, this.Resolution.Width, this.Resolution.Height);
+                        Crop = new Rectangle(0, 0, Resolution.Width, Resolution.Height);
                     }
                 }
 
-                this.BufferNum = Math.Max(this.BufferNumMin, config.BufferNum > 0 ? config.BufferNum : this.BufferNumRecommended);
-                this.BufferSize = Math.Max(this.BufferSizeMin, config.BufferSize > 0 ? config.BufferSize : this.BufferSizeRecommended);
+                BufferNum = Math.Max(BufferNumMin, config.BufferNum > 0 ? config.BufferNum : BufferNumRecommended);
+                BufferSize = Math.Max(BufferSizeMin, config.BufferSize > 0 ? config.BufferSize : BufferSizeRecommended);
 
                 // It is important to re-commit changes to width and height.
-                this.Commit();
+                Commit();
             }
             
-            this.CallbackHandler = new DefaultOutputPortCallbackHandler(this, handler);
+            CallbackHandler = new DefaultOutputPortCallbackHandler(this, handler);
         }
 
         /// <summary>
@@ -154,14 +138,14 @@ namespace MMALSharp.Ports.Outputs
         /// <returns>The connection instance between the source output and destination input ports.</returns>
         public virtual IConnection ConnectTo(IDownstreamComponent destinationComponent, int inputPort = 0, bool useCallback = false)
         {
-            if (this.ConnectedReference != null)
+            if (ConnectedReference != null)
             {
-                MMALLog.Logger.LogWarning($"{this.Name}: A connection has already been established on this port");
-                return this.ConnectedReference;
+                MMALLog.Logger.LogWarning($"{Name}: A connection has already been established on this port");
+                return ConnectedReference;
             }
 
             var connection = MMALConnectionImpl.CreateConnection(this, destinationComponent.Inputs[inputPort], destinationComponent, useCallback);
-            this.ConnectedReference = connection;
+            ConnectedReference = connection;
 
             destinationComponent.Inputs[inputPort].ConnectTo(this, connection);
 
@@ -189,28 +173,28 @@ namespace MMALSharp.Ports.Outputs
             {
                 if (MMALCameraConfig.Debug)
                 {
-                    if (!this.Enabled)
+                    if (!Enabled)
                     {
-                        MMALLog.Logger.LogDebug($"{this.Name}: Port not enabled.");
+                        MMALLog.Logger.LogDebug($"{Name}: Port not enabled.");
                     }
 
-                    if (this.BufferPool == null)
+                    if (BufferPool == null)
                     {
-                        MMALLog.Logger.LogDebug($"{this.Name}: Buffer pool null.");
+                        MMALLog.Logger.LogDebug($"{Name}: Buffer pool null.");
                     }
                 }
                 
-                if (this.Enabled && this.BufferPool != null)
+                if (Enabled && BufferPool != null)
                 {
-                    newBuffer = this.BufferPool.Queue.GetBuffer();
+                    newBuffer = BufferPool.Queue.GetBuffer();
                     
                     if (newBuffer.CheckState())
                     {
-                        this.SendBuffer(newBuffer);
+                        SendBuffer(newBuffer);
                     }
                     else
                     {
-                        MMALLog.Logger.LogWarning($"{this.Name}: Buffer null. Continuing.");
+                        MMALLog.Logger.LogWarning($"{Name}: Buffer null. Continuing.");
                     }
                 }
             }
@@ -221,7 +205,7 @@ namespace MMALSharp.Ports.Outputs
                     newBuffer.Release();
                 }
 
-                MMALLog.Logger.LogWarning($"{this.Name}: Unable to send buffer header. {e.Message}");
+                MMALLog.Logger.LogWarning($"{Name}: Unable to send buffer header. {e.Message}");
             }
         }
 
@@ -231,7 +215,7 @@ namespace MMALSharp.Ports.Outputs
         /// <param name="callbackHandler">The output callback handler.</param>
         public void RegisterCallbackHandler(IOutputCallbackHandler callbackHandler)
         {
-            this.CallbackHandler = callbackHandler;
+            CallbackHandler = callbackHandler;
         }
 
         /// <summary>
@@ -239,33 +223,33 @@ namespace MMALSharp.Ports.Outputs
         /// </summary>
         public virtual void Enable()
         {            
-            if (!this.Enabled)
+            if (!Enabled)
             {
-                this.NativeCallback = this.NativeOutputPortCallback;
+                NativeCallback = NativeOutputPortCallback;
                 
-                IntPtr ptrCallback = Marshal.GetFunctionPointerForDelegate(this.NativeCallback);
-                this.PtrCallback = ptrCallback;
+                IntPtr ptrCallback = Marshal.GetFunctionPointerForDelegate(NativeCallback);
+                PtrCallback = ptrCallback;
                 
-                if (this.CallbackHandler == null)
+                if (CallbackHandler == null)
                 {
-                    MMALLog.Logger.LogWarning($"{this.Name}: Callback null");
+                    MMALLog.Logger.LogWarning($"{Name}: Callback null");
 
-                    this.EnablePort(IntPtr.Zero);
+                    EnablePort(IntPtr.Zero);
                 }
                 else
                 {
-                    this.EnablePort(ptrCallback);
+                    EnablePort(ptrCallback);
                 }
                 
-                if (this.CallbackHandler != null)
+                if (CallbackHandler != null)
                 {
-                    this.SendAllBuffers();
+                    SendAllBuffers();
                 }
             }
             
-            if (!this.Enabled)
+            if (!Enabled)
             {
-                throw new PiCameraError($"{this.Name}: Unknown error occurred whilst enabling port");
+                throw new PiCameraError($"{Name}: Unknown error occurred whilst enabling port");
             }
         }
 
@@ -274,9 +258,9 @@ namespace MMALSharp.Ports.Outputs
         /// </summary>
         public void Start()
         {
-            MMALLog.Logger.LogDebug($"{this.Name}: Starting output port.");
-            this.Trigger = new TaskCompletionSource<bool>();
-            this.Enable();
+            MMALLog.Logger.LogDebug($"{Name}: Starting output port.");
+            Trigger = new TaskCompletionSource<bool>();
+            Enable();
         }
         
         /// <summary>
@@ -286,10 +270,8 @@ namespace MMALSharp.Ports.Outputs
         /// <param name="buffer">The buffer header.</param>
         internal virtual void NativeOutputPortCallback(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)
         {
-            if (MMALCameraConfig.Debug)
-            {
-                MMALLog.Logger.LogDebug($"{this.Name}: In native output callback");
-            }
+            if (MMALCameraConfig.Debug)            
+                MMALLog.Logger.LogDebug($"{Name}: In native output callback");            
             
             var bufferImpl = new MMALBufferImpl(buffer);
 
@@ -299,23 +281,23 @@ namespace MMALSharp.Ports.Outputs
 
             var eos = bufferImpl.AssertProperty(MMALBufferProperties.MMAL_BUFFER_HEADER_FLAG_FRAME_END) ||
                       bufferImpl.AssertProperty(MMALBufferProperties.MMAL_BUFFER_HEADER_FLAG_EOS) ||
-                      this.ComponentReference.ForceStopProcessing ||
+                      ComponentReference.ForceStopProcessing ||
                       bufferImpl.Length == 0;
 
-            if ((bufferImpl.CheckState() && bufferImpl.Length > 0 && !eos && !failed && !this.Trigger.Task.IsCompleted) || (eos && !this.Trigger.Task.IsCompleted))
+            if ((bufferImpl.CheckState() && bufferImpl.Length > 0 && !eos && !failed && !Trigger.Task.IsCompleted) || (eos && !Trigger.Task.IsCompleted))
             {
-                this.CallbackHandler.Callback(bufferImpl);
+                CallbackHandler.Callback(bufferImpl);
             }
             
             // Ensure we release the buffer before any signalling or we will cause a memory leak due to there still being a reference count on the buffer.
-            this.ReleaseBuffer(bufferImpl, eos);
+            ReleaseBuffer(bufferImpl, eos);
 
             // If this buffer signals the end of data stream, allow waiting thread to continue.
             if (eos || failed)
             {
-                MMALLog.Logger.LogDebug($"{this.Name}: End of stream. Signaling completion...");
+                MMALLog.Logger.LogDebug($"{Name}: End of stream. Signaling completion...");
                 
-                Task.Run(() => { this.Trigger.SetResult(true); });
+                Task.Run(() => { Trigger.SetResult(true); });
             }
         }
     }

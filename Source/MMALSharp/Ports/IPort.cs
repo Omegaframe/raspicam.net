@@ -1,9 +1,4 @@
-﻿// <copyright file="IPort.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using MMALSharp.Common;
@@ -13,9 +8,6 @@ using MMALSharp.Native;
 
 namespace MMALSharp.Ports
 {
-    /// <summary>
-    /// Represents a port.
-    /// </summary>
     public interface IPort : IMMALObject
     {
         /// <summary>

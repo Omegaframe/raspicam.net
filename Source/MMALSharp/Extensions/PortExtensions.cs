@@ -15,12 +15,8 @@ using MMALSharp.Ports;
 using static MMALSharp.MMALNativeExceptionHelper;
 using static MMALSharp.Native.MMALParametersCamera;
 
-namespace MMALSharp
+namespace MMALSharp.Extensions
 {
-#pragma warning disable SA1202 // Public methods before Internal
-    /// <summary>
-    /// Provides extension methods to obtain and change the configuration of a port.
-    /// </summary>
     public static class PortExtensions
     {
         /// <summary>
@@ -284,4 +280,3 @@ namespace MMALSharp
         }
     }
 }
-#pragma warning restore SA1202 // Public methods before Internal

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using MMALSharp.Common.Utility;
+using MMALSharp.Extensions;
 using MMALSharp.Handlers;
 using MMALSharp.Ports.Inputs;
 

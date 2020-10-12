@@ -1,9 +1,4 @@
-﻿// <copyright file="PortBase.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -17,12 +12,7 @@ using static MMALSharp.MMALNativeExceptionHelper;
 
 namespace MMALSharp.Ports
 {
-    /// <summary>
-    /// Base class for port objects.
-    /// </summary>
-    /// <typeparam name="TCallback">The callback handler type.</typeparam>
-    public abstract unsafe class PortBase<TCallback> : MMALObject, IPort
-        where TCallback : ICallbackHandler
+    public abstract unsafe class PortBase<TCallback> : MMALObject, IPort where TCallback : ICallbackHandler
     {
         /// <summary>
         /// The callback handler associated with this port.
@@ -63,7 +53,7 @@ namespace MMALSharp.Ports
         /// The MMALEncoding pixel format that this port will process data in. Helpful for retrieving encoding name/FourCC value.
         /// </summary>
         public MMALEncoding PixelFormat { get; internal set; }
-        
+
         /// <summary>
         /// The config for this port.
         /// </summary>
@@ -81,8 +71,6 @@ namespace MMALSharp.Ports
         /// </summary>
         public TaskCompletionSource<bool> Trigger { get; internal set; }
 
-        #region Native properties
-
         /// <summary>
         /// Native pointer that represents this port.
         /// </summary>
@@ -91,45 +79,45 @@ namespace MMALSharp.Ports
         /// <summary>
         /// Native name of port.
         /// </summary>
-        public string Name => Marshal.PtrToStringAnsi((IntPtr)this.Ptr->Name);
+        public string Name => Marshal.PtrToStringAnsi((IntPtr)Ptr->Name);
 
         /// <summary>
         /// Indicates whether this port is enabled.
         /// </summary>
-        public bool Enabled => this.Ptr->IsEnabled == 1;
+        public bool Enabled => Ptr->IsEnabled == 1;
 
         /// <summary>
         /// Specifies minimum number of buffer headers required for this port.
         /// </summary>
-        public int BufferNumMin => this.Ptr->BufferNumMin;
+        public int BufferNumMin => Ptr->BufferNumMin;
 
         /// <summary>
         /// Specifies minimum size of buffer headers required for this port.
         /// </summary>
-        public int BufferSizeMin => this.Ptr->BufferSizeMin;
+        public int BufferSizeMin => Ptr->BufferSizeMin;
 
         /// <summary>
         /// Specifies minimum alignment value for buffer headers required for this port.
         /// </summary>
-        public int BufferAlignmentMin => this.Ptr->BufferAlignmentMin;
+        public int BufferAlignmentMin => Ptr->BufferAlignmentMin;
 
         /// <summary>
         /// Specifies recommended number of buffer headers for this port.
         /// </summary>
-        public int BufferNumRecommended => this.Ptr->BufferNumRecommended;
+        public int BufferNumRecommended => Ptr->BufferNumRecommended;
 
         /// <summary>
         /// Specifies recommended size of buffer headers for this port.
         /// </summary>
-        public int BufferSizeRecommended => this.Ptr->BufferSizeRecommended;
+        public int BufferSizeRecommended => Ptr->BufferSizeRecommended;
 
         /// <summary>
         /// Indicates the currently set number of buffer headers for this port.
         /// </summary>
         public int BufferNum
         {
-            get => this.Ptr->BufferNum;
-            internal set => this.Ptr->BufferNum = value;
+            get => Ptr->BufferNum;
+            internal set => Ptr->BufferNum = value;
         }
 
         /// <summary>
@@ -137,15 +125,15 @@ namespace MMALSharp.Ports
         /// </summary>
         public int BufferSize
         {
-            get => this.Ptr->BufferSize;
-            internal set => this.Ptr->BufferSize = value;
+            get => Ptr->BufferSize;
+            internal set => Ptr->BufferSize = value;
         }
 
         /// <summary>
         /// Accessor for the elementary stream.
         /// </summary>
-        public MMAL_ES_FORMAT_T Format => *this.Ptr->Format;
-        
+        public MMAL_ES_FORMAT_T Format => *Ptr->Format;
+
         /// <summary>
         /// The Width/Height that this port will process data in.
         /// </summary>
@@ -156,8 +144,8 @@ namespace MMALSharp.Ports
         /// </summary>
         public Rectangle Crop
         {
-            get => new Rectangle(this.Ptr->Format->Es->Video.Crop.X, this.Ptr->Format->Es->Video.Crop.Y, this.Ptr->Format->Es->Video.Crop.Width, this.Ptr->Format->Es->Video.Crop.Height);
-            internal set => this.Ptr->Format->Es->Video.Crop = new MMAL_RECT_T(value.X, value.Y, value.Width, value.Height);
+            get => new Rectangle(Ptr->Format->Es->Video.Crop.X, Ptr->Format->Es->Video.Crop.Y, Ptr->Format->Es->Video.Crop.Width, Ptr->Format->Es->Video.Crop.Height);
+            internal set => Ptr->Format->Es->Video.Crop = new MMAL_RECT_T(value.X, value.Y, value.Width, value.Height);
         }
 
         /// <summary>
@@ -165,8 +153,8 @@ namespace MMALSharp.Ports
         /// </summary>
         public double FrameRate
         {
-            get => this.Ptr->Format->Es->Video.FrameRate.Num;
-            internal set => this.Ptr->Format->Es->Video.FrameRate = new MMAL_RATIONAL_T(value);
+            get => Ptr->Format->Es->Video.FrameRate.Num;
+            internal set => Ptr->Format->Es->Video.FrameRate = new MMAL_RATIONAL_T(value);
         }
 
         /// <summary>
@@ -174,7 +162,7 @@ namespace MMALSharp.Ports
         /// </summary>
         public MMAL_RATIONAL_T FrameRateRational
         {
-            get => this.Ptr->Format->Es->Video.FrameRate;
+            get => Ptr->Format->Es->Video.FrameRate;
         }
 
         /// <summary>
@@ -182,27 +170,27 @@ namespace MMALSharp.Ports
         /// </summary>
         public MMALEncoding VideoColorSpace
         {
-            get => this.Ptr->Format->Es->Video.ColorSpace.ParseEncoding();
-            internal set => this.Ptr->Format->Es->Video.ColorSpace = value.EncodingVal;
+            get => Ptr->Format->Es->Video.ColorSpace.ParseEncoding();
+            internal set => Ptr->Format->Es->Video.ColorSpace = value.EncodingVal;
         }
 
         /// <summary>
         /// The Region of Interest width that this port will process data in.
         /// </summary>
-        public int CropWidth => this.Ptr->Format->Es->Video.Crop.Width;
+        public int CropWidth => Ptr->Format->Es->Video.Crop.Width;
 
         /// <summary>
         /// The Region of Interest height that this port will process data in.
         /// </summary>
-        public int CropHeight => this.Ptr->Format->Es->Video.Crop.Height;
+        public int CropHeight => Ptr->Format->Es->Video.Crop.Height;
 
         /// <summary>
         /// Query / Set the port domain type.
         /// </summary>
         public MMALFormat.MMAL_ES_TYPE_T FormatType
         {
-            get => this.Ptr->Format->Type;
-            internal set => this.Ptr->Format->Type = value;
+            get => Ptr->Format->Type;
+            internal set => Ptr->Format->Type = value;
         }
 
         /// <summary>
@@ -210,8 +198,8 @@ namespace MMALSharp.Ports
         /// </summary>
         public int NativeEncodingType
         {
-            get => this.Ptr->Format->Encoding;
-            internal set => this.Ptr->Format->Encoding = value;
+            get => Ptr->Format->Encoding;
+            internal set => Ptr->Format->Encoding = value;
         }
 
         /// <summary>
@@ -219,8 +207,8 @@ namespace MMALSharp.Ports
         /// </summary>
         public int NativeEncodingSubformat
         {
-            get => this.Ptr->Format->EncodingVariant;
-            internal set => this.Ptr->Format->EncodingVariant = value;
+            get => Ptr->Format->EncodingVariant;
+            internal set => Ptr->Format->EncodingVariant = value;
         }
 
         /// <summary>
@@ -228,8 +216,8 @@ namespace MMALSharp.Ports
         /// </summary>
         public int Bitrate
         {
-            get => this.Ptr->Format->Bitrate;
-            internal set => this.Ptr->Format->Bitrate = value;
+            get => Ptr->Format->Bitrate;
+            internal set => Ptr->Format->Bitrate = value;
         }
 
         /// <summary>
@@ -237,29 +225,27 @@ namespace MMALSharp.Ports
         /// </summary>
         public MMAL_RATIONAL_T Par
         {
-            get => this.Ptr->Format->Es->Video.Par;
-            internal set => this.Ptr->Format->Es->Video.Par = value;
+            get => Ptr->Format->Es->Video.Par;
+            internal set => Ptr->Format->Es->Video.Par = value;
         }
 
         internal int Width
         {
-            get => this.Ptr->Format->Es->Video.Width;
-            set => this.Ptr->Format->Es->Video.Width = value;
+            get => Ptr->Format->Es->Video.Width;
+            set => Ptr->Format->Es->Video.Width = value;
         }
 
         internal int Height
         {
-            get => this.Ptr->Format->Es->Video.Height;
-            set => this.Ptr->Format->Es->Video.Height = value;
+            get => Ptr->Format->Es->Video.Height;
+            set => Ptr->Format->Es->Video.Height = value;
         }
 
-        #endregion
-        
         /// <summary>
         /// Native pointer that represents the component this port is associated with.
         /// </summary>
         internal MMAL_COMPONENT_T* Comp { get; }
-        
+
         /// <summary>
         /// Native pointer to the native callback function.
         /// </summary>
@@ -269,11 +255,11 @@ namespace MMALSharp.Ports
         /// Delegate for native port callback.
         /// </summary>
         internal MMALPort.MMAL_PORT_BH_CB_T NativeCallback { get; set; }
-        
+
         /// <inheritdoc />
         public override bool CheckState()
         {
-            return this.Ptr != null && (IntPtr)this.Ptr != IntPtr.Zero;
+            return Ptr != null && (IntPtr)Ptr != IntPtr.Zero;
         }
 
         /// <summary>
@@ -285,11 +271,11 @@ namespace MMALSharp.Ports
         /// <param name="guid">A managed unique identifier for this port.</param>
         protected PortBase(IntPtr ptr, IComponent comp, PortType type, Guid guid)
         {
-            this.Ptr = (MMAL_PORT_T*)ptr;
-            this.Comp = ((MMAL_PORT_T*)ptr)->Component;
-            this.ComponentReference = comp;
-            this.PortType = type;
-            this.Guid = guid;
+            Ptr = (MMAL_PORT_T*)ptr;
+            Comp = ((MMAL_PORT_T*)ptr)->Component;
+            ComponentReference = comp;
+            PortType = type;
+            Guid = guid;
         }
 
         /// <summary>
@@ -299,8 +285,8 @@ namespace MMALSharp.Ports
         /// <exception cref="MMALException"/>
         public void EnablePort(IntPtr callback)
         {
-            MMALLog.Logger.LogDebug($"{this.Name}: Enabling port.");
-            MMALCheck(MMALPort.mmal_port_enable(this.Ptr, callback), $"{this.Name}: Unable to enable port.");
+            MMALLog.Logger.LogDebug($"{Name}: Enabling port.");
+            MMALCheck(MMALPort.mmal_port_enable(Ptr, callback), $"{Name}: Unable to enable port.");
         }
 
         /// <summary>
@@ -311,10 +297,10 @@ namespace MMALSharp.Ports
         /// <exception cref="MMALException"/>
         public void DisablePort()
         {
-            if (this.Enabled)
+            if (Enabled)
             {
-                MMALLog.Logger.LogDebug($"{this.Name}: Disabling port.");
-                MMALCheck(MMALPort.mmal_port_disable(this.Ptr), $"{this.Name}: Unable to disable port.");
+                MMALLog.Logger.LogDebug($"{Name}: Disabling port.");
+                MMALCheck(MMALPort.mmal_port_disable(Ptr), $"{Name}: Unable to disable port.");
             }
         }
 
@@ -324,8 +310,8 @@ namespace MMALSharp.Ports
         /// <exception cref="MMALException"/>
         public void Commit()
         {
-            MMALLog.Logger.LogDebug($"{this.Name}: Committing port format changes.");
-            MMALCheck(MMALPort.mmal_port_format_commit(this.Ptr), $"{this.Name}: Unable to commit port changes.");
+            MMALLog.Logger.LogDebug($"{Name}: Committing port format changes.");
+            MMALCheck(MMALPort.mmal_port_format_commit(Ptr), $"{Name}: Unable to commit port changes.");
         }
 
         /// <summary>
@@ -334,8 +320,8 @@ namespace MMALSharp.Ports
         /// <param name="destination">The destination port we're copying to.</param>
         public void ShallowCopy(IPort destination)
         {
-            MMALLog.Logger.LogDebug($"{this.Name}: Shallow copy port format.");
-            MMALFormat.mmal_format_copy(destination.Ptr->Format, this.Ptr->Format);
+            MMALLog.Logger.LogDebug($"{Name}: Shallow copy port format.");
+            MMALFormat.mmal_format_copy(destination.Ptr->Format, Ptr->Format);
         }
 
         /// <summary>
@@ -344,8 +330,8 @@ namespace MMALSharp.Ports
         /// <param name="eventFormatSource">The source event format we're copying from.</param>
         public void ShallowCopy(IBufferEvent eventFormatSource)
         {
-            MMALLog.Logger.LogDebug($"{this.Name}: Shallow copy event format.");
-            MMALFormat.mmal_format_copy(this.Ptr->Format, eventFormatSource.Ptr);
+            MMALLog.Logger.LogDebug($"{Name}: Shallow copy event format.");
+            MMALFormat.mmal_format_copy(Ptr->Format, eventFormatSource.Ptr);
         }
 
         /// <summary>
@@ -354,8 +340,8 @@ namespace MMALSharp.Ports
         /// <param name="destination">The destination port we're copying to.</param>
         public void FullCopy(IPort destination)
         {
-            MMALLog.Logger.LogDebug($"{this.Name}: Full copy port format.");
-            MMALFormat.mmal_format_full_copy(destination.Ptr->Format, this.Ptr->Format);
+            MMALLog.Logger.LogDebug($"{Name}: Full copy port format.");
+            MMALFormat.mmal_format_full_copy(destination.Ptr->Format, Ptr->Format);
         }
 
         /// <summary>
@@ -364,8 +350,8 @@ namespace MMALSharp.Ports
         /// <param name="eventFormatSource">The source event format we're copying from.</param>
         public void FullCopy(IBufferEvent eventFormatSource)
         {
-            MMALLog.Logger.LogDebug($"{this.Name}: Full copy event format.");
-            MMALFormat.mmal_format_full_copy(this.Ptr->Format, eventFormatSource.Ptr);
+            MMALLog.Logger.LogDebug($"{Name}: Full copy event format.");
+            MMALFormat.mmal_format_full_copy(Ptr->Format, eventFormatSource.Ptr);
         }
 
         /// <summary>
@@ -374,9 +360,9 @@ namespace MMALSharp.Ports
         /// </summary>
         /// <exception cref="MMALException"/>
         public void Flush()
-        {            
-            MMALLog.Logger.LogDebug($"{this.Name}: Flushing port buffers");
-            MMALCheck(MMALPort.mmal_port_flush(this.Ptr), $"{this.Name}: Unable to flush port.");
+        {
+            MMALLog.Logger.LogDebug($"{Name}: Flushing port buffers");
+            MMALCheck(MMALPort.mmal_port_flush(Ptr), $"{Name}: Unable to flush port.");
         }
 
         /// <summary>
@@ -386,20 +372,16 @@ namespace MMALSharp.Ports
         /// <exception cref="MMALException"/>
         public void SendBuffer(IBuffer buffer)
         {
-            if (this.Enabled)
-            {
-                if (MMALCameraConfig.Debug)
-                {
-                    MMALLog.Logger.LogDebug($"{this.Name}: Sending buffer start.");
-                }
+            if (!Enabled)
+                return;
 
-                MMALCheck(MMALPort.mmal_port_send_buffer(this.Ptr, buffer.Ptr), $"{this.Name}: Unable to send buffer header.");
+            if (MMALCameraConfig.Debug)
+                MMALLog.Logger.LogDebug($"{Name}: Sending buffer start.");
 
-                if (MMALCameraConfig.Debug)
-                {
-                    MMALLog.Logger.LogDebug($"{this.Name}: Sending buffer complete.");
-                }
-            }
+            MMALCheck(MMALPort.mmal_port_send_buffer(Ptr, buffer.Ptr), $"{Name}: Unable to send buffer header.");
+
+            if (MMALCameraConfig.Debug)
+                MMALLog.Logger.LogDebug($"{Name}: Sending buffer complete.");
         }
 
         /// <summary>
@@ -407,17 +389,17 @@ namespace MMALSharp.Ports
         /// </summary>
         public void SendAllBuffers()
         {
-            this.InitialiseBufferPool();
-            
-            var length = this.BufferPool.Queue.QueueLength();
+            InitialiseBufferPool();
+
+            var length = BufferPool.Queue.QueueLength();
 
             for (int i = 0; i < length; i++)
             {
-                var buffer = this.BufferPool.Queue.GetBuffer();
+                var buffer = BufferPool.Queue.GetBuffer();
 
-                MMALLog.Logger.LogDebug($"{this.Name}: Sending buffer to output port: Length {buffer.Length}.");
-                
-                this.SendBuffer(buffer);
+                MMALLog.Logger.LogDebug($"{Name}: Sending buffer to output port: Length {buffer.Length}.");
+
+                SendBuffer(buffer);
             }
         }
 
@@ -433,9 +415,9 @@ namespace MMALSharp.Ports
             {
                 var buffer = pool.Queue.GetBuffer();
 
-                MMALLog.Logger.LogDebug($"{this.Name}: Sending buffer to output port: Length {buffer.Length}.");
+                MMALLog.Logger.LogDebug($"{Name}: Sending buffer to output port: Length {buffer.Length}.");
 
-                this.SendBuffer(buffer);
+                SendBuffer(buffer);
             }
         }
 
@@ -445,14 +427,14 @@ namespace MMALSharp.Ports
         /// </summary>
         public void DestroyPortPool()
         {
-            if (this.BufferPool != null && !this.BufferPool.IsDisposed)
+            if (BufferPool != null && !BufferPool.IsDisposed)
             {
-                this.DisablePort();
+                DisablePort();
 
-                MMALLog.Logger.LogDebug($"{this.Name}: Releasing active buffers.");
-                while (this.BufferPool.Queue.QueueLength() < this.BufferPool.HeadersNum)
+                MMALLog.Logger.LogDebug($"{Name}: Releasing active buffers.");
+                while (BufferPool.Queue.QueueLength() < BufferPool.HeadersNum)
                 {
-                    var tempBuf = this.BufferPool.Queue.TimedWait(1000);
+                    var tempBuf = BufferPool.Queue.TimedWait(1000);
 
                     if (tempBuf != null)
                     {
@@ -460,15 +442,15 @@ namespace MMALSharp.Ports
                     }
                     else
                     {
-                        MMALLog.Logger.LogWarning($"{this.Name}: Attempted to release buffer but retrieved null.");
+                        MMALLog.Logger.LogWarning($"{Name}: Attempted to release buffer but retrieved null.");
                     }
                 }
 
-                this.BufferPool.Dispose();
+                BufferPool.Dispose();
             }
             else
             {
-                MMALLog.Logger.LogDebug($"{this.Name}: Buffer pool already null or disposed of.");
+                MMALLog.Logger.LogDebug($"{Name}: Buffer pool already null or disposed of.");
             }
         }
 
@@ -477,8 +459,8 @@ namespace MMALSharp.Ports
         /// </summary>
         public void InitialiseBufferPool()
         {
-            MMALLog.Logger.LogDebug($"{this.Name}: Initialising buffer pool.");
-            this.BufferPool = new MMALPoolImpl(this);
+            MMALLog.Logger.LogDebug($"{Name}: Initialising buffer pool.");
+            BufferPool = new MMALPoolImpl(this);
         }
 
         /// <summary>
@@ -486,7 +468,7 @@ namespace MMALSharp.Ports
         /// </summary>
         public void CloseConnection()
         {
-            this.ConnectedReference = null;
+            ConnectedReference = null;
         }
 
         /// <summary>
@@ -496,7 +478,7 @@ namespace MMALSharp.Ports
         /// <exception cref="MMALException"/>
         public void ExtraDataAlloc(int size)
         {
-            MMALCheck(MMALFormat.mmal_format_extradata_alloc(this.Ptr->Format, (uint)size), $"{this.Name}: Unable to alloc extradata.");
+            MMALCheck(MMALFormat.mmal_format_extradata_alloc(Ptr->Format, (uint)size), $"{Name}: Unable to alloc extradata.");
         }
     }
 }
