@@ -1,14 +1,14 @@
 ﻿using System.Runtime.InteropServices;
-using MMALSharp.Common.Utility;
+using MMALSharp.Native.Internal;
 
 namespace MMALSharp.Native
 {
     public static class MmalEvents
     {
-        public static int MmalEventError = Helpers.FourCcFromString("ERRO");
-        public static int MmalEventEos = Helpers.FourCcFromString("EEOS");
-        public static int MmalEventFormatChanged = Helpers.FourCcFromString("EFCH");
-        public static int MmalEventParameterChanged = Helpers.FourCcFromString("EPCH");
+        public static int MmalEventError = "ERRO".ToFourCc();
+        public static int MmalEventEos = "EEOS".ToFourCc();
+        public static int MmalEventFormatChanged = "EFCH".ToFourCc();
+        public static int MmalEventParameterChanged = "EPCH".ToFourCc();
 
         [DllImport("libmmal.so", EntryPoint = "mmal_event_format_changed_get", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe MMAL_EVENT_FORMAT_CHANGED_T* mmal_event_format_changed_get(MMAL_BUFFER_HEADER_T* buffer);

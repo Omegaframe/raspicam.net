@@ -1,22 +1,22 @@
 ﻿using System.Runtime.InteropServices;
-using MMALSharp.Common.Utility;
+using MMALSharp.Native.Internal;
 
 namespace MMALSharp.Native
 {
     public static class MmalClock
     {
-        public static int MmalClockEventMagic = Helpers.FourCcFromString("CKLM");
-        public static int MmalClockEventReference = Helpers.FourCcFromString("CREF");
-        public static int MmalClockEventActive = Helpers.FourCcFromString("CACT");
-        public static int MmalClockEventScale = Helpers.FourCcFromString("CSCA");
-        public static int MmalClockEventTime = Helpers.FourCcFromString("CTIM");
-        public static int MmalClockEventUpdateThreshold = Helpers.FourCcFromString("CUTH");
-        public static int MmalClockEventDiscontThreshold = Helpers.FourCcFromString("CDTH");
-        public static int MmalClockEventRequestThreshold = Helpers.FourCcFromString("CRTH");
-        public static int MmalClockEventInputBufferInfo = Helpers.FourCcFromString("CIBI");
-        public static int MmalClockEventOutputBufferInfo = Helpers.FourCcFromString("COBI");
-        public static int MmalClockEventLatency = Helpers.FourCcFromString("CLAT");
-        public static int MmalClockEventInvalid = 0;                
+        public static int MmalClockEventMagic = "CKLM".ToFourCc();
+        public static int MmalClockEventReference = "CREF".ToFourCc();
+        public static int MmalClockEventActive = "CACT".ToFourCc();
+        public static int MmalClockEventScale = "CSCA".ToFourCc();
+        public static int MmalClockEventTime = "CTIM".ToFourCc();
+        public static int MmalClockEventUpdateThreshold = "CUTH".ToFourCc();
+        public static int MmalClockEventDiscontThreshold = "CDTH".ToFourCc();
+        public static int MmalClockEventRequestThreshold = "CRTH".ToFourCc();
+        public static int MmalClockEventInputBufferInfo = "CIBI".ToFourCc();
+        public static int MmalClockEventOutputBufferInfo = "COBI".ToFourCc();
+        public static int MmalClockEventLatency = "CLAT".ToFourCc();
+        public static int MmalClockEventInvalid = 0;
     }
 
     [StructLayout(LayoutKind.Sequential)]
