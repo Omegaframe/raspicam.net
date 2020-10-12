@@ -1,9 +1,4 @@
-﻿// <copyright file="IDownstreamComponent.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MMALSharp.Handlers;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Inputs;
@@ -20,7 +15,7 @@ namespace MMALSharp.Components
         /// The ports which are processing data on this component.
         /// </summary>
         Dictionary<int, IOutputPort> ProcessingPorts { get; }
-      
+
         /// <summary>
         /// Configures the input port.
         /// </summary>
@@ -50,8 +45,7 @@ namespace MMALSharp.Components
         /// pipeline and you are feeding data to it directly from a <see cref="IInputCaptureHandler"/>. If this port is connected to by another component then leave this parameter null.
         /// </param>
         /// <returns>This component.</returns>
-        IDownstreamComponent ConfigureInputPort<TPort>(IMMALPortConfig config, IInputCaptureHandler handler) 
-            where TPort : IInputPort;
+        IDownstreamComponent ConfigureInputPort<TPort>(IMMALPortConfig config, IInputCaptureHandler handler) where TPort : IInputPort;
 
         /// <summary>
         /// Configures the output port.
@@ -79,7 +73,6 @@ namespace MMALSharp.Components
         /// <param name="config">The port configuration object.</param>
         /// <param name="handler">The capture handler to use with this port.</param>
         /// <returns>This component.</returns>
-        IDownstreamComponent ConfigureOutputPort<TPort>(int outputPort, IMMALPortConfig config, IOutputCaptureHandler handler)
-            where TPort : IOutputPort;
+        IDownstreamComponent ConfigureOutputPort<TPort>(int outputPort, IMMALPortConfig config, IOutputCaptureHandler handler) where TPort : IOutputPort;
     }
 }

@@ -1,9 +1,4 @@
-﻿// <copyright file="MMALCameraComponent.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
@@ -67,7 +62,7 @@ namespace MMALSharp.Components
         /// </summary>
         Mode7
     }
-    
+
     /// <summary>
     /// Represents a camera component.
     /// </summary>
@@ -107,25 +102,22 @@ namespace MMALSharp.Components
         /// Camera Info component. This is used to provide detailed info about the camera itself.
         /// </summary>
         public ICameraInfoComponent CameraInfo { get; set; }
-        
+
         /// <summary>
         /// Initialises a new MMALCameraComponent.
         /// </summary>
-        public unsafe MMALCameraComponent()
-            : base(MMALParameters.MMAL_COMPONENT_DEFAULT_CAMERA)
+        public unsafe MMALCameraComponent() : base(MMALParameters.MMAL_COMPONENT_DEFAULT_CAMERA)
         {
-            this.Outputs.Add(new OutputPort((IntPtr)(&(*this.Ptr->Output[0])), this, Guid.NewGuid()));
-            this.Outputs.Add(new VideoPort((IntPtr)(&(*this.Ptr->Output[1])), this, Guid.NewGuid()));
-            this.Outputs.Add(new StillPort((IntPtr)(&(*this.Ptr->Output[2])), this, Guid.NewGuid()));
-            
-            if (this.CameraInfo == null)
-            {
-                this.SetSensorDefaults();
-            }
-            
-            this.PreviewPort = this.Outputs[MMALCameraPreviewPort];
-            this.VideoPort = this.Outputs[MMALCameraVideoPort];
-            this.StillPort = this.Outputs[MMALCameraStillPort];
+            Outputs.Add(new OutputPort((IntPtr)(&(*Ptr->Output[0])), this, Guid.NewGuid()));
+            Outputs.Add(new VideoPort((IntPtr)(&(*Ptr->Output[1])), this, Guid.NewGuid()));
+            Outputs.Add(new StillPort((IntPtr)(&(*Ptr->Output[2])), this, Guid.NewGuid()));
+
+            if (CameraInfo == null)
+                SetSensorDefaults();
+
+            PreviewPort = Outputs[MMALCameraPreviewPort];
+            VideoPort = Outputs[MMALCameraVideoPort];
+            StillPort = Outputs[MMALCameraStillPort];
 
             /*
              * Stereoscopic mode is only supported with the compute module as it requires two camera modules to work.
@@ -133,20 +125,18 @@ namespace MMALSharp.Components
              * and therefore will not work if enabled.
              * See: https://www.raspberrypi.org/forums/viewtopic.php?p=600720
             */
-            this.PreviewPort.SetStereoMode(MMALCameraConfig.StereoMode);
-            this.VideoPort.SetStereoMode(MMALCameraConfig.StereoMode);
-            this.StillPort.SetStereoMode(MMALCameraConfig.StereoMode);
+            PreviewPort.SetStereoMode(MMALCameraConfig.StereoMode);
+            VideoPort.SetStereoMode(MMALCameraConfig.StereoMode);
+            StillPort.SetStereoMode(MMALCameraConfig.StereoMode);
 
-            this.Control.SetParameter(MMALParametersCamera.MMAL_PARAMETER_CAMERA_NUM, 0);
-            
+            Control.SetParameter(MMALParametersCamera.MMAL_PARAMETER_CAMERA_NUM, 0);
+
             var eventRequest = new MMAL_PARAMETER_CHANGE_EVENT_REQUEST_T(
                 new MMAL_PARAMETER_HEADER_T(MMALParametersCommon.MMAL_PARAMETER_CHANGE_EVENT_REQUEST, Marshal.SizeOf<MMAL_PARAMETER_CHANGE_EVENT_REQUEST_T>()),
                 MMALParametersCamera.MMAL_PARAMETER_CAMERA_SETTINGS, 1);
 
             if (MMALCameraConfig.SetChangeEventRequest)
-            {
-                this.Control.SetChangeEventRequest(eventRequest);
-            }
+                Control.SetChangeEventRequest(eventRequest);
         }
 
         /// <summary>
@@ -154,11 +144,9 @@ namespace MMALSharp.Components
         /// </summary>
         public override void Dispose()
         {
-            if (this.CameraInfo != null && this.CameraInfo.CheckState())
-            {
-                this.CameraInfo.DestroyComponent();
-            }
-            
+            if (CameraInfo != null && CameraInfo.CheckState())
+                CameraInfo.DestroyComponent();
+
             base.Dispose();
         }
 
@@ -168,9 +156,9 @@ namespace MMALSharp.Components
         public override void PrintComponent()
         {
             base.PrintComponent();
-            MMALLog.Logger.LogInformation($"    Still Width: {this.StillPort.Resolution.Width}. Video Height: {this.StillPort.Resolution.Height}");
-            MMALLog.Logger.LogInformation($"    Video Width: {this.VideoPort.Resolution.Width}. Video Height: {this.VideoPort.Resolution.Height}");
-            MMALLog.Logger.LogInformation($"    Max Width: {this.CameraInfo.MaxWidth}. Video Height: {this.CameraInfo.MaxHeight}");
+            MMALLog.Logger.LogInformation($"    Still Width: {StillPort.Resolution.Width}. Video Height: {StillPort.Resolution.Height}");
+            MMALLog.Logger.LogInformation($"    Video Width: {VideoPort.Resolution.Width}. Video Height: {VideoPort.Resolution.Height}");
+            MMALLog.Logger.LogInformation($"    Max Width: {CameraInfo.MaxWidth}. Video Height: {CameraInfo.MaxHeight}");
         }
 
         /// <summary>
@@ -180,12 +168,12 @@ namespace MMALSharp.Components
         /// <param name="videoCaptureHandler">A capture handler when capturing raw video from the camera's video port (no encoder attached).</param>
         public void Initialise(IOutputCaptureHandler stillCaptureHandler = null, IOutputCaptureHandler videoCaptureHandler = null)
         {
-            this.DisableComponent();
-            
+            DisableComponent();
+
             var camConfig = new MMAL_PARAMETER_CAMERA_CONFIG_T(
                 new MMAL_PARAMETER_HEADER_T(MMALParametersCamera.MMAL_PARAMETER_CAMERA_CONFIG, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_CONFIG_T>()),
-                                                                this.CameraInfo.MaxWidth,
-                                                                this.CameraInfo.MaxHeight,
+                                                                CameraInfo.MaxWidth,
+                                                                CameraInfo.MaxHeight,
                                                                 0,
                                                                 1,
                                                                 MMALCameraConfig.Resolution.Width,
@@ -194,35 +182,35 @@ namespace MMALSharp.Components
                                                                 0,
                                                                 0,
                                                                 MMALCameraConfig.ClockMode);
-                        
+
             this.SetCameraConfig(camConfig);
 
             MMALLog.Logger.LogDebug("Camera config set");
 
-            this.Control.Start();
+            Control.Start();
 
             MMALLog.Logger.LogDebug("Configuring camera parameters.");
 
-            this.SetCameraParameters();
+            SetCameraParameters();
 
-            this.InitialisePreview();
-            this.InitialiseVideo(videoCaptureHandler);
-            this.InitialiseStill(stillCaptureHandler);
+            InitialisePreview();
+            InitialiseVideo(videoCaptureHandler);
+            InitialiseStill(stillCaptureHandler);
 
-            this.EnableComponent();
+            EnableComponent();
 
             MMALLog.Logger.LogDebug("Camera component configured.");
         }
 
-        private void SetSensorDefaults()
+        void SetSensorDefaults()
         {
-            this.CameraInfo = new MMALCameraInfoComponent();
+            CameraInfo = new MMALCameraInfoComponent();
         }
-                
+
         /// <summary>
         /// Initialises the camera's preview component using the user defined width/height for the video port.
         /// </summary>
-        private void InitialisePreview()
+        void InitialisePreview()
         {
             var portConfig = new MMALPortConfig(
                 MMALCameraConfig.Encoding,
@@ -233,17 +221,13 @@ namespace MMALSharp.Components
 
             MMALLog.Logger.LogDebug("Commit preview");
 
-            this.PreviewPort.Configure(portConfig, null, null);
+            PreviewPort.Configure(portConfig, null, null);
 
             // Use Raspistill values.
             if (MMALCameraConfig.ShutterSpeed > 6000000)
-            {
-                this.PreviewPort.SetFramerateRange(new MMAL_RATIONAL_T(5, 1000), new MMAL_RATIONAL_T(166, 1000));
-            }
+                PreviewPort.SetFramerateRange(new MMAL_RATIONAL_T(5, 1000), new MMAL_RATIONAL_T(166, 1000));
             else if (MMALCameraConfig.ShutterSpeed > 1000000)
-            {
-                this.PreviewPort.SetFramerateRange(new MMAL_RATIONAL_T(166, 1000), new MMAL_RATIONAL_T(999, 1000));
-            }
+                PreviewPort.SetFramerateRange(new MMAL_RATIONAL_T(166, 1000), new MMAL_RATIONAL_T(999, 1000));
         }
 
         /// <summary>
@@ -255,39 +239,31 @@ namespace MMALSharp.Components
             int currentWidth = MMALCameraConfig.Resolution.Width;
             int currentHeight = MMALCameraConfig.Resolution.Height;
 
-            if (currentWidth == 0 || currentWidth > this.CameraInfo.MaxWidth)
-            {
-                currentWidth = this.CameraInfo.MaxWidth;
-            }
+            if (currentWidth == 0 || currentWidth > CameraInfo.MaxWidth)
+                currentWidth = CameraInfo.MaxWidth;
 
-            if (currentHeight == 0 || currentHeight > this.CameraInfo.MaxHeight)
-            {
-                currentHeight = this.CameraInfo.MaxHeight;
-            }
+            if (currentHeight == 0 || currentHeight > CameraInfo.MaxHeight)
+                currentHeight = CameraInfo.MaxHeight;
 
             var portConfig = new MMALPortConfig(
-                MMALCameraConfig.Encoding, 
+                MMALCameraConfig.Encoding,
                 MMALCameraConfig.EncodingSubFormat,
                 width: currentWidth,
                 height: currentHeight,
                 framerate: MMALCameraConfig.Framerate,
-                bufferNum: Math.Max(this.VideoPort.BufferNumRecommended, 3),
-                bufferSize: Math.Max(this.VideoPort.BufferSizeRecommended, this.VideoPort.BufferSizeMin),
+                bufferNum: Math.Max(VideoPort.BufferNumRecommended, 3),
+                bufferSize: Math.Max(VideoPort.BufferSizeRecommended, VideoPort.BufferSizeMin),
                 crop: new Rectangle(0, 0, currentWidth, currentHeight));
 
             MMALLog.Logger.LogDebug("Commit video");
 
-            this.VideoPort.Configure(portConfig, null, handler);
+            VideoPort.Configure(portConfig, null, handler);
 
             // Use Raspistill values.
             if (MMALCameraConfig.ShutterSpeed > 6000000)
-            {
-                this.VideoPort.SetFramerateRange(new MMAL_RATIONAL_T(5, 1000), new MMAL_RATIONAL_T(166, 1000));
-            }
+                VideoPort.SetFramerateRange(new MMAL_RATIONAL_T(5, 1000), new MMAL_RATIONAL_T(166, 1000));
             else if (MMALCameraConfig.ShutterSpeed > 1000000)
-            {
-                this.VideoPort.SetFramerateRange(new MMAL_RATIONAL_T(167, 1000), new MMAL_RATIONAL_T(999, 1000));
-            }
+                VideoPort.SetFramerateRange(new MMAL_RATIONAL_T(167, 1000), new MMAL_RATIONAL_T(999, 1000));
         }
 
         /// <summary>
@@ -299,19 +275,15 @@ namespace MMALSharp.Components
             int currentWidth = MMALCameraConfig.Resolution.Width;
             int currentHeight = MMALCameraConfig.Resolution.Height;
 
-            if (currentWidth == 0 || currentWidth > this.CameraInfo.MaxWidth)
-            {
-                currentWidth = this.CameraInfo.MaxWidth;
-            }
+            if (currentWidth == 0 || currentWidth > CameraInfo.MaxWidth)            
+                currentWidth = CameraInfo.MaxWidth;            
 
-            if (currentHeight == 0 || currentHeight > this.CameraInfo.MaxHeight)
-            {
-                currentHeight = this.CameraInfo.MaxHeight;
-            }
+            if (currentHeight == 0 || currentHeight > CameraInfo.MaxHeight)            
+                currentHeight = CameraInfo.MaxHeight;            
 
             MMALCameraConfig.Resolution = new Resolution(currentWidth, currentHeight);
 
-            MMALPortConfig portConfig = null;
+            MMALPortConfig portConfig;
 
             if (MMALCameraConfig.Encoding == MMALEncoding.RGB32 ||
                 MMALCameraConfig.Encoding == MMALEncoding.RGB24 ||
@@ -324,7 +296,7 @@ namespace MMALSharp.Components
 
                 try
                 {
-                    if (!this.StillPort.RgbOrderFixed())
+                    if (!StillPort.RgbOrderFixed())
                     {
                         MMALLog.Logger.LogWarning("Using old firmware. Setting encoding to BGR24");
                         encoding = MMALEncoding.BGR24;
@@ -335,15 +307,15 @@ namespace MMALSharp.Components
                     MMALLog.Logger.LogWarning("Using old firmware. Setting encoding to BGR24");
                     encoding = MMALEncoding.BGR24;
                 }
-                
+
                 portConfig = new MMALPortConfig(
                     encoding,
                     encoding,
                     width: currentWidth,
                     height: currentHeight,
                     framerate: MMALCameraConfig.Framerate,
-                    bufferNum: Math.Max(this.StillPort.BufferNumRecommended, 3),
-                    bufferSize: Math.Max(this.StillPort.BufferSizeRecommended, this.StillPort.BufferSizeMin),
+                    bufferNum: Math.Max(StillPort.BufferNumRecommended, 3),
+                    bufferSize: Math.Max(StillPort.BufferSizeRecommended, StillPort.BufferSizeMin),
                     crop: new Rectangle(0, 0, currentWidth, currentHeight));
             }
             else
@@ -351,31 +323,27 @@ namespace MMALSharp.Components
                 var resolution = MMALCameraConfig.Resolution.Pad();
 
                 portConfig = new MMALPortConfig(
-                    MMALCameraConfig.Encoding, 
+                    MMALCameraConfig.Encoding,
                     MMALCameraConfig.EncodingSubFormat,
                     width: resolution.Width,
                     height: resolution.Height,
                     framerate: MMALCameraConfig.Framerate,
-                    bufferNum: Math.Max(this.StillPort.BufferNumRecommended, 3),
-                    bufferSize: Math.Max(this.StillPort.BufferSizeRecommended, this.StillPort.BufferSizeMin),
+                    bufferNum: Math.Max(StillPort.BufferNumRecommended, 3),
+                    bufferSize: Math.Max(StillPort.BufferSizeRecommended, StillPort.BufferSizeMin),
                     crop: new Rectangle(0, 0, currentWidth, currentHeight));
             }
-            
+
             MMALLog.Logger.LogDebug("Commit still");
-            this.StillPort.Configure(portConfig, null, handler);
+            StillPort.Configure(portConfig, null, handler);
 
             // Use Raspistill values.
-            if (MMALCameraConfig.ShutterSpeed > 6000000)
-            {
-                this.StillPort.SetFramerateRange(new MMAL_RATIONAL_T(5, 1000), new MMAL_RATIONAL_T(166, 1000));
-            }
-            else if (MMALCameraConfig.ShutterSpeed > 1000000)
-            {
-                this.StillPort.SetFramerateRange(new MMAL_RATIONAL_T(167, 1000), new MMAL_RATIONAL_T(999, 1000));
-            }
+            if (MMALCameraConfig.ShutterSpeed > 6000000)            
+                StillPort.SetFramerateRange(new MMAL_RATIONAL_T(5, 1000), new MMAL_RATIONAL_T(166, 1000));            
+            else if (MMALCameraConfig.ShutterSpeed > 1000000)            
+                StillPort.SetFramerateRange(new MMAL_RATIONAL_T(167, 1000), new MMAL_RATIONAL_T(999, 1000));            
         }
 
-        private void SetCameraParameters()
+        void SetCameraParameters()
         {
             this.SetSensorMode(MMALCameraConfig.SensorMode);
             this.SetSaturation(MMALCameraConfig.Saturation);

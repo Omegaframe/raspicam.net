@@ -2,9 +2,6 @@
 
 namespace MMALSharp.Components.EncoderComponents
 {
-    /// <summary>
-    /// Represents an image encoder component.
-    /// </summary>
     public interface IImageEncoder : IEncoder
     {
         /// <summary>

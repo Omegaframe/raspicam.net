@@ -1,9 +1,4 @@
-﻿// <copyright file="MMALImageEncoder.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -11,12 +6,12 @@ using Microsoft.Extensions.Logging;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components.EncoderComponents;
 using MMALSharp.Config;
-using MMALSharp.Extensions;
 using MMALSharp.Handlers;
 using MMALSharp.Native;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;
+using MMALSharp.Extensions;
 using static MMALSharp.MMALNativeExceptionHelper;
 
 namespace MMALSharp.Components
@@ -48,7 +43,7 @@ namespace MMALSharp.Components
         /// Custom list of user defined EXIF metadata.
         /// </summary>
         public ExifTag[] ExifTags { get; }
-        
+
         /// <summary>
         /// If true, this component will be configured to process rapidly captured frames from the camera's video port.
         /// Note: The component pipeline must be configured as such. 
@@ -68,62 +63,53 @@ namespace MMALSharp.Components
         /// <param name="continuousCapture">Configure component for rapid capture mode.</param>
         /// <param name="thumbnailConfig">Configures the embedded JPEG thumbnail.</param>
         /// <param name="exifTags">A collection of custom EXIF tags.</param>
-        public MMALImageEncoder(bool rawBayer = false, bool useExif = true, bool continuousCapture = false, JpegThumbnail thumbnailConfig = null, params ExifTag[] exifTags)
-            : base(MMALParameters.MMAL_COMPONENT_DEFAULT_IMAGE_ENCODER)
+        public MMALImageEncoder(bool rawBayer = false, bool useExif = true, bool continuousCapture = false, JpegThumbnail thumbnailConfig = null, params ExifTag[] exifTags) : base(MMALParameters.MMAL_COMPONENT_DEFAULT_IMAGE_ENCODER)
         {
-            this.RawBayer = rawBayer;
-            this.UseExif = useExif;
-            this.ExifTags = exifTags;
-            this.ContinuousCapture = continuousCapture;
-            this.JpegThumbnailConfig = thumbnailConfig;
-            
-            this.Inputs.Add(new InputPort((IntPtr)(&(*this.Ptr->Input[0])), this, Guid.NewGuid()));
+            RawBayer = rawBayer;
+            UseExif = useExif;
+            ExifTags = exifTags;
+            ContinuousCapture = continuousCapture;
+            JpegThumbnailConfig = thumbnailConfig;
 
-            if (this.ContinuousCapture)
-            {
-                this.Outputs.Add(new FastStillPort((IntPtr)(&(*this.Ptr->Output[0])), this, Guid.NewGuid()));
-            }
+            Inputs.Add(new InputPort((IntPtr)(&(*Ptr->Input[0])), this, Guid.NewGuid()));
+
+            if (ContinuousCapture)
+                Outputs.Add(new FastStillPort((IntPtr)(&(*Ptr->Output[0])), this, Guid.NewGuid()));
             else
-            {
-                this.Outputs.Add(new StillPort((IntPtr)(&(*this.Ptr->Output[0])), this, Guid.NewGuid()));
-            }
+                Outputs.Add(new StillPort((IntPtr)(&(*Ptr->Output[0])), this, Guid.NewGuid()));
         }
-        
+
         /// <inheritdoc />
         public override IDownstreamComponent ConfigureOutputPort(int outputPort, IMMALPortConfig config, IOutputCaptureHandler handler)
         {
             base.ConfigureOutputPort(outputPort, config, handler);
 
-            if (this.RawBayer)
-            {
+            if (RawBayer)
                 MMALCamera.Instance.Camera.StillPort.SetRawCapture(true);
-            }
 
-            if (this.UseExif)
-            {
-                this.AddExifTags(this.ExifTags);
-            }
-            
-            if (this.JpegThumbnailConfig != null)
+            if (UseExif)
+                AddExifTags(ExifTags);
+
+            if (JpegThumbnailConfig != null)
             {
                 var str = new MMAL_PARAMETER_THUMBNAIL_CONFIG_T(
                     new MMAL_PARAMETER_HEADER_T(
                         MMALParametersCamera.MMAL_PARAMETER_THUMBNAIL_CONFIGURATION,
-                        Marshal.SizeOf<MMAL_PARAMETER_THUMBNAIL_CONFIG_T>()), 
-                        this.JpegThumbnailConfig.Enable, this.JpegThumbnailConfig.Width, 
-                        this.JpegThumbnailConfig.Height, this.JpegThumbnailConfig.Quality);
+                        Marshal.SizeOf<MMAL_PARAMETER_THUMBNAIL_CONFIG_T>()),
+                        JpegThumbnailConfig.Enable, JpegThumbnailConfig.Width,
+                        JpegThumbnailConfig.Height, JpegThumbnailConfig.Quality);
 
-                MMALCheck(MMALPort.mmal_port_parameter_set(this.Control.Ptr, &str.Hdr), "Unable to set JPEG thumbnail config.");
+                MMALCheck(MMALPort.mmal_port_parameter_set(Control.Ptr, &str.Hdr), "Unable to set JPEG thumbnail config.");
             }
-            
+
             return this;
         }
-        
+
         /// <summary>
         /// Adds EXIF tags to the resulting image.
         /// </summary>
         /// <param name="exifTags">A list of user defined EXIF tags.</param>
-        private void AddExifTags(params ExifTag[] exifTags)
+        void AddExifTags(params ExifTag[] exifTags)
         {
             // Add the same defaults as per Raspistill.c
             string sensorName = string.Empty;
@@ -136,7 +122,7 @@ namespace MMALSharp.Components
             {
                 MMALLog.Logger.LogWarning("Attempt to retrieve sensor name failed.");
             }
-            
+
             List<ExifTag> defaultTags = new List<ExifTag>
             {
                 new ExifTag { Key = "IFD0.Model", Value = "RP_" + sensorName },
@@ -148,32 +134,26 @@ namespace MMALSharp.Components
 
             this.SetDisableExif(false);
 
-            defaultTags.ForEach(c => this.AddExifTag(c));
+            defaultTags.ForEach(c => AddExifTag(c));
 
-            if ((defaultTags.Count + exifTags.Length) > 32)
-            {
+            if ((defaultTags.Count + exifTags.Length) > 32)            
                 throw new PiCameraError("Maximum number of EXIF tags exceeded.");
-            }
-                        
+
             // Add user defined tags.
             foreach (ExifTag tag in exifTags)
-            {
-                this.AddExifTag(tag);
-            }
+                AddExifTag(tag);            
         }
 
         /// <summary>
         /// Provides a facility to add an EXIF tag to the image. 
         /// </summary>
         /// <param name="exifTag">The EXIF tag to add to.</param>
-        private void AddExifTag(ExifTag exifTag)
-        {            
+        void AddExifTag(ExifTag exifTag)
+        {
             var formattedExif = exifTag.Key + "=" + exifTag.Value + char.MinValue;
 
-            if (formattedExif.Length > MaxExifPayloadLength)
-            {
-                throw new PiCameraError("EXIF payload greater than allowed max.");
-            }
+            if (formattedExif.Length > MaxExifPayloadLength)            
+                throw new PiCameraError("EXIF payload greater than allowed max.");            
 
             var arr = new byte[128];
 
@@ -192,7 +172,7 @@ namespace MMALSharp.Components
 
             try
             {
-                MMALCheck(MMALPort.mmal_port_parameter_set(this.Outputs[0].Ptr, (MMAL_PARAMETER_HEADER_T*)ptr),
+                MMALCheck(MMALPort.mmal_port_parameter_set(Outputs[0].Ptr, (MMAL_PARAMETER_HEADER_T*)ptr),
                     $"Unable to set EXIF {formattedExif}");
             }
             finally
@@ -200,5 +180,5 @@ namespace MMALSharp.Components
                 Marshal.FreeHGlobal(ptr);
             }
         }
-    }        
+    }
 }

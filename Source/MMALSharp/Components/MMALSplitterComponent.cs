@@ -1,9 +1,4 @@
-﻿// <copyright file="MMALSplitterComponent.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using MMALSharp.Handlers;
 using MMALSharp.Native;
 using MMALSharp.Ports;
@@ -19,24 +14,18 @@ namespace MMALSharp.Components
     /// </summary>
     public class MMALSplitterComponent : MMALDownstreamHandlerComponent
     {
-        /// <summary>
-        /// Creates a new instance of <see cref="MMALSplitterComponent"/>.
-        /// </summary>
-        public unsafe MMALSplitterComponent()
-            : base(MMALParameters.MMAL_COMPONENT_DEFAULT_VIDEO_SPLITTER)
+        public unsafe MMALSplitterComponent()            : base(MMALParameters.MMAL_COMPONENT_DEFAULT_VIDEO_SPLITTER)
         {
-            this.Inputs.Add(new InputPort((IntPtr)(&(*this.Ptr->Input[0])), this, Guid.NewGuid()));
+            Inputs.Add(new InputPort((IntPtr)(&(*Ptr->Input[0])), this, Guid.NewGuid()));
 
-            for (var i = 0; i < 4; i++)
-            {
-                this.Outputs.Add(new SplitterVideoPort((IntPtr)(&(*this.Ptr->Output[i])), this, Guid.NewGuid()));
-            }
+            for (var i = 0; i < 4; i++)            
+                Outputs.Add(new SplitterVideoPort((IntPtr)(&(*Ptr->Output[i])), this, Guid.NewGuid()));            
         }
 
         /// <inheritdoc />
         public override IDownstreamComponent ConfigureInputPort(IMMALPortConfig config, IPort copyPort, IInputCaptureHandler handler)
         {
-            var bufferNum = Math.Max(Math.Max(this.Inputs[0].BufferNumRecommended, 3), config.BufferNum);
+            var bufferNum = Math.Max(Math.Max(Inputs[0].BufferNumRecommended, 3), config.BufferNum);
             
             config = new MMALPortConfig(
                 config.EncodingType,

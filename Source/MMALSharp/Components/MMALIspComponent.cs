@@ -1,9 +1,4 @@
-﻿// <copyright file="MMALIspComponent.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;
 using static MMALSharp.Native.MMALParameters;
@@ -28,16 +23,13 @@ namespace MMALSharp.Components
         /// Creates a new instance of the <see cref="MMALIspComponent"/> class that can be used to change the size
         /// and the pixel format of resulting frames. 
         /// </summary>
-        public unsafe MMALIspComponent()
-            : base(MMAL_COMPONENT_ISP)
+        public unsafe MMALIspComponent() : base(MMAL_COMPONENT_ISP)
         {
             // Default to use still image port behaviour.
-            this.Inputs.Add(new InputPort((IntPtr)(&(*this.Ptr->Input[0])), this, Guid.NewGuid()));
+            Inputs.Add(new InputPort((IntPtr)(&(*Ptr->Input[0])), this, Guid.NewGuid()));
 
-            for (var i = 0; i < this.Ptr->OutputNum; i++)
-            {
-                this.Outputs.Add(new StillPort((IntPtr)(&(*this.Ptr->Output[i])), this, Guid.NewGuid()));
-            }            
+            for (var i = 0; i < Ptr->OutputNum; i++)
+                Outputs.Add(new StillPort((IntPtr)(&(*Ptr->Output[i])), this, Guid.NewGuid()));
         }
 
         /// <summary>
@@ -45,15 +37,12 @@ namespace MMALSharp.Components
         /// and the pixel format of resulting frames. 
         /// </summary>
         /// <param name="outputPortType">The user defined output port type.</param>
-        public unsafe MMALIspComponent(Type outputPortType)
-            : base(MMAL_COMPONENT_ISP)
+        public unsafe MMALIspComponent(Type outputPortType) : base(MMAL_COMPONENT_ISP)
         {
-            this.Inputs.Add(new InputPort((IntPtr)(&(*this.Ptr->Input[0])), this, Guid.NewGuid()));
+            Inputs.Add(new InputPort((IntPtr)(&(*Ptr->Input[0])), this, Guid.NewGuid()));
 
-            for (var i = 0; i < this.Ptr->OutputNum; i++)
-            {
-                this.Outputs.Add((IOutputPort)Activator.CreateInstance(outputPortType, (IntPtr)(&(*this.Ptr->Output[i])), this, Guid.NewGuid()));
-            }            
+            for (var i = 0; i < Ptr->OutputNum; i++)
+                Outputs.Add((IOutputPort)Activator.CreateInstance(outputPortType, (IntPtr)(&(*Ptr->Output[i])), this, Guid.NewGuid()));
         }
     }
 }

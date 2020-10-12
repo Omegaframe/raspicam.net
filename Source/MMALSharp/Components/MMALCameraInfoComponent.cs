@@ -1,9 +1,4 @@
-﻿// <copyright file="MMALCameraInfoComponent.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
 using MMALSharp.Common.Utility;
@@ -12,35 +7,17 @@ using static MMALSharp.MMALNativeExceptionHelper;
 
 namespace MMALSharp.Components
 {
-    /// <summary>
-    /// Represents a Camera Info component.
-    /// </summary>
     public unsafe class MMALCameraInfoComponent : MMALComponentBase, ICameraInfoComponent
-    {
-        /// <summary>
-        /// The sensor name of the camera.
-        /// </summary>
-        public string SensorName { get; set; }
-
-        /// <summary>
-        /// Maximum width supported by the sensor.
-        /// </summary>
-        public int MaxWidth { get; set; }
-
-        /// <summary>
-        /// Maximum height supported by the sensor.
-        /// </summary>
+    {      
+        public string SensorName { get; set; }      
+        public int MaxWidth { get; set; }       
         public int MaxHeight { get; set; }
-
-        /// <summary>
-        /// Creates a new instance of <see cref="MMALCameraInfoComponent"/>.
-        /// </summary>
-        public MMALCameraInfoComponent()
-            : base(MMALParameters.MMAL_COMPONENT_DEFAULT_CAMERA_INFO)
+       
+        public MMALCameraInfoComponent()            : base(MMALParameters.MMAL_COMPONENT_DEFAULT_CAMERA_INFO)
         {
-            this.SensorName = "OV5647";
-            this.MaxWidth = 2592;
-            this.MaxHeight = 1944;
+            SensorName = "OV5647";
+            MaxWidth = 2592;
+            MaxHeight = 1944;
 
             IntPtr ptr1 = Marshal.AllocHGlobal(Marshal.SizeOf<MMAL_PARAMETER_CAMERA_INFO_T>());
             var str1 = (MMAL_PARAMETER_HEADER_T*)ptr1;
@@ -53,7 +30,7 @@ namespace MMALSharp.Components
             try
             {
                 // If succeeds, keep OV5647 defaults.
-                MMALCheck(MMALPort.mmal_port_parameter_get(this.Control.Ptr, str1), string.Empty);
+                MMALCheck(MMALPort.mmal_port_parameter_get(Control.Ptr, str1), string.Empty);
             }
             catch
             {
@@ -68,7 +45,7 @@ namespace MMALSharp.Components
 
                 try
                 {
-                    MMALCheck(MMALPort.mmal_port_parameter_get(this.Control.Ptr, str2),
+                    MMALCheck(MMALPort.mmal_port_parameter_get(Control.Ptr, str2),
                         "Unable to get camera info for newer firmware.");
 
                     var p = (IntPtr)str2;
@@ -77,9 +54,9 @@ namespace MMALSharp.Components
 
                     if (s.Cameras != null && s.Cameras.Length > 0)
                     {
-                        this.SensorName = s.Cameras[0].CameraName;
-                        this.MaxHeight = s.Cameras[0].MaxHeight;
-                        this.MaxWidth = s.Cameras[0].MaxWidth;
+                        SensorName = s.Cameras[0].CameraName;
+                        MaxHeight = s.Cameras[0].MaxHeight;
+                        MaxWidth = s.Cameras[0].MaxWidth;
                     }
                 }
                 catch
@@ -94,9 +71,6 @@ namespace MMALSharp.Components
             }
         }
 
-        /// <summary>
-        /// Prints the name of this component to the console.
-        /// </summary>
         public override void PrintComponent()
         {
             MMALLog.Logger.LogInformation($"Component: Camera info");
