@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using MMALSharp.Native.Buffer;
+using MMALSharp.Native.Component;
 
 namespace MMALSharp.Native
 {
@@ -94,7 +95,7 @@ namespace MMALSharp.Native
         int isEnabled;
         MMAL_ES_FORMAT_T* format;
         int bufferNumMin, bufferSizeMin, bufferAlignmentMin, bufferNumRecommended, bufferSizeRecommended, bufferNum, bufferSize;
-        MMAL_COMPONENT_T* component;
+        MmalComponentType* component;
         IntPtr userData;
         uint capabilities;
 
@@ -135,13 +136,13 @@ namespace MMALSharp.Native
             }
         }
 
-        public MMAL_COMPONENT_T* Component => component;
+        public MmalComponentType* Component => component;
         public IntPtr UserData => userData;
         public uint Capabilities => capabilities;
 
         public MMAL_PORT_T(IntPtr priv, char* name, MmalPort.MmalPortTypeT type, ushort index, ushort indexAll,
                            int isEnabled, MMAL_ES_FORMAT_T* format, int bufferNumMin, int bufferSizeMin, int bufferAlignmentMin,
-                           int bufferNumRecommended, int bufferSizeRecommended, int bufferNum, int bufferSize, MMAL_COMPONENT_T* component,
+                           int bufferNumRecommended, int bufferSizeRecommended, int bufferNum, int bufferSize, MmalComponentType* component,
                            IntPtr userData, uint capabilities)
         {
             this.priv = priv;

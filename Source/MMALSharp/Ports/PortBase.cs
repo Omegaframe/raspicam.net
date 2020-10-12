@@ -8,6 +8,7 @@ using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Native;
+using MMALSharp.Native.Component;
 using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp.Ports
@@ -119,7 +120,7 @@ namespace MMALSharp.Ports
             set => Ptr->Format->Es->Video.Height = value;
         }
 
-        internal MMAL_COMPONENT_T* Comp { get; }
+        internal MmalComponentType* Comp { get; }
 
         internal IntPtr PtrCallback { get; set; }
 

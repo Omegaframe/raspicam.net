@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using MMALSharp.Native.Buffer;
+using MMALSharp.Native.Component;
 
 namespace MMALSharp.Native
 {
@@ -120,7 +121,7 @@ namespace MMALSharp.Native
         public static extern unsafe void mmal_log_dump_format(MMAL_ES_FORMAT_T* format);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_util_get_port", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMAL_PORT_T mmal_util_get_port(MMAL_COMPONENT_T* comp, MmalPort.MmalPortTypeT pType, uint index);
+        public static extern unsafe MMAL_PORT_T mmal_util_get_port(MmalComponentType* comp, MmalPort.MmalPortTypeT pType, uint index);
         
         [DllImport("libmmal.so", EntryPoint = "mmal_4cc_to_string", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe string mmal_4cc_to_string([MarshalAs(UnmanagedType.LPTStr)] string buffer, ushort len, uint fourcc);

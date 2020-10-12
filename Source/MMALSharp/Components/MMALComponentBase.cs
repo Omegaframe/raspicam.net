@@ -6,7 +6,7 @@ using System.Text;
 using Microsoft.Extensions.Logging;
 using MMALSharp.Common;
 using MMALSharp.Common.Utility;
-using MMALSharp.Native;
+using MMALSharp.Native.Component;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Clocks;
 using MMALSharp.Ports.Controls;
@@ -28,7 +28,7 @@ namespace MMALSharp.Components
         public bool Enabled => Ptr->IsEnabled == 1;
         public bool ForceStopProcessing { get; set; }
 
-        internal MMAL_COMPONENT_T* Ptr { get; }
+        internal MmalComponentType* Ptr { get; }
 
         protected MmalComponentBase(string name)
         {
@@ -141,20 +141,20 @@ namespace MMALSharp.Components
             base.Dispose();
         }
 
-        public void AcquireComponent() => MmalComponent.mmal_component_acquire(Ptr);
-        public void ReleaseComponent() => MmalCheck(MmalComponent.mmal_component_release(Ptr), "Unable to release component");
-        public void DestroyComponent() => MmalCheck(MmalComponent.mmal_component_destroy(Ptr), "Unable to destroy component");
+        public void AcquireComponent() => MmalComponent.Acquire(Ptr);
+        public void ReleaseComponent() => MmalCheck(MmalComponent.Release(Ptr), "Unable to release component");
+        public void DestroyComponent() => MmalCheck(MmalComponent.Destroy(Ptr), "Unable to destroy component");
 
         public void EnableComponent()
         {
             if (!Enabled)
-                MmalCheck(MmalComponent.mmal_component_enable(Ptr), "Unable to enable component");
+                MmalCheck(MmalComponent.Enable(Ptr), "Unable to enable component");
         }
 
         public void DisableComponent()
         {
             if (Enabled)
-                MmalCheck(MmalComponent.mmal_component_disable(Ptr), "Unable to disable component");
+                MmalCheck(MmalComponent.Disable(Ptr), "Unable to disable component");
         }
 
         public void CleanPortPools()
@@ -175,12 +175,12 @@ namespace MMALSharp.Components
             }
         }
 
-        static MMAL_COMPONENT_T* CreateComponent(string name)
+        static MmalComponentType* CreateComponent(string name)
         {
             var ptr = IntPtr.Zero;
-            MmalCheck(MmalComponent.mmal_component_create(name, &ptr), "Unable to create component");
+            MmalCheck(MmalComponent.Create(name, &ptr), "Unable to create component");
 
-            var compPtr = (MMAL_COMPONENT_T*)ptr.ToPointer();
+            var compPtr = (MmalComponentType*)ptr.ToPointer();
 
             return compPtr;
         }
