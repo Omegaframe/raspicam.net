@@ -21,7 +21,7 @@ namespace MMALSharp.Components
 
         protected MMALDownstreamComponent(string name) : base(name)
         {
-            MMALBootstrapper.DownstreamComponents.Add(this);
+            MmalBootstrapper.DownstreamComponents.Add(this);
             ProcessingPorts = new Dictionary<int, IOutputPort>();
         }
 
@@ -120,9 +120,9 @@ namespace MMALSharp.Components
         {
             ClosePipelineConnections();
 
-            MMALBootstrapper.DownstreamComponents.Remove(this);
+            MmalBootstrapper.DownstreamComponents.Remove(this);
 
-            MmalLog.Logger.LogDebug($"Remaining components in pipeline: {MMALBootstrapper.DownstreamComponents.Count}");
+            MmalLog.Logger.LogDebug($"Remaining components in pipeline: {MmalBootstrapper.DownstreamComponents.Count}");
 
             base.Dispose();
         }

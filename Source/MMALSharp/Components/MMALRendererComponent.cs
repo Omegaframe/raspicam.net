@@ -10,7 +10,7 @@ using MMALSharp.Config;
 using MMALSharp.Native;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Inputs;
-using static MMALSharp.MMALNativeExceptionHelper;
+using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp.Components
 {
@@ -95,7 +95,7 @@ namespace MMALSharp.Components
         /// <summary>
         /// Commits all changes made to the configuration.
         /// </summary>
-        /// <exception cref="MMALException"/>
+        /// <exception cref="MmalException"/>
         public unsafe void ConfigureRenderer()
         {
             if (Configuration == null)
@@ -151,7 +151,7 @@ namespace MMALSharp.Components
 
             try
             {
-                MMALCheck(MMALPort.mmal_port_parameter_set(Inputs[0].Ptr, (MMAL_PARAMETER_HEADER_T*)ptr), $"Unable to set preview renderer configuration");
+                MmalCheck(MMALPort.mmal_port_parameter_set(Inputs[0].Ptr, (MMAL_PARAMETER_HEADER_T*)ptr), $"Unable to set preview renderer configuration");
             }
             finally
             {

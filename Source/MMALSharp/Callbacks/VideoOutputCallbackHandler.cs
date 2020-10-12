@@ -39,7 +39,7 @@ namespace MMALSharp.Callbacks
 
         public override void Callback(IBuffer buffer)
         {
-            if (MMALCameraConfig.Debug)
+            if (MmalCameraConfig.Debug)
                 MmalLog.Logger.LogDebug("In video output callback");
 
             if (PrepareSplit && buffer.AssertProperty(MMALBufferProperties.MMAL_BUFFER_HEADER_FLAG_CONFIG))

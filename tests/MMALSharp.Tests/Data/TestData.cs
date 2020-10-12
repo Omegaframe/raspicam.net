@@ -40,19 +40,19 @@ namespace MMALSharp.Tests
 
         private static IEnumerable<object[]> GetVideoEncoderData(MmalEncoding encodingType, string extension)
         {
-            var supportedEncodings = Fixture.MMALCamera.Camera.VideoPort.GetSupportedEncodings();
+            var supportedEncodings = Fixture.MalCamera.Camera.VideoPort.GetSupportedEncodings();
             return PixelFormats.Where(c => supportedEncodings.Contains(c.EncodingVal) && c != MmalEncoding.Opaque).Select(pixFormat => new object[] { extension, encodingType, pixFormat }).ToList();
         }
 
         private static IEnumerable<object[]> GetImageEncoderData(MmalEncoding encodingType, string extension)
         {
-            var supportedEncodings = Fixture.MMALCamera.Camera.StillPort.GetSupportedEncodings();
+            var supportedEncodings = Fixture.MalCamera.Camera.StillPort.GetSupportedEncodings();
             return PixelFormats.Where(c => supportedEncodings.Contains(c.EncodingVal) && c != MmalEncoding.Opaque).Select(pixFormat => new object[] { extension, encodingType, pixFormat }).ToList();
         }
         
         private static object[] GetEncoderData(MmalEncoding encodingType, MmalEncoding pixelFormat, string extension)
         {
-            var supportedEncodings = Fixture.MMALCamera.Camera.StillPort.GetSupportedEncodings();
+            var supportedEncodings = Fixture.MalCamera.Camera.StillPort.GetSupportedEncodings();
 
             if (!supportedEncodings.Contains(pixelFormat.EncodingVal))
             {

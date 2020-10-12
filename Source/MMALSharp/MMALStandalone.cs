@@ -10,13 +10,13 @@ using MMALSharp.Native;
 
 namespace MMALSharp
 {
-    public class MMALStandalone
+    public class MmalStandalone
     {
-        public static MMALStandalone Instance => Lazy.Value;
+        public static MmalStandalone Instance => Lazy.Value;
 
-        static readonly Lazy<MMALStandalone> Lazy = new Lazy<MMALStandalone>(() => new MMALStandalone());
+        static readonly Lazy<MmalStandalone> Lazy = new Lazy<MmalStandalone>(() => new MmalStandalone());
 
-        MMALStandalone()
+        MmalStandalone()
         {
             BcmHost.bcm_host_init();
         }
@@ -93,7 +93,7 @@ namespace MMALSharp
         {
             MmalLog.Logger.LogDebug("Destroying final components");
 
-            var tempList = new List<MMALDownstreamComponent>(MMALBootstrapper.DownstreamComponents);
+            var tempList = new List<MMALDownstreamComponent>(MmalBootstrapper.DownstreamComponents);
 
             tempList.ForEach(c => c.Dispose());
 
@@ -110,19 +110,19 @@ namespace MMALSharp
             return list;
         }
 
-        void FindComponents(IDownstreamComponent downstream, List<IDownstreamComponent> list)
+        static void FindComponents(IDownstreamComponent downstream, List<IDownstreamComponent> list)
         {
-            if (downstream.Outputs.Count == 0)
-                return;
-
-            if (downstream.Outputs.Count == 1 && downstream.Outputs[0].ConnectedReference == null)
+            switch (downstream.Outputs.Count)
             {
-                list.Add(downstream);
-                return;
+                case 0:
+                    return;
+                case 1 when downstream.Outputs[0].ConnectedReference == null:
+                    list.Add(downstream);
+                    return;
             }
 
-            if (downstream is IDownstreamHandlerComponent checkDownstream)
-                list.Add((IDownstreamHandlerComponent)downstream);
+            if (downstream is IDownstreamHandlerComponent component)
+                list.Add(component);
 
             foreach (var output in downstream.Outputs.Where(o => o.ConnectedReference != null))
                 FindComponents(output.ConnectedReference.DownstreamComponent, list);

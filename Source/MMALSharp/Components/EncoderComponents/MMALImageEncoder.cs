@@ -12,7 +12,7 @@ using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;
 using MMALSharp.Extensions;
 using MMALSharp.Processing.Handlers;
-using static MMALSharp.MMALNativeExceptionHelper;
+using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp.Components
 {
@@ -85,7 +85,7 @@ namespace MMALSharp.Components
             base.ConfigureOutputPort(outputPort, config, handler);
 
             if (RawBayer)
-                MMALCamera.Instance.Camera.StillPort.SetRawCapture(true);
+                MalCamera.Instance.Camera.StillPort.SetRawCapture(true);
 
             if (UseExif)
                 AddExifTags(ExifTags);
@@ -99,7 +99,7 @@ namespace MMALSharp.Components
                         JpegThumbnailConfig.Enable, JpegThumbnailConfig.Width,
                         JpegThumbnailConfig.Height, JpegThumbnailConfig.Quality);
 
-                MMALCheck(MMALPort.mmal_port_parameter_set(Control.Ptr, &str.Hdr), "Unable to set JPEG thumbnail config.");
+                MmalCheck(MMALPort.mmal_port_parameter_set(Control.Ptr, &str.Hdr), "Unable to set JPEG thumbnail config.");
             }
 
             return this;
@@ -116,7 +116,7 @@ namespace MMALSharp.Components
 
             try
             {
-                sensorName = MMALCamera.Instance.Camera.CameraInfo.SensorName;
+                sensorName = MalCamera.Instance.Camera.CameraInfo.SensorName;
             }
             catch
             {
@@ -172,7 +172,7 @@ namespace MMALSharp.Components
 
             try
             {
-                MMALCheck(MMALPort.mmal_port_parameter_set(Outputs[0].Ptr, (MMAL_PARAMETER_HEADER_T*)ptr),
+                MmalCheck(MMALPort.mmal_port_parameter_set(Outputs[0].Ptr, (MMAL_PARAMETER_HEADER_T*)ptr),
                     $"Unable to set EXIF {formattedExif}");
             }
             finally

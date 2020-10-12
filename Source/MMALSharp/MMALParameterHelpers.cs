@@ -3,11 +3,8 @@ using System.Collections.Generic;
 
 namespace MMALSharp
 {
-    internal static class MMALParameterHelpers
+    internal static class MmalParameterHelpers
     {
-        /// <summary>
-        /// Contains a list of parameters which can be used with <see cref="PortExtensions.GetParameter"/> and <see cref="PortExtensions.SetParameter"/>.
-        /// </summary>
         public static IReadOnlyCollection<Parameter> ParameterHelper = new List<Parameter>
         {
             new Parameter(MMALParametersCamera.MMAL_PARAMETER_ANTISHAKE, typeof(MMAL_PARAMETER_BOOLEAN_T), "MMAL_PARAMETER_ANTISHAKE"),

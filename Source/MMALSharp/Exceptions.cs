@@ -3,31 +3,31 @@ using System;
 
 namespace MMALSharp
 {
-    public static class MMALNativeExceptionHelper
+    public static class MmalNativeExceptionHelper
     {
-        public static void MMALCheck(MMALUtil.MMAL_STATUS_T status, string message)
+        public static void MmalCheck(MMALUtil.MMAL_STATUS_T status, string message)
         {
             if (status == MMALUtil.MMAL_STATUS_T.MMAL_SUCCESS)
                 return;
 
             throw status switch
             {
-                MMALUtil.MMAL_STATUS_T.MMAL_ENOMEM => new MMALNoMemoryException(message),
-                MMALUtil.MMAL_STATUS_T.MMAL_ENOSPC => new MMALNoSpaceException(message),
-                MMALUtil.MMAL_STATUS_T.MMAL_EINVAL => new MMALInvalidException(message),
-                MMALUtil.MMAL_STATUS_T.MMAL_ENOSYS => new MMALNotImplementedException(message),
-                MMALUtil.MMAL_STATUS_T.MMAL_ENOENT => new MMALInvalidDirectoryException(message),
-                MMALUtil.MMAL_STATUS_T.MMAL_ENXIO => new MMALInvalidDeviceException(message),
-                MMALUtil.MMAL_STATUS_T.MMAL_EIO => new MMALIOException(message),
-                MMALUtil.MMAL_STATUS_T.MMAL_ESPIPE => new MMALIllegalSeekException(message),
-                MMALUtil.MMAL_STATUS_T.MMAL_ECORRUPT => new MMALCorruptException(message),
-                MMALUtil.MMAL_STATUS_T.MMAL_ENOTREADY => new MMALComponentNotReadyException(message),
-                MMALUtil.MMAL_STATUS_T.MMAL_ECONFIG => new MMALComponentNotConfiguredException(message),
-                MMALUtil.MMAL_STATUS_T.MMAL_EISCONN => new MMALPortConnectedException(message),
-                MMALUtil.MMAL_STATUS_T.MMAL_ENOTCONN => new MMALPortNotConnectedException(message),
-                MMALUtil.MMAL_STATUS_T.MMAL_EAGAIN => new MMALResourceUnavailableException(message),
-                MMALUtil.MMAL_STATUS_T.MMAL_EFAULT => new MMALBadAddressException(message),
-                _ => new MMALException(status, $"Unknown error occurred. {message}"),
+                MMALUtil.MMAL_STATUS_T.MMAL_ENOMEM => new MmalNoMemoryException(message),
+                MMALUtil.MMAL_STATUS_T.MMAL_ENOSPC => new MmalNoSpaceException(message),
+                MMALUtil.MMAL_STATUS_T.MMAL_EINVAL => new MmalInvalidException(message),
+                MMALUtil.MMAL_STATUS_T.MMAL_ENOSYS => new MmalNotImplementedException(message),
+                MMALUtil.MMAL_STATUS_T.MMAL_ENOENT => new MmalInvalidDirectoryException(message),
+                MMALUtil.MMAL_STATUS_T.MMAL_ENXIO => new MmalInvalidDeviceException(message),
+                MMALUtil.MMAL_STATUS_T.MMAL_EIO => new MmalIoException(message),
+                MMALUtil.MMAL_STATUS_T.MMAL_ESPIPE => new MmalIllegalSeekException(message),
+                MMALUtil.MMAL_STATUS_T.MMAL_ECORRUPT => new MmalCorruptException(message),
+                MMALUtil.MMAL_STATUS_T.MMAL_ENOTREADY => new MmalComponentNotReadyException(message),
+                MMALUtil.MMAL_STATUS_T.MMAL_ECONFIG => new MmalComponentNotConfiguredException(message),
+                MMALUtil.MMAL_STATUS_T.MMAL_EISCONN => new MmalPortConnectedException(message),
+                MMALUtil.MMAL_STATUS_T.MMAL_ENOTCONN => new MmalPortNotConnectedException(message),
+                MMALUtil.MMAL_STATUS_T.MMAL_EAGAIN => new MmalResourceUnavailableException(message),
+                MMALUtil.MMAL_STATUS_T.MMAL_EFAULT => new MmalBadAddressException(message),
+                _ => new MmalException(status, $"Unknown error occurred. {message}"),
             };
         }
     }
@@ -37,83 +37,83 @@ namespace MMALSharp
         public PiCameraError(string msg) : base(msg) { }
     }
 
-    public class MMALException : Exception
+    public class MmalException : Exception
     {
-        public MMALException(MMALUtil.MMAL_STATUS_T status, string message) : base($"Status: {status}. Message: {message}") { }
+        public MmalException(MMALUtil.MMAL_STATUS_T status, string message) : base($"Status: {status}. Message: {message}") { }
     }
 
-    public class MMALNoMemoryException : MMALException
+    public class MmalNoMemoryException : MmalException
     {
-        public MMALNoMemoryException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ENOMEM, $"Out of memory. {message}") { }
+        public MmalNoMemoryException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ENOMEM, $"Out of memory. {message}") { }
     }
 
-    public class MMALNoSpaceException : MMALException
+    public class MmalNoSpaceException : MmalException
     {
-        public MMALNoSpaceException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ENOSPC, $"Out of resources. {message}") { }
+        public MmalNoSpaceException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ENOSPC, $"Out of resources. {message}") { }
     }
 
-    public class MMALInvalidException : MMALException
+    public class MmalInvalidException : MmalException
     {
-        public MMALInvalidException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_EINVAL, $"Argument is invalid. {message}") { }
+        public MmalInvalidException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_EINVAL, $"Argument is invalid. {message}") { }
     }
 
-    public class MMALNotImplementedException : MMALException
+    public class MmalNotImplementedException : MmalException
     {
-        public MMALNotImplementedException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ENOSYS, $"Function not implemented. {message}") { }
+        public MmalNotImplementedException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ENOSYS, $"Function not implemented. {message}") { }
     }
 
-    public class MMALInvalidDirectoryException : MMALException
+    public class MmalInvalidDirectoryException : MmalException
     {
-        public MMALInvalidDirectoryException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ENOENT, $"No such file or directory. {message}") { }
+        public MmalInvalidDirectoryException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ENOENT, $"No such file or directory. {message}") { }
     }
 
-    public class MMALInvalidDeviceException : MMALException
+    public class MmalInvalidDeviceException : MmalException
     {
-        public MMALInvalidDeviceException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ENXIO, $"No such device or address. {message}") { }
+        public MmalInvalidDeviceException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ENXIO, $"No such device or address. {message}") { }
     }
 
-    public class MMALIOException : MMALException
+    public class MmalIoException : MmalException
     {
-        public MMALIOException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_EIO, $"I/O error. {message}") { }
+        public MmalIoException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_EIO, $"I/O error. {message}") { }
     }
 
-    public class MMALIllegalSeekException : MMALException
+    public class MmalIllegalSeekException : MmalException
     {
-        public MMALIllegalSeekException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ESPIPE, $"Illegal seek. {message}") { }
+        public MmalIllegalSeekException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ESPIPE, $"Illegal seek. {message}") { }
     }
 
-    public class MMALCorruptException : MMALException
+    public class MmalCorruptException : MmalException
     {
-        public MMALCorruptException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ECORRUPT, $"Data is corrupt. {message}") { }
+        public MmalCorruptException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ECORRUPT, $"Data is corrupt. {message}") { }
     }
 
-    public class MMALComponentNotReadyException : MMALException
+    public class MmalComponentNotReadyException : MmalException
     {
-        public MMALComponentNotReadyException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ENOTREADY, $"Component is not ready. {message}") { }
+        public MmalComponentNotReadyException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ENOTREADY, $"Component is not ready. {message}") { }
     }
 
-    public class MMALComponentNotConfiguredException : MMALException
+    public class MmalComponentNotConfiguredException : MmalException
     {
-        public MMALComponentNotConfiguredException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ECONFIG, $"Component is not configured. {message}") { }
+        public MmalComponentNotConfiguredException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ECONFIG, $"Component is not configured. {message}") { }
     }
 
-    public class MMALPortConnectedException : MMALException
+    public class MmalPortConnectedException : MmalException
     {
-        public MMALPortConnectedException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_EISCONN, $"Port is already connected. {message}") { }
+        public MmalPortConnectedException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_EISCONN, $"Port is already connected. {message}") { }
     }
 
-    public class MMALPortNotConnectedException : MMALException
+    public class MmalPortNotConnectedException : MmalException
     {
-        public MMALPortNotConnectedException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ENOTCONN, $"Port is disconnected. {message}") { }
+        public MmalPortNotConnectedException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_ENOTCONN, $"Port is disconnected. {message}") { }
     }
 
-    public class MMALResourceUnavailableException : MMALException
+    public class MmalResourceUnavailableException : MmalException
     {
-        public MMALResourceUnavailableException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_EAGAIN, $"Resource temporarily unavailable; try again later. {message}") { }
+        public MmalResourceUnavailableException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_EAGAIN, $"Resource temporarily unavailable; try again later. {message}") { }
     }
 
-    public class MMALBadAddressException : MMALException
+    public class MmalBadAddressException : MmalException
     {
-        public MMALBadAddressException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_EFAULT, $"Bad address. {message}") { }
+        public MmalBadAddressException(string message) : base(MMALUtil.MMAL_STATUS_T.MMAL_EFAULT, $"Bad address. {message}") { }
     }
 }

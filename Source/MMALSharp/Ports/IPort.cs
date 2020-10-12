@@ -8,7 +8,7 @@ using MMALSharp.Native;
 
 namespace MMALSharp.Ports
 {
-    public interface IPort : IMMALObject
+    public interface IPort : IMmalObject
     {
         /// <summary>
         /// Native pointer that represents this port.
@@ -188,13 +188,13 @@ namespace MMALSharp.Ports
         /// buffer headers to the client. If this is a connected output port, the input port to which it is connected shall also be disabled.
         /// Any buffer pool shall be released.
         /// </summary>
-        /// <exception cref="MMALException"/>
+        /// <exception cref="MmalException"/>
         void DisablePort();
 
         /// <summary>
         /// Commit format changes on this port.
         /// </summary>
-        /// <exception cref="MMALException"/>
+        /// <exception cref="MmalException"/>
         void Commit();
 
         /// <summary>
@@ -225,14 +225,14 @@ namespace MMALSharp.Ports
         /// Ask a port to release all the buffer headers it currently has. This is an asynchronous operation and the
         /// flush call will return before all the buffer headers are returned to the client.
         /// </summary>
-        /// <exception cref="MMALException"/>
+        /// <exception cref="MmalException"/>
         void Flush();
 
         /// <summary>
         /// Send a buffer header to a port.
         /// </summary>
         /// <param name="buffer">A managed buffer object.</param>
-        /// <exception cref="MMALException"/>
+        /// <exception cref="MmalException"/>
         void SendBuffer(IBuffer buffer);
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace MMALSharp.Ports
         /// Attempts to allocate the native extradata store with the given size.
         /// </summary>
         /// <param name="size">The size to allocate.</param>
-        /// <exception cref="MMALException"/>
+        /// <exception cref="MmalException"/>
         void ExtraDataAlloc(int size);
 
         /// <summary>

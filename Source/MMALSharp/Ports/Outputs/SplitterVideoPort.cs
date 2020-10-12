@@ -52,8 +52,8 @@ namespace MMALSharp.Ports.Outputs
                     this.SetParameter(MMALParametersCommon.MMAL_PARAMETER_ZERO_COPY, true);
                 }
 
-                if (MMALCameraConfig.VideoColorSpace != null && MMALCameraConfig.VideoColorSpace.EncType == MmalEncoding.EncodingType.ColorSpace)
-                    VideoColorSpace = MMALCameraConfig.VideoColorSpace;
+                if (MmalCameraConfig.VideoColorSpace != null && MmalCameraConfig.VideoColorSpace.EncType == MmalEncoding.EncodingType.ColorSpace)
+                    VideoColorSpace = MmalCameraConfig.VideoColorSpace;
 
                 if (config.Bitrate > 0)
                     Bitrate = config.Bitrate;
@@ -72,7 +72,7 @@ namespace MMALSharp.Ports.Outputs
 
         internal override void NativeOutputPortCallback(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)
         {
-            if (MMALCameraConfig.Debug)
+            if (MmalCameraConfig.Debug)
                 MmalLog.Logger.LogDebug($"{Name}: In native {nameof(SplitterVideoPort)} output callback");
 
             base.NativeOutputPortCallback(port, buffer);

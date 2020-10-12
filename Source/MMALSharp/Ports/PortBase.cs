@@ -8,11 +8,11 @@ using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Native;
-using static MMALSharp.MMALNativeExceptionHelper;
+using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp.Ports
 {
-    public abstract unsafe class PortBase<TCallback> : MMALObject, IPort where TCallback : ICallbackHandler
+    public abstract unsafe class PortBase<TCallback> : MmalObject, IPort where TCallback : ICallbackHandler
     {
         /// <summary>
         /// The callback handler associated with this port.
@@ -282,11 +282,11 @@ namespace MMALSharp.Ports
         /// Enables the specified port.
         /// </summary>
         /// <param name="callback">The function pointer MMAL will call back to.</param>
-        /// <exception cref="MMALException"/>
+        /// <exception cref="MmalException"/>
         public void EnablePort(IntPtr callback)
         {
             MmalLog.Logger.LogDebug($"{Name}: Enabling port.");
-            MMALCheck(MMALPort.mmal_port_enable(Ptr, callback), $"{Name}: Unable to enable port.");
+            MmalCheck(MMALPort.mmal_port_enable(Ptr, callback), $"{Name}: Unable to enable port.");
         }
 
         /// <summary>
@@ -294,24 +294,24 @@ namespace MMALSharp.Ports
         /// buffer headers to the client. If this is a connected output port, the input port to which it is connected shall also be disabled.
         /// Any buffer pool shall be released.
         /// </summary>
-        /// <exception cref="MMALException"/>
+        /// <exception cref="MmalException"/>
         public void DisablePort()
         {
             if (Enabled)
             {
                 MmalLog.Logger.LogDebug($"{Name}: Disabling port.");
-                MMALCheck(MMALPort.mmal_port_disable(Ptr), $"{Name}: Unable to disable port.");
+                MmalCheck(MMALPort.mmal_port_disable(Ptr), $"{Name}: Unable to disable port.");
             }
         }
 
         /// <summary>
         /// Commit format changes on this port.
         /// </summary>
-        /// <exception cref="MMALException"/>
+        /// <exception cref="MmalException"/>
         public void Commit()
         {
             MmalLog.Logger.LogDebug($"{Name}: Committing port format changes.");
-            MMALCheck(MMALPort.mmal_port_format_commit(Ptr), $"{Name}: Unable to commit port changes.");
+            MmalCheck(MMALPort.mmal_port_format_commit(Ptr), $"{Name}: Unable to commit port changes.");
         }
 
         /// <summary>
@@ -358,29 +358,29 @@ namespace MMALSharp.Ports
         /// Ask a port to release all the buffer headers it currently has. This is an asynchronous operation and the
         /// flush call will return before all the buffer headers are returned to the client.
         /// </summary>
-        /// <exception cref="MMALException"/>
+        /// <exception cref="MmalException"/>
         public void Flush()
         {
             MmalLog.Logger.LogDebug($"{Name}: Flushing port buffers");
-            MMALCheck(MMALPort.mmal_port_flush(Ptr), $"{Name}: Unable to flush port.");
+            MmalCheck(MMALPort.mmal_port_flush(Ptr), $"{Name}: Unable to flush port.");
         }
 
         /// <summary>
         /// Send a buffer header to a port.
         /// </summary>
         /// <param name="buffer">A managed buffer object.</param>
-        /// <exception cref="MMALException"/>
+        /// <exception cref="MmalException"/>
         public void SendBuffer(IBuffer buffer)
         {
             if (!Enabled)
                 return;
 
-            if (MMALCameraConfig.Debug)
+            if (MmalCameraConfig.Debug)
                 MmalLog.Logger.LogDebug($"{Name}: Sending buffer start.");
 
-            MMALCheck(MMALPort.mmal_port_send_buffer(Ptr, buffer.Ptr), $"{Name}: Unable to send buffer header.");
+            MmalCheck(MMALPort.mmal_port_send_buffer(Ptr, buffer.Ptr), $"{Name}: Unable to send buffer header.");
 
-            if (MMALCameraConfig.Debug)
+            if (MmalCameraConfig.Debug)
                 MmalLog.Logger.LogDebug($"{Name}: Sending buffer complete.");
         }
 
@@ -460,7 +460,7 @@ namespace MMALSharp.Ports
         public void InitialiseBufferPool()
         {
             MmalLog.Logger.LogDebug($"{Name}: Initialising buffer pool.");
-            BufferPool = new MMALPoolImpl(this);
+            BufferPool = new MmalPoolImpl(this);
         }
 
         /// <summary>
@@ -475,10 +475,10 @@ namespace MMALSharp.Ports
         /// Attempts to allocate the native extradata store with the given size.
         /// </summary>
         /// <param name="size">The size to allocate.</param>
-        /// <exception cref="MMALException"/>
+        /// <exception cref="MmalException"/>
         public void ExtraDataAlloc(int size)
         {
-            MMALCheck(MMALFormat.mmal_format_extradata_alloc(Ptr->Format, (uint)size), $"{Name}: Unable to alloc extradata.");
+            MmalCheck(MMALFormat.mmal_format_extradata_alloc(Ptr->Format, (uint)size), $"{Name}: Unable to alloc extradata.");
         }
     }
 }

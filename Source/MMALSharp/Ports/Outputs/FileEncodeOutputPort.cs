@@ -24,10 +24,10 @@ namespace MMALSharp.Ports.Outputs
         /// <param name="buffer">The buffer header.</param>
         internal override void NativeOutputPortCallback(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)
         {
-            if (MMALCameraConfig.Debug)            
+            if (MmalCameraConfig.Debug)            
                 MmalLog.Logger.LogDebug($"{Name}: In native {nameof(FileEncodeOutputPort)} callback");            
             
-            var bufferImpl = new MMALBufferImpl(buffer);
+            var bufferImpl = new MmalBuffer(buffer);
             bufferImpl.PrintProperties();
             bufferImpl.ParseEvents();
 
@@ -77,10 +77,10 @@ namespace MMALSharp.Ports.Outputs
         {
             MmalLog.Logger.LogInformation($"{Name}: Received MMAL_EVENT_FORMAT_CHANGED event");
 
-            var ev = MMALEventFormat.GetEventFormat(buffer);
+            var ev = MmalEventFormat.GetEventFormat(buffer);
 
             MmalLog.Logger.LogInformation("-- Event format changed from -- ");
-            LogFormat(new MMALEventFormat(Format), this);
+            LogFormat(new MmalEventFormat(Format), this);
 
             MmalLog.Logger.LogInformation("-- To -- ");
             LogFormat(ev, null);
@@ -88,7 +88,7 @@ namespace MMALSharp.Ports.Outputs
             MmalLog.Logger.LogDebug($"{Name}: Finished processing MMAL_EVENT_FORMAT_CHANGED event");
         }
 
-        private void LogFormat(MMALEventFormat format, IPort port)
+        private void LogFormat(MmalEventFormat format, IPort port)
         {
             StringBuilder sb = new StringBuilder();
 

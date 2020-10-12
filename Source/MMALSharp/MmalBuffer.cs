@@ -7,65 +7,38 @@ using Microsoft.Extensions.Logging;
 using MMALSharp.Common.Utility;
 using MMALSharp.Extensions;
 using MMALSharp.Native;
-using static MMALSharp.MMALNativeExceptionHelper;
+using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp
 {
-    /// <inheritdoc />
-    public unsafe class MMALBufferImpl : MMALObject, IBuffer
+    public unsafe class MmalBuffer : MmalObject, IBuffer
     {
-        /// <inheritdoc />
         public byte* Data => Ptr->data;
-
-        /// <inheritdoc />
         public uint Cmd => Ptr->Cmd;
-
-        /// <inheritdoc />
         public uint AllocSize => Ptr->AllocSize;
-
-        /// <inheritdoc />
         public uint Length => Ptr->Length;
-
-        /// <inheritdoc />
         public uint Offset => Ptr->Offset;
-
-        /// <inheritdoc />
         public uint Flags => Ptr->Flags;
-
-        /// <inheritdoc />
         public long Pts => Ptr->Pts;
-
-        /// <inheritdoc />
         public long Dts => Ptr->Dts;
-
-        /// <inheritdoc />
         public MMAL_BUFFER_HEADER_TYPE_SPECIFIC_T Type => Marshal.PtrToStructure<MMAL_BUFFER_HEADER_TYPE_SPECIFIC_T>(Ptr->Type);
-
-        /// <inheritdoc />
         public List<MMALBufferProperties> Properties { get; }
-
-        /// <inheritdoc />
         public List<int> Events { get; }
-
-        /// <inheritdoc />
         public MMAL_BUFFER_HEADER_T* Ptr { get; }
 
-        /// <inheritdoc />
-        public MMALBufferImpl(MMAL_BUFFER_HEADER_T* ptr)
+        public MmalBuffer(MMAL_BUFFER_HEADER_T* ptr)
         {
             Ptr = ptr;
             Properties = new List<MMALBufferProperties>();
             Events = new List<int>();
         }
 
-        /// <inheritdoc />
         public void PrintProperties()
         {
-            if (MMALCameraConfig.Debug)
+            if (MmalCameraConfig.Debug)
                 MmalLog.Logger.LogDebug(ToString());
         }
 
-        /// <inheritdoc />
         public void ParseEvents()
         {
             if (Cmd == MMALEvents.MMAL_EVENT_EOS)
@@ -81,10 +54,8 @@ namespace MMALSharp
                 MmalLog.Logger.LogDebug("Buffer event: MMAL_EVENT_PARAMETER_CHANGED");
         }
 
-        /// <inheritdoc />
         public bool AssertProperty(MMALBufferProperties property) => ((int)Flags & (int)property) == (int)property;
 
-        /// <inheritdoc />
         public override string ToString()
         {
             InitialiseProperties();
@@ -92,13 +63,13 @@ namespace MMALSharp
             var sb = new StringBuilder();
 
             sb.Append(
-                $"\r\n Buffer Header \r\n" +
+                "\r\n Buffer Header \r\n" +
                 "---------------- \r\n" +
                 $"Length: {Length} \r\n" +
                 $"Presentation Timestamp: {Pts} \r\n" +
-                $"Flags: \r\n");
+                "Flags: \r\n");
 
-            foreach (MMALBufferProperties prop in Properties)
+            foreach (var prop in Properties)
                 sb.Append($"{prop} \r\n");
 
             sb.Append("---------------- \r\n");
@@ -106,16 +77,14 @@ namespace MMALSharp
             return sb.ToString();
         }
 
-        /// <inheritdoc />
         public override bool CheckState() => Ptr != null && (IntPtr)Ptr != IntPtr.Zero;
 
-        /// <inheritdoc />
         public byte[] GetBufferData()
         {
-            if (MMALCameraConfig.Debug)
+            if (MmalCameraConfig.Debug)
                 MmalLog.Logger.LogDebug("Getting data from buffer");
 
-            MMALCheck(MMALBuffer.mmal_buffer_header_mem_lock(Ptr), "Unable to lock buffer header.");
+            MmalCheck(MMALBuffer.mmal_buffer_header_mem_lock(Ptr), "Unable to lock buffer header.");
 
             try
             {
@@ -135,10 +104,9 @@ namespace MMALSharp
             }
         }
 
-        /// <inheritdoc />
         public void ReadIntoBuffer(byte[] source, int length, bool eof)
         {
-            if (MMALCameraConfig.Debug)
+            if (MmalCameraConfig.Debug)
                 MmalLog.Logger.LogDebug($"Reading {length} bytes into buffer");
 
             Ptr->length = (uint)length;
@@ -151,19 +119,17 @@ namespace MMALSharp
             Marshal.Copy(source, 0, (IntPtr)Ptr->data, length);
         }
 
-        /// <inheritdoc />
         public void Acquire()
         {
             if (CheckState())
                 MMALBuffer.mmal_buffer_header_acquire(Ptr);
         }
 
-        /// <inheritdoc />
         public void Release()
         {
             if (CheckState())
             {
-                if (MMALCameraConfig.Debug)
+                if (MmalCameraConfig.Debug)
                     MmalLog.Logger.LogDebug("Releasing buffer.");
 
                 MMALBuffer.mmal_buffer_header_release(Ptr);
@@ -176,7 +142,6 @@ namespace MMALSharp
             Dispose();
         }
 
-        /// <inheritdoc />
         public void Reset()
         {
             if (CheckState())

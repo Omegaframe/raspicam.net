@@ -30,7 +30,7 @@ namespace MMALSharp.Config
     {
         /// <summary>
         /// Do not automatically refresh the <see cref="AnnotateImage.ShowDateText"/> and <see cref="AnnotateImage.ShowTimeText"/> annotations.
-        /// These annotations can be explicitly refreshed by calling <see cref="MMALCamera.EnableAnnotation"/>.
+        /// These annotations can be explicitly refreshed by calling <see cref="MalCamera.EnableAnnotation"/>.
         /// </summary>
         Disabled = 0,
 

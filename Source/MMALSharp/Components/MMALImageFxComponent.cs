@@ -6,7 +6,7 @@ using MMALSharp.Native;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;
 using MMALSharp.Utility;
-using static MMALSharp.MMALNativeExceptionHelper;
+using static MMALSharp.MmalNativeExceptionHelper;
 using static MMALSharp.Native.MMALParametersCamera;
 
 namespace MMALSharp.Components
@@ -49,7 +49,7 @@ namespace MMALSharp.Components
                                                                                                         0,
                                                                                                         0);
 
-            MMALCheck(MMALPort.mmal_port_parameter_get(Outputs[0].Ptr, &colFx.Hdr), "Unable to get colour enhancement value.");
+            MmalCheck(MMALPort.mmal_port_parameter_get(Outputs[0].Ptr, &colFx.Hdr), "Unable to get colour enhancement value.");
 
             ColourEffects fx = new ColourEffects(colFx.Enable == 1, MmalColor.FromYuvBytes(0, (byte)colFx.U, (byte)colFx.V));
 
@@ -66,7 +66,7 @@ namespace MMALSharp.Components
                                                                                                         uv.Item2,
                                                                                                         uv.Item3);
 
-            MMALCheck(MMALPort.mmal_port_parameter_set(Outputs[0].Ptr, &colFx.Hdr), "Unable to set colour enhancement value.");
+            MmalCheck(MMALPort.mmal_port_parameter_set(Outputs[0].Ptr, &colFx.Hdr), "Unable to set colour enhancement value.");
         }
 
         unsafe MMAL_PARAM_IMAGEFX_T GetCurrentImageEffect()
@@ -77,7 +77,7 @@ namespace MMALSharp.Components
                 new MMAL_PARAMETER_HEADER_T(MMAL_PARAMETER_IMAGE_EFFECT, Marshal.SizeOf<MMAL_PARAMETER_IMAGEFX_T>()),
                 value);
 
-            MMALCheck(MMALPort.mmal_port_parameter_get(Outputs[0].Ptr, &effectStr.Hdr), "Unable to get current effect value.");
+            MmalCheck(MMALPort.mmal_port_parameter_get(Outputs[0].Ptr, &effectStr.Hdr), "Unable to get current effect value.");
 
             return value;
         }
@@ -88,7 +88,7 @@ namespace MMALSharp.Components
                 new MMAL_PARAMETER_HEADER_T(MMAL_PARAMETER_IMAGE_EFFECT, Marshal.SizeOf<MMAL_PARAMETER_IMAGEFX_T>()),
                 effect);
 
-            MMALCheck(MMALPort.mmal_port_parameter_set(Outputs[0].Ptr, &effectStr.Hdr), "Unable to set current effect value.");
+            MmalCheck(MMALPort.mmal_port_parameter_set(Outputs[0].Ptr, &effectStr.Hdr), "Unable to set current effect value.");
         }
     }
 }

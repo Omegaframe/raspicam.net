@@ -191,10 +191,10 @@ namespace MMALSharp.Ports.Inputs
 
         internal virtual unsafe void NativeInputPortCallback(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)
         {
-            if (MMALCameraConfig.Debug)            
+            if (MmalCameraConfig.Debug)            
                 MmalLog.Logger.LogDebug($"{Name}: In native input callback.");            
 
-            var bufferImpl = new MMALBufferImpl(buffer);
+            var bufferImpl = new MmalBuffer(buffer);
 
             if (bufferImpl.CheckState())
             {

@@ -12,7 +12,7 @@ using MMALSharp.Common.Utility;
 using MMALSharp.Config;
 using MMALSharp.Native;
 using MMALSharp.Ports;
-using static MMALSharp.MMALNativeExceptionHelper;
+using static MMALSharp.MmalNativeExceptionHelper;
 using static MMALSharp.Native.MMALParametersCamera;
 
 namespace MMALSharp.Extensions
@@ -27,7 +27,7 @@ namespace MMALSharp.Extensions
         /// <returns>Dynamic parameter based on key parameter.</returns>
         public static unsafe dynamic GetParameter(this IPort port, int key)
         {
-            var t = MMALParameterHelpers.ParameterHelper.Where(c => c.ParamValue == key).FirstOrDefault();
+            var t = MmalParameterHelpers.ParameterHelper.Where(c => c.ParamValue == key).FirstOrDefault();
 
             if (t == null)
             {
@@ -42,27 +42,27 @@ namespace MMALSharp.Extensions
                 {
                     case "MMAL_PARAMETER_BOOLEAN_T":
                         int boolVal = 0;
-                        MMALCheck(MMALUtil.mmal_port_parameter_get_boolean(port.Ptr, (uint)key, ref boolVal), "Unable to get boolean value");
+                        MmalCheck(MMALUtil.mmal_port_parameter_get_boolean(port.Ptr, (uint)key, ref boolVal), "Unable to get boolean value");
                         return boolVal == 1;
                     case "MMAL_PARAMETER_UINT64_T":
                         ulong ulongVal = 0UL;
-                        MMALCheck(MMALUtil.mmal_port_parameter_get_uint64(port.Ptr, (uint)key, ref ulongVal), "Unable to get ulong value");
+                        MmalCheck(MMALUtil.mmal_port_parameter_get_uint64(port.Ptr, (uint)key, ref ulongVal), "Unable to get ulong value");
                         return ulongVal;
                     case "MMAL_PARAMETER_INT64_T":
                         long longVal = 0U;
-                        MMALCheck(MMALUtil.mmal_port_parameter_get_int64(port.Ptr, (uint)key, ref longVal), "Unable to get long value");
+                        MmalCheck(MMALUtil.mmal_port_parameter_get_int64(port.Ptr, (uint)key, ref longVal), "Unable to get long value");
                         return longVal;
                     case "MMAL_PARAMETER_UINT32_T":
                         uint uintVal = 0U;
-                        MMALCheck(MMALUtil.mmal_port_parameter_get_uint32(port.Ptr, (uint)key, ref uintVal), "Unable to get uint value");
+                        MmalCheck(MMALUtil.mmal_port_parameter_get_uint32(port.Ptr, (uint)key, ref uintVal), "Unable to get uint value");
                         return uintVal;
                     case "MMAL_PARAMETER_INT32_T":
                         int intVal = 0;
-                        MMALCheck(MMALUtil.mmal_port_parameter_get_int32(port.Ptr, (uint)key, ref intVal), "Unable to get int value");
+                        MmalCheck(MMALUtil.mmal_port_parameter_get_int32(port.Ptr, (uint)key, ref intVal), "Unable to get int value");
                         return intVal;
                     case "MMAL_PARAMETER_RATIONAL_T":
                         MMAL_RATIONAL_T ratVal = default(MMAL_RATIONAL_T);
-                        MMALCheck(MMALUtil.mmal_port_parameter_get_rational(port.Ptr, (uint)key, ref ratVal), "Unable to get rational value");
+                        MmalCheck(MMALUtil.mmal_port_parameter_get_rational(port.Ptr, (uint)key, ref ratVal), "Unable to get rational value");
                         return (double)ratVal.Num / ratVal.Den;
                     default:
                         throw new NotSupportedException();
@@ -104,7 +104,7 @@ namespace MMALSharp.Extensions
 
             try
             {
-                MMALCheck(MMALPort.mmal_port_parameter_get(port.Ptr, str1), "Unable to get supported encodings");
+                MmalCheck(MMALPort.mmal_port_parameter_get(port.Ptr, str1), "Unable to get supported encodings");
                 encodings = (MMAL_PARAMETER_ENCODING_T)Marshal.PtrToStructure(ptr1, typeof(MMAL_PARAMETER_ENCODING_T));
                 return encodings.Value;
             }
@@ -144,7 +144,7 @@ namespace MMALSharp.Extensions
         /// <param name="value">The value of the parameter.</param>
         internal static unsafe void SetParameter(this IPort port, int key, dynamic value)
         {
-            var t = MMALParameterHelpers.ParameterHelper.FirstOrDefault(c => c.ParamValue == key);
+            var t = MmalParameterHelpers.ParameterHelper.FirstOrDefault(c => c.ParamValue == key);
 
             if (t == null)
             {
@@ -159,25 +159,25 @@ namespace MMALSharp.Extensions
                 {
                     case "MMAL_PARAMETER_BOOLEAN_T":
                         int i = (bool)value ? 1 : 0;
-                        MMALCheck(MMALUtil.mmal_port_parameter_set_boolean(port.Ptr, (uint)key, i), "Unable to set boolean value");
+                        MmalCheck(MMALUtil.mmal_port_parameter_set_boolean(port.Ptr, (uint)key, i), "Unable to set boolean value");
                         break;
                     case "MMAL_PARAMETER_UINT64_T":
-                        MMALCheck(MMALUtil.mmal_port_parameter_set_uint64(port.Ptr, (uint)key, (ulong)value), "Unable to set ulong value");
+                        MmalCheck(MMALUtil.mmal_port_parameter_set_uint64(port.Ptr, (uint)key, (ulong)value), "Unable to set ulong value");
                         break;
                     case "MMAL_PARAMETER_INT64_T":
-                        MMALCheck(MMALUtil.mmal_port_parameter_set_int64(port.Ptr, (uint)key, (long)value), "Unable to set long value");
+                        MmalCheck(MMALUtil.mmal_port_parameter_set_int64(port.Ptr, (uint)key, (long)value), "Unable to set long value");
                         break;
                     case "MMAL_PARAMETER_UINT32_T":
-                        MMALCheck(MMALUtil.mmal_port_parameter_set_uint32(port.Ptr, (uint)key, (uint)value), "Unable to set uint value");
+                        MmalCheck(MMALUtil.mmal_port_parameter_set_uint32(port.Ptr, (uint)key, (uint)value), "Unable to set uint value");
                         break;
                     case "MMAL_PARAMETER_INT32_T":
-                        MMALCheck(MMALUtil.mmal_port_parameter_set_int32(port.Ptr, (uint)key, (int)value), "Unable to set int value");
+                        MmalCheck(MMALUtil.mmal_port_parameter_set_int32(port.Ptr, (uint)key, (int)value), "Unable to set int value");
                         break;
                     case "MMAL_PARAMETER_RATIONAL_T":
-                        MMALCheck(MMALUtil.mmal_port_parameter_set_rational(port.Ptr, (uint)key, (MMAL_RATIONAL_T)value), "Unable to set rational value");
+                        MmalCheck(MMALUtil.mmal_port_parameter_set_rational(port.Ptr, (uint)key, (MMAL_RATIONAL_T)value), "Unable to set rational value");
                         break;
                     case "MMAL_PARAMETER_STRING_T":
-                        MMALCheck(MMALUtil.mmal_port_parameter_set_string(port.Ptr, (uint)key, (string)value), "Unable to set rational value");
+                        MmalCheck(MMALUtil.mmal_port_parameter_set_string(port.Ptr, (uint)key, (string)value), "Unable to set rational value");
                         break;
                     default:
                         throw new NotSupportedException();
@@ -218,7 +218,7 @@ namespace MMALSharp.Extensions
                 mode.Decimate,
                 mode.SwapEyes);
 
-            MMALCheck(MMALPort.mmal_port_parameter_set(port.Ptr, &stereo.Hdr), "Unable to set Stereo mode");
+            MmalCheck(MMALPort.mmal_port_parameter_set(port.Ptr, &stereo.Hdr), "Unable to set Stereo mode");
         }
 
         internal static void CheckSupportedEncoding(this IPort port, MmalEncoding encoding)
@@ -264,7 +264,7 @@ namespace MMALSharp.Extensions
                         MMALParametersCamera.MMAL_PARAMETER_FPS_RANGE,
                         Marshal.SizeOf<MMAL_PARAMETER_FPS_RANGE_T>()), default(MMAL_RATIONAL_T), default(MMAL_RATIONAL_T));
 
-            MMALCheck(MMALPort.mmal_port_parameter_get(port.Ptr, &str.Hdr), "Unable to get framerate range for port.");
+            MmalCheck(MMALPort.mmal_port_parameter_get(port.Ptr, &str.Hdr), "Unable to get framerate range for port.");
 
             return str;
         }
@@ -276,7 +276,7 @@ namespace MMALSharp.Extensions
                         MMALParametersCamera.MMAL_PARAMETER_FPS_RANGE,
                         Marshal.SizeOf<MMAL_PARAMETER_FPS_RANGE_T>()), fpsLow, fpsHigh);
 
-            MMALCheck(MMALPort.mmal_port_parameter_set(port.Ptr, &str.Hdr), "Unable to set framerate range for port.");
+            MmalCheck(MMALPort.mmal_port_parameter_set(port.Ptr, &str.Hdr), "Unable to set framerate range for port.");
         }
     }
 }

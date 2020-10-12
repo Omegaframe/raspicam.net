@@ -6,7 +6,7 @@ namespace MMALSharp.Demo
 {
     public abstract class OpsBase
     {
-        protected MMALCamera Cam => MMALCamera.Instance;
+        protected MalCamera Cam => MalCamera.Instance;
 
         public abstract void Operations();
         

@@ -66,10 +66,10 @@ namespace MMALSharp.Ports.Controls
                 MmalLog.Logger.LogInformation($"{Name}: Received unexpected camera control callback event");
             }
 
-            if (MMALCameraConfig.Debug)
+            if (MmalCameraConfig.Debug)
                 MmalLog.Logger.LogDebug($"{Name}: In native control callback.");
 
-            var bufferImpl = new MMALBufferImpl(buffer);
+            var bufferImpl = new MmalBuffer(buffer);
 
             if (!bufferImpl.CheckState())
             {
@@ -77,14 +77,14 @@ namespace MMALSharp.Ports.Controls
                 return;
             }
 
-            if (MMALCameraConfig.Debug)
+            if (MmalCameraConfig.Debug)
                 bufferImpl.ParseEvents();
 
             bufferImpl.PrintProperties();
 
             CallbackHandler.Callback(bufferImpl);
 
-            if (MMALCameraConfig.Debug)
+            if (MmalCameraConfig.Debug)
                 MmalLog.Logger.LogDebug($"{Name}: Releasing buffer.");
 
             bufferImpl.Release();

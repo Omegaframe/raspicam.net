@@ -75,10 +75,10 @@ namespace MMALSharp.Ports.Outputs
                     this.SetParameter(MMALParametersCommon.MMAL_PARAMETER_ZERO_COPY, true);
                 }
 
-                if (MMALCameraConfig.VideoColorSpace != null &&
-                    MMALCameraConfig.VideoColorSpace.EncType == MmalEncoding.EncodingType.ColorSpace)
+                if (MmalCameraConfig.VideoColorSpace != null &&
+                    MmalCameraConfig.VideoColorSpace.EncType == MmalEncoding.EncodingType.ColorSpace)
                 {
-                    VideoColorSpace = MMALCameraConfig.VideoColorSpace;
+                    VideoColorSpace = MmalCameraConfig.VideoColorSpace;
                 }
 
                 if (config.Framerate > 0)
@@ -144,7 +144,7 @@ namespace MMALSharp.Ports.Outputs
                 return ConnectedReference;
             }
 
-            var connection = MMALConnectionImpl.CreateConnection(this, destinationComponent.Inputs[inputPort], destinationComponent, useCallback);
+            var connection = MmalConnectionImpl.CreateConnection(this, destinationComponent.Inputs[inputPort], destinationComponent, useCallback);
             ConnectedReference = connection;
 
             destinationComponent.Inputs[inputPort].ConnectTo(this, connection);
@@ -171,7 +171,7 @@ namespace MMALSharp.Ports.Outputs
 
             try
             {
-                if (MMALCameraConfig.Debug)
+                if (MmalCameraConfig.Debug)
                 {
                     if (!Enabled)
                     {
@@ -270,10 +270,10 @@ namespace MMALSharp.Ports.Outputs
         /// <param name="buffer">The buffer header.</param>
         internal virtual void NativeOutputPortCallback(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)
         {
-            if (MMALCameraConfig.Debug)            
+            if (MmalCameraConfig.Debug)            
                 MmalLog.Logger.LogDebug($"{Name}: In native output callback");            
             
-            var bufferImpl = new MMALBufferImpl(buffer);
+            var bufferImpl = new MmalBuffer(buffer);
 
             bufferImpl.PrintProperties();
             

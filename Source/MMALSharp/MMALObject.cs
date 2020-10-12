@@ -1,10 +1,10 @@
 ﻿namespace MMALSharp
 {
-    public abstract class MMALObject : IMMALObject
+    public abstract class MmalObject : IMmalObject
     {
         public bool IsDisposed { get; internal set; }
 
-        protected MMALObject() { }
+        protected MmalObject() { }
 
         public virtual void Dispose() => IsDisposed = true;
         

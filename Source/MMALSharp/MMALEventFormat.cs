@@ -5,7 +5,7 @@ using MMALSharp.Common;
 
 namespace MMALSharp
 {
-    public unsafe class MMALEventFormat : IBufferEvent
+    public unsafe class MmalEventFormat : IBufferEvent
     {
         public MMAL_ES_FORMAT_T* Ptr { get; }
 
@@ -35,21 +35,21 @@ namespace MMALSharp
 
         MMAL_ES_FORMAT_T Format { get; }
 
-        public MMALEventFormat(MMAL_ES_FORMAT_T format)
+        public MmalEventFormat(MMAL_ES_FORMAT_T format)
         {
             Format = format;
         }
 
-        public MMALEventFormat(MMAL_ES_FORMAT_T format, MMAL_ES_FORMAT_T* ptr)
+        public MmalEventFormat(MMAL_ES_FORMAT_T format, MMAL_ES_FORMAT_T* ptr)
         {
             Format = format;
             Ptr = ptr;
         }
 
-        internal static MMALEventFormat GetEventFormat(IBuffer buffer)
+        internal static MmalEventFormat GetEventFormat(IBuffer buffer)
         {
             var ev = MMALEvents.mmal_event_format_changed_get(buffer.Ptr);
-            return new MMALEventFormat(Marshal.PtrToStructure<MMAL_ES_FORMAT_T>((IntPtr)ev->Format), ev->Format);
+            return new MmalEventFormat(Marshal.PtrToStructure<MMAL_ES_FORMAT_T>((IntPtr)ev->Format), ev->Format);
         }
     }
 }

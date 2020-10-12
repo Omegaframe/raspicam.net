@@ -6,7 +6,7 @@ namespace MMALSharp.Demo
     {        
         public static void OperationsHandler()
         {
-            MMALCameraConfig.Debug = true;
+            MmalCameraConfig.Debug = true;
             
             Console.WriteLine("Please select from an option below.");
             

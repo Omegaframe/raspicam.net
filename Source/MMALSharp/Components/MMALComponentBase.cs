@@ -13,11 +13,11 @@ using MMALSharp.Ports.Clocks;
 using MMALSharp.Ports.Controls;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;
-using static MMALSharp.MMALNativeExceptionHelper;
+using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp
 {
-    public abstract unsafe class MMALComponentBase : MMALObject, IComponent
+    public abstract unsafe class MMALComponentBase : MmalObject, IComponent
     {
         public IControlPort Control { get; }
         public List<IInputPort> Inputs { get; }
@@ -55,7 +55,7 @@ namespace MMALSharp
         /// Enables any connections associated with this component, traversing down the pipeline to enable those connections
         /// also.
         /// </summary>
-        /// <exception cref="MMALPortConnectedException">Thrown when port enabled prior to enabling connection.</exception>
+        /// <exception cref="MmalPortConnectedException">Thrown when port enabled prior to enabling connection.</exception>
         public void EnableConnections()
         {
             foreach (IOutputPort port in Outputs.Where(o => o.ConnectedReference != null))
@@ -72,7 +72,7 @@ namespace MMALSharp
         /// Disables any connections associated with this component, traversing down the pipeline to disable those connections
         /// also.
         /// </summary>
-        /// <exception cref="MMALPortConnectedException">Thrown when port still enabled prior to disabling connection.</exception>
+        /// <exception cref="MmalPortConnectedException">Thrown when port still enabled prior to disabling connection.</exception>
         public void DisableConnections()
         {
             foreach (IOutputPort port in Outputs.Where(o => o.ConnectedReference != null))
@@ -169,13 +169,13 @@ namespace MMALSharp
         /// Release a reference on a component Release an acquired reference on a component. Triggers the destruction of the component 
         /// when the last reference is being released.
         /// </summary>
-        public void ReleaseComponent() => MMALCheck(MMALComponent.mmal_component_release(Ptr), "Unable to release component");
+        public void ReleaseComponent() => MmalCheck(MMALComponent.mmal_component_release(Ptr), "Unable to release component");
 
         /// <summary>
         /// Destroy a previously created component Release an acquired reference on a component. 
         /// Only actually destroys the component when the last reference is being released.
         /// </summary>
-        public void DestroyComponent() => MMALCheck(MMALComponent.mmal_component_destroy(Ptr), "Unable to destroy component");
+        public void DestroyComponent() => MmalCheck(MMALComponent.mmal_component_destroy(Ptr), "Unable to destroy component");
 
         /// <summary>
         /// Enable processing on a component.
@@ -183,7 +183,7 @@ namespace MMALSharp
         public void EnableComponent()
         {
             if (!Enabled)
-                MMALCheck(MMALComponent.mmal_component_enable(Ptr), "Unable to enable component");
+                MmalCheck(MMALComponent.mmal_component_enable(Ptr), "Unable to enable component");
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace MMALSharp
         public void DisableComponent()
         {
             if (Enabled)
-                MMALCheck(MMALComponent.mmal_component_disable(Ptr), "Unable to disable component");
+                MmalCheck(MMALComponent.mmal_component_disable(Ptr), "Unable to disable component");
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace MMALSharp
         static MMAL_COMPONENT_T* CreateComponent(string name)
         {
             IntPtr ptr = IntPtr.Zero;
-            MMALCheck(MMALComponent.mmal_component_create(name, &ptr), "Unable to create component");
+            MmalCheck(MMALComponent.mmal_component_create(name, &ptr), "Unable to create component");
 
             var compPtr = (MMAL_COMPONENT_T*)ptr.ToPointer();
 

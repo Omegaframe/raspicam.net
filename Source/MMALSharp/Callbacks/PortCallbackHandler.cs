@@ -27,7 +27,7 @@ namespace MMALSharp.Callbacks
         
         public virtual void Callback(IBuffer buffer)
         {
-            if (MMALCameraConfig.Debug)            
+            if (MmalCameraConfig.Debug)            
                 MmalLog.Logger.LogDebug($"In managed {WorkingPort.PortType.GetPortType()} callback");            
 
             long? pts = null;
@@ -48,7 +48,7 @@ namespace MMALSharp.Callbacks
                 pts = buffer.Pts - _ptsStartTime.Value;
             }
 
-            if (MMALCameraConfig.Debug)            
+            if (MmalCameraConfig.Debug)            
                 MmalLog.Logger.LogDebug("Attempting to process data.");            
             
             CaptureHandler?.Process(new ImageContext

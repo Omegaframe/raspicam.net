@@ -33,7 +33,7 @@ namespace MMALSharp.Tests
             using (var preview = new MMALVideoRenderer())
             using (var resizer = new MMALResizerComponent())
             {
-                Fixture.MMALCamera.ConfigureCameraSettings();
+                Fixture.MalCamera.ConfigureCameraSettings();
 
                 // Use the resizer to resize 1080p to 640x480.
                 var portConfig = new MMALPortConfig(MmalEncoding.I420, MmalEncoding.I420, width: 640, height: 480);
@@ -41,9 +41,9 @@ namespace MMALSharp.Tests
                 resizer.ConfigureOutputPort<VideoPort>(0, portConfig, vidCaptureHandler);
 
                 // Create our component pipeline.         
-                Fixture.MMALCamera.Camera.VideoPort
+                Fixture.MalCamera.Camera.VideoPort
                     .ConnectTo(resizer);
-                Fixture.MMALCamera.Camera.PreviewPort
+                Fixture.MalCamera.Camera.PreviewPort
                     .ConnectTo(preview);
 
                 // Camera warm up time
@@ -52,7 +52,7 @@ namespace MMALSharp.Tests
                 CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(15));
 
                 // Record video for 20 seconds
-                await Fixture.MMALCamera.ProcessAsync(Fixture.MMALCamera.Camera.VideoPort, cts.Token);
+                await Fixture.MalCamera.ProcessAsync(Fixture.MalCamera.Camera.VideoPort, cts.Token);
 
                 Fixture.CheckAndAssertFilepath(vidCaptureHandler.GetFilepath());
             }
@@ -71,18 +71,18 @@ namespace MMALSharp.Tests
             using (var preview = new MMALVideoRenderer())
             using (var splitter = new MMALSplitterComponent())
             {
-                Fixture.MMALCamera.ConfigureCameraSettings();
+                Fixture.MalCamera.ConfigureCameraSettings();
 
                 var splitterPortConfig = new MMALPortConfig(MmalEncoding.I420, MmalEncoding.I420);
 
                 // Create our component pipeline.         
-                splitter.ConfigureInputPort(new MMALPortConfig(MmalEncoding.Opaque, MmalEncoding.I420, 0), Fixture.MMALCamera.Camera.VideoPort, null);
+                splitter.ConfigureInputPort(new MMALPortConfig(MmalEncoding.Opaque, MmalEncoding.I420, 0), Fixture.MalCamera.Camera.VideoPort, null);
                 splitter.ConfigureOutputPort(0, splitterPortConfig, vidCaptureHandler);
                
                 // Create our component pipeline.         
-                Fixture.MMALCamera.Camera.VideoPort
+                Fixture.MalCamera.Camera.VideoPort
                     .ConnectTo(splitter);
-                Fixture.MMALCamera.Camera.PreviewPort
+                Fixture.MalCamera.Camera.PreviewPort
                     .ConnectTo(preview);
 
                 // Camera warm up time
@@ -91,7 +91,7 @@ namespace MMALSharp.Tests
                 CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(15));
 
                 // Record video for 20 seconds
-                await Fixture.MMALCamera.ProcessAsync(Fixture.MMALCamera.Camera.VideoPort, cts.Token);
+                await Fixture.MalCamera.ProcessAsync(Fixture.MalCamera.Camera.VideoPort, cts.Token);
 
                 Fixture.CheckAndAssertFilepath(vidCaptureHandler.GetFilepath());
             }
@@ -111,30 +111,30 @@ namespace MMALSharp.Tests
             using (var splitter = new MMALSplitterComponent())
             using (var resizer = new MMALResizerComponent())
             {
-                Fixture.MMALCamera.ConfigureCameraSettings();
+                Fixture.MalCamera.ConfigureCameraSettings();
 
                 var splitterPortConfig = new MMALPortConfig(MmalEncoding.Opaque, MmalEncoding.I420);
                 var resizerPortConfig = new MMALPortConfig(MmalEncoding.I420, MmalEncoding.I420, width: 1024, height: 768, timeout: DateTime.Now.AddSeconds(15));
 
                 // Create our component pipeline.         
-                splitter.ConfigureInputPort(new MMALPortConfig(MmalEncoding.Opaque, MmalEncoding.I420), Fixture.MMALCamera.Camera.VideoPort, null);
+                splitter.ConfigureInputPort(new MMALPortConfig(MmalEncoding.Opaque, MmalEncoding.I420), Fixture.MalCamera.Camera.VideoPort, null);
                 splitter.ConfigureOutputPort(0, splitterPortConfig, null);
                 
                 resizer.ConfigureOutputPort<VideoPort>(0, resizerPortConfig, vidCaptureHandler);
                 
                 // Create our component pipeline.         
-                Fixture.MMALCamera.Camera.VideoPort
+                Fixture.MalCamera.Camera.VideoPort
                     .ConnectTo(splitter);
 
                 splitter.Outputs[0].ConnectTo(resizer);
 
-                Fixture.MMALCamera.Camera.PreviewPort
+                Fixture.MalCamera.Camera.PreviewPort
                     .ConnectTo(preview);
 
                 // Camera warm up time
                 await Task.Delay(2000);
 
-                await Fixture.MMALCamera.ProcessAsync(Fixture.MMALCamera.Camera.VideoPort);
+                await Fixture.MalCamera.ProcessAsync(Fixture.MalCamera.Camera.VideoPort);
 
                 Fixture.CheckAndAssertFilepath(vidCaptureHandler.GetFilepath());
             }

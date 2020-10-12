@@ -19,8 +19,8 @@ namespace MMALSharp.Ports.Outputs
             {
                 if (value.Width == 0 || value.Height == 0)
                 {
-                    Width = MMALCameraConfig.Resolution.Pad().Width;
-                    Height = MMALCameraConfig.Resolution.Pad().Height;
+                    Width = MmalCameraConfig.Resolution.Pad().Width;
+                    Height = MmalCameraConfig.Resolution.Pad().Height;
                 }
                 else
                 {
@@ -45,7 +45,7 @@ namespace MMALSharp.Ports.Outputs
 
         internal override void NativeOutputPortCallback(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)
         {
-            if (MMALCameraConfig.Debug)
+            if (MmalCameraConfig.Debug)
                 MmalLog.Logger.LogDebug($"{Name}: In native {nameof(StillPort)} output callback");
 
             base.NativeOutputPortCallback(port, buffer);
