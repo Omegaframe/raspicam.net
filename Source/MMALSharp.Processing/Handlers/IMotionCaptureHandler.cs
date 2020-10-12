@@ -1,33 +1,13 @@
-﻿using MMALSharp.Processors.Motion;
-using System;
+﻿using System;
+using MMALSharp.Processing.Processors.Motion;
 
-namespace MMALSharp.Handlers
+namespace MMALSharp.Processing.Handlers
 {
-    /// <summary>
-    /// Represents a capture handler which can detect motion.
-    /// </summary>
     public interface IMotionCaptureHandler
     {
-        /// <summary>
-        /// The motion type associated with this MotionCaptureHandler.
-        /// </summary>
         MotionType MotionType { get; set; }
-
-        /// <summary>
-        /// Call to configure motion detection.
-        /// </summary>
-        /// <param name="config">The motion configuration.</param>
-        /// <param name="onDetect">A callback for when motion is detected.</param>
         void ConfigureMotionDetection(MotionConfig config, Action onDetect);
-
-        /// <summary>
-        /// Enables motion detection. When configured, this will instruct the capture handler to detect motion.
-        /// </summary>
         void EnableMotionDetection();
-
-        /// <summary>
-        /// Disables motion detection. When configured, this will instruct the capture handler not to detect motion.
-        /// </summary>
         void DisableMotionDetection();
     }
 }

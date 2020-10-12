@@ -2,9 +2,9 @@
 using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Extensions;
-using MMALSharp.Handlers;
 using MMALSharp.Native;
 using MMALSharp.Ports;
+using MMALSharp.Processing.Handlers;
 
 namespace MMALSharp.Callbacks
 {   

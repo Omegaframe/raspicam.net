@@ -4,7 +4,6 @@
 // </copyright>
 
 using MMALSharp.Components;
-using MMALSharp.Handlers;
 using MMALSharp.Native;
 using System;
 using System.Drawing;
@@ -17,11 +16,12 @@ using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Config;
 using MMALSharp.Ports;
-using MMALSharp.Processors;
 using MMALSharp.Tests.Data;
 using Xunit;
 using MMALSharp.Extensions;
 using MMALSharp.Processing;
+using MMALSharp.Processing.Handlers;
+using MMALSharp.Processing.Processors.Bayer;
 
 namespace MMALSharp.Tests
 {

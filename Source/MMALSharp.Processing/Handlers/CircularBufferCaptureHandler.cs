@@ -1,36 +1,33 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using MMALSharp.Common;
 using MMALSharp.Common.Utility;
-using MMALSharp.Processing;
+using MMALSharp.Processing.Internal;
 
-namespace MMALSharp.Handlers
+[assembly: InternalsVisibleTo("MMALSharp.Tests")]
+namespace MMALSharp.Processing.Handlers
 {
     public sealed class CircularBufferCaptureHandler : VideoStreamCaptureHandler
     {
-        private bool _recordToFileStream;
-        private int _bufferSize;
-        private bool _receivedIFrame;
+        bool _recordToFileStream;
 
-        public CircularBuffer<byte> Buffer { get; private set; }
+        internal CircularBuffer<byte> Buffer { get; private set; }
 
-        public CircularBufferCaptureHandler(int bufferSize) : base()
+        public CircularBufferCaptureHandler(int bufferSize)
         {
-            _bufferSize = bufferSize;
             Buffer = new CircularBuffer<byte>(bufferSize);
         }
 
         public CircularBufferCaptureHandler(int bufferSize, string directory, string extension) : base(directory, extension)
         {
-            _bufferSize = bufferSize;
             Buffer = new CircularBuffer<byte>(bufferSize);
         }
 
         public CircularBufferCaptureHandler(int bufferSize, string fullPath) : base(fullPath)
         {
-            _bufferSize = bufferSize;
             Buffer = new CircularBuffer<byte>(bufferSize);
         }
 
@@ -38,48 +35,30 @@ namespace MMALSharp.Handlers
         {
             if (!_recordToFileStream)
             {
-                for (var i = 0; i < context.Data.Length; i++)
-                {
-                    Buffer.PushBack(context.Data[i]);
-                }
+                foreach (var bytes in context.Data)
+                    Buffer.PushBack(bytes);
             }
             else
             {
-                if (context.Encoding == MmalEncoding.H264)
-                {
-                    _receivedIFrame = context.IsIFrame;
-                }
-
                 if (Buffer.Size > 0)
                 {
                     // The buffer contains data.
                     if (CurrentStream != null && CurrentStream.CanWrite)
-                    {
                         CurrentStream.Write(Buffer.ToArray(), 0, Buffer.Size);
-                    }
 
                     Processed += Buffer.Size;
                     Buffer = new CircularBuffer<byte>(Buffer.Capacity);
                 }
 
                 if (CurrentStream != null && CurrentStream.CanWrite)
-                {
                     CurrentStream.Write(context.Data, 0, context.Data.Length);
-                }
 
                 Processed += context.Data.Length;
             }
 
-            // Not calling base method to stop data being written to the stream when not recording.
             ImageContext = context;
         }
 
-        /// <summary>
-        /// Call to start recording to FileStream.
-        /// </summary>
-        /// <param name="initRecording">Optional Action to execute when recording starts, for example, to request an h.264 I-frame.</param>
-        /// <param name="cancellationToken">When the token is canceled, <see cref="StopRecording"/> is called. If a token is not provided, the caller must stop the recording.</param>
-        /// <returns>Task representing the recording process if a CancellationToken was provided, otherwise a completed Task.</returns>
         public async Task StartRecording(Action initRecording = null, CancellationToken cancellationToken = default)
         {
             if (CurrentStream == null)
@@ -105,17 +84,9 @@ namespace MMALSharp.Handlers
             MmalLog.Logger.LogInformation("Stop recording.");
 
             _recordToFileStream = false;
-            _receivedIFrame = false;
         }
 
-        public override void Dispose()
-        {
-            CurrentStream?.Dispose();
-        }
-
-        public override string TotalProcessed()
-        {
-            return $"{Processed}";
-        }
+        public override void Dispose() => CurrentStream?.Dispose();
+        public override string TotalProcessed() => $"{Processed}";
     }
 }

@@ -7,9 +7,9 @@ using MMALSharp.Callbacks;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Extensions;
-using MMALSharp.Handlers;
 using MMALSharp.Native;
 using MMALSharp.Ports.Outputs;
+using MMALSharp.Processing.Handlers;
 
 namespace MMALSharp.Ports.Inputs
 {
@@ -164,13 +164,13 @@ namespace MMALSharp.Ports.Inputs
             var result = CallbackHandler.CallbackWithResult(newBuffer);
 
             if (result.Success)            
-                newBuffer.ReadIntoBuffer(result.BufferFeed, result.DataLength, result.EOF);            
+                newBuffer.ReadIntoBuffer(result.BufferFeed, result.DataLength, result.IsEof);            
 
             SendBuffer(newBuffer);
 
-            if (result.EOF || ComponentReference.ForceStopProcessing)
+            if (result.IsEof || ComponentReference.ForceStopProcessing)
             {
-                MmalLog.Logger.LogDebug($"{Name}: Received EOF. Releasing.");
+                MmalLog.Logger.LogDebug($"{Name}: Received IsEof. Releasing.");
 
                 Task.Run(() => { Trigger.SetResult(true); });
             }

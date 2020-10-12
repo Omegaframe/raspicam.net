@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace MMALSharp.Processing
+namespace MMALSharp.Processing.Internal
 {
-    public class CircularBuffer<T> : IEnumerable<T>
+    class CircularBuffer<T> : IEnumerable<T>
     {
         readonly T[] _buffer;
 

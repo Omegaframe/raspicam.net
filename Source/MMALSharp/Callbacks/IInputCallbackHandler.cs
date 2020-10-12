@@ -1,4 +1,4 @@
-﻿using MMALSharp.Handlers;
+﻿using MMALSharp.Processing.Handlers;
 
 namespace MMALSharp.Callbacks
 {

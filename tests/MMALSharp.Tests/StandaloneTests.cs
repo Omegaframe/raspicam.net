@@ -4,9 +4,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using MMALSharp.Common;
 using MMALSharp.Components;
-using MMALSharp.Handlers;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Outputs;
+using MMALSharp.Processing.Handlers;
 using Xunit;
 
 namespace MMALSharp.Tests

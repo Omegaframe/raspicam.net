@@ -3,9 +3,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using MMALSharp.Common;
 using MMALSharp.Components;
-using MMALSharp.Handlers;
 using MMALSharp.Native;
 using MMALSharp.Ports;
+using MMALSharp.Processing.Handlers;
 
 namespace MMALSharp.Demo
 {

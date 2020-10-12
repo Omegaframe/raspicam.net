@@ -1,55 +1,27 @@
-﻿using Microsoft.Extensions.Logging;
-using MMALSharp.Common.Utility;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.Extensions.Logging;
+using MMALSharp.Common.Utility;
 
-namespace MMALSharp.Handlers
+namespace MMALSharp.Processing.Handlers
 {
-    /// <summary>
-    /// Processes image data to a <see cref="FileStream"/>.
-    /// </summary>
     public class FileStreamCaptureHandler : StreamCaptureHandler<FileStream>, IFileStreamCaptureHandler
     {
-        private readonly bool _customFilename;
-        private int _increment;
-
-        /// <summary>
-        /// A list of files that have been processed by this capture handler.
-        /// </summary>
         public List<ProcessedFileResult> ProcessedFiles { get; set; } = new List<ProcessedFileResult>();
-
-        /// <summary>
-        /// The directory to save to (if applicable).
-        /// </summary>
         public string Directory { get; set; }
-
-        /// <summary>
-        /// The extension of the file (if applicable).
-        /// </summary>
         public string Extension { get; set; }
-
-        /// <summary>
-        /// The name of the current file associated with the FileStream.
-        /// </summary>
         public string CurrentFilename { get; set; }
 
-        /// <summary>
-        /// Creates a new instance of the <see cref="FileStreamCaptureHandler"/> class without provisions for writing to a file. Supports
-        /// subclasses in which file output is optional.
-        /// </summary>
+        readonly bool _customFilename;
+        int _increment;
+
         public FileStreamCaptureHandler()
         {
             MmalLog.Logger.LogDebug($"{nameof(FileStreamCaptureHandler)} empty ctor invoked, no file will be written");
         }
 
-        /// <summary>
-        /// Creates a new instance of the <see cref="FileStreamCaptureHandler"/> class with the specified directory and filename extension. Filenames will be in the
-        /// format "dd-MMM-yy HH-mm-ss" taken from this moment in time.
-        /// </summary>
-        /// <param name="directory">The directory to save captured data.</param>
-        /// <param name="extension">The filename extension for saving files.</param>
         public FileStreamCaptureHandler(string directory, string extension)
         {
             Directory = directory.TrimEnd('/');
@@ -61,8 +33,7 @@ namespace MMALSharp.Handlers
 
             var now = DateTime.Now.ToString("dd-MMM-yy HH-mm-ss");
 
-            int i = 1;
-
+            var i = 1;
             var fileName = $"{Directory}/{now}.{Extension}";
 
             while (File.Exists(fileName))
@@ -77,10 +48,6 @@ namespace MMALSharp.Handlers
             CurrentStream = File.Create(fileName);
         }
 
-        /// <summary>
-        /// Creates a new instance of the <see cref="FileStreamCaptureHandler"/> class with the specified file path.
-        /// </summary>
-        /// <param name="fullPath">The absolute full path to save captured data to.</param>
         public FileStreamCaptureHandler(string fullPath)
         {
             var fileInfo = new FileInfo(fullPath);
@@ -104,25 +71,13 @@ namespace MMALSharp.Handlers
             CurrentStream = File.Create(fullPath);
         }
 
-        /// <summary>
-        /// Gets the filename that a FileStream points to.
-        /// </summary>
-        /// <returns>The filename.</returns>
         public string GetFilename() => (CurrentStream != null) ? Path.GetFileNameWithoutExtension(CurrentStream.Name) : string.Empty;
+        public string GetFilepath() => CurrentStream?.Name ?? string.Empty;
 
-        /// <summary>
-        /// Gets the filepath that a FileStream points to.
-        /// </summary>
-        /// <returns>The filepath.</returns>
-        public string GetFilepath() =>            CurrentStream?.Name ?? string.Empty;
-
-        /// <summary>
-        /// Creates a new File (FileStream), assigns it to the Stream instance of this class and disposes of any existing stream. 
-        /// </summary>
         public virtual void NewFile()
         {
-            if (CurrentStream == null)            
-                return;            
+            if (CurrentStream == null)
+                return;
 
             CurrentStream?.Dispose();
 
@@ -136,8 +91,8 @@ namespace MMALSharp.Handlers
             }
             else
             {
-                string tempFilename = DateTime.Now.ToString("dd-MMM-yy HH-mm-ss");
-                int i = 1;
+                var tempFilename = DateTime.Now.ToString("dd-MMM-yy HH-mm-ss");
+                var i = 1;
 
                 newFilename = $"{Directory}/{tempFilename}.{Extension}";
 
@@ -150,16 +105,16 @@ namespace MMALSharp.Handlers
 
             CurrentStream = File.Create(newFilename);
         }
-                
+
         public override void PostProcess()
         {
-            if (CurrentStream == null)            
-                return;            
+            if (CurrentStream == null)
+                return;
 
             ProcessedFiles.Add(new ProcessedFileResult(Directory, GetFilename(), Extension));
             base.PostProcess();
         }
-        
+
         public override string TotalProcessed() => $"{Processed}";
     }
 }

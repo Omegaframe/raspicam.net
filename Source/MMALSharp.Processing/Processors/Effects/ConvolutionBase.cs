@@ -6,40 +6,24 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using MMALSharp.Common;
 
-namespace MMALSharp.Processors.Effects
+namespace MMALSharp.Processing.Processors.Effects
 {
-    /// <summary>
-    /// Base class for image processors using matrix convolution.
-    /// </summary>
     public abstract class ConvolutionBase
     {
-        /// <summary>
-        /// Apply a convolution based on the kernel passed in.
-        /// </summary>
-        /// <param name="kernel">The kernel.</param>
-        /// <param name="kernelWidth">The kernel's width.</param>
-        /// <param name="kernelHeight">The kernel's height.</param>
-        /// <param name="context">An image context providing additional metadata on the data passed in.</param>
         public void ApplyConvolution(double[,] kernel, int kernelWidth, int kernelHeight, ImageContext context)
         {
-            BitmapData bmpData = null;
-            IntPtr pNative = IntPtr.Zero;
-            int bytes;
+            BitmapData bmpData;
             byte[] store = null;
 
             using (var ms = new MemoryStream(context.Data))
             using (var bmp = LoadBitmap(context, ms))
             {
-                bmpData = bmp.LockBits(new Rectangle(0, 0,
-                        bmp.Width,
-                        bmp.Height),
-                    ImageLockMode.ReadWrite,
-                    bmp.PixelFormat);
+                bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadWrite, bmp.PixelFormat);
 
                 if (context.IsRaw)
                     InitBitmapData(context, bmpData);
 
-                pNative = bmpData.Scan0;
+                var pNative = bmpData.Scan0;
 
                 // Split image into 4 quadrants and process individually.
                 var quadA = new Rectangle(0, 0, bmpData.Width / 2, bmpData.Height / 2);
@@ -47,8 +31,7 @@ namespace MMALSharp.Processors.Effects
                 var quadC = new Rectangle(0, bmpData.Height / 2, bmpData.Width / 2, bmpData.Height / 2);
                 var quadD = new Rectangle(bmpData.Width / 2, bmpData.Height / 2, bmpData.Width / 2, bmpData.Height / 2);
 
-                bytes = bmpData.Stride * bmp.Height;
-
+                var bytes = bmpData.Stride * bmp.Height;
                 var rgbValues = new byte[bytes];
 
                 // Copy the RGB values into the array.
@@ -56,22 +39,10 @@ namespace MMALSharp.Processors.Effects
 
                 var bpp = Image.GetPixelFormatSize(bmp.PixelFormat) / 8;
 
-                var t1 = Task.Run(() =>
-                {
-                    ProcessQuadrant(quadA, bmp, bmpData, rgbValues, kernel, kernelWidth, kernelHeight, bpp);
-                });
-                var t2 = Task.Run(() =>
-                {
-                    ProcessQuadrant(quadB, bmp, bmpData, rgbValues, kernel, kernelWidth, kernelHeight, bpp);
-                });
-                var t3 = Task.Run(() =>
-                {
-                    ProcessQuadrant(quadC, bmp, bmpData, rgbValues, kernel, kernelWidth, kernelHeight, bpp);
-                });
-                var t4 = Task.Run(() =>
-                {
-                    ProcessQuadrant(quadD, bmp, bmpData, rgbValues, kernel, kernelWidth, kernelHeight, bpp);
-                });
+                var t1 = Task.Run(() => { ProcessQuadrant(quadA, bmp, bmpData, rgbValues, kernel, kernelWidth, kernelHeight, bpp); });
+                var t2 = Task.Run(() => { ProcessQuadrant(quadB, bmp, bmpData, rgbValues, kernel, kernelWidth, kernelHeight, bpp); });
+                var t3 = Task.Run(() => { ProcessQuadrant(quadC, bmp, bmpData, rgbValues, kernel, kernelWidth, kernelHeight, bpp); });
+                var t4 = Task.Run(() => { ProcessQuadrant(quadD, bmp, bmpData, rgbValues, kernel, kernelWidth, kernelHeight, bpp); });
 
                 Task.WaitAll(t1, t2, t3, t4);
 
@@ -85,19 +56,17 @@ namespace MMALSharp.Processors.Effects
 
                 if (!context.IsRaw || context.StoreFormat != null)
                 {
-                    using (var ms2 = new MemoryStream())
-                    {
-                        bmp.Save(ms2, context.StoreFormat);
-                        store = new byte[ms2.Length];
-                        Array.Copy(ms2.ToArray(), 0, store, 0, ms2.Length);
-                    }
+                    using var ms2 = new MemoryStream();
+                    bmp.Save(ms2, context.StoreFormat);
+                    store = new byte[ms2.Length];
+                    Array.Copy(ms2.ToArray(), 0, store, 0, ms2.Length);
                 }
             }
 
             context.Data = store;
         }
 
-        private Bitmap LoadBitmap(ImageContext imageContext, MemoryStream stream)
+        static Bitmap LoadBitmap(ImageContext imageContext, MemoryStream stream)
         {
             if (!imageContext.IsRaw)
                 return new Bitmap(stream);
@@ -120,24 +89,24 @@ namespace MMALSharp.Processors.Effects
             return new Bitmap(imageContext.Resolution.Width, imageContext.Resolution.Height, format);
         }
 
-        private void InitBitmapData(ImageContext imageContext, BitmapData bmpData)
+        static void InitBitmapData(ImageContext imageContext, BitmapData bmpData)
         {
             var pNative = bmpData.Scan0;
             Marshal.Copy(imageContext.Data, 0, pNative, imageContext.Data.Length);
         }
 
-        private void ProcessQuadrant(Rectangle quad, Bitmap bmp, BitmapData bmpData, byte[] rgbValues, double[,] kernel, int kernelWidth, int kernelHeight, int pixelDepth)
+        static void ProcessQuadrant(Rectangle quad, Bitmap bmp, BitmapData bmpData, byte[] rgbValues, double[,] kernel, int kernelWidth, int kernelHeight, int pixelDepth)
         {
             unsafe
             {
                 // Declare an array to hold the bytes of the bitmap.
                 var stride = bmpData.Stride;
 
-                byte* ptr1 = (byte*)bmpData.Scan0;
+                var ptr1 = (byte*)bmpData.Scan0;
 
-                for (int column = quad.X; column < quad.X + quad.Width; column++)
+                for (var column = quad.X; column < quad.X + quad.Width; column++)
                 {
-                    for (int row = quad.Y; row < quad.Y + quad.Height; row++)
+                    for (var row = quad.Y; row < quad.Y + quad.Height; row++)
                     {
                         if (column > kernelWidth && row > kernelHeight)
                         {
@@ -168,17 +137,13 @@ namespace MMALSharp.Processors.Effects
             }
         }
 
-        private int Bound(int value, int endIndex)
+        static int Bound(int value, int endIndex)
         {
             if (value < 0)
-            {
                 return 0;
-            }
 
             if (value < endIndex)
-            {
                 return value;
-            }
 
             return endIndex - 1;
         }

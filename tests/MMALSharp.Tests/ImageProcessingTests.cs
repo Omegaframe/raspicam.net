@@ -4,19 +4,19 @@
 // </copyright>
 
 using MMALSharp.Components;
-using MMALSharp.Handlers;
 using MMALSharp.Native;
 using System.Threading.Tasks;
 using MMALSharp.Common;
 using MMALSharp.Ports;
 using Xunit;
-using MMALSharp.Processors.Effects;
 using System;
 using System.Text;
-using MMALSharp.Processors;
 using System.IO;
 using System.Drawing.Imaging;
 using MMALSharp.Processing;
+using MMALSharp.Processing.Handlers;
+using MMALSharp.Processing.Processors.Bayer;
+using MMALSharp.Processing.Processors.Effects;
 
 namespace MMALSharp.Tests
 {
@@ -91,7 +91,7 @@ namespace MMALSharp.Tests
 
                 imgCaptureHandler.Manipulate(context =>
                 {
-                    context.Apply(new EdgeDetection(EDStrength.High));
+                    context.Apply(new EdgeDetection(EdStrength.High));
                 }, ImageFormat.Jpeg);
 
                 // Camera warm up time

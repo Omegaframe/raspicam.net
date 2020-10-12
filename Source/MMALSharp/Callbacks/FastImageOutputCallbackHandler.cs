@@ -1,6 +1,6 @@
-using MMALSharp.Handlers;
 using MMALSharp.Native;
 using MMALSharp.Ports.Outputs;
+using MMALSharp.Processing.Handlers;
 
 namespace MMALSharp.Callbacks
 {

@@ -1,15 +1,7 @@
-﻿namespace MMALSharp.Processors
+﻿namespace MMALSharp.Processing.Processors
 {
-    /// <summary>
-    /// A context to apply image processing techniques on image frames.
-    /// </summary>
     public interface IFrameProcessingContext
     {
-        /// <summary>
-        /// Applies a processing function on an image frame.
-        /// </summary>
-        /// <param name="processor">The image processor.</param>
-        /// <returns>The active image context.</returns>
         IFrameProcessingContext Apply(IFrameProcessor processor);
     }
 }

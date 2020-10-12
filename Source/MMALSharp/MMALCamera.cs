@@ -8,11 +8,11 @@ using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Config;
 using MMALSharp.Extensions;
-using MMALSharp.Handlers;
 using MMALSharp.Native;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Outputs;
-using MMALSharp.Processors.Motion;
+using MMALSharp.Processing.Handlers;
+using MMALSharp.Processing.Processors.Motion;
 
 namespace MMALSharp
 {

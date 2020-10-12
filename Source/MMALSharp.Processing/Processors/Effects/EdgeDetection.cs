@@ -1,102 +1,53 @@
 using MMALSharp.Common;
 
-namespace MMALSharp.Processors.Effects
+namespace MMALSharp.Processing.Processors.Effects
 {
-    /// <summary>
-    /// Represents the strength of the Edge Detection algorithm.
-    /// </summary>
-    public enum EDStrength
+    public enum EdStrength
     {
-        /// <summary>
-        /// Low strength.
-        /// </summary>
         Low,
-
-        /// <summary>
-        /// Medium strength.
-        /// </summary>
         Medium,
-
-        /// <summary>
-        /// High strength.
-        /// </summary>
         High
     }
-    
-    /// <summary>
-    /// A kernel based image processor used to apply Edge detection convolution.
-    /// </summary>
+
     public class EdgeDetection : ConvolutionBase, IFrameProcessor
     {
-        /// <summary>
-        /// The kernel's width.
-        /// </summary>
         public const int KernelWidth = 3;
-
-        /// <summary>
-        /// The kernel's height.
-        /// </summary>
         public const int KernelHeight = 3;
 
-        /// <summary>
-        /// A kernel used to apply a low strength edge detection convolution to an image.
-        /// </summary>
-        public static double[,] LowStrengthKernel = new double[KernelWidth, KernelHeight]
+        public static double[,] LowStrengthKernel = 
         {
             { -1, 0, 1 },
             { 0, 0, 0 },
             { 1, 0, -1 }
         };
 
-        /// <summary>
-        /// A kernel used to apply a medium strength edge detection convolution to an image.
-        /// </summary>
-        public static double[,] MediumStrengthKernel = new double[KernelWidth, KernelHeight]
+        public static double[,] MediumStrengthKernel = 
         {
             { 0, 1, 0 },
             { 1, -4, 1 },
             { 0, 1, 0 }
         };
 
-        /// <summary>
-        /// A kernel used to apply a high strength edge detection convolution to an image.
-        /// </summary>
-        public static double[,] HighStrengthKernel = new double[KernelWidth, KernelHeight]
+        public static double[,] HighStrengthKernel = 
         {
             { -1, -1, -1 },
             { -1, 8, -1 },
             { -1, -1, -1 }
         };
 
-        /// <summary>
-        /// The working kernel.
-        /// </summary>
         public double[,] Kernel { get; }
-        
-        /// <summary>
-        /// Creates a new instance of <see cref="EdgeDetection"/> processor used to apply Edge detection convolution.
-        /// </summary>
-        /// <param name="strength">The Edge detection strength.</param>
-        public EdgeDetection(EDStrength strength)
+
+        public EdgeDetection(EdStrength strength)
         {
-            switch (strength)
+            Kernel = strength switch
             {
-                case EDStrength.Low:
-                    Kernel = LowStrengthKernel;
-                    break;
-                case EDStrength.Medium:
-                    Kernel = MediumStrengthKernel;
-                    break;
-                case EDStrength.High:
-                    Kernel = HighStrengthKernel;
-                    break;
-            }
+                EdStrength.Low => LowStrengthKernel,
+                EdStrength.Medium => MediumStrengthKernel,
+                EdStrength.High => HighStrengthKernel,
+                _ => Kernel
+            };
         }
 
-        /// <inheritdoc />
-        public void Apply(ImageContext context)
-        {
-            ApplyConvolution(Kernel, KernelWidth, KernelHeight, context);
-        }
+        public void Apply(ImageContext context) => ApplyConvolution(Kernel, KernelWidth, KernelHeight, context);
     }
 }

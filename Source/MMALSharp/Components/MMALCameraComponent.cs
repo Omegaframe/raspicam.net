@@ -5,10 +5,10 @@ using Microsoft.Extensions.Logging;
 using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Extensions;
-using MMALSharp.Handlers;
 using MMALSharp.Native;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Outputs;
+using MMALSharp.Processing.Handlers;
 
 namespace MMALSharp.Components
 {
