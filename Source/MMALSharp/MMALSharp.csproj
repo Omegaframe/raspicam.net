@@ -1,15 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>MMALSharp brings low level access to the Raspberry Pi camera module in C#. Based on the native MMAL library, MMALSharp allows you to configure a rich set of camera/sensor related settings via an easy to use asynchronous API.</Description>
-    <AssemblyTitle>MMALSharp</AssemblyTitle>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <AssemblyName>MMALSharp</AssemblyName>
-    <PackageId>MMALSharp</PackageId>
-    <RootNamespace>MMALSharp</RootNamespace>
-    <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageTags>raspberry-pi</PackageTags>
-    <VersionPrefix>0.7.0</VersionPrefix>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>  
   <ItemGroup>
