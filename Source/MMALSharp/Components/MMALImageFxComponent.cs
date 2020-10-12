@@ -2,18 +2,19 @@
 using System.Runtime.InteropServices;
 using MMALSharp.Config;
 using MMALSharp.Native;
+using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;
 using MMALSharp.Utility;
 using static MMALSharp.MmalNativeExceptionHelper;
-using static MMALSharp.Native.MmalParametersCamera;
+using static MMALSharp.Native.Parameters.MmalParametersCamera;
 
 namespace MMALSharp.Components
 {
     public class MmalImageFxComponent : MmalDownstreamHandlerComponent
     {
-        public MmalParamImagefxT ImageEffect
+        public MmalParamImagefxType ImageEffect
         {
             get => GetCurrentImageEffect();
             set => SetCurrentImageEffect(value);
@@ -34,8 +35,8 @@ namespace MMALSharp.Components
 
         unsafe ColorEffects GetColourEnhancementValue()
         {
-            var colFx = new MMAL_PARAMETER_COLOURFX_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterColorEffect, Marshal.SizeOf<MMAL_PARAMETER_COLOURFX_T>()),
+            var colFx = new MmalParameterColorFxType(
+                new MmalParameterHeaderType(MmalParameterColorEffect, Marshal.SizeOf<MmalParameterColorFxType>()),
                                                                                                         0,
                                                                                                         0,
                                                                                                         0);
@@ -51,8 +52,8 @@ namespace MMALSharp.Components
         {
             var (_, u, v) = MmalColor.RgbToYuvBytes(colorFx.Color);
 
-            var colFx = new MMAL_PARAMETER_COLOURFX_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterColorEffect, Marshal.SizeOf<MMAL_PARAMETER_COLOURFX_T>()),
+            var colFx = new MmalParameterColorFxType(
+                new MmalParameterHeaderType(MmalParameterColorEffect, Marshal.SizeOf<MmalParameterColorFxType>()),
                                                                                                         colorFx.Enable ? 1 : 0,
                                                                                                         u,
                                                                                                         v);
@@ -60,12 +61,12 @@ namespace MMALSharp.Components
             MmalCheck(MmalPort.SetParameter(Outputs[0].Ptr, &colFx.Hdr), "Unable to set colour enhancement value.");
         }
 
-        unsafe MmalParamImagefxT GetCurrentImageEffect()
+        unsafe MmalParamImagefxType GetCurrentImageEffect()
         {
-            const MmalParamImagefxT value = default;
+            const MmalParamImagefxType value = default;
 
-            var effectStr = new MMAL_PARAMETER_IMAGEFX_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterImageEffect, Marshal.SizeOf<MMAL_PARAMETER_IMAGEFX_T>()),
+            var effectStr = new MmalParameterImageFxType(
+                new MmalParameterHeaderType(MmalParameterImageEffect, Marshal.SizeOf<MmalParameterImageFxType>()),
                 value);
 
             MmalCheck(MmalPort.GetParameter(Outputs[0].Ptr, &effectStr.Hdr), "Unable to get current effect value.");
@@ -73,10 +74,10 @@ namespace MMALSharp.Components
             return value;
         }
 
-        unsafe void SetCurrentImageEffect(MmalParamImagefxT effect)
+        unsafe void SetCurrentImageEffect(MmalParamImagefxType effect)
         {
-            var effectStr = new MMAL_PARAMETER_IMAGEFX_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterImageEffect, Marshal.SizeOf<MMAL_PARAMETER_IMAGEFX_T>()),
+            var effectStr = new MmalParameterImageFxType(
+                new MmalParameterHeaderType(MmalParameterImageEffect, Marshal.SizeOf<MmalParameterImageFxType>()),
                 effect);
 
             MmalCheck(MmalPort.SetParameter(Outputs[0].Ptr, &effectStr.Hdr), "Unable to set current effect value.");

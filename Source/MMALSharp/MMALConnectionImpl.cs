@@ -7,6 +7,7 @@ using MMALSharp.Components;
 using MMALSharp.Extensions;
 using MMALSharp.Native;
 using MMALSharp.Native.Connection;
+using MMALSharp.Native.Parameters;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;
 using static MMALSharp.MmalNativeExceptionHelper;

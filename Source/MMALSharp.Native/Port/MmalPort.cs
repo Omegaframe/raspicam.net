@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using MMALSharp.Native.Buffer;
+using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Util;
 
 namespace MMALSharp.Native.Port
@@ -23,10 +24,10 @@ namespace MMALSharp.Native.Port
         public static extern unsafe MmalStatusEnum Flush(MmalPortType* port);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_set", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusEnum SetParameter(MmalPortType* port, MMAL_PARAMETER_HEADER_T* header);
+        public static extern unsafe MmalStatusEnum SetParameter(MmalPortType* port, MmalParameterHeaderType* header);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_get", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusEnum GetParameter(MmalPortType* port, MMAL_PARAMETER_HEADER_T* header);
+        public static extern unsafe MmalStatusEnum GetParameter(MmalPortType* port, MmalParameterHeaderType* header);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_send_buffer", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe MmalStatusEnum SendBuffer(MmalPortType* port, MmalBufferHeader* header);

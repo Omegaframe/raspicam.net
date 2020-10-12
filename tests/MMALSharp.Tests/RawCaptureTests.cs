@@ -11,6 +11,7 @@ using MMALSharp.Components;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Outputs;
 using MMALSharp.Processing.Handlers;
+using MMALSharp.Tests.Data;
 using Xunit;
 
 namespace MMALSharp.Tests

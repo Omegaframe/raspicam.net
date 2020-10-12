@@ -6,6 +6,7 @@ using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Extensions;
 using MMALSharp.Native;
+using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Util;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Outputs;
@@ -55,8 +56,8 @@ namespace MMALSharp.Components
 
             Control.SetParameter(MmalParametersCamera.MmalParameterCameraNum, 0);
 
-            var eventRequest = new MMAL_PARAMETER_CHANGE_EVENT_REQUEST_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParametersCommon.MmalParameterChangeEventRequest, Marshal.SizeOf<MMAL_PARAMETER_CHANGE_EVENT_REQUEST_T>()),
+            var eventRequest = new MmalParameterChangeEventRequestType(
+                new MmalParameterHeaderType(MmalParametersCommon.MmalParameterChangeEventRequest, Marshal.SizeOf<MmalParameterChangeEventRequestType>()),
                 MmalParametersCamera.MmalParameterCameraSettings, 1);
 
             if (MmalCameraConfig.SetChangeEventRequest)
@@ -83,8 +84,8 @@ namespace MMALSharp.Components
         {
             DisableComponent();
 
-            var camConfig = new MMAL_PARAMETER_CAMERA_CONFIG_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParametersCamera.MmalParameterCameraConfig, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_CONFIG_T>()),
+            var camConfig = new MmalParameterCameraConfigType(
+                new MmalParameterHeaderType(MmalParametersCamera.MmalParameterCameraConfig, Marshal.SizeOf<MmalParameterCameraConfigType>()),
                                                                 CameraInfo.MaxWidth,
                                                                 CameraInfo.MaxHeight,
                                                                 0,

@@ -1,13 +1,14 @@
 ﻿using System.Runtime.InteropServices;
+using MMALSharp.Native.Parameters;
 
 namespace MMALSharp.Native.Events
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct MmalEventParameterChanged
     {
-        public MMAL_PARAMETER_HEADER_T Hdr;
+        public MmalParameterHeaderType Hdr;
 
-        public MmalEventParameterChanged(MMAL_PARAMETER_HEADER_T hdr)
+        public MmalEventParameterChanged(MmalParameterHeaderType hdr)
         {
             Hdr = hdr;
         }

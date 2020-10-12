@@ -6,11 +6,12 @@ using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Config;
 using MMALSharp.Native;
+using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 using MMALSharp.Native.Util;
 using MMALSharp.Ports;
 using static MMALSharp.MmalNativeExceptionHelper;
-using static MMALSharp.Native.MmalParametersCamera;
+using static MMALSharp.Native.Parameters.MmalParametersCamera;
 
 namespace MMALSharp.Extensions
 {
@@ -29,27 +30,27 @@ namespace MMALSharp.Extensions
             {
                 switch (t.ParamType.Name)
                 {
-                    case nameof(MMAL_PARAMETER_BOOLEAN_T):
+                    case nameof(MmalParameterBooleanType):
                         var boolVal = 0;
                         MmalCheck(MmalUtil.GetBoolean(port.Ptr, (uint)key, ref boolVal), "Unable to get boolean value");
                         return boolVal == 1;
-                    case nameof(MMAL_PARAMETER_UINT64_T):
+                    case nameof(MmalParameterUint64Type):
                         var ulongVal = 0UL;
                         MmalCheck(MmalUtil.GetUint64(port.Ptr, (uint)key, ref ulongVal), "Unable to get ulong value");
                         return ulongVal;
-                    case nameof(MMAL_PARAMETER_INT64_T):
+                    case nameof(MmalParameterInt64Type):
                         var longVal = 0L;
                         MmalCheck(MmalUtil.GetInt64(port.Ptr, (uint)key, ref longVal), "Unable to get long value");
                         return longVal;
-                    case nameof(MMAL_PARAMETER_UINT32_T):
+                    case nameof(MmalParameterUint32Type):
                         var uintVal = 0U;
                         MmalCheck(MmalUtil.GetUint32(port.Ptr, (uint)key, ref uintVal), "Unable to get uint value");
                         return uintVal;
-                    case nameof(MMAL_PARAMETER_INT32_T):
+                    case nameof(MmalParameterInt32Type):
                         var intVal = 0;
                         MmalCheck(MmalUtil.GetInt32(port.Ptr, (uint)key, ref intVal), "Unable to get int value");
                         return intVal;
-                    case nameof(MMAL_PARAMETER_RATIONAL_T):
+                    case nameof(MmalParameterRationalType):
                         var ratVal = default(MmalRational);
                         MmalCheck(MmalUtil.GetRational(port.Ptr, (uint)key, ref ratVal), "Unable to get rational value");
                         return (double)ratVal.Num / ratVal.Den;
@@ -71,18 +72,18 @@ namespace MMALSharp.Extensions
 
         public static unsafe int[] GetSupportedEncodings(this IPort port)
         {
-            var ptr1 = Marshal.AllocHGlobal(Marshal.SizeOf<MMAL_PARAMETER_ENCODING_T>() + 20);
-            var str1 = (MMAL_PARAMETER_HEADER_T*)ptr1;
+            var ptr1 = Marshal.AllocHGlobal(Marshal.SizeOf<MmalParameterEncodingType>() + 20);
+            var str1 = (MmalParameterHeaderType*)ptr1;
 
             str1->Id = MmalParametersCommon.MmalParameterSupportedEncodings;
 
             // Deliberately undersize to check if running on older firmware.
-            str1->Size = Marshal.SizeOf<MMAL_PARAMETER_ENCODING_T>() + 20;
+            str1->Size = Marshal.SizeOf<MmalParameterEncodingType>() + 20;
 
             try
             {
                 MmalCheck(MmalPort.GetParameter(port.Ptr, str1), "Unable to get supported encodings");
-                var encodings = (MMAL_PARAMETER_ENCODING_T)Marshal.PtrToStructure(ptr1, typeof(MMAL_PARAMETER_ENCODING_T));
+                var encodings = (MmalParameterEncodingType)Marshal.PtrToStructure(ptr1, typeof(MmalParameterEncodingType));
                 return encodings.Value;
             }
             finally
@@ -116,26 +117,26 @@ namespace MMALSharp.Extensions
             {
                 switch (t.ParamType.Name)
                 {
-                    case nameof(MMAL_PARAMETER_BOOLEAN_T):
+                    case nameof(MmalParameterBooleanType):
                         int i = (bool)value ? 1 : 0;
                         MmalCheck(MmalUtil.SetBoolean(port.Ptr, (uint)key, i), "Unable to set boolean value");
                         break;
-                    case nameof(MMAL_PARAMETER_UINT64_T):
+                    case nameof(MmalParameterUint64Type):
                         MmalCheck(MmalUtil.SetUint64(port.Ptr, (uint)key, (ulong)value), "Unable to set ulong value");
                         break;
-                    case nameof(MMAL_PARAMETER_INT64_T):
+                    case nameof(MmalParameterInt64Type):
                         MmalCheck(MmalUtil.SetInt64(port.Ptr, (uint)key, (long)value), "Unable to set long value");
                         break;
-                    case nameof(MMAL_PARAMETER_UINT32_T):
+                    case nameof(MmalParameterUint32Type):
                         MmalCheck(MmalUtil.SetUint32(port.Ptr, (uint)key, (uint)value), "Unable to set uint value");
                         break;
-                    case nameof(MMAL_PARAMETER_INT32_T):
+                    case nameof(MmalParameterInt32Type):
                         MmalCheck(MmalUtil.SetInt32(port.Ptr, (uint)key, (int)value), "Unable to set int value");
                         break;
-                    case nameof(MMAL_PARAMETER_RATIONAL_T):
+                    case nameof(MmalParameterRationalType):
                         MmalCheck(MmalUtil.SetRational(port.Ptr, (uint)key, (MmalRational)value), "Unable to set rational value");
                         break;
-                    case nameof(MMAL_PARAMETER_STRING_T):
+                    case nameof(MmalParameterStringType):
                         MmalCheck(MmalUtil.SetString(port.Ptr, (uint)key, (string)value), "Unable to set rational value");
                         break;
                     default:
@@ -161,8 +162,8 @@ namespace MMALSharp.Extensions
 
         internal static unsafe void SetStereoMode(this IPort port, StereoMode mode)
         {
-            var stereo = new MMAL_PARAMETER_STEREOSCOPIC_MODE_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterStereoscopicMode, Marshal.SizeOf<MMAL_PARAMETER_STEREOSCOPIC_MODE_T>()),
+            var stereo = new MmalParameterStereoscopicModeType(
+                new MmalParameterHeaderType(MmalParameterStereoscopicMode, Marshal.SizeOf<MmalParameterStereoscopicModeType>()),
                 mode.Mode,
                 mode.Decimate,
                 mode.SwapEyes);
@@ -195,12 +196,12 @@ namespace MMALSharp.Extensions
             return newFirmware == 1;
         }
         
-        public static unsafe MMAL_PARAMETER_FPS_RANGE_T GetFramerateRange(this IPort port)
+        public static unsafe MmalParameterFpsRangeType GetFramerateRange(this IPort port)
         {
-            var str = new MMAL_PARAMETER_FPS_RANGE_T(
-                    new MMAL_PARAMETER_HEADER_T(
+            var str = new MmalParameterFpsRangeType(
+                    new MmalParameterHeaderType(
                         MmalParametersCamera.MmalParameterFpsRange,
-                        Marshal.SizeOf<MMAL_PARAMETER_FPS_RANGE_T>()), default(MmalRational), default(MmalRational));
+                        Marshal.SizeOf<MmalParameterFpsRangeType>()), default(MmalRational), default(MmalRational));
 
             MmalCheck(MmalPort.GetParameter(port.Ptr, &str.Hdr), "Unable to get framerate range for port.");
 
@@ -209,10 +210,10 @@ namespace MMALSharp.Extensions
 
         internal static unsafe void SetFramerateRange(this IPort port, MmalRational fpsLow, MmalRational fpsHigh)
         {
-            var str = new MMAL_PARAMETER_FPS_RANGE_T(
-                    new MMAL_PARAMETER_HEADER_T(
+            var str = new MmalParameterFpsRangeType(
+                    new MmalParameterHeaderType(
                         MmalParametersCamera.MmalParameterFpsRange,
-                        Marshal.SizeOf<MMAL_PARAMETER_FPS_RANGE_T>()), fpsLow, fpsHigh);
+                        Marshal.SizeOf<MmalParameterFpsRangeType>()), fpsLow, fpsHigh);
 
             MmalCheck(MmalPort.SetParameter(port.Ptr, &str.Hdr), "Unable to set framerate range for port.");
         }

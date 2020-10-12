@@ -8,31 +8,32 @@ using MMALSharp.Components;
 using MMALSharp.Components.EncoderComponents;
 using MMALSharp.Config;
 using MMALSharp.Native;
+using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 using MMALSharp.Native.Util;
 using MMALSharp.Ports.Controls;
 using MMALSharp.Utility;
 using static MMALSharp.MmalNativeExceptionHelper;
-using static MMALSharp.Native.MmalParametersCamera;
+using static MMALSharp.Native.Parameters.MmalParametersCamera;
 
 namespace MMALSharp.Extensions
 {
     public static unsafe class MmalCameraComponentExtensions
     {
-        internal static void SetCameraConfig(this MmalCameraComponent camera, MMAL_PARAMETER_CAMERA_CONFIG_T value)
+        internal static void SetCameraConfig(this MmalCameraComponent camera, MmalParameterCameraConfigType value)
         {
             MmalCheck(MmalPort.SetParameter(camera.Control.Ptr, &value.Hdr), "Unable to set camera config.");
         }
 
-        internal static void SetChangeEventRequest(this IControlPort controlPort, MMAL_PARAMETER_CHANGE_EVENT_REQUEST_T value)
+        internal static void SetChangeEventRequest(this IControlPort controlPort, MmalParameterChangeEventRequestType value)
         {
             MmalCheck(MmalPort.SetParameter(controlPort.Ptr, &value.Hdr), "Unable to set camera event request.");
         }
 
         public static bool GetIsEnabledAnnotateSettings(this MmalCameraComponent camera)
         {
-            var annotate = new MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterAnnotate, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T>()),
+            var annotate = new MmalParameterCameraAnnotateV3Type(
+                new MmalParameterHeaderType(MmalParameterAnnotate, Marshal.SizeOf<MmalParameterCameraAnnotateV3Type>()),
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &annotate.Hdr), "Unable to get camera annotate settings");
@@ -42,8 +43,8 @@ namespace MMALSharp.Extensions
 
         public static bool GetShowShutterAnnotateSettings(this MmalCameraComponent camera)
         {
-            var annotate = new MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterAnnotate, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T>()),
+            var annotate = new MmalParameterCameraAnnotateV3Type(
+                new MmalParameterHeaderType(MmalParameterAnnotate, Marshal.SizeOf<MmalParameterCameraAnnotateV3Type>()),
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &annotate.Hdr), "Unable to get camera annotate settings");
@@ -53,8 +54,8 @@ namespace MMALSharp.Extensions
 
         public static bool GetShowCafAnnotateSettings(this MmalCameraComponent camera)
         {
-            var annotate = new MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterAnnotate, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T>()),
+            var annotate = new MmalParameterCameraAnnotateV3Type(
+                new MmalParameterHeaderType(MmalParameterAnnotate, Marshal.SizeOf<MmalParameterCameraAnnotateV3Type>()),
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &annotate.Hdr), "Unable to get camera annotate settings");
@@ -64,8 +65,8 @@ namespace MMALSharp.Extensions
 
         public static bool GetShowGainAnnotateSettings(this MmalCameraComponent camera)
         {
-            var annotate = new MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterAnnotate, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T>()),
+            var annotate = new MmalParameterCameraAnnotateV3Type(
+                new MmalParameterHeaderType(MmalParameterAnnotate, Marshal.SizeOf<MmalParameterCameraAnnotateV3Type>()),
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &annotate.Hdr), "Unable to get camera annotate settings");
@@ -75,8 +76,8 @@ namespace MMALSharp.Extensions
 
         public static bool GetShowLensAnnotateSettings(this MmalCameraComponent camera)
         {
-            var annotate = new MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterAnnotate, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T>()),
+            var annotate = new MmalParameterCameraAnnotateV3Type(
+                new MmalParameterHeaderType(MmalParameterAnnotate, Marshal.SizeOf<MmalParameterCameraAnnotateV3Type>()),
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &annotate.Hdr), "Unable to get camera annotate settings");
@@ -86,8 +87,8 @@ namespace MMALSharp.Extensions
 
         public static bool GetShowMotionAnnotateSettings(this MmalCameraComponent camera)
         {
-            var annotate = new MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterAnnotate, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T>()),
+            var annotate = new MmalParameterCameraAnnotateV3Type(
+                new MmalParameterHeaderType(MmalParameterAnnotate, Marshal.SizeOf<MmalParameterCameraAnnotateV3Type>()),
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &annotate.Hdr), "Unable to get camera annotate settings");
@@ -97,8 +98,8 @@ namespace MMALSharp.Extensions
 
         public static bool GetShowFrameNumberAnnotateSettings(this MmalCameraComponent camera)
         {
-            var annotate = new MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterAnnotate, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T>()),
+            var annotate = new MmalParameterCameraAnnotateV3Type(
+                new MmalParameterHeaderType(MmalParameterAnnotate, Marshal.SizeOf<MmalParameterCameraAnnotateV3Type>()),
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &annotate.Hdr), "Unable to get camera annotate settings");
@@ -108,8 +109,8 @@ namespace MMALSharp.Extensions
 
         public static bool GetShowBlackBackgroundAnnotateSettings(this MmalCameraComponent camera)
         {
-            var annotate = new MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterAnnotate, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T>()),
+            var annotate = new MmalParameterCameraAnnotateV3Type(
+                new MmalParameterHeaderType(MmalParameterAnnotate, Marshal.SizeOf<MmalParameterCameraAnnotateV3Type>()),
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &annotate.Hdr), "Unable to get camera annotate settings");
@@ -119,8 +120,8 @@ namespace MMALSharp.Extensions
 
         public static string GetCustomTextAnnotateSettings(this MmalCameraComponent camera)
         {
-            var annotate = new MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterAnnotate, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T>()),
+            var annotate = new MmalParameterCameraAnnotateV3Type(
+                new MmalParameterHeaderType(MmalParameterAnnotate, Marshal.SizeOf<MmalParameterCameraAnnotateV3Type>()),
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &annotate.Hdr), "Unable to get camera annotate settings");
@@ -130,8 +131,8 @@ namespace MMALSharp.Extensions
 
         public static Color GetTextColourAnnotateSettings(this MmalCameraComponent camera)
         {
-            var annotate = new MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterAnnotate, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T>()),
+            var annotate = new MmalParameterCameraAnnotateV3Type(
+                new MmalParameterHeaderType(MmalParameterAnnotate, Marshal.SizeOf<MmalParameterCameraAnnotateV3Type>()),
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &annotate.Hdr), "Unable to get camera annotate settings");
@@ -141,8 +142,8 @@ namespace MMALSharp.Extensions
 
         public static Color GetBackgroundColourAnnotateSettings(this MmalCameraComponent camera)
         {
-            var annotate = new MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterAnnotate, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T>()),
+            var annotate = new MmalParameterCameraAnnotateV3Type(
+                new MmalParameterHeaderType(MmalParameterAnnotate, Marshal.SizeOf<MmalParameterCameraAnnotateV3Type>()),
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &annotate.Hdr), "Unable to get camera annotate settings");
@@ -239,19 +240,19 @@ namespace MMALSharp.Extensions
 
             Array.Copy(bytes, arr, bytes.Length);
 
-            var strV4 = new MMAL_PARAMETER_CAMERA_ANNOTATE_V4_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterAnnotate, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_ANNOTATE_V4_T>() + (arr.Length - 1)),
+            var strV4 = new MmalParameterCameraAnnotateV4Type(
+                new MmalParameterHeaderType(MmalParameterAnnotate, Marshal.SizeOf<MmalParameterCameraAnnotateV4Type>() + (arr.Length - 1)),
                 1, showShutter, showAnalogGain, showLens,
                 showCaf, showMotion, showFrame, enableTextBackground,
                 customBackgroundColor, customBackgroundY, customBackgroundU, customBackgroundV, 0, customTextColor,
                 customTextY, customTextU, customTextV, textSize, arr, (int)justify, xOffset, yOffset);
 
-            var ptrV4 = Marshal.AllocHGlobal(Marshal.SizeOf<MMAL_PARAMETER_CAMERA_ANNOTATE_V4_T>() + (arr.Length - 1));
+            var ptrV4 = Marshal.AllocHGlobal(Marshal.SizeOf<MmalParameterCameraAnnotateV4Type>() + (arr.Length - 1));
             Marshal.StructureToPtr(strV4, ptrV4, false);
 
             try
             {
-                MmalCheck(MmalPort.SetParameter(camera.Control.Ptr, (MMAL_PARAMETER_HEADER_T*)ptrV4), "Unable to set annotate");
+                MmalCheck(MmalPort.SetParameter(camera.Control.Ptr, (MmalParameterHeaderType*)ptrV4), "Unable to set annotate");
             }
             catch
             {
@@ -260,19 +261,19 @@ namespace MMALSharp.Extensions
 
                 MmalLog.Logger.LogWarning("Unable to set V4 annotation structure. Trying V3. Please update firmware to latest version.");
 
-                var str = new MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T(
-                    new MMAL_PARAMETER_HEADER_T(MmalParameterAnnotate, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T>() + (arr.Length - 1)),
+                var str = new MmalParameterCameraAnnotateV3Type(
+                    new MmalParameterHeaderType(MmalParameterAnnotate, Marshal.SizeOf<MmalParameterCameraAnnotateV3Type>() + (arr.Length - 1)),
                     1, showShutter, showAnalogGain, showLens,
                     showCaf, showMotion, showFrame, enableTextBackground,
                     customBackgroundColor, customBackgroundY, customBackgroundU, customBackgroundV, 0, customTextColor,
                     customTextY, customTextU, customTextV, textSize, arr);
 
-                var ptr = Marshal.AllocHGlobal(Marshal.SizeOf<MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T>() + (arr.Length - 1));
+                var ptr = Marshal.AllocHGlobal(Marshal.SizeOf<MmalParameterCameraAnnotateV3Type>() + (arr.Length - 1));
                 Marshal.StructureToPtr(str, ptr, false);
 
                 try
                 {
-                    MmalCheck(MmalPort.SetParameter(camera.Control.Ptr, (MMAL_PARAMETER_HEADER_T*)ptr), "Unable to set annotate V3.");
+                    MmalCheck(MmalPort.SetParameter(camera.Control.Ptr, (MmalParameterHeaderType*)ptr), "Unable to set annotate V3.");
                 }
                 finally
                 {
@@ -288,24 +289,24 @@ namespace MMALSharp.Extensions
 
         internal static void DisableAnnotate(this MmalCameraComponent camera)
         {
-            var annotate = new MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterAnnotate, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T>()),
+            var annotate = new MmalParameterCameraAnnotateV3Type(
+                new MmalParameterHeaderType(MmalParameterAnnotate, Marshal.SizeOf<MmalParameterCameraAnnotateV3Type>()),
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &annotate.Hdr), "Unable to get camera annotate settings");
 
-            var disableAnnotate = new MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterAnnotate, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T>()), 0,
+            var disableAnnotate = new MmalParameterCameraAnnotateV3Type(
+                new MmalParameterHeaderType(MmalParameterAnnotate, Marshal.SizeOf<MmalParameterCameraAnnotateV3Type>()), 0,
                 annotate.ShowShutter, annotate.ShowAnalogGain, annotate.ShowLens, annotate.ShowCaf, annotate.ShowMotion, annotate.ShowFrameNum,
                 annotate.EnableTextBackground, annotate.CustomBackgroundColor, annotate.CustomBackgroundY, annotate.CustomBackgroundU, annotate.CustomBackgroundV, 0,
                 annotate.CustomTextColor, annotate.CustomTextY, annotate.CustomTextU, annotate.CustomTextV, annotate.TextSize, annotate.Text);
 
-            var ptr = Marshal.AllocHGlobal(Marshal.SizeOf<MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T>());
+            var ptr = Marshal.AllocHGlobal(Marshal.SizeOf<MmalParameterCameraAnnotateV3Type>());
             Marshal.StructureToPtr(disableAnnotate, ptr, false);
 
             try
             {
-                MmalCheck(MmalPort.SetParameter(camera.Control.Ptr, (MMAL_PARAMETER_HEADER_T*)ptr), "Unable to set annotate");
+                MmalCheck(MmalPort.SetParameter(camera.Control.Ptr, (MmalParameterHeaderType*)ptr), "Unable to set annotate");
             }
             finally
             {
@@ -443,67 +444,67 @@ namespace MMALSharp.Extensions
             camera.Control.SetParameter(MmalParameterExposureComp, expCompensation);
         }
 
-        public static MmalParamExposuremodeT GetExposureMode(this MmalCameraComponent camera)
+        public static MmalParamExposuremodeType GetExposureMode(this MmalCameraComponent camera)
         {
-            var expMode = new MMAL_PARAMETER_EXPOSUREMODE_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterExposureMode, Marshal.SizeOf<MMAL_PARAMETER_EXPOSUREMODE_T>()),
-                default(MmalParamExposuremodeT));
+            var expMode = new MmalParameterExposuremodeType(
+                new MmalParameterHeaderType(MmalParameterExposureMode, Marshal.SizeOf<MmalParameterExposuremodeType>()),
+                default(MmalParamExposuremodeType));
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &expMode.Hdr), "Unable to get exposure mode");
 
             return expMode.Value;
         }
 
-        internal static void SetExposureMode(this MmalCameraComponent camera, MmalParamExposuremodeT mode)
+        internal static void SetExposureMode(this MmalCameraComponent camera, MmalParamExposuremodeType mode)
         {
             MmalLog.Logger.LogDebug($"Setting exposure mode: {mode}");
 
-            var expMode = new MMAL_PARAMETER_EXPOSUREMODE_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterExposureMode, Marshal.SizeOf<MMAL_PARAMETER_EXPOSUREMODE_T>()),
+            var expMode = new MmalParameterExposuremodeType(
+                new MmalParameterHeaderType(MmalParameterExposureMode, Marshal.SizeOf<MmalParameterExposuremodeType>()),
                 mode);
 
             MmalCheck(MmalPort.SetParameter(camera.Control.Ptr, &expMode.Hdr), "Unable to set exposure mode");
         }
 
-        public static MmalParamExposuremeteringmodeT GetExposureMeteringMode(this MmalCameraComponent camera)
+        public static MmalParamExposuremeteringmodeType GetExposureMeteringMode(this MmalCameraComponent camera)
         {
-            var expMode = new MMAL_PARAMETER_EXPOSUREMETERINGMODE_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterExpMeteringMode, Marshal.SizeOf<MMAL_PARAMETER_EXPOSUREMETERINGMODE_T>()),
-                default(MmalParamExposuremeteringmodeT));
+            var expMode = new MmalParameterExposuremeteringmodeType(
+                new MmalParameterHeaderType(MmalParameterExpMeteringMode, Marshal.SizeOf<MmalParameterExposuremeteringmodeType>()),
+                default(MmalParamExposuremeteringmodeType));
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &expMode.Hdr), "Unable to get exposure metering mode");
 
             return expMode.Value;
         }
 
-        internal static void SetExposureMeteringMode(this MmalCameraComponent camera, MmalParamExposuremeteringmodeT mode)
+        internal static void SetExposureMeteringMode(this MmalCameraComponent camera, MmalParamExposuremeteringmodeType mode)
         {
             MmalLog.Logger.LogDebug($"Setting exposure metering mode: {mode}");
 
-            var expMode = new MMAL_PARAMETER_EXPOSUREMETERINGMODE_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterExpMeteringMode, Marshal.SizeOf<MMAL_PARAMETER_EXPOSUREMETERINGMODE_T>()),
+            var expMode = new MmalParameterExposuremeteringmodeType(
+                new MmalParameterHeaderType(MmalParameterExpMeteringMode, Marshal.SizeOf<MmalParameterExposuremeteringmodeType>()),
                                                                                                         mode);
 
             MmalCheck(MmalPort.SetParameter(camera.Control.Ptr, &expMode.Hdr), "Unable to set exposure metering mode");
         }
 
-        public static MmalParamAwbmodeT GetAwbMode(this MmalCameraComponent camera)
+        public static MmalParamAwbmodeType GetAwbMode(this MmalCameraComponent camera)
         {
-            var awbMode = new MMAL_PARAMETER_AWBMODE_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterAwbMode, Marshal.SizeOf<MMAL_PARAMETER_AWBMODE_T>()),
-                                                                                                        default(MmalParamAwbmodeT));
+            var awbMode = new MmalParameterAwbModeType(
+                new MmalParameterHeaderType(MmalParameterAwbMode, Marshal.SizeOf<MmalParameterAwbModeType>()),
+                                                                                                        default(MmalParamAwbmodeType));
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &awbMode.Hdr), "Unable to get awb mode");
 
             return awbMode.Value;
         }
 
-        internal static void SetAwbMode(this MmalCameraComponent camera, MmalParamAwbmodeT mode)
+        internal static void SetAwbMode(this MmalCameraComponent camera, MmalParamAwbmodeType mode)
         {
             MmalLog.Logger.LogDebug($"Setting AWB mode: {mode}");
 
-            var awbMode = new MMAL_PARAMETER_AWBMODE_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterAwbMode, Marshal.SizeOf<MMAL_PARAMETER_AWBMODE_T>()),
+            var awbMode = new MmalParameterAwbModeType(
+                new MmalParameterHeaderType(MmalParameterAwbMode, Marshal.SizeOf<MmalParameterAwbModeType>()),
                                                                                                         mode);
 
             MmalCheck(MmalPort.SetParameter(camera.Control.Ptr, &awbMode.Hdr), "Unable to set awb mode");
@@ -511,8 +512,8 @@ namespace MMALSharp.Extensions
 
         public static int GetExposureSpeed(this MmalCameraComponent camera)
         {
-            var settings = new MMAL_PARAMETER_CAMERA_SETTINGS_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterCameraSettings, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_SETTINGS_T>()),
+            var settings = new MmalParameterCameraSettingsType(
+                new MmalParameterHeaderType(MmalParameterCameraSettings, Marshal.SizeOf<MmalParameterCameraSettingsType>()),
                 0, new MmalRational(0, 0), new MmalRational(0, 0),
                 new MmalRational(0, 0), new MmalRational(0, 0), 0);
 
@@ -523,8 +524,8 @@ namespace MMALSharp.Extensions
 
         public static int GetFocusPosition(this MmalCameraComponent camera)
         {
-            var settings = new MMAL_PARAMETER_CAMERA_SETTINGS_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterCameraSettings, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_SETTINGS_T>()),
+            var settings = new MmalParameterCameraSettingsType(
+                new MmalParameterHeaderType(MmalParameterCameraSettings, Marshal.SizeOf<MmalParameterCameraSettingsType>()),
                 0, new MmalRational(0, 0), new MmalRational(0, 0),
                 new MmalRational(0, 0), new MmalRational(0, 0), 0);
 
@@ -535,8 +536,8 @@ namespace MMALSharp.Extensions
 
         public static double GetAwbRedGain(this MmalCameraComponent camera)
         {
-            var settings = new MMAL_PARAMETER_CAMERA_SETTINGS_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterCameraSettings, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_SETTINGS_T>()),
+            var settings = new MmalParameterCameraSettingsType(
+                new MmalParameterHeaderType(MmalParameterCameraSettings, Marshal.SizeOf<MmalParameterCameraSettingsType>()),
                 0, new MmalRational(0, 0), new MmalRational(0, 0),
                 new MmalRational(0, 0), new MmalRational(0, 0), 0);
 
@@ -547,8 +548,8 @@ namespace MMALSharp.Extensions
 
         public static double GetAwbBlueGain(this MmalCameraComponent camera)
         {
-            var settings = new MMAL_PARAMETER_CAMERA_SETTINGS_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterCameraSettings, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_SETTINGS_T>()),
+            var settings = new MmalParameterCameraSettingsType(
+                new MmalParameterHeaderType(MmalParameterCameraSettings, Marshal.SizeOf<MmalParameterCameraSettingsType>()),
                 0, new MmalRational(0, 0), new MmalRational(0, 0),
                 new MmalRational(0, 0), new MmalRational(0, 0), 0);
 
@@ -561,32 +562,32 @@ namespace MMALSharp.Extensions
         {
             MmalLog.Logger.LogDebug($"Setting AWB gains: {rGain}, {bGain}");
 
-            if (MmalCameraConfig.AwbMode != MmalParamAwbmodeT.MmalParamAwbmodeOff && (rGain > 0 || bGain > 0))
+            if (MmalCameraConfig.AwbMode != MmalParamAwbmodeType.MmalParamAwbmodeOff && (rGain > 0 || bGain > 0))
                 throw new PiCameraError("AWB Mode must be off when setting AWB gains");
 
-            var awbGains = new MMAL_PARAMETER_AWB_GAINS_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterCustomAwbGains, Marshal.SizeOf<MMAL_PARAMETER_AWB_GAINS_T>()),
+            var awbGains = new MmalParameterAwbGainsType(
+                new MmalParameterHeaderType(MmalParameterCustomAwbGains, Marshal.SizeOf<MmalParameterAwbGainsType>()),
                                                                                                         new MmalRational((int)(rGain * 65536), 65536),
                                                                                                         new MmalRational((int)(bGain * 65536), 65536));
 
             MmalCheck(MmalPort.SetParameter(camera.Control.Ptr, &awbGains.Hdr), "Unable to set awb gains");
         }
 
-        public static MmalParamImagefxT GetImageFx(this MmalCameraComponent camera)
+        public static MmalParamImagefxType GetImageFx(this MmalCameraComponent camera)
         {
-            var imgFx = new MMAL_PARAMETER_IMAGEFX_T(new MMAL_PARAMETER_HEADER_T(MmalParameterImageEffect, Marshal.SizeOf<MMAL_PARAMETER_IMAGEFX_T>()), default(MmalParamImagefxT));
+            var imgFx = new MmalParameterImageFxType(new MmalParameterHeaderType(MmalParameterImageEffect, Marshal.SizeOf<MmalParameterImageFxType>()), default(MmalParamImagefxType));
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &imgFx.Hdr), "Unable to get image fx");
 
             return imgFx.Value;
         }
 
-        internal static void SetImageFx(this MmalCameraComponent camera, MmalParamImagefxT imageFx)
+        internal static void SetImageFx(this MmalCameraComponent camera, MmalParamImagefxType imageFx)
         {
             MmalLog.Logger.LogDebug($"Setting Image FX: {imageFx}");
 
-            var imgFx = new MMAL_PARAMETER_IMAGEFX_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterImageEffect, Marshal.SizeOf<MMAL_PARAMETER_IMAGEFX_T>()),
+            var imgFx = new MmalParameterImageFxType(
+                new MmalParameterHeaderType(MmalParameterImageEffect, Marshal.SizeOf<MmalParameterImageFxType>()),
                 imageFx);
 
             MmalCheck(MmalPort.SetParameter(camera.Control.Ptr, &imgFx.Hdr), "Unable to set image fx");
@@ -594,8 +595,8 @@ namespace MMALSharp.Extensions
 
         public static ColorEffects GetColourFx(this MmalCameraComponent camera)
         {
-            var colFx = new MMAL_PARAMETER_COLOURFX_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterColorEffect, Marshal.SizeOf<MMAL_PARAMETER_COLOURFX_T>()),
+            var colFx = new MmalParameterColorFxType(
+                new MmalParameterHeaderType(MmalParameterColorEffect, Marshal.SizeOf<MmalParameterColorFxType>()),
                                                                                                         0,
                                                                                                         0,
                                                                                                         0);
@@ -613,8 +614,8 @@ namespace MMALSharp.Extensions
 
             var (_, u, v) = MmalColor.RgbToYuvBytes(colorFx.Color);
 
-            var colFx = new MMAL_PARAMETER_COLOURFX_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterColorEffect, Marshal.SizeOf<MMAL_PARAMETER_COLOURFX_T>()),
+            var colFx = new MmalParameterColorFxType(
+                new MmalParameterHeaderType(MmalParameterColorEffect, Marshal.SizeOf<MmalParameterColorFxType>()),
                                                                                                         colorFx.Enable ? 1 : 0,
                                                                                                         u,
                                                                                                         v);
@@ -636,34 +637,34 @@ namespace MMALSharp.Extensions
             camera.StillPort.SetParameter(MmalParameterRotation, rot);
         }
 
-        public static MmalParamMirrorT GetFlips(this MmalCameraComponent camera) => GetStillFlips(camera);
+        public static MmalParamMirrorType GetFlips(this MmalCameraComponent camera) => GetStillFlips(camera);
 
-        public static MmalParamMirrorT GetVideoFlips(this MmalCameraComponent camera)
+        public static MmalParamMirrorType GetVideoFlips(this MmalCameraComponent camera)
         {
-            var mirror = new MMAL_PARAMETER_MIRROR_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterMirror, Marshal.SizeOf<MMAL_PARAMETER_MIRROR_T>()),
-                MmalParamMirrorT.MmalParamMirrorNone);
+            var mirror = new MmalParameterMirrorType(
+                new MmalParameterHeaderType(MmalParameterMirror, Marshal.SizeOf<MmalParameterMirrorType>()),
+                MmalParamMirrorType.MmalParamMirrorNone);
 
             MmalCheck(MmalPort.GetParameter(camera.VideoPort.Ptr, &mirror.Hdr), "Unable to get flips");
 
             return mirror.Value;
         }
 
-        public static MmalParamMirrorT GetStillFlips(this MmalCameraComponent camera)
+        public static MmalParamMirrorType GetStillFlips(this MmalCameraComponent camera)
         {
-            var mirror = new MMAL_PARAMETER_MIRROR_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterMirror, Marshal.SizeOf<MMAL_PARAMETER_MIRROR_T>()),
-                MmalParamMirrorT.MmalParamMirrorNone);
+            var mirror = new MmalParameterMirrorType(
+                new MmalParameterHeaderType(MmalParameterMirror, Marshal.SizeOf<MmalParameterMirrorType>()),
+                MmalParamMirrorType.MmalParamMirrorNone);
 
             MmalCheck(MmalPort.GetParameter(camera.StillPort.Ptr, &mirror.Hdr), "Unable to get flips");
 
             return mirror.Value;
         }
 
-        internal static void SetFlips(this MmalCameraComponent camera, MmalParamMirrorT flips)
+        internal static void SetFlips(this MmalCameraComponent camera, MmalParamMirrorType flips)
         {
-            var mirror = new MMAL_PARAMETER_MIRROR_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterMirror, Marshal.SizeOf<MMAL_PARAMETER_MIRROR_T>()),
+            var mirror = new MmalParameterMirrorType(
+                new MmalParameterHeaderType(MmalParameterMirror, Marshal.SizeOf<MmalParameterMirrorType>()),
                 flips);
 
             MmalCheck(MmalPort.SetParameter(camera.StillPort.Ptr, &mirror.Hdr), "Unable to set flips");
@@ -672,8 +673,8 @@ namespace MMALSharp.Extensions
 
         public static MmalRect GetZoom(this MmalCameraComponent camera)
         {
-            var crop = new MMAL_PARAMETER_INPUT_CROP_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterInputCrop, Marshal.SizeOf<MMAL_PARAMETER_INPUT_CROP_T>()),
+            var crop = new MmalParameterInputCropType(
+                new MmalParameterHeaderType(MmalParameterInputCrop, Marshal.SizeOf<MmalParameterInputCropType>()),
                 default(MmalRect));
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &crop.Hdr), "Unable to get zoom");
@@ -686,8 +687,8 @@ namespace MMALSharp.Extensions
             if (rect.X > 1.0 || rect.Y > 1.0 || rect.Height > 1.0 || rect.Width > 1.0)
                 throw new ArgumentOutOfRangeException(nameof(rect), "Invalid zoom settings. Value mustn't be greater than 1.0");
 
-            var crop = new MMAL_PARAMETER_INPUT_CROP_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterInputCrop, Marshal.SizeOf<MMAL_PARAMETER_INPUT_CROP_T>()),
+            var crop = new MmalParameterInputCropType(
+                new MmalParameterHeaderType(MmalParameterInputCrop, Marshal.SizeOf<MmalParameterInputCropType>()),
                 new MmalRect(Convert.ToInt32(65536 * rect.X), Convert.ToInt32(65536 * rect.Y), Convert.ToInt32(65536 * rect.Width), Convert.ToInt32(65536 * rect.Height)));
 
             MmalCheck(MmalPort.SetParameter(camera.Control.Ptr, &crop.Hdr), "Unable to set zoom");
@@ -708,21 +709,21 @@ namespace MMALSharp.Extensions
             camera.Control.SetParameter(MmalParameterShutterSpeed, speed);
         }
 
-        public static MmalParameterDrcStrengthT GetDrc(this MmalCameraComponent camera)
+        public static MmalParameterDrcStrengthType GetDrc(this MmalCameraComponent camera)
         {
-            var drc = new MMAL_PARAMETER_DRC_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterDynamicRangeCompression, Marshal.SizeOf<MMAL_PARAMETER_DRC_T>()),
-                default(MmalParameterDrcStrengthT));
+            var drc = new MmalParameterDrcType(
+                new MmalParameterHeaderType(MmalParameterDynamicRangeCompression, Marshal.SizeOf<MmalParameterDrcType>()),
+                default(MmalParameterDrcStrengthType));
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &drc.Hdr), "Unable to get DRC");
 
             return drc.Strength;
         }
 
-        internal static void SetDrc(this MmalCameraComponent camera, MmalParameterDrcStrengthT strength)
+        internal static void SetDrc(this MmalCameraComponent camera, MmalParameterDrcStrengthType strength)
         {
-            var drc = new MMAL_PARAMETER_DRC_T(
-                new MMAL_PARAMETER_HEADER_T(MmalParameterDynamicRangeCompression, Marshal.SizeOf<MMAL_PARAMETER_DRC_T>()),
+            var drc = new MmalParameterDrcType(
+                new MmalParameterHeaderType(MmalParameterDynamicRangeCompression, Marshal.SizeOf<MmalParameterDrcType>()),
                 strength);
 
             MmalCheck(MmalPort.SetParameter(camera.Control.Ptr, &drc.Hdr), "Unable to set DRC");

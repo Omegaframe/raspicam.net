@@ -4,7 +4,7 @@ using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Config;
-using MMALSharp.Native;
+using MMALSharp.Native.Parameters;
 
 namespace MMALSharp.Tests
 {
@@ -19,18 +19,18 @@ namespace MMALSharp.Tests
             MmalCameraConfig.Saturation = 50;
             MmalCameraConfig.AwbGainsB = 0;
             MmalCameraConfig.AwbGainsR = 0;
-            MmalCameraConfig.AwbMode = MmalParamAwbmodeT.MmalParamAwbmodeAuto;
+            MmalCameraConfig.AwbMode = MmalParamAwbmodeType.MmalParamAwbmodeAuto;
             MmalCameraConfig.ColorFx = default(ColorEffects);
             MmalCameraConfig.ExposureCompensation = -1;
-            MmalCameraConfig.ExposureMeterMode = MmalParamExposuremeteringmodeT.MmalParamExposuremeteringmodeAverage;
-            MmalCameraConfig.ExposureMode = MmalParamExposuremodeT.MmalParamExposuremodeAuto;
+            MmalCameraConfig.ExposureMeterMode = MmalParamExposuremeteringmodeType.MmalParamExposuremeteringmodeAverage;
+            MmalCameraConfig.ExposureMode = MmalParamExposuremodeType.MmalParamExposuremodeAuto;
             MmalCameraConfig.Roi = default(Zoom);
             MmalCameraConfig.Iso = 0;
             MmalCameraConfig.StatsPass = false;
-            MmalCameraConfig.Flips = MmalParamMirrorT.MmalParamMirrorNone;
-            MmalCameraConfig.ImageFx = MmalParamImagefxT.MmalParamImagefxNone;
+            MmalCameraConfig.Flips = MmalParamMirrorType.MmalParamMirrorNone;
+            MmalCameraConfig.ImageFx = MmalParamImagefxType.MmalParamImagefxNone;
             MmalCameraConfig.Rotation = 0;
-            MmalCameraConfig.DrcLevel = MmalParameterDrcStrengthT.MmalParameterDrcStrengthOff;
+            MmalCameraConfig.DrcLevel = MmalParameterDrcStrengthType.MmalParameterDrcStrengthOff;
             MmalCameraConfig.ShutterSpeed = 0;
             MmalCameraConfig.SensorMode = MmalSensorMode.Mode0;
             MmalCameraConfig.VideoStabilisation = true;

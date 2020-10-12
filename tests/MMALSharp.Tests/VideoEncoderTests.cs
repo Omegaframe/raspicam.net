@@ -13,6 +13,7 @@ using MMALSharp.Components.EncoderComponents;
 using MMALSharp.Config;
 using MMALSharp.Extensions;
 using MMALSharp.Native;
+using MMALSharp.Native.Parameters;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Outputs;
 using MMALSharp.Processing.Handlers;
@@ -398,7 +399,7 @@ namespace MMALSharp.Tests
 
         [Theory]
         [MemberData(nameof(ImageFxData.Data), MemberType = typeof(ImageFxData))]
-        public async Task ImageFxComponentFromCameraVideoPort(MmalParamImagefxT effect, bool throwsException)
+        public async Task ImageFxComponentFromCameraVideoPort(MmalParamImagefxType effect, bool throwsException)
         {
             TestHelper.BeginTest($"Video - ImageFxComponentFromCameraVideoPort - {effect}");
             TestHelper.SetConfigurationDefaults();
@@ -445,7 +446,7 @@ namespace MMALSharp.Tests
 
         [Theory]
         [MemberData(nameof(ImageFxData.Data), MemberType = typeof(ImageFxData))]
-        public async Task ImageFxComponentFromCameraVideoPortWithSplitterAndEncoder(MmalParamImagefxT effect, bool throwsException)
+        public async Task ImageFxComponentFromCameraVideoPortWithSplitterAndEncoder(MmalParamImagefxType effect, bool throwsException)
         {
             TestHelper.BeginTest($"Video - ImageFxComponentFromCameraVideoPortWithSplitterAndEncoder - {effect}");
             TestHelper.SetConfigurationDefaults();

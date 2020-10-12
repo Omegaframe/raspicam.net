@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace MMALSharp.Tests
+namespace MMALSharp.Tests.Data
 {
     public class BasicImageData
     {

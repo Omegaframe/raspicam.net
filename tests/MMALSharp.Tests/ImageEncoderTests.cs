@@ -20,6 +20,7 @@ using MMALSharp.Ports;
 using MMALSharp.Tests.Data;
 using Xunit;
 using MMALSharp.Extensions;
+using MMALSharp.Native.Parameters;
 using MMALSharp.Processing;
 using MMALSharp.Processing.Handlers;
 using MMALSharp.Processing.Processors.Bayer;
@@ -487,7 +488,7 @@ namespace MMALSharp.Tests
 
         [Theory]
         [MemberData(nameof(ImageFxData.Data), MemberType = typeof(ImageFxData))]
-        public async Task ImageFxComponentFromCameraStillPort(MmalParamImagefxT effect, bool throwsException)
+        public async Task ImageFxComponentFromCameraStillPort(MmalParamImagefxType effect, bool throwsException)
         {
             TestHelper.BeginTest($"Image - ImageFxComponentFromCameraStillPort - {effect}");
             TestHelper.SetConfigurationDefaults();
@@ -555,7 +556,7 @@ namespace MMALSharp.Tests
                 imageFx.ConfigureOutputPort(fxConfig, null);
                 imgEncoder.ConfigureOutputPort(portConfig, imgCaptureHandler);
                 
-                imageFx.ImageEffect = MmalParamImagefxT.MmalParamImagefxSolarize;
+                imageFx.ImageEffect = MmalParamImagefxType.MmalParamImagefxSolarize;
                 imageFx.ColorEnhancement = new ColorEffects(true, Color.Blue);
                 
                 // Create our component pipeline.         

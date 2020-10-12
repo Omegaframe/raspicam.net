@@ -7,6 +7,7 @@ using MMALSharp.Common.Utility;
 using MMALSharp.Config;
 using MMALSharp.Extensions;
 using MMALSharp.Native;
+using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Inputs;
@@ -55,10 +56,10 @@ namespace MMALSharp.Components.EncoderComponents
             if (JpegThumbnailConfig == null) 
                 return this;
 
-            var str = new MMAL_PARAMETER_THUMBNAIL_CONFIG_T(
-                new MMAL_PARAMETER_HEADER_T(
+            var str = new MmalParameterThumbnailConfigType(
+                new MmalParameterHeaderType(
                     MmalParametersCamera.MmalParameterThumbnailConfiguration,
-                    Marshal.SizeOf<MMAL_PARAMETER_THUMBNAIL_CONFIG_T>()),
+                    Marshal.SizeOf<MmalParameterThumbnailConfigType>()),
                 JpegThumbnailConfig.Enable, JpegThumbnailConfig.Width,
                 JpegThumbnailConfig.Height, JpegThumbnailConfig.Quality);
 
@@ -115,18 +116,18 @@ namespace MMALSharp.Components.EncoderComponents
 
             Array.Copy(bytes, arr, bytes.Length);
 
-            var ptr = Marshal.AllocHGlobal(Marshal.SizeOf<MMAL_PARAMETER_EXIF_T>() + (arr.Length - 1));
+            var ptr = Marshal.AllocHGlobal(Marshal.SizeOf<MmalParameterExifType>() + (arr.Length - 1));
 
-            var str = new MMAL_PARAMETER_EXIF_T(
-                new MMAL_PARAMETER_HEADER_T(
+            var str = new MmalParameterExifType(
+                new MmalParameterHeaderType(
                     MmalParametersCamera.MmalParameterExif,
-                Marshal.SizeOf<MMAL_PARAMETER_EXIF_T_DUMMY>() + (arr.Length - 1)), 0, 0, 0, arr);
+                Marshal.SizeOf<MmalParameterExifTDummy>() + (arr.Length - 1)), 0, 0, 0, arr);
 
             Marshal.StructureToPtr(str, ptr, false);
 
             try
             {
-                MmalCheck(MmalPort.SetParameter(Outputs[0].Ptr, (MMAL_PARAMETER_HEADER_T*)ptr),
+                MmalCheck(MmalPort.SetParameter(Outputs[0].Ptr, (MmalParameterHeaderType*)ptr),
                     $"Unable to set EXIF {formattedExif}");
             }
             finally

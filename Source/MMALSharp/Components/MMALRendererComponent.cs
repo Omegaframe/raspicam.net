@@ -8,6 +8,7 @@ using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Config;
 using MMALSharp.Native;
+using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 using MMALSharp.Native.Util;
 using MMALSharp.Ports;
@@ -101,19 +102,19 @@ namespace MMALSharp.Components
                 copyProtect = 1;
             }
 
-            var ptr = Marshal.AllocHGlobal(Marshal.SizeOf<MMAL_DISPLAYREGION_T>());
+            var ptr = Marshal.AllocHGlobal(Marshal.SizeOf<MmalDisplayRegionType>());
 
-            var displayRegion = new MMAL_DISPLAYREGION_T(
-                new MMAL_PARAMETER_HEADER_T(
+            var displayRegion = new MmalDisplayRegionType(
+                new MmalParameterHeaderType(
                     MmalParametersVideo.MmalParameterDisplayregion,
-                    Marshal.SizeOf<MMAL_DISPLAYREGION_T>()), displaySet, 0, fullScreen, Configuration.DisplayTransform, (MmalRect) previewWindow, new MmalRect(0, 0, 0, 0), noAspect,
+                    Marshal.SizeOf<MmalDisplayRegionType>()), displaySet, 0, fullScreen, Configuration.DisplayTransform, (MmalRect) previewWindow, new MmalRect(0, 0, 0, 0), noAspect,
                     Configuration.DisplayMode, 0, 0, Configuration.Layer, copyProtect, Configuration.Opacity);
 
             Marshal.StructureToPtr(displayRegion, ptr, false);
 
             try
             {
-                MmalCheck(MmalPort.SetParameter(Inputs[0].Ptr, (MMAL_PARAMETER_HEADER_T*)ptr), "Unable to set preview renderer configuration");
+                MmalCheck(MmalPort.SetParameter(Inputs[0].Ptr, (MmalParameterHeaderType*)ptr), "Unable to set preview renderer configuration");
             }
             finally
             {

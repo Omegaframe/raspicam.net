@@ -1,5 +1,6 @@
 ﻿using System;
 using MMALSharp.Native;
+using MMALSharp.Native.Parameters;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;

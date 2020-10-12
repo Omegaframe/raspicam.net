@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using MMALSharp.Native;
+using MMALSharp.Native.Parameters;
 
 namespace MMALSharp.Config
 {

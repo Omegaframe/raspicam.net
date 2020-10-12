@@ -18,6 +18,7 @@ using MMALSharp.Processing;
 using MMALSharp.Processing.Handlers;
 using MMALSharp.Processing.Processors.Bayer;
 using MMALSharp.Processing.Processors.Effects;
+using MMALSharp.Tests.Data;
 
 namespace MMALSharp.Tests
 {

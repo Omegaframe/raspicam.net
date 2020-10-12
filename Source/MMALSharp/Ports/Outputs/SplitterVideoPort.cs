@@ -7,6 +7,7 @@ using MMALSharp.Components;
 using MMALSharp.Extensions;
 using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
+using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Processing.Handlers;

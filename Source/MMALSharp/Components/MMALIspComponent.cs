@@ -1,7 +1,7 @@
 ﻿using System;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;
-using static MMALSharp.Native.MmalParameters;
+using static MMALSharp.Native.Parameters.MmalParameters;
 
 namespace MMALSharp.Components
 {

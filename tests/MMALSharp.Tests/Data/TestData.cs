@@ -3,15 +3,14 @@
 // Licensed under the MIT License. Please see LICENSE.txt for License info.
 // </copyright>
 
-using MMALSharp.Native;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using MMALSharp.Common;
-using Xunit;
 using MMALSharp.Extensions;
+using Xunit;
 
-namespace MMALSharp.Tests
+namespace MMALSharp.Tests.Data
 {
     [Collection("MMALCollection")]
     public class TestBase

@@ -7,6 +7,7 @@ using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Extensions;
 using MMALSharp.Native;
+using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 using MMALSharp.Native.Util;
 using MMALSharp.Ports;
@@ -125,7 +126,7 @@ namespace MMALSharp.Components.EncoderComponents
 
         void ConfigureRateControl(int outputPort)
         {
-            var param = new MMAL_PARAMETER_VIDEO_RATECONTROL_T(new MMAL_PARAMETER_HEADER_T(MmalParametersVideo.MmalParameterRatecontrol, Marshal.SizeOf<MMAL_PARAMETER_VIDEO_RATECONTROL_T>()), MmalCameraConfig.RateControl);
+            var param = new MmalParameterVideoRateControlType(new MmalParameterHeaderType(MmalParametersVideo.MmalParameterRatecontrol, Marshal.SizeOf<MmalParameterVideoRateControlType>()), MmalCameraConfig.RateControl);
             MmalCheck(MmalPort.SetParameter(Outputs[outputPort].Ptr, param.HdrPtr), "Unable to set ratecontrol.");
         }
 
@@ -158,11 +159,11 @@ namespace MMALSharp.Components.EncoderComponents
             if (macroblocksPSec > level.MacroblocksPerSecLimit)
                 throw new PiCameraError("Resolution exceeds macroblocks/s limit for selected profile and level.");
 
-            var p = new MMAL_PARAMETER_VIDEO_PROFILE_S(MmalCameraConfig.VideoProfile, MmalCameraConfig.VideoLevel);
+            var p = new MmalParameterVideoProfileS(MmalCameraConfig.VideoProfile, MmalCameraConfig.VideoLevel);
 
-            var arr = new MMAL_PARAMETER_VIDEO_PROFILE_S[1] { p };
+            var arr = new MmalParameterVideoProfileS[1] { p };
 
-            var param = new MMAL_PARAMETER_VIDEO_PROFILE_T(new MMAL_PARAMETER_HEADER_T(MmalParametersVideo.MmalParameterProfile, Marshal.SizeOf<MMAL_PARAMETER_VIDEO_PROFILE_T>()), arr);
+            var param = new MmalParameterVideoProfileType(new MmalParameterHeaderType(MmalParametersVideo.MmalParameterProfile, Marshal.SizeOf<MmalParameterVideoProfileType>()), arr);
 
             var ptr = Marshal.AllocHGlobal(Marshal.SizeOf(param));
 
@@ -171,7 +172,7 @@ namespace MMALSharp.Components.EncoderComponents
             try
             {
                 MmalCheck(
-                    MmalPort.SetParameter(Outputs[outputPort].Ptr, (MMAL_PARAMETER_HEADER_T*)ptr),
+                    MmalPort.SetParameter(Outputs[outputPort].Ptr, (MmalParameterHeaderType*)ptr),
                     "Unable to set video profile.");
             }
             finally
@@ -197,7 +198,7 @@ namespace MMALSharp.Components.EncoderComponents
 
         void ConfigureIntraRefresh(int outputPort)
         {
-            var param = new MMAL_PARAMETER_VIDEO_INTRA_REFRESH_T(new MMAL_PARAMETER_HEADER_T(MmalParametersVideo.MmalParameterVideoIntraRefresh, Marshal.SizeOf<MMAL_PARAMETER_VIDEO_INTRA_REFRESH_T>()), MmalParametersVideo.MmalVideoIntraRefreshT.MmalVideoIntraRefreshBoth, 0, 0, 0, 0);
+            var param = new MmalParameterVideoIntraRefreshType(new MmalParameterHeaderType(MmalParametersVideo.MmalParameterVideoIntraRefresh, Marshal.SizeOf<MmalParameterVideoIntraRefreshType>()), MmalParametersVideo.MmalVideoIntraRefreshT.MmalVideoIntraRefreshBoth, 0, 0, 0, 0);
 
             int airMbs = 0, airRef = 0, cirMbs = 0, pirMbs = 0;
 
@@ -214,7 +215,7 @@ namespace MMALSharp.Components.EncoderComponents
                 /* catch all */
             }
 
-            param = new MMAL_PARAMETER_VIDEO_INTRA_REFRESH_T(new MMAL_PARAMETER_HEADER_T(MmalParametersVideo.MmalParameterVideoIntraRefresh, Marshal.SizeOf<MMAL_PARAMETER_VIDEO_INTRA_REFRESH_T>()), MmalCameraConfig.IntraRefresh, airMbs, airRef, cirMbs, pirMbs);
+            param = new MmalParameterVideoIntraRefreshType(new MmalParameterHeaderType(MmalParametersVideo.MmalParameterVideoIntraRefresh, Marshal.SizeOf<MmalParameterVideoIntraRefreshType>()), MmalCameraConfig.IntraRefresh, airMbs, airRef, cirMbs, pirMbs);
 
             MmalCheck(MmalPort.SetParameter(Outputs[outputPort].Ptr, param.HdrPtr), "Unable to set video intra refresh.");
         }

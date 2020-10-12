@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
 using MMALSharp.Common.Utility;
 using MMALSharp.Native;
+using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 using static MMALSharp.MmalNativeExceptionHelper;
 
@@ -20,13 +21,13 @@ namespace MMALSharp.Components
             MaxWidth = 2592;
             MaxHeight = 1944;
 
-            var ptr1 = Marshal.AllocHGlobal(Marshal.SizeOf<MMAL_PARAMETER_CAMERA_INFO_T>());
-            var str1 = (MMAL_PARAMETER_HEADER_T*)ptr1;
+            var ptr1 = Marshal.AllocHGlobal(Marshal.SizeOf<MmalParameterCameraInfoType>());
+            var str1 = (MmalParameterHeaderType*)ptr1;
 
             str1->Id = MmalParametersCamera.MmalParameterCameraInfo;
 
             // Deliberately undersize to check if running on older firmware.
-            str1->Size = Marshal.SizeOf<MMAL_PARAMETER_CAMERA_INFO_T>();
+            str1->Size = Marshal.SizeOf<MmalParameterCameraInfoType>();
 
             try
             {
@@ -38,11 +39,11 @@ namespace MMALSharp.Components
                 Marshal.FreeHGlobal(ptr1);
 
                 // Running on newer firmware - default to first camera found.
-                var ptr2 = Marshal.AllocHGlobal(Marshal.SizeOf<MMAL_PARAMETER_CAMERA_INFO_V2_T>());
-                var str2 = (MMAL_PARAMETER_HEADER_T*)ptr2;
+                var ptr2 = Marshal.AllocHGlobal(Marshal.SizeOf<MmalParameterCameraInfoV2Type>());
+                var str2 = (MmalParameterHeaderType*)ptr2;
 
                 str2->Id = MmalParametersCamera.MmalParameterCameraInfo;
-                str2->Size = Marshal.SizeOf<MMAL_PARAMETER_CAMERA_INFO_V2_T>();
+                str2->Size = Marshal.SizeOf<MmalParameterCameraInfoV2Type>();
 
                 try
                 {
@@ -51,7 +52,7 @@ namespace MMALSharp.Components
 
                     var p = (IntPtr)str2;
 
-                    var s = Marshal.PtrToStructure<MMAL_PARAMETER_CAMERA_INFO_V2_T>(p);
+                    var s = Marshal.PtrToStructure<MmalParameterCameraInfoV2Type>(p);
 
                     if (s.Cameras != null && s.Cameras.Length > 0)
                     {

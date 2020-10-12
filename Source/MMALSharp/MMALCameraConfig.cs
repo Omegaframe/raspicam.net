@@ -2,7 +2,7 @@
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Config;
-using MMALSharp.Native;
+using MMALSharp.Native.Parameters;
 
 namespace MMALSharp
 {
@@ -16,25 +16,25 @@ namespace MMALSharp
         public static int Saturation { get; set; }
         public static int Iso { get; set; }
         public static int ExposureCompensation { get; set; }
-        public static MmalParamExposuremodeT ExposureMode { get; set; } = MmalParamExposuremodeT.MmalParamExposuremodeAuto;
-        public static MmalParamExposuremeteringmodeT ExposureMeterMode { get; set; } = MmalParamExposuremeteringmodeT.MmalParamExposuremeteringmodeAverage;
-        public static MmalParamAwbmodeT AwbMode { get; set; } = MmalParamAwbmodeT.MmalParamAwbmodeAuto;
-        public static MmalParamImagefxT ImageFx { get; set; } = MmalParamImagefxT.MmalParamImagefxNone;
+        public static MmalParamExposuremodeType ExposureMode { get; set; } = MmalParamExposuremodeType.MmalParamExposuremodeAuto;
+        public static MmalParamExposuremeteringmodeType ExposureMeterMode { get; set; } = MmalParamExposuremeteringmodeType.MmalParamExposuremeteringmodeAverage;
+        public static MmalParamAwbmodeType AwbMode { get; set; } = MmalParamAwbmodeType.MmalParamAwbmodeAuto;
+        public static MmalParamImagefxType ImageFx { get; set; } = MmalParamImagefxType.MmalParamImagefxNone;
         public static ColorEffects ColorFx { get; set; }
         public static int Rotation { get; set; }
-        public static MmalParamMirrorT Flips { get; set; } = MmalParamMirrorT.MmalParamMirrorNone;
+        public static MmalParamMirrorType Flips { get; set; } = MmalParamMirrorType.MmalParamMirrorNone;
         public static Zoom Roi { get; set; }
         public static int ShutterSpeed { get; set; }
         public static double AwbGainsR { get; set; }
         public static double AwbGainsB { get; set; }
         public static double AnalogGain { get; set; }
         public static double DigitalGain { get; set; }
-        public static MmalParameterDrcStrengthT DrcLevel { get; set; } = MmalParameterDrcStrengthT.MmalParameterDrcStrengthOff;
+        public static MmalParameterDrcStrengthType DrcLevel { get; set; } = MmalParameterDrcStrengthType.MmalParameterDrcStrengthOff;
         public static bool StatsPass { get; set; }
         public static AnnotateImage Annotate { get; set; }
         public static StereoMode StereoMode { get; set; } = new StereoMode();
         public static bool SetChangeEventRequest { get; set; }
-        public static MmalParameterCameraConfigTimestampModeT ClockMode { get; set; } = MmalParameterCameraConfigTimestampModeT.MmalParamTimestampModeResetStc;
+        public static MmalParameterCameraConfigTimestampModeType ClockMode { get; set; } = MmalParameterCameraConfigTimestampModeType.MmalParamTimestampModeResetStc;
         public static MmalEncoding Encoding { get; set; } = MmalEncoding.Opaque;
         public static MmalEncoding EncodingSubFormat { get; set; } = MmalEncoding.I420;
         public static Resolution Resolution { get; set; } = Resolution.As720p;

@@ -7,6 +7,7 @@ using MMALSharp.Components;
 using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Events;
+using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 
 namespace MMALSharp.Ports.Controls
@@ -46,7 +47,7 @@ namespace MMALSharp.Ports.Controls
 
                 if (data->Hdr.Id == MmalParametersCamera.MmalParameterCameraSettings)
                 {
-                    var settings = (MMAL_PARAMETER_CAMERA_SETTINGS_T*)data;
+                    var settings = (MmalParameterCameraSettingsType*)data;
 
                     MmalLog.Logger.LogDebug($"{Name}: Analog gain num {settings->AnalogGain.Num}");
                     MmalLog.Logger.LogDebug($"{Name}: Analog gain den {settings->AnalogGain.Den}");
