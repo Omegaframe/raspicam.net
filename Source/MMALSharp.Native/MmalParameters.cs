@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using MMALSharp.Native.Clock;
 
 namespace MMALSharp.Native
 {
@@ -2391,11 +2392,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CLOCK_UPDATE_THRESHOLD_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        MMAL_CLOCK_UPDATE_THRESHOLD_T value;
+        MmalClockUpdateThreshold value;
 
-        public MMAL_CLOCK_UPDATE_THRESHOLD_T Value => value;
+        public MmalClockUpdateThreshold Value => value;
 
-        public MMAL_PARAMETER_CLOCK_UPDATE_THRESHOLD_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_CLOCK_UPDATE_THRESHOLD_T value)
+        public MMAL_PARAMETER_CLOCK_UPDATE_THRESHOLD_T(MMAL_PARAMETER_HEADER_T hdr, MmalClockUpdateThreshold value)
         {
             this.Hdr = hdr;
             this.value = value;
@@ -2406,11 +2407,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CLOCK_DISCONT_THRESHOLD_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        MMAL_CLOCK_DISCONT_THRESHOLD_T value;
+        MmalClockDiscontThreshold value;
 
-        public MMAL_CLOCK_DISCONT_THRESHOLD_T Value => value;
+        public MmalClockDiscontThreshold Value => value;
 
-        public MMAL_PARAMETER_CLOCK_DISCONT_THRESHOLD_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_CLOCK_DISCONT_THRESHOLD_T value)
+        public MMAL_PARAMETER_CLOCK_DISCONT_THRESHOLD_T(MMAL_PARAMETER_HEADER_T hdr, MmalClockDiscontThreshold value)
         {
             this.Hdr = hdr;
             this.value = value;
@@ -2421,11 +2422,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CLOCK_REQUEST_THRESHOLD_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        MMAL_CLOCK_REQUEST_THRESHOLD_T value;
+        MmalClockRequestThreshold value;
 
-        public MMAL_CLOCK_REQUEST_THRESHOLD_T Value => value;
+        public MmalClockRequestThreshold Value => value;
 
-        public MMAL_PARAMETER_CLOCK_REQUEST_THRESHOLD_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_CLOCK_REQUEST_THRESHOLD_T value)
+        public MMAL_PARAMETER_CLOCK_REQUEST_THRESHOLD_T(MMAL_PARAMETER_HEADER_T hdr, MmalClockRequestThreshold value)
         {
             this.Hdr = hdr;
             this.value = value;
@@ -2436,11 +2437,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CLOCK_LATENCY_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        MMAL_CLOCK_LATENCY_T value;
+        MmalClockLatency value;
 
-        public MMAL_CLOCK_LATENCY_T Value => value;
+        public MmalClockLatency Value => value;
 
-        public MMAL_PARAMETER_CLOCK_LATENCY_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_CLOCK_LATENCY_T value)
+        public MMAL_PARAMETER_CLOCK_LATENCY_T(MMAL_PARAMETER_HEADER_T hdr, MmalClockLatency value)
         {
             this.Hdr = hdr;
             this.value = value;
