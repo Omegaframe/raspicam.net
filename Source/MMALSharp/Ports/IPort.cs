@@ -6,12 +6,13 @@ using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Native;
 using MMALSharp.Native.Format;
+using MMALSharp.Native.Port;
 
 namespace MMALSharp.Ports
 {
     public interface IPort : IMmalObject
     {
-        unsafe MMAL_PORT_T* Ptr { get; }
+        unsafe MmalPortType* Ptr { get; }
         PortType PortType { get; }
         IComponent ComponentReference { get; }
         IConnection ConnectedReference { get; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using MMALSharp.Native.Port;
 
 namespace MMALSharp.Native.Component
 {
@@ -14,23 +15,23 @@ namespace MMALSharp.Native.Component
 
         public uint IsEnabled;
 
-        public MMAL_PORT_T* Control;
+        public MmalPortType* Control;
 
         public uint InputNum;
 
-        public MMAL_PORT_T** Input;
+        public MmalPortType** Input;
 
         public uint OutputNum;
 
-        public MMAL_PORT_T** Output;
+        public MmalPortType** Output;
 
         public uint ClockNum;
 
-        public MMAL_PORT_T** Clock;
+        public MmalPortType** Clock;
 
         public uint PortNum;
 
-        public MMAL_PORT_T** Port;
+        public MmalPortType** Port;
 
         public uint Id;
 
@@ -39,15 +40,15 @@ namespace MMALSharp.Native.Component
             IntPtr userData,
             char* name,
             uint isEnabled,
-            MMAL_PORT_T* control,
+            MmalPortType* control,
             uint inputNum,
-            MMAL_PORT_T** input,
+            MmalPortType** input,
             uint outputNum,
-            MMAL_PORT_T** output,
+            MmalPortType** output,
             uint clockNum,
-            MMAL_PORT_T** clock,
+            MmalPortType** clock,
             uint portNum,
-            MMAL_PORT_T** port,
+            MmalPortType** port,
             uint id)
         {
             Priv = priv;

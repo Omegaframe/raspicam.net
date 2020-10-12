@@ -6,6 +6,7 @@ using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Config;
 using MMALSharp.Native;
+using MMALSharp.Native.Port;
 using MMALSharp.Ports;
 using static MMALSharp.MmalNativeExceptionHelper;
 using static MMALSharp.Native.MmalParametersCamera;
@@ -79,7 +80,7 @@ namespace MMALSharp.Extensions
 
             try
             {
-                MmalCheck(MmalPort.mmal_port_parameter_get(port.Ptr, str1), "Unable to get supported encodings");
+                MmalCheck(MmalPort.GetParameter(port.Ptr, str1), "Unable to get supported encodings");
                 var encodings = (MMAL_PARAMETER_ENCODING_T)Marshal.PtrToStructure(ptr1, typeof(MMAL_PARAMETER_ENCODING_T));
                 return encodings.Value;
             }
@@ -165,7 +166,7 @@ namespace MMALSharp.Extensions
                 mode.Decimate,
                 mode.SwapEyes);
 
-            MmalCheck(MmalPort.mmal_port_parameter_set(port.Ptr, &stereo.Hdr), "Unable to set Stereo mode");
+            MmalCheck(MmalPort.SetParameter(port.Ptr, &stereo.Hdr), "Unable to set Stereo mode");
         }
 
         internal static void CheckSupportedEncoding(this IPort port, MmalEncoding encoding)
@@ -200,7 +201,7 @@ namespace MMALSharp.Extensions
                         MmalParametersCamera.MmalParameterFpsRange,
                         Marshal.SizeOf<MMAL_PARAMETER_FPS_RANGE_T>()), default(MMAL_RATIONAL_T), default(MMAL_RATIONAL_T));
 
-            MmalCheck(MmalPort.mmal_port_parameter_get(port.Ptr, &str.Hdr), "Unable to get framerate range for port.");
+            MmalCheck(MmalPort.GetParameter(port.Ptr, &str.Hdr), "Unable to get framerate range for port.");
 
             return str;
         }
@@ -212,7 +213,7 @@ namespace MMALSharp.Extensions
                         MmalParametersCamera.MmalParameterFpsRange,
                         Marshal.SizeOf<MMAL_PARAMETER_FPS_RANGE_T>()), fpsLow, fpsHigh);
 
-            MmalCheck(MmalPort.mmal_port_parameter_set(port.Ptr, &str.Hdr), "Unable to set framerate range for port.");
+            MmalCheck(MmalPort.SetParameter(port.Ptr, &str.Hdr), "Unable to set framerate range for port.");
         }
     }
 }

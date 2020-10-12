@@ -10,6 +10,7 @@ using MMALSharp.Components;
 using MMALSharp.Extensions;
 using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
+using MMALSharp.Native.Port;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Processing.Handlers;
 
@@ -206,7 +207,7 @@ namespace MMALSharp.Ports.Outputs
             Enable();
         }
 
-        internal virtual void NativeOutputPortCallback(MMAL_PORT_T* port, MmalBufferHeader* buffer)
+        internal virtual void NativeOutputPortCallback(MmalPortType* port, MmalBufferHeader* buffer)
         {
             if (MmalCameraConfig.Debug)
                 MmalLog.Logger.LogDebug($"{Name}: In native output callback");

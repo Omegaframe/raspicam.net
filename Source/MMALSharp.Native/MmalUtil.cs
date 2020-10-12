@@ -4,6 +4,7 @@ using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Component;
 using MMALSharp.Native.Format;
 using MMALSharp.Native.Pool;
+using MMALSharp.Native.Port;
 
 namespace MMALSharp.Native
 {
@@ -33,58 +34,58 @@ namespace MMALSharp.Native
         }
 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_set_boolean", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusT mmal_port_parameter_set_boolean(MMAL_PORT_T* port, uint id, int value);
+        public static extern unsafe MmalStatusT mmal_port_parameter_set_boolean(MmalPortType* port, uint id, int value);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_get_boolean", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusT mmal_port_parameter_get_boolean(MMAL_PORT_T* port, uint id, ref int value);
+        public static extern unsafe MmalStatusT mmal_port_parameter_get_boolean(MmalPortType* port, uint id, ref int value);
         
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_set_uint64", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusT mmal_port_parameter_set_uint64(MMAL_PORT_T* port, uint id, ulong value);
+        public static extern unsafe MmalStatusT mmal_port_parameter_set_uint64(MmalPortType* port, uint id, ulong value);
         
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_get_uint64", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusT mmal_port_parameter_get_uint64(MMAL_PORT_T* port, uint id, ref ulong value);
+        public static extern unsafe MmalStatusT mmal_port_parameter_get_uint64(MmalPortType* port, uint id, ref ulong value);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_set_int64", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusT mmal_port_parameter_set_int64(MMAL_PORT_T* port, uint id, long value);
+        public static extern unsafe MmalStatusT mmal_port_parameter_set_int64(MmalPortType* port, uint id, long value);
         
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_get_int64", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusT mmal_port_parameter_get_int64(MMAL_PORT_T* port, uint id, ref long value);
+        public static extern unsafe MmalStatusT mmal_port_parameter_get_int64(MmalPortType* port, uint id, ref long value);
         
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_set_uint32", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusT mmal_port_parameter_set_uint32(MMAL_PORT_T* port, uint id, uint value);
+        public static extern unsafe MmalStatusT mmal_port_parameter_set_uint32(MmalPortType* port, uint id, uint value);
         
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_get_uint32", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusT mmal_port_parameter_get_uint32(MMAL_PORT_T* port, uint id, ref uint value);
+        public static extern unsafe MmalStatusT mmal_port_parameter_get_uint32(MmalPortType* port, uint id, ref uint value);
                 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_set_int32", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusT mmal_port_parameter_set_int32(MMAL_PORT_T* port, uint id, int value);
+        public static extern unsafe MmalStatusT mmal_port_parameter_set_int32(MmalPortType* port, uint id, int value);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_get_int32", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusT mmal_port_parameter_get_int32(MMAL_PORT_T* port, uint id, ref int value);
+        public static extern unsafe MmalStatusT mmal_port_parameter_get_int32(MmalPortType* port, uint id, ref int value);
         
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_set_rational", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusT mmal_port_parameter_set_rational(MMAL_PORT_T* port, uint id, MMAL_RATIONAL_T value);
+        public static extern unsafe MmalStatusT mmal_port_parameter_set_rational(MmalPortType* port, uint id, MMAL_RATIONAL_T value);
         
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_get_rational", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusT mmal_port_parameter_get_rational(MMAL_PORT_T* port, uint id, ref MMAL_RATIONAL_T value);
+        public static extern unsafe MmalStatusT mmal_port_parameter_get_rational(MmalPortType* port, uint id, ref MMAL_RATIONAL_T value);
         
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_set_string", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusT mmal_port_parameter_set_string(MMAL_PORT_T* port, uint id, [MarshalAs(UnmanagedType.LPTStr)] string value);
+        public static extern unsafe MmalStatusT mmal_port_parameter_set_string(MmalPortType* port, uint id, [MarshalAs(UnmanagedType.LPTStr)] string value);
         
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_set_bytes", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusT mmal_port_parameter_set_bytes(MMAL_PORT_T* port, uint id, byte* data, uint size);
+        public static extern unsafe MmalStatusT mmal_port_parameter_set_bytes(MmalPortType* port, uint id, byte* data, uint size);
         
         [DllImport("libmmal.so", EntryPoint = "mmal_util_port_set_uri", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusT mmal_util_port_set_uri(MMAL_PORT_T* port, [MarshalAs(UnmanagedType.LPTStr)] string uri);
+        public static extern unsafe MmalStatusT mmal_util_port_set_uri(MmalPortType* port, [MarshalAs(UnmanagedType.LPTStr)] string uri);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_util_set_display_region", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusT mmal_util_set_display_region(MMAL_PORT_T* port, MMAL_DISPLAYREGION_T* region);
+        public static extern unsafe MmalStatusT mmal_util_set_display_region(MmalPortType* port, MMAL_DISPLAYREGION_T* region);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_util_camera_use_stc_timestamp", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusT mmal_util_camera_use_stc_timestamp(MMAL_PORT_T* port, MmalCameraStcModeT mode);
+        public static extern unsafe MmalStatusT mmal_util_camera_use_stc_timestamp(MmalPortType* port, MmalCameraStcModeT mode);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_util_get_core_port_stats", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalStatusT mmal_util_get_core_port_stats(MMAL_PORT_T* port, MmalCoreStatsDir dir, int reset, ref MmalCoreStatistics stats);
+        public static extern unsafe MmalStatusT mmal_util_get_core_port_stats(MmalPortType* port, MmalCoreStatsDir dir, int reset, ref MmalCoreStatistics stats);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_status_to_string", CallingConvention = CallingConvention.Cdecl)]
         public static extern string mmal_status_to_string(MmalStatusT status);
@@ -99,10 +100,10 @@ namespace MMALSharp.Native
         public static extern uint mmal_encoding_get_slice_variant(uint encoding);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_type_to_string", CallingConvention = CallingConvention.Cdecl)]
-        public static extern string mmal_port_type_to_string(MmalPort.MmalPortTypeT pType);
+        public static extern string mmal_port_type_to_string(MmalPortTypeEnum pType);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_alloc_get", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMAL_PARAMETER_HEADER_T* mmal_port_parameter_alloc_get(MMAL_PORT_T* port, uint id, uint size, ref MmalStatusT status);
+        public static extern unsafe MMAL_PARAMETER_HEADER_T* mmal_port_parameter_alloc_get(MmalPortType* port, uint id, uint size, ref MmalStatusT status);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_free", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe void mmal_port_parameter_free(MMAL_PARAMETER_HEADER_T* header);
@@ -111,19 +112,19 @@ namespace MMALSharp.Native
         public static extern unsafe void mmal_buffer_header_copy_header(MmalBufferHeader* dest, MmalBufferHeader* src);
                 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_pool_create", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalPoolType* mmal_port_pool_create(MMAL_PORT_T* port, int headers, int payload_size);
+        public static extern unsafe MmalPoolType* mmal_port_pool_create(MmalPortType* port, int headers, int payload_size);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_pool_destroy", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe void mmal_port_pool_destroy(MMAL_PORT_T* port, MmalPoolType* pool);
+        public static extern unsafe void mmal_port_pool_destroy(MmalPortType* port, MmalPoolType* pool);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_log_dump_port", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe void mmal_log_dump_port(MMAL_PORT_T* port);
+        public static extern unsafe void mmal_log_dump_port(MmalPortType* port);
         
         [DllImport("libmmal.so", EntryPoint = "mmal_log_dump_format", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe void mmal_log_dump_format(MmalEsFormat* format);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_util_get_port", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMAL_PORT_T mmal_util_get_port(MmalComponentType* comp, MmalPort.MmalPortTypeT pType, uint index);
+        public static extern unsafe MmalPortType mmal_util_get_port(MmalComponentType* comp, MmalPortTypeEnum pType, uint index);
         
         [DllImport("libmmal.so", EntryPoint = "mmal_4cc_to_string", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe string mmal_4cc_to_string([MarshalAs(UnmanagedType.LPTStr)] string buffer, ushort len, uint fourcc);

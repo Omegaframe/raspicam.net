@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
 using MMALSharp.Common.Utility;
 using MMALSharp.Native;
+using MMALSharp.Native.Port;
 using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp.Components
@@ -30,7 +31,7 @@ namespace MMALSharp.Components
             try
             {
                 // If succeeds, keep OV5647 defaults.
-                MmalCheck(MmalPort.mmal_port_parameter_get(Control.Ptr, str1), string.Empty);
+                MmalCheck(MmalPort.GetParameter(Control.Ptr, str1), string.Empty);
             }
             catch
             {
@@ -45,7 +46,7 @@ namespace MMALSharp.Components
 
                 try
                 {
-                    MmalCheck(MmalPort.mmal_port_parameter_get(Control.Ptr, str2),
+                    MmalCheck(MmalPort.GetParameter(Control.Ptr, str2),
                         "Unable to get camera info for newer firmware.");
 
                     var p = (IntPtr)str2;

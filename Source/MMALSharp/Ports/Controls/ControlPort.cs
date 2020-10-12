@@ -7,6 +7,7 @@ using MMALSharp.Components;
 using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Events;
+using MMALSharp.Native.Port;
 
 namespace MMALSharp.Ports.Controls
 {
@@ -37,7 +38,7 @@ namespace MMALSharp.Ports.Controls
         }
         public void Start() => Enable();
 
-        internal void NativeControlPortCallback(MMAL_PORT_T* port, MmalBufferHeader* buffer)
+        internal void NativeControlPortCallback(MmalPortType* port, MmalBufferHeader* buffer)
         {
             if (buffer->Cmd == MmalEvents.MmalEventParameterChanged)
             {

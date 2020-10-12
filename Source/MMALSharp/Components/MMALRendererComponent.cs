@@ -8,6 +8,7 @@ using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Config;
 using MMALSharp.Native;
+using MMALSharp.Native.Port;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Inputs;
 using static MMALSharp.MmalNativeExceptionHelper;
@@ -111,7 +112,7 @@ namespace MMALSharp.Components
 
             try
             {
-                MmalCheck(MmalPort.mmal_port_parameter_set(Inputs[0].Ptr, (MMAL_PARAMETER_HEADER_T*)ptr), "Unable to set preview renderer configuration");
+                MmalCheck(MmalPort.SetParameter(Inputs[0].Ptr, (MMAL_PARAMETER_HEADER_T*)ptr), "Unable to set preview renderer configuration");
             }
             finally
             {

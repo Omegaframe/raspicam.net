@@ -7,6 +7,7 @@ using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Extensions;
 using MMALSharp.Native;
+using MMALSharp.Native.Port;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;
@@ -124,7 +125,7 @@ namespace MMALSharp.Components.EncoderComponents
         void ConfigureRateControl(int outputPort)
         {
             var param = new MMAL_PARAMETER_VIDEO_RATECONTROL_T(new MMAL_PARAMETER_HEADER_T(MmalParametersVideo.MmalParameterRatecontrol, Marshal.SizeOf<MMAL_PARAMETER_VIDEO_RATECONTROL_T>()), MmalCameraConfig.RateControl);
-            MmalCheck(MmalPort.mmal_port_parameter_set(Outputs[outputPort].Ptr, param.HdrPtr), "Unable to set ratecontrol.");
+            MmalCheck(MmalPort.SetParameter(Outputs[outputPort].Ptr, param.HdrPtr), "Unable to set ratecontrol.");
         }
 
         void ConfigureIntraPeriod(int outputPort)
@@ -169,7 +170,7 @@ namespace MMALSharp.Components.EncoderComponents
             try
             {
                 MmalCheck(
-                    MmalPort.mmal_port_parameter_set(Outputs[outputPort].Ptr, (MMAL_PARAMETER_HEADER_T*)ptr),
+                    MmalPort.SetParameter(Outputs[outputPort].Ptr, (MMAL_PARAMETER_HEADER_T*)ptr),
                     "Unable to set video profile.");
             }
             finally
@@ -201,7 +202,7 @@ namespace MMALSharp.Components.EncoderComponents
 
             try
             {
-                MmalCheck(MmalPort.mmal_port_parameter_get(Outputs[outputPort].Ptr, param.HdrPtr), "Unable to set video profile.");
+                MmalCheck(MmalPort.GetParameter(Outputs[outputPort].Ptr, param.HdrPtr), "Unable to set video profile.");
                 airMbs = param.AirMbs;
                 airRef = param.AirRef;
                 cirMbs = param.CirMbs;
@@ -214,7 +215,7 @@ namespace MMALSharp.Components.EncoderComponents
 
             param = new MMAL_PARAMETER_VIDEO_INTRA_REFRESH_T(new MMAL_PARAMETER_HEADER_T(MmalParametersVideo.MmalParameterVideoIntraRefresh, Marshal.SizeOf<MMAL_PARAMETER_VIDEO_INTRA_REFRESH_T>()), MmalCameraConfig.IntraRefresh, airMbs, airRef, cirMbs, pirMbs);
 
-            MmalCheck(MmalPort.mmal_port_parameter_set(Outputs[outputPort].Ptr, param.HdrPtr), "Unable to set video intra refresh.");
+            MmalCheck(MmalPort.SetParameter(Outputs[outputPort].Ptr, param.HdrPtr), "Unable to set video intra refresh.");
         }
 
         static List<VideoLevel> GetNormalLevelLimits()

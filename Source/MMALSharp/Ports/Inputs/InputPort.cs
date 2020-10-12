@@ -10,6 +10,7 @@ using MMALSharp.Extensions;
 using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Events;
+using MMALSharp.Native.Port;
 using MMALSharp.Ports.Outputs;
 using MMALSharp.Processing.Handlers;
 
@@ -154,7 +155,7 @@ namespace MMALSharp.Ports.Inputs
 
         public void RegisterCallbackHandler(IInputCallbackHandler callbackHandler) => CallbackHandler = callbackHandler;
 
-        internal virtual unsafe void NativeInputPortCallback(MMAL_PORT_T* port, MmalBufferHeader* buffer)
+        internal virtual unsafe void NativeInputPortCallback(MmalPortType* port, MmalBufferHeader* buffer)
         {
             if (MmalCameraConfig.Debug)
                 MmalLog.Logger.LogDebug($"{Name}: In native input callback.");

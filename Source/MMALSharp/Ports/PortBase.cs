@@ -10,6 +10,7 @@ using MMALSharp.Components;
 using MMALSharp.Native;
 using MMALSharp.Native.Component;
 using MMALSharp.Native.Format;
+using MMALSharp.Native.Port;
 using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp.Ports
@@ -27,7 +28,7 @@ namespace MMALSharp.Ports
         public IMmalPortConfig PortConfig { get; internal set; }
         public bool ZeroCopy { get; set; }
         public TaskCompletionSource<bool> Trigger { get; internal set; }
-        public MMAL_PORT_T* Ptr { get; }
+        public MmalPortType* Ptr { get; }
         public string Name => Marshal.PtrToStringAnsi((IntPtr)Ptr->Name);
         public bool Enabled => Ptr->IsEnabled == 1;
         public int BufferNumMin => Ptr->BufferNumMin;
@@ -125,7 +126,7 @@ namespace MMALSharp.Ports
 
         internal IntPtr PtrCallback { get; set; }
 
-        internal MmalPort.MMAL_PORT_BH_CB_T NativeCallback { get; set; }
+        internal MmalPort.MmalPortBhCbT NativeCallback { get; set; }
 
         public override bool CheckState()
         {
@@ -134,8 +135,8 @@ namespace MMALSharp.Ports
 
         protected PortBase(IntPtr ptr, IComponent comp, PortType type, Guid guid)
         {
-            Ptr = (MMAL_PORT_T*)ptr;
-            Comp = ((MMAL_PORT_T*)ptr)->Component;
+            Ptr = (MmalPortType*)ptr;
+            Comp = ((MmalPortType*)ptr)->Component;
             ComponentReference = comp;
             PortType = type;
             Guid = guid;
@@ -144,7 +145,7 @@ namespace MMALSharp.Ports
         public void EnablePort(IntPtr callback)
         {
             MmalLog.Logger.LogDebug($"{Name}: Enabling port.");
-            MmalCheck(MmalPort.mmal_port_enable(Ptr, callback), $"{Name}: Unable to enable port.");
+            MmalCheck(MmalPort.Enable(Ptr, callback), $"{Name}: Unable to enable port.");
         }
 
         public void DisablePort()
@@ -153,13 +154,13 @@ namespace MMALSharp.Ports
                 return;
 
             MmalLog.Logger.LogDebug($"{Name}: Disabling port.");
-            MmalCheck(MmalPort.mmal_port_disable(Ptr), $"{Name}: Unable to disable port.");
+            MmalCheck(MmalPort.Disable(Ptr), $"{Name}: Unable to disable port.");
         }
 
         public void Commit()
         {
             MmalLog.Logger.LogDebug($"{Name}: Committing port format changes.");
-            MmalCheck(MmalPort.mmal_port_format_commit(Ptr), $"{Name}: Unable to commit port changes.");
+            MmalCheck(MmalPort.Commit(Ptr), $"{Name}: Unable to commit port changes.");
         }
 
         public void ShallowCopy(IPort destination)
@@ -189,7 +190,7 @@ namespace MMALSharp.Ports
         public void Flush()
         {
             MmalLog.Logger.LogDebug($"{Name}: Flushing port buffers");
-            MmalCheck(MmalPort.mmal_port_flush(Ptr), $"{Name}: Unable to flush port.");
+            MmalCheck(MmalPort.Flush(Ptr), $"{Name}: Unable to flush port.");
         }
 
         public void SendBuffer(IBuffer buffer)
@@ -200,7 +201,7 @@ namespace MMALSharp.Ports
             if (MmalCameraConfig.Debug)
                 MmalLog.Logger.LogDebug($"{Name}: Sending buffer start.");
 
-            MmalCheck(MmalPort.mmal_port_send_buffer(Ptr, buffer.Ptr), $"{Name}: Unable to send buffer header.");
+            MmalCheck(MmalPort.SendBuffer(Ptr, buffer.Ptr), $"{Name}: Unable to send buffer header.");
 
             if (MmalCameraConfig.Debug)
                 MmalLog.Logger.LogDebug($"{Name}: Sending buffer complete.");

@@ -7,6 +7,7 @@ using MMALSharp.Common.Utility;
 using MMALSharp.Config;
 using MMALSharp.Extensions;
 using MMALSharp.Native;
+using MMALSharp.Native.Port;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;
@@ -61,7 +62,7 @@ namespace MMALSharp.Components.EncoderComponents
                 JpegThumbnailConfig.Enable, JpegThumbnailConfig.Width,
                 JpegThumbnailConfig.Height, JpegThumbnailConfig.Quality);
 
-            MmalCheck(MmalPort.mmal_port_parameter_set(Control.Ptr, &str.Hdr), "Unable to set JPEG thumbnail config.");
+            MmalCheck(MmalPort.SetParameter(Control.Ptr, &str.Hdr), "Unable to set JPEG thumbnail config.");
 
             return this;
         }
@@ -125,7 +126,7 @@ namespace MMALSharp.Components.EncoderComponents
 
             try
             {
-                MmalCheck(MmalPort.mmal_port_parameter_set(Outputs[0].Ptr, (MMAL_PARAMETER_HEADER_T*)ptr),
+                MmalCheck(MmalPort.SetParameter(Outputs[0].Ptr, (MMAL_PARAMETER_HEADER_T*)ptr),
                     $"Unable to set EXIF {formattedExif}");
             }
             finally

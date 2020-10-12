@@ -7,6 +7,7 @@ using MMALSharp.Components;
 using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Events;
+using MMALSharp.Native.Port;
 
 namespace MMALSharp.Ports.Outputs
 {
@@ -16,7 +17,7 @@ namespace MMALSharp.Ports.Outputs
 
         public FileEncodeOutputPort(IPort copyFrom) : base((IntPtr)copyFrom.Ptr, copyFrom.ComponentReference, copyFrom.Guid) { }
 
-        internal override void NativeOutputPortCallback(MMAL_PORT_T* port, MmalBufferHeader* buffer)
+        internal override void NativeOutputPortCallback(MmalPortType* port, MmalBufferHeader* buffer)
         {
             if (MmalCameraConfig.Debug)
                 MmalLog.Logger.LogDebug($"{Name}: In native {nameof(FileEncodeOutputPort)} callback");

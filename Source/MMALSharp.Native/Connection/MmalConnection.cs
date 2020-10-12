@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using MMALSharp.Native.Port;
 
 namespace MMALSharp.Native.Connection
 {
@@ -11,7 +12,7 @@ namespace MMALSharp.Native.Connection
         public unsafe delegate int MmalConnectionCallbackT(MmalConnectionType* conn);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_connection_create", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalUtil.MmalStatusT Create(IntPtr* connection, MMAL_PORT_T* output, MMAL_PORT_T* input, uint flags);
+        public static extern unsafe MmalUtil.MmalStatusT Create(IntPtr* connection, MmalPortType* output, MmalPortType* input, uint flags);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_connection_destroy", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe MmalUtil.MmalStatusT Destroy(MmalConnectionType* connection);
