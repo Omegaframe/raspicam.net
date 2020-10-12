@@ -6,6 +6,7 @@ using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
+using MMALSharp.Native.Events;
 
 namespace MMALSharp.Ports.Controls
 {
@@ -40,7 +41,7 @@ namespace MMALSharp.Ports.Controls
         {
             if (buffer->Cmd == MmalEvents.MmalEventParameterChanged)
             {
-                var data = (MMAL_EVENT_PARAMETER_CHANGED_T*)buffer->Data;
+                var data = (MmalEventParameterChanged*)buffer->Data;
 
                 if (data->Hdr.Id == MmalParametersCamera.MmalParameterCameraSettings)
                 {

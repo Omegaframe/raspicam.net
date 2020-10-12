@@ -2,6 +2,7 @@
 using System;
 using System.Runtime.InteropServices;
 using MMALSharp.Common;
+using MMALSharp.Native.Events;
 
 namespace MMALSharp
 {
@@ -48,7 +49,7 @@ namespace MMALSharp
 
         internal static MmalEventFormat GetEventFormat(IBuffer buffer)
         {
-            var ev = MmalEvents.mmal_event_format_changed_get(buffer.Ptr);
+            var ev = MmalEvents.GetChanged(buffer.Ptr);
             return new MmalEventFormat(Marshal.PtrToStructure<MMAL_ES_FORMAT_T>((IntPtr)ev->Format), ev->Format);
         }
     }

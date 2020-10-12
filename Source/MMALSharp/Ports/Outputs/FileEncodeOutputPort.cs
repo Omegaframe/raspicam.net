@@ -6,6 +6,7 @@ using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
+using MMALSharp.Native.Events;
 
 namespace MMALSharp.Ports.Outputs
 {
