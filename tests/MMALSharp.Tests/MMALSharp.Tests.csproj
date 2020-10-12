@@ -2,25 +2,21 @@
   <PropertyGroup>
     <!--<OutputType>Exe</OutputType>-->
     <AssemblyTitle>MMALSharp.Tests</AssemblyTitle>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <IsPackable>false</IsPackable>
     <AssemblyName>MMALSharp.Tests</AssemblyName>
     <PackageId>MMALSharp.Tests</PackageId>
     <RootNamespace>MMALSharp.Tests</RootNamespace>	
   </PropertyGroup>
-  <PropertyGroup>
-    <CodeAnalysisRuleSet>..\..\StyleCop.Analyzers.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>   
   <ItemGroup>
-    <Folder Include="Properties\" />    
+    <Compile Remove="Properties\**" />
+    <EmbeddedResource Remove="Properties\**" />
+    <None Remove="Properties\**" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
-    <PackageReference Include="NLog.Extensions.Logging" Version="1.6.1" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
-      <PrivateAssets>All</PrivateAssets>
-    </PackageReference>
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.6.1" />   
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.console" Version="2.4.1">
       <PrivateAssets>all</PrivateAssets>
@@ -28,9 +24,8 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\MMALSharp.Common\MMALSharp.Common.csproj" />
-    <ProjectReference Include="..\..\src\MMALSharp.FFmpeg\MMALSharp.FFmpeg.csproj" />
-    <ProjectReference Include="..\..\src\MMALSharp\MMALSharp.csproj" />
+    <ProjectReference Include="..\..\Source\MMALSharp.Common\MMALSharp.Common.csproj" />
+    <ProjectReference Include="..\..\Source\MMALSharp\MMALSharp.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />

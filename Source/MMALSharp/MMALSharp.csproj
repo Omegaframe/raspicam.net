@@ -2,37 +2,19 @@
   <PropertyGroup>
     <Description>MMALSharp brings low level access to the Raspberry Pi camera module in C#. Based on the native MMAL library, MMALSharp allows you to configure a rich set of camera/sensor related settings via an easy to use asynchronous API.</Description>
     <AssemblyTitle>MMALSharp</AssemblyTitle>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>MMALSharp</AssemblyName>
     <PackageId>MMALSharp</PackageId>
     <RootNamespace>MMALSharp</RootNamespace>
-    <Copyright>Ian Auty (c) 2016-2020</Copyright>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Authors>Ian Auty</Authors>
     <PackageTags>raspberry-pi</PackageTags>
-    <PackageProjectUrl>https://github.com/techyian/MMALSharp</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/techyian/MMALSharp/blob/dev/LICENSE.txt</PackageLicenseUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/techyian/MMALSharp</RepositoryUrl>
     <VersionPrefix>0.7.0</VersionPrefix>
-    <CodeAnalysisRuleSet>..\..\StyleCop.Analyzers.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-	<ProjectGuid>{47af9428-8246-4267-bc76-5fc648848e40}</ProjectGuid> <!--Project guid for Sonar-->
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Platform)'=='AnyCPU'">
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-  </PropertyGroup> 
+  </PropertyGroup>  
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.0" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
-      <PrivateAssets>All</PrivateAssets>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MMALSharp.Processing\MMALSharp.Processing.csproj" />
