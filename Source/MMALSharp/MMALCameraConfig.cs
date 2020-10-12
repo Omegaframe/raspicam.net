@@ -1,9 +1,4 @@
-﻿// <copyright file="MMALCameraConfig.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using MMALSharp.Common;
+﻿using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Config;
@@ -162,8 +157,7 @@ namespace MMALSharp
         /// <summary>
         /// Specify the Presentation timestamp (PTS) mode.
         /// </summary>
-        public static MMAL_PARAMETER_CAMERA_CONFIG_TIMESTAMP_MODE_T ClockMode { get; set; } =
-            MMAL_PARAMETER_CAMERA_CONFIG_TIMESTAMP_MODE_T.MMAL_PARAM_TIMESTAMP_MODE_RESET_STC;
+        public static MMAL_PARAMETER_CAMERA_CONFIG_TIMESTAMP_MODE_T ClockMode { get; set; } = MMAL_PARAMETER_CAMERA_CONFIG_TIMESTAMP_MODE_T.MMAL_PARAM_TIMESTAMP_MODE_RESET_STC;
 
         /// <summary>
         /// The camera encoding type.

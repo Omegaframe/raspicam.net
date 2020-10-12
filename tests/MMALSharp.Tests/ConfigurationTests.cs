@@ -7,6 +7,7 @@ using System;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Config;
+using MMALSharp.Extensions;
 using MMALSharp.Native;
 using Xunit;
 

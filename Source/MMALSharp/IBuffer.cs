@@ -1,9 +1,4 @@
-﻿// <copyright file="IBuffer.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MMALSharp.Native;
 
 namespace MMALSharp

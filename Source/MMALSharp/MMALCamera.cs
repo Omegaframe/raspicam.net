@@ -7,6 +7,7 @@ using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Config;
+using MMALSharp.Extensions;
 using MMALSharp.Handlers;
 using MMALSharp.Native;
 using MMALSharp.Ports;
@@ -36,7 +37,7 @@ namespace MMALSharp
         {
             BcmHost.bcm_host_init();
 
-            this.Camera = new MMALCameraComponent();
+            Camera = new MMALCameraComponent();
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace MMALSharp
         /// <param name="port">An output port of the camera component.</param>
         public void StartCapture(IOutputPort port)
         {
-            if (port == this.Camera.StillPort || port == this.Camera.VideoPort)
+            if (port == Camera.StillPort || port == Camera.VideoPort)
             {
                 port.SetImageCapture(true);
             }
@@ -57,7 +58,7 @@ namespace MMALSharp
         /// <param name="port">An output port of the camera component.</param>
         public void StopCapture(IOutputPort port)
         {
-            if (port == this.Camera.StillPort || port == this.Camera.VideoPort)
+            if (port == Camera.StillPort || port == Camera.VideoPort)
             {
                 port.SetImageCapture(false);
             }
@@ -87,7 +88,7 @@ namespace MMALSharp
             using (var splitter = new MMALSplitterComponent())
             using (var renderer = new MMALVideoRenderer())
             {
-                this.ConfigureCameraSettings();
+                ConfigureCameraSettings();
 
                 var splitterOutputConfig = new MMALPortConfig(MMALCameraConfig.Encoding, MMALCameraConfig.EncodingSubFormat);
 
@@ -95,15 +96,15 @@ namespace MMALSharp
                 splitter.ConfigureOutputPort<SplitterVideoPort>(0, splitterOutputConfig, handler);
 
                 // Create our component pipeline.
-                this.Camera.VideoPort.ConnectTo(splitter);
-                this.Camera.PreviewPort.ConnectTo(renderer);
+                Camera.VideoPort.ConnectTo(splitter);
+                Camera.PreviewPort.ConnectTo(renderer);
 
-                MMALLog.Logger.LogInformation($"Preparing to take raw video. Resolution: {this.Camera.VideoPort.Resolution.Width} x {this.Camera.VideoPort.Resolution.Height}. " +
+                MMALLog.Logger.LogInformation($"Preparing to take raw video. Resolution: {Camera.VideoPort.Resolution.Width} x {Camera.VideoPort.Resolution.Height}. " +
                                     $"Encoder: {MMALCameraConfig.Encoding.EncodingName}. Pixel Format: {MMALCameraConfig.EncodingSubFormat.EncodingName}.");
 
                 // Camera warm up time
                 await Task.Delay(2000).ConfigureAwait(false);
-                await this.ProcessAsync(this.Camera.VideoPort, cancellationToken).ConfigureAwait(false);
+                await ProcessAsync(Camera.VideoPort, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -125,22 +126,22 @@ namespace MMALSharp
             using (var vidEncoder = new MMALVideoEncoder())
             using (var renderer = new MMALVideoRenderer())
             {
-                this.ConfigureCameraSettings();
+                ConfigureCameraSettings();
 
                 var portConfig = new MMALPortConfig(MMALEncoding.H264, MMALEncoding.I420, 10, MMALVideoEncoder.MaxBitrateLevel4, split: split);
 
                 vidEncoder.ConfigureOutputPort(portConfig, handler);
 
                 // Create our component pipeline.
-                this.Camera.VideoPort.ConnectTo(vidEncoder);
-                this.Camera.PreviewPort.ConnectTo(renderer);
+                Camera.VideoPort.ConnectTo(vidEncoder);
+                Camera.PreviewPort.ConnectTo(renderer);
 
-                MMALLog.Logger.LogInformation($"Preparing to take video. Resolution: {this.Camera.VideoPort.Resolution.Width} x {this.Camera.VideoPort.Resolution.Height}. " +
+                MMALLog.Logger.LogInformation($"Preparing to take video. Resolution: {Camera.VideoPort.Resolution.Width} x {Camera.VideoPort.Resolution.Height}. " +
                                     $"Encoder: {vidEncoder.Outputs[0].EncodingType.EncodingName}. Pixel Format: {vidEncoder.Outputs[0].PixelFormat.EncodingName}.");
 
                 // Camera warm up time
                 await Task.Delay(2000).ConfigureAwait(false);
-                await this.ProcessAsync(this.Camera.VideoPort, cancellationToken).ConfigureAwait(false);
+                await ProcessAsync(Camera.VideoPort, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -154,7 +155,7 @@ namespace MMALSharp
         /// <exception cref="PiCameraError"/>
         public async Task TakeRawPicture(IOutputCaptureHandler handler)
         {
-            if (this.Camera.StillPort.ConnectedReference != null)
+            if (Camera.StillPort.ConnectedReference != null)
             {
                 throw new PiCameraError("A connection was found to the Camera still port. No encoder should be connected to the Camera's still port for raw capture.");
             }
@@ -166,15 +167,15 @@ namespace MMALSharp
 
             using (var renderer = new MMALNullSinkComponent())
             {
-                this.ConfigureCameraSettings(handler);
-                this.Camera.PreviewPort.ConnectTo(renderer);
+                ConfigureCameraSettings(handler);
+                Camera.PreviewPort.ConnectTo(renderer);
                 
-                MMALLog.Logger.LogInformation($"Preparing to take raw picture - Resolution: {this.Camera.StillPort.Resolution.Width} x {this.Camera.StillPort.Resolution.Height}. " +
+                MMALLog.Logger.LogInformation($"Preparing to take raw picture - Resolution: {Camera.StillPort.Resolution.Width} x {Camera.StillPort.Resolution.Height}. " +
                                   $"Encoder: {MMALCameraConfig.Encoding.EncodingName}. Pixel Format: {MMALCameraConfig.EncodingSubFormat.EncodingName}.");
 
                 // Camera warm up time
                 await Task.Delay(2000).ConfigureAwait(false);
-                await this.ProcessAsync(this.Camera.StillPort).ConfigureAwait(false);
+                await ProcessAsync(Camera.StillPort).ConfigureAwait(false);
             }            
         }
 
@@ -191,22 +192,22 @@ namespace MMALSharp
             using (var imgEncoder = new MMALImageEncoder())
             using (var renderer = new MMALNullSinkComponent())
             {
-                this.ConfigureCameraSettings();
+                ConfigureCameraSettings();
 
                 var portConfig = new MMALPortConfig(encodingType, pixelFormat, 90);
 
                 imgEncoder.ConfigureOutputPort(portConfig, handler);
 
                 // Create our component pipeline.
-                this.Camera.StillPort.ConnectTo(imgEncoder);
-                this.Camera.PreviewPort.ConnectTo(renderer);
+                Camera.StillPort.ConnectTo(imgEncoder);
+                Camera.PreviewPort.ConnectTo(renderer);
                 
-                MMALLog.Logger.LogInformation($"Preparing to take picture. Resolution: {this.Camera.StillPort.Resolution.Width} x {this.Camera.StillPort.Resolution.Height}. " +
+                MMALLog.Logger.LogInformation($"Preparing to take picture. Resolution: {Camera.StillPort.Resolution.Width} x {Camera.StillPort.Resolution.Height}. " +
                                     $"Encoder: {encodingType.EncodingName}. Pixel Format: {pixelFormat.EncodingName}.");
 
                 // Camera warm up time
                 await Task.Delay(2000).ConfigureAwait(false);
-                await this.ProcessAsync(this.Camera.StillPort).ConfigureAwait(false);
+                await ProcessAsync(Camera.StillPort).ConfigureAwait(false);
             }
         }
 
@@ -230,22 +231,22 @@ namespace MMALSharp
             using (var imgEncoder = new MMALImageEncoder())
             using (var renderer = new MMALNullSinkComponent())
             {
-                this.ConfigureCameraSettings();
+                ConfigureCameraSettings();
 
                 var portConfig = new MMALPortConfig(encodingType, pixelFormat, 90);
 
                 imgEncoder.ConfigureOutputPort(portConfig, handler);
 
                 // Create our component pipeline.
-                this.Camera.StillPort.ConnectTo(imgEncoder);
-                this.Camera.PreviewPort.ConnectTo(renderer);
+                Camera.StillPort.ConnectTo(imgEncoder);
+                Camera.PreviewPort.ConnectTo(renderer);
 
                 // Camera warm up time
                 await Task.Delay(2000).ConfigureAwait(false);
 
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    await this.ProcessAsync(this.Camera.StillPort).ConfigureAwait(false);
+                    await ProcessAsync(Camera.StillPort).ConfigureAwait(false);
 
                     if (!cancellationToken.IsCancellationRequested)
                     {
@@ -277,15 +278,15 @@ namespace MMALSharp
             using (var imgEncoder = new MMALImageEncoder())
             using (var renderer = new MMALNullSinkComponent())
             {
-                this.ConfigureCameraSettings();
+                ConfigureCameraSettings();
 
                 var portConfig = new MMALPortConfig(encodingType, pixelFormat, 90);
 
                 imgEncoder.ConfigureOutputPort(portConfig, handler);
 
                 // Create our component pipeline.
-                this.Camera.StillPort.ConnectTo(imgEncoder);
-                this.Camera.PreviewPort.ConnectTo(renderer);
+                Camera.StillPort.ConnectTo(imgEncoder);
+                Camera.PreviewPort.ConnectTo(renderer);
 
                 // Camera warm up time
                 await Task.Delay(2000).ConfigureAwait(false);
@@ -310,7 +311,7 @@ namespace MMALSharp
                     MMALLog.Logger.LogInformation($"Preparing to take picture. Resolution: {MMALCameraConfig.Resolution.Width} x {MMALCameraConfig.Resolution.Height}. " +
                                         $"Encoder: {encodingType.EncodingName}. Pixel Format: {pixelFormat.EncodingName}.");
 
-                    await this.ProcessAsync(this.Camera.StillPort).ConfigureAwait(false);
+                    await ProcessAsync(Camera.StillPort).ConfigureAwait(false);
 
                     if (!timelapse.CancellationToken.IsCancellationRequested)
                     {
@@ -329,11 +330,11 @@ namespace MMALSharp
         /// <returns>The awaitable Task.</returns>
         public async Task ProcessAsync(IOutputPort cameraPort, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var handlerComponents = this.PopulateProcessingList();
+            var handlerComponents = PopulateProcessingList();
             
             if (handlerComponents.Count == 0)
             {
-                await this.ProcessRawAsync(cameraPort, cancellationToken);
+                await ProcessRawAsync(cameraPort, cancellationToken);
                 return;
             }
             
@@ -356,7 +357,7 @@ namespace MMALSharp
                 component.EnableConnections();
             }
 
-            this.Camera.SetShutterSpeed(MMALCameraConfig.ShutterSpeed);
+            Camera.SetShutterSpeed(MMALCameraConfig.ShutterSpeed);
 
             // Prepare arguments for the annotation-refresh task
             var ctsRefreshAnnotation = new CancellationTokenSource();
@@ -368,7 +369,7 @@ namespace MMALSharp
             }
 
             // We now begin capturing on the camera, processing will commence based on the pipeline configured.
-            this.StartCapture(cameraPort);
+            StartCapture(cameraPort);
             
             if (cancellationToken == CancellationToken.None)
             {
@@ -395,7 +396,7 @@ namespace MMALSharp
                 await Task.WhenAll(tasks).ConfigureAwait(false);
             }
 
-            this.StopCapture(cameraPort);
+            StopCapture(cameraPort);
 
             // Cleanup each connected downstream component.
             foreach (var component in handlerComponents)
@@ -421,7 +422,7 @@ namespace MMALSharp
             MMALLog.Logger.LogInformation("Current pipeline:");
             MMALLog.Logger.LogInformation(string.Empty);
 
-            this.Camera.PrintComponent();
+            Camera.PrintComponent();
 
             foreach (var component in MMALBootstrapper.DownstreamComponents)
             {
@@ -434,7 +435,7 @@ namespace MMALSharp
         /// </summary>
         public void DisableCamera()
         {
-            this.Camera.DisableComponent();
+            Camera.DisableComponent();
         }
 
         /// <summary>
@@ -442,7 +443,7 @@ namespace MMALSharp
         /// </summary>
         public void EnableCamera()
         {
-            this.Camera.EnableComponent();
+            Camera.EnableComponent();
         }
 
         /// <summary>
@@ -454,7 +455,7 @@ namespace MMALSharp
         /// <returns>The camera instance.</returns>
         public MMALCamera ConfigureCameraSettings(IOutputCaptureHandler stillCaptureHandler = null, IOutputCaptureHandler videoCaptureHandler = null)
         {            
-            this.Camera.Initialise(stillCaptureHandler, videoCaptureHandler);
+            Camera.Initialise(stillCaptureHandler, videoCaptureHandler);
             return this;
         }
 
@@ -464,7 +465,7 @@ namespace MMALSharp
         /// <returns>The camera instance.</returns>
         public MMALCamera EnableAnnotation()
         {
-            this.Camera.SetAnnotateSettings();
+            Camera.SetAnnotateSettings();
             return this;
         }
 
@@ -474,7 +475,7 @@ namespace MMALSharp
         /// <returns>The camera instance.</returns>
         public MMALCamera DisableAnnotation()
         {
-            this.Camera.DisableAnnotate();
+            Camera.DisableAnnotate();
             return this;
         }
 
@@ -512,7 +513,7 @@ namespace MMALSharp
             var tempList = new List<MMALDownstreamComponent>(MMALBootstrapper.DownstreamComponents);
 
             tempList.ForEach(c => c.Dispose());
-            this.Camera.Dispose();
+            Camera.Dispose();
 
             BcmHost.bcm_host_deinit();
         }
@@ -536,7 +537,7 @@ namespace MMALSharp
                     while (!cancellationToken.IsCancellationRequested)
                     {
                         await Task.Delay(msInterval, cancellationToken).ConfigureAwait(false);
-                        this.Camera.SetAnnotateSettings();
+                        Camera.SetAnnotateSettings();
                     }
                 }
             }
@@ -563,11 +564,11 @@ namespace MMALSharp
                 cameraPort.DisablePort();
                 cameraPort.Start();
 
-                this.StartCapture(cameraPort);
+                StartCapture(cameraPort);
                 await cameraPort.Trigger.Task.ConfigureAwait(false);
                 
-                this.StopCapture(cameraPort);
-                this.Camera.CleanPortPools();
+                StopCapture(cameraPort);
+                Camera.CleanPortPools();
             }
         }
         
@@ -578,7 +579,7 @@ namespace MMALSharp
         private void CheckPreviewComponentStatus()
         {
             // Create connections
-            if (this.Camera.PreviewPort.ConnectedReference == null)
+            if (Camera.PreviewPort.ConnectedReference == null)
             {
                 MMALLog.Logger.LogWarning("Preview port does not have a Render component configured. Resulting image will be affected.");
             }
@@ -587,23 +588,23 @@ namespace MMALSharp
         private List<IDownstreamComponent> PopulateProcessingList()
         {
             var list = new List<IDownstreamComponent>();
-            var initialStillDownstream = this.Camera.StillPort.ConnectedReference?.DownstreamComponent;
-            var initialVideoDownstream = this.Camera.VideoPort.ConnectedReference?.DownstreamComponent;
-            var initialPreviewDownstream = this.Camera.PreviewPort.ConnectedReference?.DownstreamComponent;
+            var initialStillDownstream = Camera.StillPort.ConnectedReference?.DownstreamComponent;
+            var initialVideoDownstream = Camera.VideoPort.ConnectedReference?.DownstreamComponent;
+            var initialPreviewDownstream = Camera.PreviewPort.ConnectedReference?.DownstreamComponent;
 
             if (initialStillDownstream != null)
             {
-                this.FindComponents(initialStillDownstream, list);
+                FindComponents(initialStillDownstream, list);
             }
             
             if (initialVideoDownstream != null)
             {
-                this.FindComponents(initialVideoDownstream, list);
+                FindComponents(initialVideoDownstream, list);
             }
 
             if (initialPreviewDownstream != null)
             {
-                this.FindComponents(initialPreviewDownstream, list);
+                FindComponents(initialPreviewDownstream, list);
             }
 
             return list;
@@ -631,7 +632,7 @@ namespace MMALSharp
             {
                 if (output.ConnectedReference != null)
                 {
-                    this.FindComponents(output.ConnectedReference.DownstreamComponent, list);
+                    FindComponents(output.ConnectedReference.DownstreamComponent, list);
                 }
             }
         }

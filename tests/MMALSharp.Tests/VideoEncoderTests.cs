@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using MMALSharp.Common;
 using MMALSharp.Components;
 using MMALSharp.Config;
+using MMALSharp.Extensions;
 using MMALSharp.Handlers;
 using MMALSharp.Native;
 using MMALSharp.Ports;

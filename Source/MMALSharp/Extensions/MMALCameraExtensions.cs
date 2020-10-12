@@ -1,9 +1,4 @@
-﻿// <copyright file="MMALCameraExtensions.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -16,10 +11,8 @@ using MMALSharp.Ports.Controls;
 using static MMALSharp.MMALNativeExceptionHelper;
 using static MMALSharp.Native.MMALParametersCamera;
 
-namespace MMALSharp
+namespace MMALSharp.Extensions
 {
-#pragma warning disable SA1202
-
     /// <summary>
     /// Provides extension methods for useful configuration against the Camera component.
     /// </summary>
@@ -1054,4 +1047,3 @@ namespace MMALSharp
         }
     }
 }
-#pragma warning restore SA1202 // Public methods before Internal
