@@ -201,7 +201,7 @@ namespace MMALSharp.Extensions
             var str = new MmalParameterFpsRangeType(
                     new MmalParameterHeaderType(
                         MmalParametersCamera.MmalParameterFpsRange,
-                        Marshal.SizeOf<MmalParameterFpsRangeType>()), default(MmalRational), default(MmalRational));
+                        Marshal.SizeOf<MmalParameterFpsRangeType>()), default, default);
 
             MmalCheck(MmalPort.GetParameter(port.Ptr, &str.Hdr), "Unable to get framerate range for port.");
 

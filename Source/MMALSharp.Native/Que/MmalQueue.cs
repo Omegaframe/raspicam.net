@@ -15,7 +15,7 @@ namespace MMALSharp.Native.Que
         public static extern unsafe MmalBufferHeader* Get(MmalQueueType* ptr);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_queue_wait", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalBufferHeader* mmal_queue_wait(MmalQueueType* ptr);
+        public static extern unsafe MmalBufferHeader* Wait(MmalQueueType* ptr);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_queue_timedwait", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe MmalBufferHeader* TimedWait(MmalQueueType* ptr, int waitms);

@@ -37,34 +37,33 @@ namespace MMALSharp.Tests
             TestHelper.SetConfigurationDefaults();
             TestHelper.CleanDirectory("/home/pi/images/tests");
 
-            using (var imgCaptureHandler = new ImageStreamCaptureHandler("/home/pi/images/tests", extension))
-            using (var preview = new MmalNullSinkComponent())
-            using (var imgEncoder = new MmalImageEncoder())
+            using var imgCaptureHandler = new ImageStreamCaptureHandler("/home/pi/images/tests", extension);
+            using var preview = new MmalNullSinkComponent();
+            using var imgEncoder = new MmalImageEncoder();
+
+            Fixture.MalCamera.ConfigureCameraSettings();
+
+            var portConfig = new MmalPortConfig(encodingType, pixelFormat, quality: 90);
+
+            imgEncoder.ConfigureOutputPort(portConfig, imgCaptureHandler);
+
+            // Create our component pipeline.         
+            Fixture.MalCamera.Camera.StillPort
+                .ConnectTo(imgEncoder);
+            Fixture.MalCamera.Camera.PreviewPort
+                .ConnectTo(preview);
+
+            imgCaptureHandler.Manipulate(context =>
             {
-                Fixture.MalCamera.ConfigureCameraSettings();
+                context.Apply(new SharpenProcessor());
+            }, ImageFormat.Jpeg);
 
-                var portConfig = new MmalPortConfig(encodingType, pixelFormat, quality: 90);
+            // Camera warm up time
+            await Task.Delay(2000);
 
-                imgEncoder.ConfigureOutputPort(portConfig, imgCaptureHandler);
+            await Fixture.MalCamera.ProcessAsync(Fixture.MalCamera.Camera.StillPort);
 
-                // Create our component pipeline.         
-                Fixture.MalCamera.Camera.StillPort
-                    .ConnectTo(imgEncoder);
-                Fixture.MalCamera.Camera.PreviewPort
-                    .ConnectTo(preview);
-
-                imgCaptureHandler.Manipulate(context =>
-                {
-                    context.Apply(new SharpenProcessor());
-                }, ImageFormat.Jpeg);
-
-                // Camera warm up time
-                await Task.Delay(2000);
-
-                await Fixture.MalCamera.ProcessAsync(Fixture.MalCamera.Camera.StillPort);
-
-                Fixture.CheckAndAssertFilepath(imgCaptureHandler.GetFilepath());
-            }
+            Fixture.CheckAndAssertFilepath(imgCaptureHandler.GetFilepath());
         }
 
         [Theory]
@@ -75,34 +74,33 @@ namespace MMALSharp.Tests
             TestHelper.SetConfigurationDefaults();
             TestHelper.CleanDirectory("/home/pi/images/tests");
 
-            using (var imgCaptureHandler = new ImageStreamCaptureHandler("/home/pi/images/tests", extension))
-            using (var preview = new MmalNullSinkComponent())
-            using (var imgEncoder = new MmalImageEncoder())
+            using var imgCaptureHandler = new ImageStreamCaptureHandler("/home/pi/images/tests", extension);
+            using var preview = new MmalNullSinkComponent();
+            using var imgEncoder = new MmalImageEncoder();
+
+            Fixture.MalCamera.ConfigureCameraSettings();
+
+            var portConfig = new MmalPortConfig(encodingType, pixelFormat, quality: 90);
+
+            imgEncoder.ConfigureOutputPort(portConfig, imgCaptureHandler);
+
+            // Create our component pipeline.         
+            Fixture.MalCamera.Camera.StillPort
+                .ConnectTo(imgEncoder);
+            Fixture.MalCamera.Camera.PreviewPort
+                .ConnectTo(preview);
+
+            imgCaptureHandler.Manipulate(context =>
             {
-                Fixture.MalCamera.ConfigureCameraSettings();
+                context.Apply(new EdgeDetection(EdStrength.High));
+            }, ImageFormat.Jpeg);
 
-                var portConfig = new MmalPortConfig(encodingType, pixelFormat, quality: 90);
+            // Camera warm up time
+            await Task.Delay(2000);
 
-                imgEncoder.ConfigureOutputPort(portConfig, imgCaptureHandler);
+            await Fixture.MalCamera.ProcessAsync(Fixture.MalCamera.Camera.StillPort);
 
-                // Create our component pipeline.         
-                Fixture.MalCamera.Camera.StillPort
-                    .ConnectTo(imgEncoder);
-                Fixture.MalCamera.Camera.PreviewPort
-                    .ConnectTo(preview);
-
-                imgCaptureHandler.Manipulate(context =>
-                {
-                    context.Apply(new EdgeDetection(EdStrength.High));
-                }, ImageFormat.Jpeg);
-
-                // Camera warm up time
-                await Task.Delay(2000);
-
-                await Fixture.MalCamera.ProcessAsync(Fixture.MalCamera.Camera.StillPort);
-
-                Fixture.CheckAndAssertFilepath(imgCaptureHandler.GetFilepath());
-            }
+            Fixture.CheckAndAssertFilepath(imgCaptureHandler.GetFilepath());
         }
 
         [Theory]
@@ -113,34 +111,33 @@ namespace MMALSharp.Tests
             TestHelper.SetConfigurationDefaults();
             TestHelper.CleanDirectory("/home/pi/images/tests");
 
-            using (var imgCaptureHandler = new ImageStreamCaptureHandler("/home/pi/images/tests", extension))
-            using (var preview = new MmalNullSinkComponent())
-            using (var imgEncoder = new MmalImageEncoder())
+            using var imgCaptureHandler = new ImageStreamCaptureHandler("/home/pi/images/tests", extension);
+            using var preview = new MmalNullSinkComponent();
+            using var imgEncoder = new MmalImageEncoder();
+
+            Fixture.MalCamera.ConfigureCameraSettings();
+
+            var portConfig = new MmalPortConfig(encodingType, pixelFormat, quality: 90);
+
+            imgEncoder.ConfigureOutputPort(portConfig, imgCaptureHandler);
+
+            // Create our component pipeline.         
+            Fixture.MalCamera.Camera.StillPort
+                .ConnectTo(imgEncoder);
+            Fixture.MalCamera.Camera.PreviewPort
+                .ConnectTo(preview);
+
+            imgCaptureHandler.Manipulate(context =>
             {
-                Fixture.MalCamera.ConfigureCameraSettings();
+                context.Apply(new GaussianProcessor(GaussianMatrix.Matrix3x3));
+            }, ImageFormat.Jpeg);
 
-                var portConfig = new MmalPortConfig(encodingType, pixelFormat, quality: 90);
+            // Camera warm up time
+            await Task.Delay(2000);
 
-                imgEncoder.ConfigureOutputPort(portConfig, imgCaptureHandler);
+            await Fixture.MalCamera.ProcessAsync(Fixture.MalCamera.Camera.StillPort);
 
-                // Create our component pipeline.         
-                Fixture.MalCamera.Camera.StillPort
-                    .ConnectTo(imgEncoder);
-                Fixture.MalCamera.Camera.PreviewPort
-                    .ConnectTo(preview);
-
-                imgCaptureHandler.Manipulate(context =>
-                {
-                    context.Apply(new GaussianProcessor(GaussianMatrix.Matrix3x3));
-                }, ImageFormat.Jpeg);
-
-                // Camera warm up time
-                await Task.Delay(2000);
-
-                await Fixture.MalCamera.ProcessAsync(Fixture.MalCamera.Camera.StillPort);
-
-                Fixture.CheckAndAssertFilepath(imgCaptureHandler.GetFilepath());
-            }
+            Fixture.CheckAndAssertFilepath(imgCaptureHandler.GetFilepath());
         }
 
         [Fact]

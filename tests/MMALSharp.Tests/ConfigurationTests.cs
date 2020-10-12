@@ -221,8 +221,8 @@ namespace MMALSharp.Tests
             var uv = MmalColor.RgbToYuvBytes(Fixture.MalCamera.Camera.GetColourFx().Color);
             
             Assert.True(Fixture.MalCamera.Camera.GetColourFx().Enable == enable &&
-                        uv.Item2 == u &&
-                        uv.Item3 == v);
+                        uv.u == u &&
+                        uv.v == v);
         }
 
         [Theory]

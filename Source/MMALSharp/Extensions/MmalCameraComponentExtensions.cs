@@ -319,7 +319,7 @@ namespace MMALSharp.Extensions
             return (MmalSensorMode)(int)camera.Control.GetParameter(MmalParameterCameraCustomSensorConfig);
         }
 
-        internal static void SetSensorMode(this MmalCameraComponent camera, MmalSensorMode mode)
+        internal static void SetSensorMode(this MmalCameraComponent camera)
         {
             var currentMode = (int)camera.Control.GetParameter(MmalParameterCameraCustomSensorConfig);
 
@@ -448,7 +448,7 @@ namespace MMALSharp.Extensions
         {
             var expMode = new MmalParameterExposuremodeType(
                 new MmalParameterHeaderType(MmalParameterExposureMode, Marshal.SizeOf<MmalParameterExposuremodeType>()),
-                default(MmalParamExposuremodeType));
+                default);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &expMode.Hdr), "Unable to get exposure mode");
 
@@ -470,7 +470,7 @@ namespace MMALSharp.Extensions
         {
             var expMode = new MmalParameterExposuremeteringmodeType(
                 new MmalParameterHeaderType(MmalParameterExpMeteringMode, Marshal.SizeOf<MmalParameterExposuremeteringmodeType>()),
-                default(MmalParamExposuremeteringmodeType));
+                default);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &expMode.Hdr), "Unable to get exposure metering mode");
 
@@ -492,7 +492,7 @@ namespace MMALSharp.Extensions
         {
             var awbMode = new MmalParameterAwbModeType(
                 new MmalParameterHeaderType(MmalParameterAwbMode, Marshal.SizeOf<MmalParameterAwbModeType>()),
-                                                                                                        default(MmalParamAwbmodeType));
+                                                                                                        default);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &awbMode.Hdr), "Unable to get awb mode");
 
@@ -575,7 +575,7 @@ namespace MMALSharp.Extensions
 
         public static MmalParamImagefxType GetImageFx(this MmalCameraComponent camera)
         {
-            var imgFx = new MmalParameterImageFxType(new MmalParameterHeaderType(MmalParameterImageEffect, Marshal.SizeOf<MmalParameterImageFxType>()), default(MmalParamImagefxType));
+            var imgFx = new MmalParameterImageFxType(new MmalParameterHeaderType(MmalParameterImageEffect, Marshal.SizeOf<MmalParameterImageFxType>()), default);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &imgFx.Hdr), "Unable to get image fx");
 
@@ -675,7 +675,7 @@ namespace MMALSharp.Extensions
         {
             var crop = new MmalParameterInputCropType(
                 new MmalParameterHeaderType(MmalParameterInputCrop, Marshal.SizeOf<MmalParameterInputCropType>()),
-                default(MmalRect));
+                default);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &crop.Hdr), "Unable to get zoom");
 
@@ -713,7 +713,7 @@ namespace MMALSharp.Extensions
         {
             var drc = new MmalParameterDrcType(
                 new MmalParameterHeaderType(MmalParameterDynamicRangeCompression, Marshal.SizeOf<MmalParameterDrcType>()),
-                default(MmalParameterDrcStrengthType));
+                default);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &drc.Hdr), "Unable to get DRC");
 

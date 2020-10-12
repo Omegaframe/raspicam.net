@@ -32,7 +32,7 @@ namespace MMALSharp.Demo
             }
         }
         
-        static void Main(string[] args)
+        static void Main()
         {
             Console.WriteLine(@"
               __  __ __  __   _   _    ___ _                  

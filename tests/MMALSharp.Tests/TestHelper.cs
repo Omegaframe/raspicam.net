@@ -20,11 +20,11 @@ namespace MMALSharp.Tests
             MmalCameraConfig.AwbGainsB = 0;
             MmalCameraConfig.AwbGainsR = 0;
             MmalCameraConfig.AwbMode = MmalParamAwbmodeType.MmalParamAwbmodeAuto;
-            MmalCameraConfig.ColorFx = default(ColorEffects);
+            MmalCameraConfig.ColorFx = default;
             MmalCameraConfig.ExposureCompensation = -1;
             MmalCameraConfig.ExposureMeterMode = MmalParamExposuremeteringmodeType.MmalParamExposuremeteringmodeAverage;
             MmalCameraConfig.ExposureMode = MmalParamExposuremodeType.MmalParamExposuremodeAuto;
-            MmalCameraConfig.Roi = default(Zoom);
+            MmalCameraConfig.Roi = default;
             MmalCameraConfig.Iso = 0;
             MmalCameraConfig.StatsPass = false;
             MmalCameraConfig.Flips = MmalParamMirrorType.MmalParamMirrorNone;

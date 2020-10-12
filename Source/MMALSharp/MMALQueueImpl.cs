@@ -41,7 +41,7 @@ namespace MMALSharp
 
         public uint QueueLength() => MmalQueue.Length(Ptr);
 
-        public IBuffer Wait() => new MmalBuffer(MmalQueue.mmal_queue_wait(Ptr));
+        public IBuffer Wait() => new MmalBuffer(MmalQueue.Wait(Ptr));
 
         public IBuffer TimedWait(int waitms) => new MmalBuffer(MmalQueue.TimedWait(Ptr, waitms));
 

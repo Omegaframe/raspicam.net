@@ -216,7 +216,7 @@ namespace MMALSharp
             }
         }
 
-        public async Task ProcessAsync(IOutputPort cameraPort, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task ProcessAsync(IOutputPort cameraPort, CancellationToken cancellationToken = default)
         {
             var handlerComponents = PopulateProcessingList();
 

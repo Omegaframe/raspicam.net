@@ -247,7 +247,7 @@ namespace MMALSharp.Components
 
         void SetCameraParameters()
         {
-            this.SetSensorMode(MmalCameraConfig.SensorMode);
+            this.SetSensorMode();
             this.SetSaturation(MmalCameraConfig.Saturation);
             this.SetSharpness(MmalCameraConfig.Sharpness);
             this.SetContrast(MmalCameraConfig.Contrast);

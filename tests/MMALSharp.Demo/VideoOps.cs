@@ -19,19 +19,19 @@ namespace MMALSharp.Demo
             Console.WriteLine("1.    Take Video");
             
             var key = Console.ReadKey();
-            var formats = this.ParsePixelFormat();
+            var formats = ParsePixelFormat();
 
             switch (key.KeyChar)
             {
                 case '1':
-                    this.TakeVideoOperations(formats.Item1, formats.Item2);
+                    TakeVideoOperations(formats.Item1, formats.Item2);
                     break;
             }
             
             Program.OperationsHandler();
         }
-        
-        private void TakeVideoOperations(MmalEncoding encoding, MmalEncoding pixelFormat)
+
+        void TakeVideoOperations(MmalEncoding encoding, MmalEncoding pixelFormat)
         {
             Console.WriteLine("\nPlease enter a file extension.");
             var extension = Console.ReadLine();
@@ -40,39 +40,38 @@ namespace MMALSharp.Demo
             Console.WriteLine("\nPlease enter the number of seconds to record for.");
             var seconds = Console.ReadLine();
             
-            int intBitrate = 0, intSeconds = 0;
+            var intSeconds = 0;
 
-            if (!int.TryParse(bitrate, out intBitrate) || !int.TryParse(seconds, out intSeconds))
+            if (!int.TryParse(bitrate, out var intBitrate) || !int.TryParse(seconds, out intSeconds))
             {
                 Console.WriteLine("Invalid values entered, please try again.");
-                this.TakeVideoOperations(encoding, pixelFormat);
+                TakeVideoOperations(encoding, pixelFormat);
             }
             
-            this.TakeVideoManual(extension, encoding, pixelFormat, intBitrate, intSeconds).GetAwaiter().GetResult();
+            TakeVideoManual(extension, encoding, pixelFormat, intBitrate, intSeconds).GetAwaiter().GetResult();
         }
-        
-        private async Task TakeVideoManual(string extension, MmalEncoding encoding, MmalEncoding pixelFormat, int bitrate, int seconds)
-        {            
-            using (var vidCaptureHandler = new VideoStreamCaptureHandler($"/home/pi/videos/", extension))
-            using (var vidEncoder = new MmalVideoEncoder())
-            using (var renderer = new MmalVideoRenderer())
-            {
-                this.Cam.ConfigureCameraSettings();
 
-                var portConfig = new MmalPortConfig(encoding, pixelFormat, bitrate: bitrate);
+        async Task TakeVideoManual(string extension, MmalEncoding encoding, MmalEncoding pixelFormat, int bitrate, int seconds)
+        {
+            using var vidCaptureHandler = new VideoStreamCaptureHandler($"/home/pi/videos/", extension);
+            using var vidEncoder = new MmalVideoEncoder();
+            using var renderer = new MmalVideoRenderer();
+
+            Cam.ConfigureCameraSettings();
+
+            var portConfig = new MmalPortConfig(encoding, pixelFormat, bitrate: bitrate);
                 
-                vidEncoder.ConfigureOutputPort(portConfig, vidCaptureHandler);
+            vidEncoder.ConfigureOutputPort(portConfig, vidCaptureHandler);
 
-                this.Cam.Camera.VideoPort.ConnectTo(vidEncoder);
-                this.Cam.Camera.PreviewPort.ConnectTo(renderer);
+            Cam.Camera.VideoPort.ConnectTo(vidEncoder);
+            Cam.Camera.PreviewPort.ConnectTo(renderer);
                                                   
-                // Camera warm up time
-                await Task.Delay(2000);
+            // Camera warm up time
+            await Task.Delay(2000);
             
-                var cts = new CancellationTokenSource(TimeSpan.FromSeconds(seconds));
+            var cts = new CancellationTokenSource(TimeSpan.FromSeconds(seconds));
                                 
-                await this.Cam.ProcessAsync(this.Cam.Camera.VideoPort, cts.Token);
-            }
+            await Cam.ProcessAsync(Cam.Camera.VideoPort, cts.Token);
         }
     }
 }

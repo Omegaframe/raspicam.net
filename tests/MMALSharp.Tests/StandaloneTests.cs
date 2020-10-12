@@ -352,61 +352,59 @@ namespace MMALSharp.Tests
                 videoFilepath = videoCaptureHandler.GetFilepath();
             }
 
-            using (var stream = File.OpenRead(videoFilepath))
-            using (var inputCaptureHandler = new InputCaptureHandler(stream))
-            using (var outputCaptureHandler = new VideoStreamCaptureHandler("/home/pi/videos/tests", "h264"))
-            using (var outputCaptureHandler2 = new VideoStreamCaptureHandler("/home/pi/videos/tests", "h264"))
-            using (var outputCaptureHandler3 = new VideoStreamCaptureHandler("/home/pi/videos/tests", "h264"))
-            using (var outputCaptureHandler4 = new VideoStreamCaptureHandler("/home/pi/videos/tests", "h264"))
-            using (var splitter = new MmalSplitterComponent())
-            using (var imgDecoder = new MmalVideoDecoder())
-            using (var imgEncoder = new MmalVideoEncoder())
-            using (var imgEncoder2 = new MmalVideoEncoder())
-            using (var imgEncoder3 = new MmalVideoEncoder())
-            using (var imgEncoder4 = new MmalVideoEncoder())
-            {
-                var splitterInputConfig = new MmalPortConfig(MmalEncoding.I420, null, framerate: 25, zeroCopy: true);
-                var splitterOutputConfig = new MmalPortConfig(null, null, zeroCopy: true);
+            await using var stream = File.OpenRead(videoFilepath);
+            using var inputCaptureHandler = new InputCaptureHandler(stream);
+            using var outputCaptureHandler = new VideoStreamCaptureHandler("/home/pi/videos/tests", "h264");
+            using var outputCaptureHandler2 = new VideoStreamCaptureHandler("/home/pi/videos/tests", "h264");
+            using var outputCaptureHandler3 = new VideoStreamCaptureHandler("/home/pi/videos/tests", "h264");
+            using var outputCaptureHandler4 = new VideoStreamCaptureHandler("/home/pi/videos/tests", "h264");
+            using var splitter = new MmalSplitterComponent();
+            using var imgDecoder = new MmalVideoDecoder();
+            using var imgEncoder = new MmalVideoEncoder();
+            using var imgEncoder2 = new MmalVideoEncoder();
+            using var imgEncoder3 = new MmalVideoEncoder();
+            using var imgEncoder4 = new MmalVideoEncoder();
+            var splitterInputConfig = new MmalPortConfig(MmalEncoding.I420, null, framerate: 25, zeroCopy: true);
+            var splitterOutputConfig = new MmalPortConfig(null, null, zeroCopy: true);
 
-                var decoderInputConfig = new MmalPortConfig(MmalEncoding.H264, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
-                var decoderOutputConfig = new MmalPortConfig(MmalEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
+            var decoderInputConfig = new MmalPortConfig(MmalEncoding.H264, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
+            var decoderOutputConfig = new MmalPortConfig(MmalEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
 
-                var encoderInputConfig = new MmalPortConfig(MmalEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
-                var encoderOutputConfig = new MmalPortConfig(MmalEncoding.H264, MmalEncoding.I420, width: 640, height: 480, framerate: 25, zeroCopy: true);
+            var encoderInputConfig = new MmalPortConfig(MmalEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
+            var encoderOutputConfig = new MmalPortConfig(MmalEncoding.H264, MmalEncoding.I420, width: 640, height: 480, framerate: 25, zeroCopy: true);
 
-                imgDecoder.ConfigureInputPort(decoderInputConfig, inputCaptureHandler)
-                    .ConfigureOutputPort(0, decoderOutputConfig, null);
+            imgDecoder.ConfigureInputPort(decoderInputConfig, inputCaptureHandler)
+                .ConfigureOutputPort(0, decoderOutputConfig, null);
 
-                splitter.ConfigureInputPort(splitterInputConfig, null)
-                        .ConfigureOutputPort(0, splitterOutputConfig, null);
+            splitter.ConfigureInputPort(splitterInputConfig, null)
+                    .ConfigureOutputPort(0, splitterOutputConfig, null);
 
-                imgEncoder.ConfigureInputPort(encoderInputConfig, splitter.Outputs[0], null)
-                    .ConfigureOutputPort<FileEncodeOutputPort>(0, encoderOutputConfig, outputCaptureHandler);
+            imgEncoder.ConfigureInputPort(encoderInputConfig, splitter.Outputs[0], null)
+                .ConfigureOutputPort<FileEncodeOutputPort>(0, encoderOutputConfig, outputCaptureHandler);
 
-                imgEncoder2.ConfigureInputPort(encoderInputConfig, splitter.Outputs[1], null)
-                    .ConfigureOutputPort<FileEncodeOutputPort>(0, encoderOutputConfig, outputCaptureHandler2);
+            imgEncoder2.ConfigureInputPort(encoderInputConfig, splitter.Outputs[1], null)
+                .ConfigureOutputPort<FileEncodeOutputPort>(0, encoderOutputConfig, outputCaptureHandler2);
 
-                imgEncoder3.ConfigureInputPort(encoderInputConfig, splitter.Outputs[2], null)
-                    .ConfigureOutputPort<FileEncodeOutputPort>(0, encoderOutputConfig, outputCaptureHandler3);
+            imgEncoder3.ConfigureInputPort(encoderInputConfig, splitter.Outputs[2], null)
+                .ConfigureOutputPort<FileEncodeOutputPort>(0, encoderOutputConfig, outputCaptureHandler3);
 
-                imgEncoder4.ConfigureInputPort(encoderInputConfig, splitter.Outputs[3], null)
-                    .ConfigureOutputPort<FileEncodeOutputPort>(0, encoderOutputConfig, outputCaptureHandler4);
+            imgEncoder4.ConfigureInputPort(encoderInputConfig, splitter.Outputs[3], null)
+                .ConfigureOutputPort<FileEncodeOutputPort>(0, encoderOutputConfig, outputCaptureHandler4);
 
-                imgDecoder.Outputs[0].ConnectTo(splitter);
-                splitter.Outputs[0].ConnectTo(imgEncoder);
-                splitter.Outputs[1].ConnectTo(imgEncoder2);
-                splitter.Outputs[2].ConnectTo(imgEncoder3);
-                splitter.Outputs[3].ConnectTo(imgEncoder4);
+            imgDecoder.Outputs[0].ConnectTo(splitter);
+            splitter.Outputs[0].ConnectTo(imgEncoder);
+            splitter.Outputs[1].ConnectTo(imgEncoder2);
+            splitter.Outputs[2].ConnectTo(imgEncoder3);
+            splitter.Outputs[3].ConnectTo(imgEncoder4);
 
-                Fixture.MMALStandalone.PrintPipeline(imgDecoder);
+            Fixture.MMALStandalone.PrintPipeline(imgDecoder);
 
-                await Fixture.MMALStandalone.ProcessAsync(imgDecoder);
+            await Fixture.MMALStandalone.ProcessAsync(imgDecoder);
 
-                Fixture.CheckAndAssertFilepath(outputCaptureHandler.GetFilepath());
-                Fixture.CheckAndAssertFilepath(outputCaptureHandler2.GetFilepath());
-                Fixture.CheckAndAssertFilepath(outputCaptureHandler3.GetFilepath());
-                Fixture.CheckAndAssertFilepath(outputCaptureHandler4.GetFilepath());
-            }
+            Fixture.CheckAndAssertFilepath(outputCaptureHandler.GetFilepath());
+            Fixture.CheckAndAssertFilepath(outputCaptureHandler2.GetFilepath());
+            Fixture.CheckAndAssertFilepath(outputCaptureHandler3.GetFilepath());
+            Fixture.CheckAndAssertFilepath(outputCaptureHandler4.GetFilepath());
         }
 
         [Fact]
@@ -451,70 +449,68 @@ namespace MMALSharp.Tests
                 videoFilepath = videoCaptureHandler.GetFilepath();
             }
 
-            using (var stream = File.OpenRead(videoFilepath))
-            using (var inputCaptureHandler = new InputCaptureHandler(stream))
-            using (var outputCaptureHandler = new VideoStreamCaptureHandler("/home/pi/videos/tests", "h264"))
-            using (var outputCaptureHandler2 = new VideoStreamCaptureHandler("/home/pi/videos/tests", "h264"))
-            using (var outputCaptureHandler3 = new VideoStreamCaptureHandler("/home/pi/videos/tests", "h264"))
-            using (var outputCaptureHandler4 = new VideoStreamCaptureHandler("/home/pi/videos/tests", "h264"))
-            using (var splitter = new MmalSplitterComponent())
-            using (var imgDecoder = new MmalVideoDecoder())
-            using (var imgEncoder = new MmalVideoEncoder())
-            using (var imgEncoder2 = new MmalVideoEncoder())
-            using (var imgEncoder3 = new MmalVideoEncoder())
-            using (var imgEncoder4 = new MmalVideoEncoder())
-            using (var resizer = new MmalResizerComponent())
-            {
-                var splitterInputConfig = new MmalPortConfig(MmalEncoding.I420, null, framerate: 25, zeroCopy: true);
-                var splitterOutputConfig = new MmalPortConfig(null, null, zeroCopy: true);
+            await using var stream = File.OpenRead(videoFilepath);
+            using var inputCaptureHandler = new InputCaptureHandler(stream);
+            using var outputCaptureHandler = new VideoStreamCaptureHandler("/home/pi/videos/tests", "h264");
+            using var outputCaptureHandler2 = new VideoStreamCaptureHandler("/home/pi/videos/tests", "h264");
+            using var outputCaptureHandler3 = new VideoStreamCaptureHandler("/home/pi/videos/tests", "h264");
+            using var outputCaptureHandler4 = new VideoStreamCaptureHandler("/home/pi/videos/tests", "h264");
+            using var splitter = new MmalSplitterComponent();
+            using var imgDecoder = new MmalVideoDecoder();
+            using var imgEncoder = new MmalVideoEncoder();
+            using var imgEncoder2 = new MmalVideoEncoder();
+            using var imgEncoder3 = new MmalVideoEncoder();
+            using var imgEncoder4 = new MmalVideoEncoder();
+            using var resizer = new MmalResizerComponent();
+            var splitterInputConfig = new MmalPortConfig(MmalEncoding.I420, null, framerate: 25, zeroCopy: true);
+            var splitterOutputConfig = new MmalPortConfig(null, null, zeroCopy: true);
 
-                // Resize from 640x480 to 320x120.
-                var resizerInputConfig = new MmalPortConfig(MmalEncoding.I420, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
-                var resizerOutputConfig = new MmalPortConfig(null, null, width: 320, height: 120, zeroCopy: true);
+            // Resize from 640x480 to 320x120.
+            var resizerInputConfig = new MmalPortConfig(MmalEncoding.I420, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
+            var resizerOutputConfig = new MmalPortConfig(null, null, width: 320, height: 120, zeroCopy: true);
 
-                var decoderInputConfig = new MmalPortConfig(MmalEncoding.H264, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
-                var decoderOutputConfig = new MmalPortConfig(MmalEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
+            var decoderInputConfig = new MmalPortConfig(MmalEncoding.H264, null, width: 640, height: 480, framerate: 25, zeroCopy: true);
+            var decoderOutputConfig = new MmalPortConfig(MmalEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
 
-                var encoderInputConfig = new MmalPortConfig(MmalEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
-                var encoderOutputConfig = new MmalPortConfig(MmalEncoding.H264, MmalEncoding.I420, width: 640, height: 480, framerate: 25, zeroCopy: true);
+            var encoderInputConfig = new MmalPortConfig(MmalEncoding.I420, null, width: 640, height: 480, zeroCopy: true);
+            var encoderOutputConfig = new MmalPortConfig(MmalEncoding.H264, MmalEncoding.I420, width: 640, height: 480, framerate: 25, zeroCopy: true);
 
-                imgDecoder.ConfigureInputPort(decoderInputConfig, inputCaptureHandler)
-                    .ConfigureOutputPort(0, decoderOutputConfig, null);
+            imgDecoder.ConfigureInputPort(decoderInputConfig, inputCaptureHandler)
+                .ConfigureOutputPort(0, decoderOutputConfig, null);
 
-                splitter.ConfigureInputPort(splitterInputConfig, null)
-                        .ConfigureOutputPort(0, splitterOutputConfig, null);
+            splitter.ConfigureInputPort(splitterInputConfig, null)
+                    .ConfigureOutputPort(0, splitterOutputConfig, null);
 
-                imgEncoder.ConfigureInputPort(encoderInputConfig, splitter.Outputs[0], null)
-                    .ConfigureOutputPort<FileEncodeOutputPort>(0, encoderOutputConfig, outputCaptureHandler);
+            imgEncoder.ConfigureInputPort(encoderInputConfig, splitter.Outputs[0], null)
+                .ConfigureOutputPort<FileEncodeOutputPort>(0, encoderOutputConfig, outputCaptureHandler);
 
-                imgEncoder2.ConfigureInputPort(encoderInputConfig, splitter.Outputs[1], null)
-                    .ConfigureOutputPort<FileEncodeOutputPort>(0, encoderOutputConfig, outputCaptureHandler2);
+            imgEncoder2.ConfigureInputPort(encoderInputConfig, splitter.Outputs[1], null)
+                .ConfigureOutputPort<FileEncodeOutputPort>(0, encoderOutputConfig, outputCaptureHandler2);
 
-                imgEncoder3.ConfigureInputPort(encoderInputConfig, splitter.Outputs[2], null)
-                    .ConfigureOutputPort<FileEncodeOutputPort>(0, encoderOutputConfig, outputCaptureHandler3);
+            imgEncoder3.ConfigureInputPort(encoderInputConfig, splitter.Outputs[2], null)
+                .ConfigureOutputPort<FileEncodeOutputPort>(0, encoderOutputConfig, outputCaptureHandler3);
 
-                resizer.ConfigureInputPort(resizerInputConfig, null)
-                        .ConfigureOutputPort(0, resizerOutputConfig, null);
+            resizer.ConfigureInputPort(resizerInputConfig, null)
+                    .ConfigureOutputPort(0, resizerOutputConfig, null);
 
-                imgEncoder4.ConfigureInputPort(encoderInputConfig, resizer.Outputs[0], null)
-                    .ConfigureOutputPort<FileEncodeOutputPort>(0, encoderOutputConfig, outputCaptureHandler4);
+            imgEncoder4.ConfigureInputPort(encoderInputConfig, resizer.Outputs[0], null)
+                .ConfigureOutputPort<FileEncodeOutputPort>(0, encoderOutputConfig, outputCaptureHandler4);
 
-                imgDecoder.Outputs[0].ConnectTo(splitter);
-                splitter.Outputs[0].ConnectTo(imgEncoder);
-                splitter.Outputs[1].ConnectTo(imgEncoder2);
-                splitter.Outputs[2].ConnectTo(imgEncoder3);
-                splitter.Outputs[3].ConnectTo(resizer);
-                resizer.Outputs[0].ConnectTo(imgEncoder4);
+            imgDecoder.Outputs[0].ConnectTo(splitter);
+            splitter.Outputs[0].ConnectTo(imgEncoder);
+            splitter.Outputs[1].ConnectTo(imgEncoder2);
+            splitter.Outputs[2].ConnectTo(imgEncoder3);
+            splitter.Outputs[3].ConnectTo(resizer);
+            resizer.Outputs[0].ConnectTo(imgEncoder4);
 
-                Fixture.MMALStandalone.PrintPipeline(imgDecoder);
+            Fixture.MMALStandalone.PrintPipeline(imgDecoder);
 
-                await Fixture.MMALStandalone.ProcessAsync(imgDecoder);
+            await Fixture.MMALStandalone.ProcessAsync(imgDecoder);
 
-                Fixture.CheckAndAssertFilepath(outputCaptureHandler.GetFilepath());
-                Fixture.CheckAndAssertFilepath(outputCaptureHandler2.GetFilepath());
-                Fixture.CheckAndAssertFilepath(outputCaptureHandler3.GetFilepath());
-                Fixture.CheckAndAssertFilepath(outputCaptureHandler4.GetFilepath());
-            }
+            Fixture.CheckAndAssertFilepath(outputCaptureHandler.GetFilepath());
+            Fixture.CheckAndAssertFilepath(outputCaptureHandler2.GetFilepath());
+            Fixture.CheckAndAssertFilepath(outputCaptureHandler3.GetFilepath());
+            Fixture.CheckAndAssertFilepath(outputCaptureHandler4.GetFilepath());
         }
     }
 }
