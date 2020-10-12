@@ -93,7 +93,7 @@ namespace MMALSharp
         {
             MmalLog.Logger.LogDebug("Destroying final components");
 
-            var tempList = new List<MMALDownstreamComponent>(MmalBootstrapper.DownstreamComponents);
+            var tempList = new List<MmalDownstreamComponent>(MmalBootstrapper.DownstreamComponents);
 
             tempList.ForEach(c => c.Dispose());
 

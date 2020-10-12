@@ -1,9 +1,7 @@
-﻿using MMALSharp.Components.EncoderComponents;
-
-namespace MMALSharp.Components
+﻿namespace MMALSharp.Components.EncoderComponents
 {
-    public abstract class MMALEncoderBase : MMALDownstreamHandlerComponent, IEncoder
+    public abstract class MmalEncoderBase : MmalDownstreamHandlerComponent, IEncoder
     {
-        protected MMALEncoderBase(string encoderName) : base(encoderName) { }
+        protected MmalEncoderBase(string encoderName) : base(encoderName) { }
     }
 }

@@ -3,49 +3,49 @@ using System.Runtime.InteropServices;
 
 namespace MMALSharp.Native
 {
-    public static class MMALConnection
+    public static class MmalConnection
     {
-        public const uint MMAL_CONNECTION_FLAG_TUNNELLING = 0x1u;
-        public const uint MMAL_CONNECTION_FLAG_ALLOCATION_ON_INPUT = 0x2u;
-        public const uint MMAL_CONNECTION_FLAG_ALLOCATION_ON_OUTPUT = 0x4u;
-        public const uint MMAL_CONNECTION_FLAG_KEEP_BUFFER_REQUIREMENTS = 0x8u;
-        public const uint MMAL_CONNECTION_FLAG_DIRECT = 0x10u;
+        public const uint MmalConnectionFlagTunnelling = 0x1u;
+        public const uint MmalConnectionFlagAllocationOnInput = 0x2u;
+        public const uint MmalConnectionFlagAllocationOnOutput = 0x4u;
+        public const uint MmalConnectionFlagKeepBufferRequirements = 0x8u;
+        public const uint MmalConnectionFlagDirect = 0x10u;
 
         // typedef - Pointer to MMAL_CONNECTION_T -> Returns MMAL_BOOL_T
-        public unsafe delegate int MMAL_CONNECTION_CALLBACK_T(MMAL_CONNECTION_T* conn);
+        public unsafe delegate int MmalConnectionCallbackT(MMAL_CONNECTION_T* conn);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_connection_create", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_connection_create(IntPtr* connection, MMAL_PORT_T* output, MMAL_PORT_T* input, uint flags);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_connection_create(IntPtr* connection, MMAL_PORT_T* output, MMAL_PORT_T* input, uint flags);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_connection_acquire", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe void mmal_connection_acquire(MMAL_CONNECTION_T* connection);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_connection_release", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_connection_release(MMAL_CONNECTION_T* connection);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_connection_release(MMAL_CONNECTION_T* connection);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_connection_destroy", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_connection_destroy(MMAL_CONNECTION_T* connection);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_connection_destroy(MMAL_CONNECTION_T* connection);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_connection_enable", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_connection_enable(MMAL_CONNECTION_T* connection);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_connection_enable(MMAL_CONNECTION_T* connection);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_connection_disable", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_connection_disable(MMAL_CONNECTION_T* connection);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_connection_disable(MMAL_CONNECTION_T* connection);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_connection_event_format_changed", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_connection_event_format_changed(MMAL_CONNECTION_T* connection, MMAL_BUFFER_HEADER_T* buffer);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_connection_event_format_changed(MMAL_CONNECTION_T* connection, MMAL_BUFFER_HEADER_T* buffer);
     }
 
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct MMAL_CONNECTION_T
     {
-        private IntPtr userData, callback;
-        private uint isEnabled, flags;
-        private MMAL_PORT_T* input, output;
-        private MMAL_POOL_T* pool;
-        private MMAL_QUEUE_T* queue;
-        private char* name;
-        private long timeSetup, timeEnable, timeDisable;
+        IntPtr userData, callback;
+        uint isEnabled, flags;
+        MMAL_PORT_T* input, output;
+        MMAL_POOL_T* pool;
+        MMAL_QUEUE_T* queue;
+        char* name;
+        long timeSetup, timeEnable, timeDisable;
 
         public IntPtr UserData => userData;
         public IntPtr Callback

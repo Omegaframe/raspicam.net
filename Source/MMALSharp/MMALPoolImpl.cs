@@ -18,7 +18,7 @@ namespace MMALSharp
         {
             MmalLog.Logger.LogDebug($"Creating buffer pool with {port.BufferNum} buffers of size {port.BufferSize}");
 
-            Ptr = MMALUtil.mmal_port_pool_create(port.Ptr, port.BufferNum, port.BufferSize);
+            Ptr = MmalUtil.mmal_port_pool_create(port.Ptr, port.BufferNum, port.BufferSize);
             Queue = new MmalQueueImpl((*Ptr).Queue);
         }
 
@@ -32,7 +32,7 @@ namespace MMALSharp
 
         public override bool CheckState() => Ptr != null && (IntPtr)Ptr != IntPtr.Zero;
 
-        public void Resize(uint numHeaders, uint size) => MmalCheck(MMALPool.mmal_pool_resize(Ptr, numHeaders, size), "Unable to resize pool");
+        public void Resize(uint numHeaders, uint size) => MmalCheck(MmalPool.mmal_pool_resize(Ptr, numHeaders, size), "Unable to resize pool");
 
         public override void Dispose()
         {
@@ -41,6 +41,6 @@ namespace MMALSharp
             base.Dispose();
         }
 
-        void Destroy() => MMALPool.mmal_pool_destroy(Ptr);
+        void Destroy() => MmalPool.mmal_pool_destroy(Ptr);
     }
 }

@@ -33,17 +33,15 @@ namespace MMALSharp.Callbacks
             long? pts = null;
 
             var data = buffer.GetBufferData();
-            var eos = buffer.AssertProperty(MMALBufferProperties.MMAL_BUFFER_HEADER_FLAG_FRAME_END) || buffer.AssertProperty(MMALBufferProperties.MMAL_BUFFER_HEADER_FLAG_EOS);
-            var containsIFrame = buffer.AssertProperty(MMALBufferProperties.MMAL_BUFFER_HEADER_FLAG_CONFIG);
+            var eos = buffer.AssertProperty(MmalBufferProperties.MmalBufferHeaderFlagFrameEnd) || buffer.AssertProperty(MmalBufferProperties.MmalBufferHeaderFlagEos);
+            var containsIFrame = buffer.AssertProperty(MmalBufferProperties.MmalBufferHeaderFlagConfig);
 
             if (this is IVideoOutputCallbackHandler &&
-                !buffer.AssertProperty(MMALBufferProperties.MMAL_BUFFER_HEADER_FLAG_CONFIG) &&
-                buffer.Pts != MMALUtil.MMAL_TIME_UNKNOWN &&
+                !buffer.AssertProperty(MmalBufferProperties.MmalBufferHeaderFlagConfig) &&
+                buffer.Pts != MmalUtil.MmalTimeUnknown &&
                 (buffer.Pts != _ptsLastTime || !_ptsLastTime.HasValue))
             {
-                if (!_ptsStartTime.HasValue)                
-                    _ptsStartTime = buffer.Pts;                
-
+                _ptsStartTime ??= buffer.Pts;    
                 _ptsLastTime = buffer.Pts;
                 pts = buffer.Pts - _ptsStartTime.Value;
             }
@@ -61,7 +59,7 @@ namespace MMALSharp.Callbacks
                 PixelFormat = WorkingPort.PixelFormat,
                 IsRaw = WorkingPort.EncodingType.EncType == MmalEncoding.EncodingType.PixelFormat,
                 Pts = pts,
-                Stride = MMALUtil.mmal_encoding_width_to_stride(WorkingPort.PixelFormat?.EncodingVal ?? WorkingPort.EncodingType.EncodingVal, WorkingPort.Resolution.Width)
+                Stride = MmalUtil.mmal_encoding_width_to_stride(WorkingPort.PixelFormat?.EncodingVal ?? WorkingPort.EncodingType.EncodingVal, WorkingPort.Resolution.Width)
             });
 
             if (eos)

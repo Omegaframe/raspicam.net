@@ -3,40 +3,39 @@ using System.Runtime.InteropServices;
 
 namespace MMALSharp.Native
 {
-    // mmal_parameters_common.h
-    public static class MMALParametersCommon
+    public static class MmalParametersCommon
     {
-        public const int MMAL_PARAMETER_GROUP_COMMON = 0 << 16;
-        public const int MMAL_PARAMETER_GROUP_CAMERA = 1 << 16;
-        public const int MMAL_PARAMETER_GROUP_VIDEO = 2 << 16;
-        public const int MMAL_PARAMETER_GROUP_AUDIO = 3 << 16;
-        public const int MMAL_PARAMETER_GROUP_CLOCK = 4 << 16;
-        public const int MMAL_PARAMETER_GROUP_MIRACAST = 5 << 16;
-        public const int MMAL_PARAMETER_UNUSED = 0;
-        public const int MMAL_PARAMETER_SUPPORTED_ENCODINGS = 1;
-        public const int MMAL_PARAMETER_URI = 2;
-        public const int MMAL_PARAMETER_CHANGE_EVENT_REQUEST = 3;
-        public const int MMAL_PARAMETER_ZERO_COPY = 4;
-        public const int MMAL_PARAMETER_BUFFER_REQUIREMENTS = 5;
-        public const int MMAL_PARAMETER_STATISTICS = 6;
-        public const int MMAL_PARAMETER_CORE_STATISTICS = 7;
-        public const int MMAL_PARAMETER_MEM_USAGE = 8;
-        public const int MMAL_PARAMETER_BUFFER_FLAG_FILTER = 9;
-        public const int MMAL_PARAMETER_SEEK = 10;
-        public const int MMAL_PARAMETER_POWERMON_ENABLE = 11;
-        public const int MMAL_PARAMETER_LOGGING = 12;
-        public const int MMAL_PARAMETER_SYSTEM_TIME = 13;
-        public const int MMAL_PARAMETER_NO_IMAGE_PADDING = 14;
-        public const int MMAL_PARAMETER_LOCKSTEP_ENABLE = 15;
+        public const int MmalParameterGroupCommon = 0;
+        public const int MmalParameterGroupCamera = 1 << 16;
+        public const int MmalParameterGroupVideo = 2 << 16;
+        public const int MmalParameterGroupAudio = 3 << 16;
+        public const int MmalParameterGroupClock = 4 << 16;
+        public const int MmalParameterGroupMiracast = 5 << 16;
+        public const int MmalParameterUnused = 0;
+        public const int MmalParameterSupportedEncodings = 1;
+        public const int MmalParameterUri = 2;
+        public const int MmalParameterChangeEventRequest = 3;
+        public const int MmalParameterZeroCopy = 4;
+        public const int MmalParameterBufferRequirements = 5;
+        public const int MmalParameterStatistics = 6;
+        public const int MmalParameterCoreStatistics = 7;
+        public const int MmalParameterMemUsage = 8;
+        public const int MmalParameterBufferFlagFilter = 9;
+        public const int MmalParameterSeek = 10;
+        public const int MmalParameterPowermonEnable = 11;
+        public const int MmalParameterLogging = 12;
+        public const int MmalParameterSystemTime = 13;
+        public const int MmalParameterNoImagePadding = 14;
+        public const int MmalParameterLockstepEnable = 15;
 
-        public const int MMAL_PARAM_SEEK_FLAG_PRECISE = 0x01;
-        public const int MMAL_PARAM_SEEK_FLAG_FORWARD = 0x02;
+        public const int MmalParamSeekFlagPrecise = 0x01;
+        public const int MmalParamSeekFlagForward = 0x02;
     }
 
-    public enum MMAL_CORE_STATS_DIR
+    public enum MmalCoreStatsDir
     {
-        MMAL_CORE_STATS_RX,
-        MMAL_CORE_STATS_TX
+        MmalCoreStatsRx,
+        MmalCoreStatsTx
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -58,7 +57,7 @@ namespace MMALSharp.Native
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
 
-        private byte[] data;
+        byte[] data;
 
         public byte[] Data => data;
 
@@ -73,8 +72,8 @@ namespace MMALSharp.Native
     public unsafe struct MMAL_PARAMETER_CHANGE_EVENT_REQUEST_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private int changeId;
-        private int enable;
+        int changeId;
+        int enable;
 
         public int ChangeId => changeId;
         public int Enable => enable;
@@ -92,7 +91,7 @@ namespace MMALSharp.Native
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
 
-        private int bufferNumMin, bufferSizeMin, bufferAlignmentMin, bufferNumRecommended, bufferSizeRecommended;
+        int bufferNumMin, bufferSizeMin, bufferAlignmentMin, bufferNumRecommended, bufferSizeRecommended;
 
         public int BufferNumMin => this.bufferNumMin;
 
@@ -119,8 +118,8 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_SEEK_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private long offset;
-        private uint flags;
+        long offset;
+        uint flags;
 
         public long Offset => this.offset;
 
@@ -139,14 +138,14 @@ namespace MMALSharp.Native
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
 
-        private uint bufferCount;
-        private uint frameCount;
-        private uint framesSkipped;
-        private uint framesDiscarded;
-        private uint eosSeen;
-        private uint maximumFrameBytes;
-        private uint totalBytes;
-        private uint corruptMacroblocks;
+        uint bufferCount;
+        uint frameCount;
+        uint framesSkipped;
+        uint framesDiscarded;
+        uint eosSeen;
+        uint maximumFrameBytes;
+        uint totalBytes;
+        uint corruptMacroblocks;
 
         public uint BufferCount => this.bufferCount;
 
@@ -185,17 +184,17 @@ namespace MMALSharp.Native
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
 
-        private MMAL_CORE_STATS_DIR dir;
-        private int reset;
-        private MMAL_CORE_STATISTICS_T stats;
+        MmalCoreStatsDir dir;
+        int reset;
+        MMAL_CORE_STATISTICS_T stats;
 
-        public MMAL_CORE_STATS_DIR Dir => this.dir;
+        public MmalCoreStatsDir Dir => this.dir;
 
         public int Reset => this.reset;
 
         public MMAL_CORE_STATISTICS_T Stats => this.stats;
 
-        public MMAL_PARAMETER_CORE_STATISTICS_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_CORE_STATS_DIR dir, int reset,
+        public MMAL_PARAMETER_CORE_STATISTICS_T(MMAL_PARAMETER_HEADER_T hdr, MmalCoreStatsDir dir, int reset,
                                                 MMAL_CORE_STATISTICS_T stats)
         {
             this.Hdr = hdr;
@@ -209,7 +208,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_MEM_USAGE_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private int poolMemAllocSize;
+        int poolMemAllocSize;
 
         public int PoolMemAllocSize => this.poolMemAllocSize;
 
@@ -225,8 +224,8 @@ namespace MMALSharp.Native
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
 
-        private uint set;
-        private uint clear;
+        uint set;
+        uint clear;
 
         public uint Set => this.set;
 
@@ -240,421 +239,420 @@ namespace MMALSharp.Native
         }
     }
 
-    // mmal_parameters_camera.h
-    public static class MMALParametersCamera
+    public static class MmalParametersCamera
     {
-        public const int MMAL_PARAMETER_THUMBNAIL_CONFIGURATION = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA;
-        public const int MMAL_PARAMETER_CAPTURE_QUALITY = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 1;
-        public const int MMAL_PARAMETER_ROTATION = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 2;
-        public const int MMAL_PARAMETER_EXIF_DISABLE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 3;
-        public const int MMAL_PARAMETER_EXIF = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 4;
-        public const int MMAL_PARAMETER_AWB_MODE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 5;
-        public const int MMAL_PARAMETER_IMAGE_EFFECT = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 6;
-        public const int MMAL_PARAMETER_COLOUR_EFFECT = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 7;
-        public const int MMAL_PARAMETER_FLICKER_AVOID = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 8;
-        public const int MMAL_PARAMETER_FLASH = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 9;
-        public const int MMAL_PARAMETER_REDEYE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 10;
-        public const int MMAL_PARAMETER_FOCUS = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 11;
-        public const int MMAL_PARAMETER_FOCAL_LENGTHS = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 12;
-        public const int MMAL_PARAMETER_EXPOSURE_COMP = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 13;
-        public const int MMAL_PARAMETER_ZOOM = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 14;
-        public const int MMAL_PARAMETER_MIRROR = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 15;
-        public const int MMAL_PARAMETER_CAMERA_NUM = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 16;
-        public const int MMAL_PARAMETER_CAPTURE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 17;
-        public const int MMAL_PARAMETER_EXPOSURE_MODE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 18;
-        public const int MMAL_PARAMETER_EXP_METERING_MODE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 19;
-        public const int MMAL_PARAMETER_FOCUS_STATUS = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 20;
-        public const int MMAL_PARAMETER_CAMERA_CONFIG = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 21;
-        public const int MMAL_PARAMETER_CAPTURE_STATUS = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 22;
-        public const int MMAL_PARAMETER_FACE_TRACK = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 23;
-        public const int MMAL_PARAMETER_DRAW_BOX_FACES_AND_FOCUS = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 24;
-        public const int MMAL_PARAMETER_JPEG_Q_FACTOR = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 25;
-        public const int MMAL_PARAMETER_FRAME_RATE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 26;
-        public const int MMAL_PARAMETER_USE_STC = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 27;
-        public const int MMAL_PARAMETER_CAMERA_INFO = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 28;
-        public const int MMAL_PARAMETER_VIDEO_STABILISATION = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 29;
-        public const int MMAL_PARAMETER_FACE_TRACK_RESULTS = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 30;
-        public const int MMAL_PARAMETER_ENABLE_RAW_CAPTURE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 31;
-        public const int MMAL_PARAMETER_DPF_FILE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 32;
-        public const int MMAL_PARAMETER_ENABLE_DPF_FILE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 33;
-        public const int MMAL_PARAMETER_DPF_FAIL_IS_FATAL = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 34;
-        public const int MMAL_PARAMETER_CAPTURE_MODE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 35;
-        public const int MMAL_PARAMETER_FOCUS_REGIONS = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 36;
-        public const int MMAL_PARAMETER_INPUT_CROP = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 37;
-        public const int MMAL_PARAMETER_SENSOR_INFORMATION = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 38;
-        public const int MMAL_PARAMETER_FLASH_SELECT = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 39;
-        public const int MMAL_PARAMETER_FIELD_OF_VIEW = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 40;
-        public const int MMAL_PARAMETER_HIGH_DYNAMIC_RANGE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 41;
-        public const int MMAL_PARAMETER_DYNAMIC_RANGE_COMPRESSION = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 42;
-        public const int MMAL_PARAMETER_ALGORITHM_CONTROL = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 43;
-        public const int MMAL_PARAMETER_SHARPNESS = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 44;
-        public const int MMAL_PARAMETER_CONTRAST = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 45;
-        public const int MMAL_PARAMETER_BRIGHTNESS = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 46;
-        public const int MMAL_PARAMETER_SATURATION = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 47;
-        public const int MMAL_PARAMETER_ISO = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 48;
-        public const int MMAL_PARAMETER_ANTISHAKE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 49;
-        public const int MMAL_PARAMETER_IMAGE_EFFECT_PARAMETERS = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 50;
-        public const int MMAL_PARAMETER_CAMERA_BURST_CAPTURE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 51;
-        public const int MMAL_PARAMETER_CAMERA_MIN_ISO = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 52;
-        public const int MMAL_PARAMETER_CAMERA_USE_CASE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 53;
-        public const int MMAL_PARAMETER_CAPTURE_STATS_PASS = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 54;
-        public const int MMAL_PARAMETER_CAMERA_CUSTOM_SENSOR_CONFIG = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 55;
-        public const int MMAL_PARAMETER_ENABLE_REGISTER_FILE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 56;
-        public const int MMAL_PARAMETER_REGISTER_FAIL_IS_FATAL = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 57;
-        public const int MMAL_PARAMETER_CONFIGFILE_REGISTERS = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 58;
-        public const int MMAL_PARAMETER_CONFIGFILE_CHUNK_REGISTERS = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 59;
-        public const int MMAL_PARAMETER_JPEG_ATTACH_LOG = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 60;
-        public const int MMAL_PARAMETER_ZERO_SHUTTER_LAG = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 61;
-        public const int MMAL_PARAMETER_FPS_RANGE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 62;
-        public const int MMAL_PARAMETER_CAPTURE_EXPOSURE_COMP = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 63;
-        public const int MMAL_PARAMETER_SW_SHARPEN_DISABLE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 64;
-        public const int MMAL_PARAMETER_FLASH_REQUIRED = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 65;
-        public const int MMAL_PARAMETER_SW_SATURATION_DISABLE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 66;
-        public const int MMAL_PARAMETER_SHUTTER_SPEED = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 67;
-        public const int MMAL_PARAMETER_CUSTOM_AWB_GAINS = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 68;
-        public const int MMAL_PARAMETER_CAMERA_SETTINGS = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 69;
-        public const int MMAL_PARAMETER_PRIVACY_INDICATOR = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 70;
-        public const int MMAL_PARAMETER_VIDEO_DENOISE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 71;
-        public const int MMAL_PARAMETER_STILLS_DENOISE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 72;
-        public const int MMAL_PARAMETER_ANNOTATE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 73;
-        public const int MMAL_PARAMETER_STEREOSCOPIC_MODE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 74;
-        public const int MMAL_PARAMETER_CAMERA_INTERFACE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 75;
-        public const int MMAL_PARAMETER_CAMERA_CLOCKING_MODE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 76;
-        public const int MMAL_PARAMETER_CAMERA_RX_CONFIG = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 77;
-        public const int MMAL_PARAMETER_CAMERA_RX_TIMING = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 78;
-        public const int MMAL_PARAMETER_DPF_CONFIG = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 79;
-        public const int MMAL_PARAMETER_JPEG_RESTART_INTERVAL = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 80;
-        public const int MMAL_PARAMETER_CAMERA_ISP_BLOCK_OVERRIDE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 81;
-        public const int MMAL_PARAMETER_LENS_SHADING_OVERRIDE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 82;
-        public const int MMAL_PARAMETER_BLACK_LEVEL = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 83;
-        public const int MMAL_PARAMETER_RESIZE_PARAMS = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 84;
-        public const int MMAL_PARAMETER_CROP = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 85;
-        public const int MMAL_PARAMETER_OUTPUT_SHIFT = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 86;
-        public const int MMAL_PARAMETER_CCM_SHIFT = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 87;
-        public const int MMAL_PARAMETER_CUSTOM_CCM = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 88;
-        public const int MMAL_PARAMETER_ANALOG_GAIN = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 89;
-        public const int MMAL_PARAMETER_DIGITAL_GAIN = MMALParametersCommon.MMAL_PARAMETER_GROUP_CAMERA + 90;
+        public const int MmalParameterThumbnailConfiguration = MmalParametersCommon.MmalParameterGroupCamera;
+        public const int MmalParameterCaptureQuality = MmalParametersCommon.MmalParameterGroupCamera + 1;
+        public const int MmalParameterRotation = MmalParametersCommon.MmalParameterGroupCamera + 2;
+        public const int MmalParameterExifDisable = MmalParametersCommon.MmalParameterGroupCamera + 3;
+        public const int MmalParameterExif = MmalParametersCommon.MmalParameterGroupCamera + 4;
+        public const int MmalParameterAwbMode = MmalParametersCommon.MmalParameterGroupCamera + 5;
+        public const int MmalParameterImageEffect = MmalParametersCommon.MmalParameterGroupCamera + 6;
+        public const int MmalParameterColorEffect = MmalParametersCommon.MmalParameterGroupCamera + 7;
+        public const int MmalParameterFlickerAvoid = MmalParametersCommon.MmalParameterGroupCamera + 8;
+        public const int MmalParameterFlash = MmalParametersCommon.MmalParameterGroupCamera + 9;
+        public const int MmalParameterRedeye = MmalParametersCommon.MmalParameterGroupCamera + 10;
+        public const int MmalParameterFocus = MmalParametersCommon.MmalParameterGroupCamera + 11;
+        public const int MmalParameterFocalLengths = MmalParametersCommon.MmalParameterGroupCamera + 12;
+        public const int MmalParameterExposureComp = MmalParametersCommon.MmalParameterGroupCamera + 13;
+        public const int MmalParameterZoom = MmalParametersCommon.MmalParameterGroupCamera + 14;
+        public const int MmalParameterMirror = MmalParametersCommon.MmalParameterGroupCamera + 15;
+        public const int MmalParameterCameraNum = MmalParametersCommon.MmalParameterGroupCamera + 16;
+        public const int MmalParameterCapture = MmalParametersCommon.MmalParameterGroupCamera + 17;
+        public const int MmalParameterExposureMode = MmalParametersCommon.MmalParameterGroupCamera + 18;
+        public const int MmalParameterExpMeteringMode = MmalParametersCommon.MmalParameterGroupCamera + 19;
+        public const int MmalParameterFocusStatus = MmalParametersCommon.MmalParameterGroupCamera + 20;
+        public const int MmalParameterCameraConfig = MmalParametersCommon.MmalParameterGroupCamera + 21;
+        public const int MmalParameterCaptureStatus = MmalParametersCommon.MmalParameterGroupCamera + 22;
+        public const int MmalParameterFaceTrack = MmalParametersCommon.MmalParameterGroupCamera + 23;
+        public const int MmalParameterDrawBoxFacesAndFocus = MmalParametersCommon.MmalParameterGroupCamera + 24;
+        public const int MmalParameterJpegQFactor = MmalParametersCommon.MmalParameterGroupCamera + 25;
+        public const int MmalParameterFrameRate = MmalParametersCommon.MmalParameterGroupCamera + 26;
+        public const int MmalParameterUseStc = MmalParametersCommon.MmalParameterGroupCamera + 27;
+        public const int MmalParameterCameraInfo = MmalParametersCommon.MmalParameterGroupCamera + 28;
+        public const int MmalParameterVideoStabilisation = MmalParametersCommon.MmalParameterGroupCamera + 29;
+        public const int MmalParameterFaceTrackResults = MmalParametersCommon.MmalParameterGroupCamera + 30;
+        public const int MmalParameterEnableRawCapture = MmalParametersCommon.MmalParameterGroupCamera + 31;
+        public const int MmalParameterDpfFile = MmalParametersCommon.MmalParameterGroupCamera + 32;
+        public const int MmalParameterEnableDpfFile = MmalParametersCommon.MmalParameterGroupCamera + 33;
+        public const int MmalParameterDpfFailIsFatal = MmalParametersCommon.MmalParameterGroupCamera + 34;
+        public const int MmalParameterCaptureMode = MmalParametersCommon.MmalParameterGroupCamera + 35;
+        public const int MmalParameterFocusRegions = MmalParametersCommon.MmalParameterGroupCamera + 36;
+        public const int MmalParameterInputCrop = MmalParametersCommon.MmalParameterGroupCamera + 37;
+        public const int MmalParameterSensorInformation = MmalParametersCommon.MmalParameterGroupCamera + 38;
+        public const int MmalParameterFlashSelect = MmalParametersCommon.MmalParameterGroupCamera + 39;
+        public const int MmalParameterFieldOfView = MmalParametersCommon.MmalParameterGroupCamera + 40;
+        public const int MmalParameterHighDynamicRange = MmalParametersCommon.MmalParameterGroupCamera + 41;
+        public const int MmalParameterDynamicRangeCompression = MmalParametersCommon.MmalParameterGroupCamera + 42;
+        public const int MmalParameterAlgorithmControl = MmalParametersCommon.MmalParameterGroupCamera + 43;
+        public const int MmalParameterSharpness = MmalParametersCommon.MmalParameterGroupCamera + 44;
+        public const int MmalParameterContrast = MmalParametersCommon.MmalParameterGroupCamera + 45;
+        public const int MmalParameterBrightness = MmalParametersCommon.MmalParameterGroupCamera + 46;
+        public const int MmalParameterSaturation = MmalParametersCommon.MmalParameterGroupCamera + 47;
+        public const int MmalParameterIso = MmalParametersCommon.MmalParameterGroupCamera + 48;
+        public const int MmalParameterAntishake = MmalParametersCommon.MmalParameterGroupCamera + 49;
+        public const int MmalParameterImageEffectParameters = MmalParametersCommon.MmalParameterGroupCamera + 50;
+        public const int MmalParameterCameraBurstCapture = MmalParametersCommon.MmalParameterGroupCamera + 51;
+        public const int MmalParameterCameraMinIso = MmalParametersCommon.MmalParameterGroupCamera + 52;
+        public const int MmalParameterCameraUseCase = MmalParametersCommon.MmalParameterGroupCamera + 53;
+        public const int MmalParameterCaptureStatsPass = MmalParametersCommon.MmalParameterGroupCamera + 54;
+        public const int MmalParameterCameraCustomSensorConfig = MmalParametersCommon.MmalParameterGroupCamera + 55;
+        public const int MmalParameterEnableRegisterFile = MmalParametersCommon.MmalParameterGroupCamera + 56;
+        public const int MmalParameterRegisterFailIsFatal = MmalParametersCommon.MmalParameterGroupCamera + 57;
+        public const int MmalParameterConfigfileRegisters = MmalParametersCommon.MmalParameterGroupCamera + 58;
+        public const int MmalParameterConfigfileChunkRegisters = MmalParametersCommon.MmalParameterGroupCamera + 59;
+        public const int MmalParameterJpegAttachLog = MmalParametersCommon.MmalParameterGroupCamera + 60;
+        public const int MmalParameterZeroShutterLag = MmalParametersCommon.MmalParameterGroupCamera + 61;
+        public const int MmalParameterFpsRange = MmalParametersCommon.MmalParameterGroupCamera + 62;
+        public const int MmalParameterCaptureExposureComp = MmalParametersCommon.MmalParameterGroupCamera + 63;
+        public const int MmalParameterSwSharpenDisable = MmalParametersCommon.MmalParameterGroupCamera + 64;
+        public const int MmalParameterFlashRequired = MmalParametersCommon.MmalParameterGroupCamera + 65;
+        public const int MmalParameterSwSaturationDisable = MmalParametersCommon.MmalParameterGroupCamera + 66;
+        public const int MmalParameterShutterSpeed = MmalParametersCommon.MmalParameterGroupCamera + 67;
+        public const int MmalParameterCustomAwbGains = MmalParametersCommon.MmalParameterGroupCamera + 68;
+        public const int MmalParameterCameraSettings = MmalParametersCommon.MmalParameterGroupCamera + 69;
+        public const int MmalParameterPrivacyIndicator = MmalParametersCommon.MmalParameterGroupCamera + 70;
+        public const int MmalParameterVideoDenoise = MmalParametersCommon.MmalParameterGroupCamera + 71;
+        public const int MmalParameterStillsDenoise = MmalParametersCommon.MmalParameterGroupCamera + 72;
+        public const int MmalParameterAnnotate = MmalParametersCommon.MmalParameterGroupCamera + 73;
+        public const int MmalParameterStereoscopicMode = MmalParametersCommon.MmalParameterGroupCamera + 74;
+        public const int MmalParameterCameraInterface = MmalParametersCommon.MmalParameterGroupCamera + 75;
+        public const int MmalParameterCameraClockingMode = MmalParametersCommon.MmalParameterGroupCamera + 76;
+        public const int MmalParameterCameraRxConfig = MmalParametersCommon.MmalParameterGroupCamera + 77;
+        public const int MmalParameterCameraRxTiming = MmalParametersCommon.MmalParameterGroupCamera + 78;
+        public const int MmalParameterDpfConfig = MmalParametersCommon.MmalParameterGroupCamera + 79;
+        public const int MmalParameterJpegRestartInterval = MmalParametersCommon.MmalParameterGroupCamera + 80;
+        public const int MmalParameterCameraIspBlockOverride = MmalParametersCommon.MmalParameterGroupCamera + 81;
+        public const int MmalParameterLensShadingOverride = MmalParametersCommon.MmalParameterGroupCamera + 82;
+        public const int MmalParameterBlackLevel = MmalParametersCommon.MmalParameterGroupCamera + 83;
+        public const int MmalParameterResizeParams = MmalParametersCommon.MmalParameterGroupCamera + 84;
+        public const int MmalParameterCrop = MmalParametersCommon.MmalParameterGroupCamera + 85;
+        public const int MmalParameterOutputShift = MmalParametersCommon.MmalParameterGroupCamera + 86;
+        public const int MmalParameterCcmShift = MmalParametersCommon.MmalParameterGroupCamera + 87;
+        public const int MmalParameterCustomCcm = MmalParametersCommon.MmalParameterGroupCamera + 88;
+        public const int MmalParameterAnalogGain = MmalParametersCommon.MmalParameterGroupCamera + 89;
+        public const int MmalParameterDigitalGain = MmalParametersCommon.MmalParameterGroupCamera + 90;
 
-        public const int MMAL_MAX_IMAGEFX_PARAMETERS = 6;
+        public const int MmalMaxImageFxParameters = 6;
 
-        public const int MMAL_PARAMETER_CAMERA_INFO_MAX_CAMERAS = 4;
-        public const int MMAL_PARAMETER_CAMERA_INFO_MAX_FLASHES = 2;
-        public const int MMAL_PARAMETER_CAMERA_INFO_MAX_STR_LEN = 16;
+        public const int MmalParameterCameraInfoMaxCameras = 4;
+        public const int MmalParameterCameraInfoMaxFlashes = 2;
+        public const int MmalParameterCameraInfoMaxStrLen = 16;
 
-        public const int MMAL_CAMERA_ANNOTATE_MAX_TEXT_LEN = 32;
-        public const int MMAL_CAMERA_ANNOTATE_MAX_TEXT_LEN_V2 = 128;
-        public const int MMAL_CAMERA_ANNOTATE_MAX_TEXT_LEN_V3 = 128;
+        public const int MmalCameraAnnotateMaxTextLen = 32;
+        public const int MmalCameraAnnotateMaxTextLenV2 = 128;
+        public const int MmalCameraAnnotateMaxTextLenV3 = 128;
     }
 
-    public enum MMAL_PARAM_EXPOSUREMODE_T
+    public enum MmalParamExposuremodeT
     {
-        MMAL_PARAM_EXPOSUREMODE_OFF,
-        MMAL_PARAM_EXPOSUREMODE_AUTO,
-        MMAL_PARAM_EXPOSUREMODE_NIGHT,
-        MMAL_PARAM_EXPOSUREMODE_NIGHTPREVIEW,
-        MMAL_PARAM_EXPOSUREMODE_BACKLIGHT,
-        MMAL_PARAM_EXPOSUREMODE_SPOTLIGHT,
-        MMAL_PARAM_EXPOSUREMODE_SPORTS,
-        MMAL_PARAM_EXPOSUREMODE_SNOW,
-        MMAL_PARAM_EXPOSUREMODE_BEACH,
-        MMAL_PARAM_EXPOSUREMODE_VERYLONG,
-        MMAL_PARAM_EXPOSUREMODE_FIXEDFPS,
-        MMAL_PARAM_EXPOSUREMODE_ANTISHAKE,
-        MMAL_PARAM_EXPOSUREMODE_FIREWORKS,
-        MMAL_PARAM_EXPOSUREMODE_MAX = 0x7fffffff
+        MmalParamExposuremodeOff,
+        MmalParamExposuremodeAuto,
+        MmalParamExposuremodeNight,
+        MmalParamExposuremodeNightpreview,
+        MmalParamExposuremodeBacklight,
+        MmalParamExposuremodeSpotlight,
+        MmalParamExposuremodeSports,
+        MmalParamExposuremodeSnow,
+        MmalParamExposuremodeBeach,
+        MmalParamExposuremodeVerylong,
+        MmalParamExposuremodeFixedfps,
+        MmalParamExposuremodeAntishake,
+        MmalParamExposuremodeFireworks,
+        MmalParamExposuremodeMax = 0x7fffffff
     }
 
-    public enum MMAL_PARAM_EXPOSUREMETERINGMODE_T
+    public enum MmalParamExposuremeteringmodeT
     {
-        MMAL_PARAM_EXPOSUREMETERINGMODE_AVERAGE,
-        MMAL_PARAM_EXPOSUREMETERINGMODE_SPOT,
-        MMAL_PARAM_EXPOSUREMETERINGMODE_BACKLIT,
-        MMAL_PARAM_EXPOSUREMETERINGMODE_MATRIX,
-        MMAL_PARAM_EXPOSUREMETERINGMODE_MAX = 0x7fffffff
+        MmalParamExposuremeteringmodeAverage,
+        MmalParamExposuremeteringmodeSpot,
+        MmalParamExposuremeteringmodeBacklit,
+        MmalParamExposuremeteringmodeMatrix,
+        MmalParamExposuremeteringmodeMax = 0x7fffffff
     }
 
-    public enum MMAL_PARAM_AWBMODE_T
+    public enum MmalParamAwbmodeT
     {
-        MMAL_PARAM_AWBMODE_OFF,
-        MMAL_PARAM_AWBMODE_AUTO,
-        MMAL_PARAM_AWBMODE_SUNLIGHT,
-        MMAL_PARAM_AWBMODE_CLOUDY,
-        MMAL_PARAM_AWBMODE_SHADE,
-        MMAL_PARAM_AWBMODE_TUNGSTEN,
-        MMAL_PARAM_AWBMODE_FLUORESCENT,
-        MMAL_PARAM_AWBMODE_INCANDESCENT,
-        MMAL_PARAM_AWBMODE_FLASH,
-        MMAL_PARAM_AWBMODE_HORIZON,
-        MMAL_PARAM_AWBMODE_GREYWORLD,
-        MMAL_PARAM_AWBMODE_MAX = 0x7fffffff
+        MmalParamAwbmodeOff,
+        MmalParamAwbmodeAuto,
+        MmalParamAwbmodeSunlight,
+        MmalParamAwbmodeCloudy,
+        MmalParamAwbmodeShade,
+        MmalParamAwbmodeTungsten,
+        MmalParamAwbmodeFluorescent,
+        MmalParamAwbmodeIncandescent,
+        MmalParamAwbmodeFlash,
+        MmalParamAwbmodeHorizon,
+        MmalParamAwbmodeGreyworld,
+        MmalParamAwbmodeMax = 0x7fffffff
     }
 
-    public enum MMAL_PARAM_IMAGEFX_T
+    public enum MmalParamImagefxT
     {
-        MMAL_PARAM_IMAGEFX_NONE,
-        MMAL_PARAM_IMAGEFX_NEGATIVE,
-        MMAL_PARAM_IMAGEFX_SOLARIZE,
-        MMAL_PARAM_IMAGEFX_POSTERIZE,
-        MMAL_PARAM_IMAGEFX_WHITEBOARD,
-        MMAL_PARAM_IMAGEFX_BLACKBOARD,
-        MMAL_PARAM_IMAGEFX_SKETCH,
-        MMAL_PARAM_IMAGEFX_DENOISE,
-        MMAL_PARAM_IMAGEFX_EMBOSS,
-        MMAL_PARAM_IMAGEFX_OILPAINT,
-        MMAL_PARAM_IMAGEFX_HATCH,
-        MMAL_PARAM_IMAGEFX_GPEN,
-        MMAL_PARAM_IMAGEFX_PASTEL,
-        MMAL_PARAM_IMAGEFX_WATERCOLOUR,
-        MMAL_PARAM_IMAGEFX_FILM,
-        MMAL_PARAM_IMAGEFX_BLUR,
-        MMAL_PARAM_IMAGEFX_SATURATION,
-        MMAL_PARAM_IMAGEFX_COLOURSWAP,
-        MMAL_PARAM_IMAGEFX_WASHEDOUT,
-        MMAL_PARAM_IMAGEFX_POSTERISE,
-        MMAL_PARAM_IMAGEFX_COLOURPOINT,
-        MMAL_PARAM_IMAGEFX_COLOURBALANCE,
-        MMAL_PARAM_IMAGEFX_CARTOON,
-        MMAL_PARAM_IMAGEFX_DEINTERLACE_DOUBLE,
-        MMAL_PARAM_IMAGEFX_DEINTERLACE_ADV,
-        MMAL_PARAM_IMAGEFX_DEINTERLACE_FAST,
-        MMAL_PARAM_IMAGEFX_MAX = 0x7fffffff
+        MmalParamImagefxNone,
+        MmalParamImagefxNegative,
+        MmalParamImagefxSolarize,
+        MmalParamImagefxPosterize,
+        MmalParamImagefxWhiteboard,
+        MmalParamImagefxBlackboard,
+        MmalParamImagefxSketch,
+        MmalParamImagefxDenoise,
+        MmalParamImagefxEmboss,
+        MmalParamImagefxOilpaint,
+        MmalParamImagefxHatch,
+        MmalParamImagefxGpen,
+        MmalParamImagefxPastel,
+        MmalParamImagefxWatercolour,
+        MmalParamImagefxFilm,
+        MmalParamImagefxBlur,
+        MmalParamImagefxSaturation,
+        MmalParamImagefxColourswap,
+        MmalParamImagefxWashedout,
+        MmalParamImagefxPosterise,
+        MmalParamImagefxColourpoint,
+        MmalParamImagefxColourbalance,
+        MmalParamImagefxCartoon,
+        MmalParamImagefxDeinterlaceDouble,
+        MmalParamImagefxDeinterlaceAdv,
+        MmalParamImagefxDeinterlaceFast,
+        MmalParamImagefxMax = 0x7fffffff
     }
 
-    public enum MMAL_CAMERA_STC_MODE_T
+    public enum MmalCameraStcModeT
     {
-        MMAL_PARAM_STC_MODE_OFF,
-        MMAL_PARAM_STC_MODE_RAW,
-        MMAL_PARAM_STC_MODE_COOKED,
-        MMAL_PARAM_STC_MODE_MAX = 0x7fffffff
+        MmalParamStcModeOff,
+        MmalParamStcModeRaw,
+        MmalParamStcModeCooked,
+        MmalParamStcModeMax = 0x7fffffff
     }
 
-    public enum MMAL_PARAM_FLICKERAVOID_T
+    public enum MmalParamFlickeravoidT
     {
-        MMAL_PARAM_FLICKERAVOID_OFF,
-        MMAL_PARAM_FLICKERAVOID_AUTO,
-        MMAL_PARAM_FLICKERAVOID_50HZ,
-        MMAL_PARAM_FLICKERAVOID_60HZ,
-        MMAL_PARAM_FLICKERAVOID_MAX = 0x7FFFFFFF
+        MmalParamFlickeravoidOff,
+        MmalParamFlickeravoidAuto,
+        MmalParamFlickeravoid50Hz,
+        MmalParamFlickeravoid60Hz,
+        MmalParamFlickeravoidMax = 0x7FFFFFFF
     }
 
-    public enum MMAL_PARAM_FLASH_T
+    public enum MmalParamFlashT
     {
-        MMAL_PARAM_FLASH_OFF,
-        MMAL_PARAM_FLASH_AUTO,
-        MMAL_PARAM_FLASH_ON,
-        MMAL_PARAM_FLASH_REDEYE,
-        MMAL_PARAM_FLASH_FILLIN,
-        MMAL_PARAM_FLASH_TORCH,
-        MMAL_PARAM_FLASH_MAX = 0x7FFFFFFF
+        MmalParamFlashOff,
+        MmalParamFlashAuto,
+        MmalParamFlashOn,
+        MmalParamFlashRedeye,
+        MmalParamFlashFillin,
+        MmalParamFlashTorch,
+        MmalParamFlashMax = 0x7FFFFFFF
     }
 
-    public enum MMAL_PARAM_REDEYE_T
+    public enum MmalParamRedeyeT
     {
-        MMAL_PARAM_REDEYE_OFF,
-        MMAL_PARAM_REDEYE_ON,
-        MMAL_PARAM_REDEYE_SIMPLE,
-        MMAL_PARAM_REDEYE_MAX = 0x7FFFFFFF
+        MmalParamRedeyeOff,
+        MmalParamRedeyeOn,
+        MmalParamRedeyeSimple,
+        MmalParamRedeyeMax = 0x7FFFFFFF
     }
 
-    public enum MMAL_PARAM_FOCUS_T
+    public enum MmalParamFocusT
     {
-        MMAL_PARAM_FOCUS_AUTO,
-        MMAL_PARAM_FOCUS_AUTO_NEAR,
-        MMAL_PARAM_FOCUS_AUTO_MACRO,
-        MMAL_PARAM_FOCUS_CAF,
-        MMAL_PARAM_FOCUS_CAF_NEAR,
-        MMAL_PARAM_FOCUS_FIXED_INFINITY,
-        MMAL_PARAM_FOCUS_FIXED_HYPERFOCAL,
-        MMAL_PARAM_FOCUS_FIXED_NEAR,
-        MMAL_PARAM_FOCUS_FIXED_MACRO,
-        MMAL_PARAM_FOCUS_EDOF,
-        MMAL_PARAM_FOCUS_CAF_MACRO,
-        MMAL_PARAM_FOCUS_CAF_FAST,
-        MMAL_PARAM_FOCUS_CAF_NEAR_FAST,
-        MMAL_PARAM_FOCUS_CAF_MACRO_FAST,
-        MMAL_PARAM_FOCUS_FIXED_CURRENT,
-        MMAL_PARAM_FOCUS_MAX = 0x7FFFFFFF
+        MmalParamFocusAuto,
+        MmalParamFocusAutoNear,
+        MmalParamFocusAutoMacro,
+        MmalParamFocusCaf,
+        MmalParamFocusCafNear,
+        MmalParamFocusFixedInfinity,
+        MmalParamFocusFixedHyperfocal,
+        MmalParamFocusFixedNear,
+        MmalParamFocusFixedMacro,
+        MmalParamFocusEdof,
+        MmalParamFocusCafMacro,
+        MmalParamFocusCafFast,
+        MmalParamFocusCafNearFast,
+        MmalParamFocusCafMacroFast,
+        MmalParamFocusFixedCurrent,
+        MmalParamFocusMax = 0x7FFFFFFF
     }
 
-    public enum MMAL_PARAM_CAPTURE_STATUS_T
+    public enum MmalParamCaptureStatusT
     {
-        MMAL_PARAM_CAPTURE_STATUS_NOT_CAPTURING,
-        MMAL_PARAM_CAPTURE_STATUS_CAPTURE_STARTED,
-        MMAL_PARAM_CAPTURE_STATUS_CAPTURE_ENDED,
-        MMAL_PARAM_CAPTURE_STATUS_MAX = 0x7FFFFFFF
+        MmalParamCaptureStatusNotCapturing,
+        MmalParamCaptureStatusCaptureStarted,
+        MmalParamCaptureStatusCaptureEnded,
+        MmalParamCaptureStatusMax = 0x7FFFFFFF
     }
 
-    public enum MMAL_PARAM_FOCUS_STATUS_T
+    public enum MmalParamFocusStatusT
     {
-        MMAL_PARAM_FOCUS_STATUS_OFF,
-        MMAL_PARAM_FOCUS_STATUS_REQUEST,
-        MMAL_PARAM_FOCUS_STATUS_REACHED,
-        MMAL_PARAM_FOCUS_STATUS_UNABLE_TO_REACH,
-        MMAL_PARAM_FOCUS_STATUS_LOST,
-        MMAL_PARAM_FOCUS_STATUS_CAF_MOVING,
-        MMAL_PARAM_FOCUS_STATUS_CAF_SUCCESS,
-        MMAL_PARAM_FOCUS_STATUS_CAF_FAILED,
-        MMAL_PARAM_FOCUS_STATUS_MANUAL_MOVING,
-        MMAL_PARAM_FOCUS_STATUS_MANUAL_REACHED,
-        MMAL_PARAM_FOCUS_STATUS_CAF_WATCHING,
-        MMAL_PARAM_FOCUS_STATUS_CAF_SCENE_CHANGED,
-        MMAL_PARAM_FOCUS_STATUS_MAX = 0x7FFFFFFF
+        MmalParamFocusStatusOff,
+        MmalParamFocusStatusRequest,
+        MmalParamFocusStatusReached,
+        MmalParamFocusStatusUnableToReach,
+        MmalParamFocusStatusLost,
+        MmalParamFocusStatusCafMoving,
+        MmalParamFocusStatusCafSuccess,
+        MmalParamFocusStatusCafFailed,
+        MmalParamFocusStatusManualMoving,
+        MmalParamFocusStatusManualReached,
+        MmalParamFocusStatusCafWatching,
+        MmalParamFocusStatusCafSceneChanged,
+        MmalParamFocusStatusMax = 0x7FFFFFFF
     }
 
-    public enum MMAL_PARAM_FACE_TRACK_MODE_T
+    public enum MmalParamFaceTrackModeT
     {
-        MMAL_PARAM_FACE_DETECT_NONE,
-        MMAL_PARAM_FACE_DETECT_ON,
-        MMAL_PARAM_FACE_DETECT_MAX = 0x7FFFFFFF
+        MmalParamFaceDetectNone,
+        MmalParamFaceDetectOn,
+        MmalParamFaceDetectMax = 0x7FFFFFFF
     }
 
-    public enum MMAL_PARAMETER_CAMERA_CONFIG_TIMESTAMP_MODE_T
+    public enum MmalParameterCameraConfigTimestampModeT
     {
-        MMAL_PARAM_TIMESTAMP_MODE_ZERO,
-        MMAL_PARAM_TIMESTAMP_MODE_RAW_STC,
-        MMAL_PARAM_TIMESTAMP_MODE_RESET_STC,
-        MMAL_PARAM_TIMESTAMP_MODE_MAX = 0x7FFFFFFF
+        MmalParamTimestampModeZero,
+        MmalParamTimestampModeRawStc,
+        MmalParamTimestampModeResetStc,
+        MmalParamTimestampModeMax = 0x7FFFFFFF
     }
 
-    public enum MMAL_PARAMETER_CAMERA_INFO_FLASH_TYPE_T
+    public enum MmalParameterCameraInfoFlashTypeT
     {
-        MMAL_PARAMETER_CAMERA_INFO_FLASH_TYPE_XENON,
-        MMAL_PARAMETER_CAMERA_INFO_FLASH_TYPE_LED,
-        MMAL_PARAMETER_CAMERA_INFO_FLASH_TYPE_OTHER,
-        MMAL_PARAMETER_CAMERA_INFO_FLASH_TYPE_MAX = 0x7FFFFFFF
+        MmalParameterCameraInfoFlashTypeXenon,
+        MmalParameterCameraInfoFlashTypeLed,
+        MmalParameterCameraInfoFlashTypeOther,
+        MmalParameterCameraInfoFlashTypeMax = 0x7FFFFFFF
     }
 
-    public enum MMAL_PARAMETER_CAPTUREMODE_MODE_T
+    public enum MmalParameterCapturemodeModeT
     {
-        MMAL_PARAM_CAPTUREMODE_WAIT_FOR_END,
-        MMAL_PARAM_CAPTUREMODE_WAIT_FOR_END_AND_HOLD,
-        MMAL_PARAM_CAPTUREMODE_RESUME_VF_IMMEDIATELY
+        MmalParamCapturemodeWaitForEnd,
+        MmalParamCapturemodeWaitForEndAndHold,
+        MmalParamCapturemodeResumeVfImmediately
     }
 
-    public enum MMAL_PARAMETER_FOCUS_REGION_TYPE_T
+    public enum MmalParameterFocusRegionTypeT
     {
-        MMAL_PARAMETER_FOCUS_REGION_TYPE_NORMAL,
-        MMAL_PARAMETER_FOCUS_REGION_TYPE_FACE,
-        MMAL_PARAMETER_FOCUS_REGION_TYPE_MAX
+        MmalParameterFocusRegionTypeNormal,
+        MmalParameterFocusRegionTypeFace,
+        MmalParameterFocusRegionTypeMax
     }
 
-    public enum MMAL_PARAMETER_DRC_STRENGTH_T
+    public enum MmalParameterDrcStrengthT
     {
-        MMAL_PARAMETER_DRC_STRENGTH_OFF,
-        MMAL_PARAMETER_DRC_STRENGTH_LOW,
-        MMAL_PARAMETER_DRC_STRENGTH_MEDIUM,
-        MMAL_PARAMETER_DRC_STRENGTH_HIGH,
-        MMAL_PARAMETER_DRC_STRENGTH_MAX = 0x7fffffff
+        MmalParameterDrcStrengthOff,
+        MmalParameterDrcStrengthLow,
+        MmalParameterDrcStrengthMedium,
+        MmalParameterDrcStrengthHigh,
+        MmalParameterDrcStrengthMax = 0x7fffffff
     }
 
-    public enum MMAL_PARAMETER_ALGORITHM_CONTROL_ALGORITHMS_T
+    public enum MmalParameterAlgorithmControlAlgorithmsT
     {
-        MMAL_PARAMETER_ALGORITHM_CONTROL_ALGORITHMS_FACETRACKING,
-        MMAL_PARAMETER_ALGORITHM_CONTROL_ALGORITHMS_REDEYE_REDUCTION,
-        MMAL_PARAMETER_ALGORITHM_CONTROL_ALGORITHMS_VIDEO_STABILISATION,
-        MMAL_PARAMETER_ALGORITHM_CONTROL_ALGORITHMS_WRITE_RAW,
-        MMAL_PARAMETER_ALGORITHM_CONTROL_ALGORITHMS_VIDEO_DENOISE,
-        MMAL_PARAMETER_ALGORITHM_CONTROL_ALGORITHMS_STILLS_DENOISE,
-        MMAL_PARAMETER_ALGORITHM_CONTROL_ALGORITHMS_TEMPORAL_DENOISE,
-        MMAL_PARAMETER_ALGORITHM_CONTROL_ALGORITHMS_ANTISHAKE,
-        MMAL_PARAMETER_ALGORITHM_CONTROL_ALGORITHMS_IMAGE_EFFECTS,
-        MMAL_PARAMETER_ALGORITHM_CONTROL_ALGORITHMS_DYNAMIC_RANGE_COMPRESSION,
-        MMAL_PARAMETER_ALGORITHM_CONTROL_ALGORITHMS_FACE_RECOGNITION,
-        MMAL_PARAMETER_ALGORITHM_CONTROL_ALGORITHMS_FACE_BEAUTIFICATION,
-        MMAL_PARAMETER_ALGORITHM_CONTROL_ALGORITHMS_SCENE_DETECTION,
-        MMAL_PARAMETER_ALGORITHM_CONTROL_ALGORITHMS_HIGH_DYNAMIC_RANGE,
-        MMAL_PARAMETER_ALGORITHM_CONTROL_ALGORITHMS_MAX = 0x7fffffff
+        MmalParameterAlgorithmControlAlgorithmsFacetracking,
+        MmalParameterAlgorithmControlAlgorithmsRedeyeReduction,
+        MmalParameterAlgorithmControlAlgorithmsVideoStabilisation,
+        MmalParameterAlgorithmControlAlgorithmsWriteRaw,
+        MmalParameterAlgorithmControlAlgorithmsVideoDenoise,
+        MmalParameterAlgorithmControlAlgorithmsStillsDenoise,
+        MmalParameterAlgorithmControlAlgorithmsTemporalDenoise,
+        MmalParameterAlgorithmControlAlgorithmsAntishake,
+        MmalParameterAlgorithmControlAlgorithmsImageEffects,
+        MmalParameterAlgorithmControlAlgorithmsDynamicRangeCompression,
+        MmalParameterAlgorithmControlAlgorithmsFaceRecognition,
+        MmalParameterAlgorithmControlAlgorithmsFaceBeautification,
+        MmalParameterAlgorithmControlAlgorithmsSceneDetection,
+        MmalParameterAlgorithmControlAlgorithmsHighDynamicRange,
+        MmalParameterAlgorithmControlAlgorithmsMax = 0x7fffffff
     }
 
-    public enum MMAL_PARAM_CAMERA_USE_CASE_T
+    public enum MmalParamCameraUseCaseT
     {
-        MMAL_PARAM_CAMERA_USE_CASE_UNKNOWN,
-        MMAL_PARAM_CAMERA_USE_CASE_STILLS_CAPTURE,
-        MMAL_PARAM_CAMERA_USE_CASE_VIDEO_CAPTURE,
-        MMAL_PARAM_CAMERA_USE_CASE_MAX = 0x7fffffff
+        MmalParamCameraUseCaseUnknown,
+        MmalParamCameraUseCaseStillsCapture,
+        MmalParamCameraUseCaseVideoCapture,
+        MmalParamCameraUseCaseMax = 0x7fffffff
     }
 
-    public enum MMAL_PARAM_PRIVACY_INDICATOR_T
+    public enum MmalParamPrivacyIndicatorT
     {
-        MMAL_PARAMETER_PRIVACY_INDICATOR_OFF,
-        MMAL_PARAMETER_PRIVACY_INDICATOR_ON,
-        MMAL_PARAMETER_PRIVACY_INDICATOR_FORCE_ON,
-        MMAL_PARAMETER_PRIVACY_INDICATOR_MAX = 0x7fffffff
+        MmalParameterPrivacyIndicatorOff,
+        MmalParameterPrivacyIndicatorOn,
+        MmalParameterPrivacyIndicatorForceOn,
+        MmalParameterPrivacyIndicatorMax = 0x7fffffff
     }
 
-    public enum MMAL_STEREOSCOPIC_MODE_T
+    public enum MmalStereoscopicModeT
     {
-        MMAL_STEREOSCOPIC_MODE_NONE,
-        MMAL_STEREOSCOPIC_MODE_SIDE_BY_SIDE,
-        MMAL_STEREOSCOPIC_MODE_BOTTOM,
-        MMAL_STEREOSCOPIC_MODE_MAX = 0x7fffffff
+        MmalStereoscopicModeNone,
+        MmalStereoscopicModeSideBySide,
+        MmalStereoscopicModeBottom,
+        MmalStereoscopicModeMax = 0x7fffffff
     }
 
-    public enum MMAL_CAMERA_INTERFACE_T
+    public enum MmalCameraInterfaceT
     {
-        MMAL_CAMERA_INTERFACE_CSI2,
-        MMAL_CAMERA_INTERFACE_CCP2,
-        MMAL_CAMERA_INTERFACE_CPI,
-        MMAL_CAMERA_INTERFACE_MAX = 0x7fffffff
+        MmalCameraInterfaceCsi2,
+        MmalCameraInterfaceCcp2,
+        MmalCameraInterfaceCpi,
+        MmalCameraInterfaceMax = 0x7fffffff
     }
 
-    public enum MMAL_CAMERA_CLOCKING_MODE_T
+    public enum MmalCameraClockingModeT
     {
-        MMAL_CAMERA_CLOCKING_MODE_STROBE,
-        MMAL_CAMERA_CLOCKING_MODE_CLOCK,
-        MMAL_CAMERA_CLOCKING_MODE_MAX = 0x7fffffff
+        MmalCameraClockingModeStrobe,
+        MmalCameraClockingModeClock,
+        MmalCameraClockingModeMax = 0x7fffffff
     }
 
-    public enum MMAL_CAMERA_RX_CONFIG_DECODE
+    public enum MmalCameraRxConfigDecode
     {
-        MMAL_CAMERA_RX_CONFIG_DECODE_NONE,
-        MMAL_CAMERA_RX_CONFIG_DECODE_DPCM8TO10,
-        MMAL_CAMERA_RX_CONFIG_DECODE_DPCM7TO10,
-        MMAL_CAMERA_RX_CONFIG_DECODE_DPCM6TO10,
-        MMAL_CAMERA_RX_CONFIG_DECODE_DPCM8TO12,
-        MMAL_CAMERA_RX_CONFIG_DECODE_DPCM7TO12,
-        MMAL_CAMERA_RX_CONFIG_DECODE_DPCM6TO12,
-        MMAL_CAMERA_RX_CONFIG_DECODE_DPCM10TO14,
-        MMAL_CAMERA_RX_CONFIG_DECODE_DPCM8TO14,
-        MMAL_CAMERA_RX_CONFIG_DECODE_DPCM12TO16,
-        MMAL_CAMERA_RX_CONFIG_DECODE_DPCM10TO16,
-        MMAL_CAMERA_RX_CONFIG_DECODE_DPCM8TO16,
-        MMAL_CAMERA_RX_CONFIG_DECODE_MAX = 0x7fffffff
+        MmalCameraRxConfigDecodeNone,
+        MmalCameraRxConfigDecodeDpcm8To10,
+        MmalCameraRxConfigDecodeDpcm7To10,
+        MmalCameraRxConfigDecodeDpcm6To10,
+        MmalCameraRxConfigDecodeDpcm8To12,
+        MmalCameraRxConfigDecodeDpcm7To12,
+        MmalCameraRxConfigDecodeDpcm6To12,
+        MmalCameraRxConfigDecodeDpcm10To14,
+        MmalCameraRxConfigDecodeDpcm8To14,
+        MmalCameraRxConfigDecodeDpcm12To16,
+        MmalCameraRxConfigDecodeDpcm10To16,
+        MmalCameraRxConfigDecodeDpcm8To16,
+        MmalCameraRxConfigDecodeMax = 0x7fffffff
     }
 
-    public enum MMAL_CAMERA_RX_CONFIG_ENCODE
+    public enum MmalCameraRxConfigEncode
     {
-        MMAL_CAMERA_RX_CONFIG_ENCODE_NONE,
-        MMAL_CAMERA_RX_CONFIG_ENCODE_DPCM10TO8,
-        MMAL_CAMERA_RX_CONFIG_ENCODE_DPCM12TO8,
-        MMAL_CAMERA_RX_CONFIG_ENCODE_DPCM14TO8,
-        MMAL_CAMERA_RX_CONFIG_ENCODE_MAX = 0x7fffffff
+        MmalCameraRxConfigEncodeNone,
+        MmalCameraRxConfigEncodeDpcm10To8,
+        MmalCameraRxConfigEncodeDpcm12To8,
+        MmalCameraRxConfigEncodeDpcm14To8,
+        MmalCameraRxConfigEncodeMax = 0x7fffffff
     }
 
-    public enum MMAL_CAMERA_RX_CONFIG_UNPACK
+    public enum MmalCameraRxConfigUnpack
     {
-        MMAL_CAMERA_RX_CONFIG_UNPACK_NONE,
-        MMAL_CAMERA_RX_CONFIG_UNPACK_6,
-        MMAL_CAMERA_RX_CONFIG_UNPACK_7,
-        MMAL_CAMERA_RX_CONFIG_UNPACK_8,
-        MMAL_CAMERA_RX_CONFIG_UNPACK_10,
-        MMAL_CAMERA_RX_CONFIG_UNPACK_12,
-        MMAL_CAMERA_RX_CONFIG_UNPACK_14,
-        MMAL_CAMERA_RX_CONFIG_UNPACK_16,
-        MMAL_CAMERA_RX_CONFIG_UNPACK_MAX = 0x7fffffff
+        MmalCameraRxConfigUnpackNone,
+        MmalCameraRxConfigUnpack6,
+        MmalCameraRxConfigUnpack7,
+        MmalCameraRxConfigUnpack8,
+        MmalCameraRxConfigUnpack10,
+        MmalCameraRxConfigUnpack12,
+        MmalCameraRxConfigUnpack14,
+        MmalCameraRxConfigUnpack16,
+        MmalCameraRxConfigUnpackMax = 0x7fffffff
     }
 
-    public enum MMAL_CAMERA_RX_CONFIG_PACK
+    public enum MmalCameraRxConfigPack
     {
-        MMAL_CAMERA_RX_CONFIG_PACK_NONE,
-        MMAL_CAMERA_RX_CONFIG_PACK_8,
-        MMAL_CAMERA_RX_CONFIG_PACK_10,
-        MMAL_CAMERA_RX_CONFIG_PACK_12,
-        MMAL_CAMERA_RX_CONFIG_PACK_14,
-        MMAL_CAMERA_RX_CONFIG_PACK_16,
-        MMAL_CAMERA_RX_CONFIG_PACK_RAW10,
-        MMAL_CAMERA_RX_CONFIG_PACK_RAW12,
-        MMAL_CAMERA_RX_CONFIG_PACK_MAX = 0x7fffffff
+        MmalCameraRxConfigPackNone,
+        MmalCameraRxConfigPack8,
+        MmalCameraRxConfigPack10,
+        MmalCameraRxConfigPack12,
+        MmalCameraRxConfigPack14,
+        MmalCameraRxConfigPack16,
+        MmalCameraRxConfigPackRaw10,
+        MmalCameraRxConfigPackRaw12,
+        MmalCameraRxConfigPackMax = 0x7fffffff
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -662,10 +660,10 @@ namespace MMALSharp.Native
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
 
-        private int _enable;
-        private int _width;
-        private int _height;
-        private int _quality;
+        int _enable;
+        int _width;
+        int _height;
+        int _quality;
 
         public bool Enable => _enable == 1;
 
@@ -691,12 +689,12 @@ namespace MMALSharp.Native
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
 
-        private int keylen;
-        private int valueOffset;
-        private int valueLen;
+        int keylen;
+        int valueOffset;
+        int valueLen;
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
-        private byte[] data;
+        byte[] data;
 
         public int KeyLen => this.keylen;
 
@@ -721,10 +719,10 @@ namespace MMALSharp.Native
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
 
-        private int keylen;
-        private int valueOffset;
-        private int valueLen;
-        private byte data;
+        int keylen;
+        int valueOffset;
+        int valueLen;
+        byte data;
 
         public int KeyLen => this.keylen;
 
@@ -749,11 +747,11 @@ namespace MMALSharp.Native
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
 
-        private MMAL_PARAM_EXPOSUREMODE_T value;
+        MmalParamExposuremodeT value;
 
-        public MMAL_PARAM_EXPOSUREMODE_T Value => this.value;
+        public MmalParamExposuremodeT Value => this.value;
 
-        public MMAL_PARAMETER_EXPOSUREMODE_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_PARAM_EXPOSUREMODE_T value)
+        public MMAL_PARAMETER_EXPOSUREMODE_T(MMAL_PARAMETER_HEADER_T hdr, MmalParamExposuremodeT value)
         {
             this.Hdr = hdr;
             this.value = value;
@@ -765,11 +763,11 @@ namespace MMALSharp.Native
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
 
-        private MMAL_PARAM_EXPOSUREMETERINGMODE_T value;
+        MmalParamExposuremeteringmodeT value;
 
-        public MMAL_PARAM_EXPOSUREMETERINGMODE_T Value => this.value;
+        public MmalParamExposuremeteringmodeT Value => this.value;
 
-        public MMAL_PARAMETER_EXPOSUREMETERINGMODE_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_PARAM_EXPOSUREMETERINGMODE_T value)
+        public MMAL_PARAMETER_EXPOSUREMETERINGMODE_T(MMAL_PARAMETER_HEADER_T hdr, MmalParamExposuremeteringmodeT value)
         {
             this.Hdr = hdr;
             this.value = value;
@@ -781,11 +779,11 @@ namespace MMALSharp.Native
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
 
-        private MMAL_PARAM_AWBMODE_T value;
+        MmalParamAwbmodeT value;
 
-        public MMAL_PARAM_AWBMODE_T Value => this.value;
+        public MmalParamAwbmodeT Value => this.value;
 
-        public MMAL_PARAMETER_AWBMODE_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_PARAM_AWBMODE_T value)
+        public MMAL_PARAMETER_AWBMODE_T(MMAL_PARAMETER_HEADER_T hdr, MmalParamAwbmodeT value)
         {
             this.Hdr = hdr;
             this.value = value;
@@ -796,11 +794,11 @@ namespace MMALSharp.Native
     public unsafe struct MMAL_PARAMETER_IMAGEFX_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_PARAM_IMAGEFX_T value;
+        MmalParamImagefxT value;
 
-        public MMAL_PARAM_IMAGEFX_T Value => value;
+        public MmalParamImagefxT Value => value;
 
-        public MMAL_PARAMETER_IMAGEFX_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_PARAM_IMAGEFX_T value)
+        public MMAL_PARAMETER_IMAGEFX_T(MMAL_PARAMETER_HEADER_T hdr, MmalParamImagefxT value)
         {
             this.Hdr = hdr;
             this.value = value;
@@ -812,19 +810,19 @@ namespace MMALSharp.Native
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
 
-        private MMAL_PARAM_IMAGEFX_T effect;
-        private int numEffectParams;
+        MmalParamImagefxT effect;
+        int numEffectParams;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MMALParametersCamera.MMAL_MAX_IMAGEFX_PARAMETERS)]
-        private int[] effectParameter;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MmalParametersCamera.MmalMaxImageFxParameters)]
+        int[] effectParameter;
 
-        public MMAL_PARAM_IMAGEFX_T Effect => this.effect;
+        public MmalParamImagefxT Effect => this.effect;
 
         public int NumEffectParams => this.numEffectParams;
 
         public int[] EffectParameter => this.effectParameter;
 
-        public MMAL_PARAMETER_IMAGEFX_PARAMETERS_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_PARAM_IMAGEFX_T effect, int numEffectParams, int[] effectParameter)
+        public MMAL_PARAMETER_IMAGEFX_PARAMETERS_T(MMAL_PARAMETER_HEADER_T hdr, MmalParamImagefxT effect, int numEffectParams, int[] effectParameter)
         {
             this.Hdr = hdr;
             this.effect = effect;
@@ -838,9 +836,9 @@ namespace MMALSharp.Native
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
 
-        private int enable;
-        private int u;
-        private int v;
+        int enable;
+        int u;
+        int v;
 
         public int Enable => this.enable;
 
@@ -861,11 +859,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CAMERA_STC_MODE_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_CAMERA_STC_MODE_T value;
+        MmalCameraStcModeT value;
 
-        public MMAL_CAMERA_STC_MODE_T Value => this.value;
+        public MmalCameraStcModeT Value => this.value;
 
-        public MMAL_PARAMETER_CAMERA_STC_MODE_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_CAMERA_STC_MODE_T value)
+        public MMAL_PARAMETER_CAMERA_STC_MODE_T(MMAL_PARAMETER_HEADER_T hdr, MmalCameraStcModeT value)
         {
             this.Hdr = hdr;
             this.value = value;
@@ -876,11 +874,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_FLICKERAVOID_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_PARAM_FLICKERAVOID_T value;
+        MmalParamFlickeravoidT value;
 
-        public MMAL_PARAM_FLICKERAVOID_T Value => value;
+        public MmalParamFlickeravoidT Value => value;
 
-        public MMAL_PARAMETER_FLICKERAVOID_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_PARAM_FLICKERAVOID_T value)
+        public MMAL_PARAMETER_FLICKERAVOID_T(MMAL_PARAMETER_HEADER_T hdr, MmalParamFlickeravoidT value)
         {
             this.Hdr = hdr;
             this.value = value;
@@ -891,11 +889,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_FLASH_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_PARAM_FLASH_T value;
+        MmalParamFlashT value;
 
-        public MMAL_PARAM_FLASH_T Value => value;
+        public MmalParamFlashT Value => value;
 
-        public MMAL_PARAMETER_FLASH_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_PARAM_FLASH_T value)
+        public MMAL_PARAMETER_FLASH_T(MMAL_PARAMETER_HEADER_T hdr, MmalParamFlashT value)
         {
             this.Hdr = hdr;
             this.value = value;
@@ -906,11 +904,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_REDEYE_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_PARAM_REDEYE_T value;
+        MmalParamRedeyeT value;
 
-        public MMAL_PARAM_REDEYE_T Value => value;
+        public MmalParamRedeyeT Value => value;
 
-        public MMAL_PARAMETER_REDEYE_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_PARAM_REDEYE_T value)
+        public MMAL_PARAMETER_REDEYE_T(MMAL_PARAMETER_HEADER_T hdr, MmalParamRedeyeT value)
         {
             this.Hdr = hdr;
             this.value = value;
@@ -921,11 +919,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_FOCUS_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_PARAM_FOCUS_T value;
+        MmalParamFocusT value;
 
-        public MMAL_PARAM_FOCUS_T Value => value;
+        public MmalParamFocusT Value => value;
 
-        public MMAL_PARAMETER_FOCUS_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_PARAM_FOCUS_T value)
+        public MMAL_PARAMETER_FOCUS_T(MMAL_PARAMETER_HEADER_T hdr, MmalParamFocusT value)
         {
             this.Hdr = hdr;
             this.value = value;
@@ -936,11 +934,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CAPTURE_STATUS_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_PARAM_CAPTURE_STATUS_T value;
+        MmalParamCaptureStatusT value;
 
-        public MMAL_PARAM_CAPTURE_STATUS_T Value => value;
+        public MmalParamCaptureStatusT Value => value;
 
-        public MMAL_PARAMETER_CAPTURE_STATUS_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_PARAM_CAPTURE_STATUS_T value)
+        public MMAL_PARAMETER_CAPTURE_STATUS_T(MMAL_PARAMETER_HEADER_T hdr, MmalParamCaptureStatusT value)
         {
             this.Hdr = hdr;
             this.value = value;
@@ -951,11 +949,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_FOCUS_STATUS_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_PARAM_FOCUS_STATUS_T value;
+        MmalParamFocusStatusT value;
 
-        public MMAL_PARAM_FOCUS_STATUS_T Value => value;
+        public MmalParamFocusStatusT Value => value;
 
-        public MMAL_PARAMETER_FOCUS_STATUS_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_PARAM_FOCUS_STATUS_T value)
+        public MMAL_PARAMETER_FOCUS_STATUS_T(MMAL_PARAMETER_HEADER_T hdr, MmalParamFocusStatusT value)
         {
             this.Hdr = hdr;
             this.value = value;
@@ -966,15 +964,15 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_FACE_TRACK_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_PARAM_FACE_TRACK_MODE_T mode;
-        private uint maxRegions, frames, quality;
+        MmalParamFaceTrackModeT mode;
+        uint maxRegions, frames, quality;
 
-        public MMAL_PARAM_FACE_TRACK_MODE_T Value => mode;
+        public MmalParamFaceTrackModeT Value => mode;
         public uint MaxRegions => maxRegions;
         public uint Frames => frames;
         public uint Quality => quality;
 
-        public MMAL_PARAMETER_FACE_TRACK_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_PARAM_FACE_TRACK_MODE_T mode,
+        public MMAL_PARAMETER_FACE_TRACK_T(MMAL_PARAMETER_HEADER_T hdr, MmalParamFaceTrackModeT mode,
                                            uint maxRegions, uint frames, uint quality)
         {
             this.Hdr = hdr;
@@ -988,10 +986,10 @@ namespace MMALSharp.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct MMAL_PARAMETER_FACE_TRACK_FACE_T
     {
-        private int faceId, score;
-        private MMAL_RECT_T faceRect;
-        private MMAL_RECT_T[] eyeRect;
-        private MMAL_RECT_T mouthRect;
+        int faceId, score;
+        MMAL_RECT_T faceRect;
+        MMAL_RECT_T[] eyeRect;
+        MMAL_RECT_T mouthRect;
 
         public int FaceId => faceId;
         public int Score => score;
@@ -1013,8 +1011,8 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_FACE_TRACK_RESULTS_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private uint numFaces, frameWidth, frameHeight;
-        private MMAL_PARAMETER_FACE_TRACK_FACE_T[] faces;
+        uint numFaces, frameWidth, frameHeight;
+        MMAL_PARAMETER_FACE_TRACK_FACE_T[] faces;
 
         public uint NumFaces => numFaces;
         public uint FrameWidth => frameWidth;
@@ -1036,9 +1034,11 @@ namespace MMALSharp.Native
     public unsafe struct MMAL_PARAMETER_CAMERA_CONFIG_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private int maxStillsW, maxStillsH, stillsYUV422, oneShotStills, maxPreviewVideoW, maxPreviewVideoH, numPreviewVideoFrames,
+
+        int maxStillsW, maxStillsH, stillsYUV422, oneShotStills, maxPreviewVideoW, maxPreviewVideoH, numPreviewVideoFrames,
                     stillsCaptureCircularBufferHeight, fastPreviewResume;
-        private MMAL_PARAMETER_CAMERA_CONFIG_TIMESTAMP_MODE_T useSTCTimestamp;
+
+        MmalParameterCameraConfigTimestampModeT useSTCTimestamp;
 
         public int MaxStillsW => maxStillsW;
         public int MaxStillsH => maxStillsH;
@@ -1049,12 +1049,12 @@ namespace MMALSharp.Native
         public int NumPreviewVideoFrames => numPreviewVideoFrames;
         public int StillsCaptureCircularBufferHeight => stillsCaptureCircularBufferHeight;
         public int FastPreviewResume => fastPreviewResume;
-        public MMAL_PARAMETER_CAMERA_CONFIG_TIMESTAMP_MODE_T UseSTCTimestamp => useSTCTimestamp;
+        public MmalParameterCameraConfigTimestampModeT UseSTCTimestamp => useSTCTimestamp;
 
         public MMAL_PARAMETER_CAMERA_CONFIG_T(MMAL_PARAMETER_HEADER_T hdr, int maxStillsW, int maxStillsH, int stillsYUV422,
                                               int oneShotStills, int maxPreviewVideoW, int maxPreviewVideoH, int numPreviewVideoFrames,
                                               int stillsCaptureCircularBufferHeight, int fastPreviewResume,
-                                              MMAL_PARAMETER_CAMERA_CONFIG_TIMESTAMP_MODE_T useSTCTimestamp)
+                                              MmalParameterCameraConfigTimestampModeT useSTCTimestamp)
         {
             this.Hdr = hdr;
             this.maxStillsW = maxStillsW;
@@ -1073,7 +1073,7 @@ namespace MMALSharp.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct MMAL_PARAMETER_CAMERA_INFO_CAMERA_T
     {
-        private int portId, maxWidth, maxHeight, lensPresent;
+        int portId, maxWidth, maxHeight, lensPresent;
 
         public int PortId => portId;
         public int MaxWidth => maxWidth;
@@ -1092,9 +1092,9 @@ namespace MMALSharp.Native
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct MMAL_PARAMETER_CAMERA_INFO_CAMERA_V2_T
     {
-        private int portId, maxWidth, maxHeight, lensPresent;
+        int portId, maxWidth, maxHeight, lensPresent;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
-        private string cameraName;
+        string cameraName;
 
         public int PortId => portId;
         public int MaxWidth => maxWidth;
@@ -1115,11 +1115,11 @@ namespace MMALSharp.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct MMAL_PARAMETER_CAMERA_INFO_FLASH_T
     {
-        private MMAL_PARAMETER_CAMERA_INFO_FLASH_TYPE_T flashType;
+        MmalParameterCameraInfoFlashTypeT flashType;
 
-        public MMAL_PARAMETER_CAMERA_INFO_FLASH_TYPE_T FlashType => flashType;
+        public MmalParameterCameraInfoFlashTypeT FlashType => flashType;
 
-        public MMAL_PARAMETER_CAMERA_INFO_FLASH_T(MMAL_PARAMETER_CAMERA_INFO_FLASH_TYPE_T flashType)
+        public MMAL_PARAMETER_CAMERA_INFO_FLASH_T(MmalParameterCameraInfoFlashTypeT flashType)
         {
             this.flashType = flashType;
         }
@@ -1129,11 +1129,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CAMERA_INFO_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private int numCameras, numFlashes;
+        int numCameras, numFlashes;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-        private MMAL_PARAMETER_CAMERA_INFO_CAMERA_T[] cameras;
+        MMAL_PARAMETER_CAMERA_INFO_CAMERA_T[] cameras;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-        private MMAL_PARAMETER_CAMERA_INFO_FLASH_T[] flashes;
+        MMAL_PARAMETER_CAMERA_INFO_FLASH_T[] flashes;
 
         public int NumCameras => numCameras;
         public int NumFlashes => numFlashes;
@@ -1155,11 +1155,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CAMERA_INFO_V2_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private int numCameras, numFlashes;
+        int numCameras, numFlashes;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-        private MMAL_PARAMETER_CAMERA_INFO_CAMERA_V2_T[] cameras;
+        MMAL_PARAMETER_CAMERA_INFO_CAMERA_V2_T[] cameras;
         [MarshalAs(UnmanagedType.ByValArray,SizeConst = 2)]
-        private MMAL_PARAMETER_CAMERA_INFO_FLASH_T[] flashes;
+        MMAL_PARAMETER_CAMERA_INFO_FLASH_T[] flashes;
 
         public int NumCameras => numCameras;
         public int NumFlashes => numFlashes;
@@ -1181,11 +1181,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CAPTUREMODE_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_PARAMETER_CAPTUREMODE_MODE_T mode;
+        MmalParameterCapturemodeModeT mode;
 
-        public MMAL_PARAMETER_CAPTUREMODE_MODE_T Mode => mode;
+        public MmalParameterCapturemodeModeT Mode => mode;
 
-        public MMAL_PARAMETER_CAPTUREMODE_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_PARAMETER_CAPTUREMODE_MODE_T mode)
+        public MMAL_PARAMETER_CAPTUREMODE_T(MMAL_PARAMETER_HEADER_T hdr, MmalParameterCapturemodeModeT mode)
         {
             this.Hdr = hdr;
             this.mode = mode;
@@ -1195,16 +1195,16 @@ namespace MMALSharp.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct MMAL_PARAMETER_FOCUS_REGION_T
     {
-        private MMAL_RECT_T rect;
-        private int weight, mask;
-        private MMAL_PARAMETER_FOCUS_REGION_TYPE_T type;
+        MMAL_RECT_T rect;
+        int weight, mask;
+        MmalParameterFocusRegionTypeT type;
 
         public MMAL_RECT_T Rect => rect;
         public int Weight => weight;
         public int Mask => mask;
-        public MMAL_PARAMETER_FOCUS_REGION_TYPE_T Type => type;
+        public MmalParameterFocusRegionTypeT Type => type;
 
-        public MMAL_PARAMETER_FOCUS_REGION_T(MMAL_RECT_T rect, int weight, int mask, MMAL_PARAMETER_FOCUS_REGION_TYPE_T type)
+        public MMAL_PARAMETER_FOCUS_REGION_T(MMAL_RECT_T rect, int weight, int mask, MmalParameterFocusRegionTypeT type)
         {
             this.rect = rect;
             this.weight = weight;
@@ -1217,9 +1217,9 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_FOCUS_REGIONS_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private uint numRegions;
-        private int lockToFaces;
-        private MMAL_PARAMETER_FOCUS_REGION_T[] regions;
+        uint numRegions;
+        int lockToFaces;
+        MMAL_PARAMETER_FOCUS_REGION_T[] regions;
 
         public uint NumRegions => numRegions;
         public int LockToFaces => lockToFaces;
@@ -1238,7 +1238,7 @@ namespace MMALSharp.Native
     public unsafe struct MMAL_PARAMETER_INPUT_CROP_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_RECT_T rect;
+        MMAL_RECT_T rect;
 
         public MMAL_RECT_T Rect => rect;
 
@@ -1253,8 +1253,8 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_SENSOR_INFORMATION_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_RATIONAL_T fNumber, focalLength;
-        private uint modelId, manufacturerId, revision;
+        MMAL_RATIONAL_T fNumber, focalLength;
+        uint modelId, manufacturerId, revision;
 
         public MMAL_RATIONAL_T FNumber => fNumber;
         public MMAL_RATIONAL_T FocalLength => focalLength;
@@ -1278,11 +1278,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_FLASH_SELECT_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_PARAMETER_CAMERA_INFO_FLASH_TYPE_T flashType;
+        MmalParameterCameraInfoFlashTypeT flashType;
 
-        public MMAL_PARAMETER_CAMERA_INFO_FLASH_TYPE_T FlashType => flashType;
+        public MmalParameterCameraInfoFlashTypeT FlashType => flashType;
 
-        public MMAL_PARAMETER_FLASH_SELECT_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_PARAMETER_CAMERA_INFO_FLASH_TYPE_T flashType)
+        public MMAL_PARAMETER_FLASH_SELECT_T(MMAL_PARAMETER_HEADER_T hdr, MmalParameterCameraInfoFlashTypeT flashType)
         {
             this.Hdr = hdr;
             this.flashType = flashType;
@@ -1293,7 +1293,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_FIELD_OF_VIEW_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_RATIONAL_T fovH, fovV;
+        MMAL_RATIONAL_T fovH, fovV;
 
         public MMAL_RATIONAL_T FovH => fovH;
         public MMAL_RATIONAL_T FovV => fovV;
@@ -1310,11 +1310,11 @@ namespace MMALSharp.Native
     public unsafe struct MMAL_PARAMETER_DRC_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_PARAMETER_DRC_STRENGTH_T strength;
+        MmalParameterDrcStrengthT strength;
 
-        public MMAL_PARAMETER_DRC_STRENGTH_T Strength => strength;
+        public MmalParameterDrcStrengthT Strength => strength;
 
-        public MMAL_PARAMETER_DRC_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_PARAMETER_DRC_STRENGTH_T strength)
+        public MMAL_PARAMETER_DRC_T(MMAL_PARAMETER_HEADER_T hdr, MmalParameterDrcStrengthT strength)
         {
             this.Hdr = hdr;
             this.strength = strength;
@@ -1325,13 +1325,13 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_ALGORITHM_CONTROL_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_PARAMETER_ALGORITHM_CONTROL_ALGORITHMS_T algorithm;
-        private int enabled;
+        MmalParameterAlgorithmControlAlgorithmsT algorithm;
+        int enabled;
 
-        public MMAL_PARAMETER_ALGORITHM_CONTROL_ALGORITHMS_T Algorithm => algorithm;
+        public MmalParameterAlgorithmControlAlgorithmsT Algorithm => algorithm;
         public int Enabled => enabled;
 
-        public MMAL_PARAMETER_ALGORITHM_CONTROL_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_PARAMETER_ALGORITHM_CONTROL_ALGORITHMS_T algorithm,
+        public MMAL_PARAMETER_ALGORITHM_CONTROL_T(MMAL_PARAMETER_HEADER_T hdr, MmalParameterAlgorithmControlAlgorithmsT algorithm,
                                                   int enabled)
         {
             this.Hdr = hdr;
@@ -1344,11 +1344,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CAMERA_USE_CASE_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_PARAM_CAMERA_USE_CASE_T useCase;
+        MmalParamCameraUseCaseT useCase;
 
-        public MMAL_PARAM_CAMERA_USE_CASE_T UseCase => useCase;
+        public MmalParamCameraUseCaseT UseCase => useCase;
 
-        public MMAL_PARAMETER_CAMERA_USE_CASE_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_PARAM_CAMERA_USE_CASE_T useCase)
+        public MMAL_PARAMETER_CAMERA_USE_CASE_T(MMAL_PARAMETER_HEADER_T hdr, MmalParamCameraUseCaseT useCase)
         {
             this.Hdr = hdr;
             this.useCase = useCase;
@@ -1359,7 +1359,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_FPS_RANGE_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_RATIONAL_T fpsLow, fpsHigh;
+        MMAL_RATIONAL_T fpsLow, fpsHigh;
 
         public MMAL_RATIONAL_T FpsLow => fpsLow;
         public MMAL_RATIONAL_T FpsHigh => fpsHigh;
@@ -1376,7 +1376,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_ZEROSHUTTERLAG_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private int zeroShutterLagMode, concurrentCapture;
+        int zeroShutterLagMode, concurrentCapture;
 
         public int ZeroShutterLagMode => zeroShutterLagMode;
         public int ConcurrentCapture => concurrentCapture;
@@ -1393,7 +1393,7 @@ namespace MMALSharp.Native
     public unsafe struct MMAL_PARAMETER_AWB_GAINS_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_RATIONAL_T rGain, bGain;
+        MMAL_RATIONAL_T rGain, bGain;
 
         public MMAL_RATIONAL_T RGain => rGain;
         public MMAL_RATIONAL_T BGain => bGain;
@@ -1410,9 +1410,9 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CAMERA_SETTINGS_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private int exposure;
-        private MMAL_RATIONAL_T analogGain, digitalGain, awbRedGain, awbBlueGain;
-        private int focusPosition;
+        int exposure;
+        MMAL_RATIONAL_T analogGain, digitalGain, awbRedGain, awbBlueGain;
+        int focusPosition;
 
         public int Exposure => exposure;
         public MMAL_RATIONAL_T AnalogGain => analogGain;
@@ -1439,11 +1439,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_PRIVACY_INDICATOR_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_PARAM_PRIVACY_INDICATOR_T mode;
+        MmalParamPrivacyIndicatorT mode;
 
-        public MMAL_PARAM_PRIVACY_INDICATOR_T Mode => mode;
+        public MmalParamPrivacyIndicatorT Mode => mode;
 
-        public MMAL_PARAMETER_PRIVACY_INDICATOR_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_PARAM_PRIVACY_INDICATOR_T mode)
+        public MMAL_PARAMETER_PRIVACY_INDICATOR_T(MMAL_PARAMETER_HEADER_T hdr, MmalParamPrivacyIndicatorT mode)
         {
             this.Hdr = hdr;
             this.mode = mode;
@@ -1454,9 +1454,9 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CAMERA_ANNOTATE_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private int enable;
-        private string text;
-        private int showShutter, showAnalogGain, showLens, showCaf, showMotion;
+        int enable;
+        string text;
+        int showShutter, showAnalogGain, showLens, showCaf, showMotion;
 
         public int Enable => enable;
         public string Text => text;
@@ -1484,9 +1484,9 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private int enable;
-        private string text;
-        private int showShutter, showAnalogGain, showLens, showCaf, showMotion;
+        int enable;
+        string text;
+        int showShutter, showAnalogGain, showLens, showCaf, showMotion;
 
         public int Enable => enable;
         public string Text => text;
@@ -1514,15 +1514,17 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private int _enable;
-        private int _showShutter, _showAnalogGain, _showLens, _showCaf, _showMotion, _showFrameNum,
-            _enableTextBackground, _customBackgroundColor;
-        private byte _customBackgroundY, _customBackgroundU, _customBackgroundV, _dummy1;
-        private int _customTextColor;
-        private byte _customTextY, _customTextU, _customTextV, _textSize;
+        int _enable;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MMALParametersCamera.MMAL_CAMERA_ANNOTATE_MAX_TEXT_LEN_V3)]
-        private byte[] _text;
+        int _showShutter, _showAnalogGain, _showLens, _showCaf, _showMotion, _showFrameNum,
+            _enableTextBackground, _customBackgroundColor;
+
+        byte _customBackgroundY, _customBackgroundU, _customBackgroundV, _dummy1;
+        int _customTextColor;
+        byte _customTextY, _customTextU, _customTextV, _textSize;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MmalParametersCamera.MmalCameraAnnotateMaxTextLenV3)]
+        byte[] _text;
 
         public int Enable => _enable;
         public int ShowShutter => _showShutter;
@@ -1579,17 +1581,19 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CAMERA_ANNOTATE_V4_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private int _enable;
-        private int _showShutter, _showAnalogGain, _showLens, _showCaf, _showMotion, _showFrameNum,
+        int _enable;
+
+        int _showShutter, _showAnalogGain, _showLens, _showCaf, _showMotion, _showFrameNum,
                     _enableTextBackground, _customBackgroundColor;
-        private byte _customBackgroundY, _customBackgroundU, _customBackgroundV, _dummy1;
-        private int _customTextColor;
-        private byte _customTextY, _customTextU, _customTextV, _textSize;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MMALParametersCamera.MMAL_CAMERA_ANNOTATE_MAX_TEXT_LEN_V3)]
-        private byte[] _text;
+        byte _customBackgroundY, _customBackgroundU, _customBackgroundV, _dummy1;
+        int _customTextColor;
+        byte _customTextY, _customTextU, _customTextV, _textSize;
 
-        private int _justify, _xOffset, _yOffset;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MmalParametersCamera.MmalCameraAnnotateMaxTextLenV3)]
+        byte[] _text;
+
+        int _justify, _xOffset, _yOffset;
 
         public int Enable => _enable;
         public int ShowShutter => _showShutter;
@@ -1652,14 +1656,14 @@ namespace MMALSharp.Native
     public unsafe struct MMAL_PARAMETER_STEREOSCOPIC_MODE_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_STEREOSCOPIC_MODE_T mode;
-        private int decimate, swapEyes;
+        MmalStereoscopicModeT mode;
+        int decimate, swapEyes;
 
-        public MMAL_STEREOSCOPIC_MODE_T Mode => mode;
+        public MmalStereoscopicModeT Mode => mode;
         public int Decimate => decimate;
         public int SwapEyes => swapEyes;
 
-        public MMAL_PARAMETER_STEREOSCOPIC_MODE_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_STEREOSCOPIC_MODE_T mode,
+        public MMAL_PARAMETER_STEREOSCOPIC_MODE_T(MMAL_PARAMETER_HEADER_T hdr, MmalStereoscopicModeT mode,
                                                   int decimate, int swapEyes)
         {
             this.Hdr = hdr;
@@ -1673,11 +1677,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CAMERA_INTERFACE_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_CAMERA_INTERFACE_T mode;
+        MmalCameraInterfaceT mode;
 
-        public MMAL_CAMERA_INTERFACE_T Mode => mode;
+        public MmalCameraInterfaceT Mode => mode;
 
-        public MMAL_PARAMETER_CAMERA_INTERFACE_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_CAMERA_INTERFACE_T mode)
+        public MMAL_PARAMETER_CAMERA_INTERFACE_T(MMAL_PARAMETER_HEADER_T hdr, MmalCameraInterfaceT mode)
         {
             this.Hdr = hdr;
             this.mode = mode;
@@ -1688,11 +1692,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CAMERA_CLOCKING_MODE_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_CAMERA_CLOCKING_MODE_T mode;
+        MmalCameraClockingModeT mode;
 
-        public MMAL_CAMERA_CLOCKING_MODE_T Mode => mode;
+        public MmalCameraClockingModeT Mode => mode;
 
-        public MMAL_PARAMETER_CAMERA_CLOCKING_MODE_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_CAMERA_CLOCKING_MODE_T mode)
+        public MMAL_PARAMETER_CAMERA_CLOCKING_MODE_T(MMAL_PARAMETER_HEADER_T hdr, MmalCameraClockingModeT mode)
         {
             this.Hdr = hdr;
             this.mode = mode;
@@ -1703,24 +1707,24 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CAMERA_RX_CONFIG_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_CAMERA_RX_CONFIG_DECODE decode;
-        private MMAL_CAMERA_RX_CONFIG_ENCODE encode;
-        private MMAL_CAMERA_RX_CONFIG_UNPACK unpack;
-        private MMAL_CAMERA_RX_CONFIG_PACK pack;
-        private uint dataLanes, encodeBlockLength, embeddedDataLines, imageId;
+        MmalCameraRxConfigDecode decode;
+        MmalCameraRxConfigEncode encode;
+        MmalCameraRxConfigUnpack unpack;
+        MmalCameraRxConfigPack pack;
+        uint dataLanes, encodeBlockLength, embeddedDataLines, imageId;
 
-        public MMAL_CAMERA_RX_CONFIG_DECODE Decode => decode;
-        public MMAL_CAMERA_RX_CONFIG_ENCODE Encode => encode;
-        public MMAL_CAMERA_RX_CONFIG_UNPACK Unpack => unpack;
-        public MMAL_CAMERA_RX_CONFIG_PACK Pack => pack;
+        public MmalCameraRxConfigDecode Decode => decode;
+        public MmalCameraRxConfigEncode Encode => encode;
+        public MmalCameraRxConfigUnpack Unpack => unpack;
+        public MmalCameraRxConfigPack Pack => pack;
         public uint DataLanes => dataLanes;
         public uint EncodeBlockLength => encodeBlockLength;
         public uint EmbeddedDataLanes => embeddedDataLines;
         public uint ImageId => imageId;
 
-        public MMAL_PARAMETER_CAMERA_RX_CONFIG_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_CAMERA_RX_CONFIG_DECODE decode,
-                                                 MMAL_CAMERA_RX_CONFIG_ENCODE encode, MMAL_CAMERA_RX_CONFIG_UNPACK unpack,
-                                                 MMAL_CAMERA_RX_CONFIG_PACK pack,
+        public MMAL_PARAMETER_CAMERA_RX_CONFIG_T(MMAL_PARAMETER_HEADER_T hdr, MmalCameraRxConfigDecode decode,
+                                                 MmalCameraRxConfigEncode encode, MmalCameraRxConfigUnpack unpack,
+                                                 MmalCameraRxConfigPack pack,
                                                  uint dataLanes, uint encodeBlockLength, uint embeddedDataLines, uint imageId)
         {
             this.Hdr = hdr;
@@ -1739,7 +1743,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CAMERA_RX_TIMING_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private uint timing1, timing2, timing3, timing4, timing5, term1, term2, cpiTiming1, cpiTiming2;
+        uint timing1, timing2, timing3, timing4, timing5, term1, term2, cpiTiming1, cpiTiming2;
 
         public uint Timing1 => timing1;
         public uint Timing2 => timing2;
@@ -1767,244 +1771,236 @@ namespace MMALSharp.Native
         }
     }
 
-    // mmal_parameters_video.h
-    public static class MMALParametersVideo
+    public static class MmalParametersVideo
     {
-        public const int MMAL_PARAMETER_DISPLAYREGION = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO;
-        public const int MMAL_PARAMETER_SUPPORTED_PROFILES = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 1;
-        public const int MMAL_PARAMETER_PROFILE = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 2;
-        public const int MMAL_PARAMETER_INTRAPERIOD = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 3;
-        public const int MMAL_PARAMETER_RATECONTROL = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 4;
-        public const int MMAL_PARAMETER_NALUNITFORMAT = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 5;
-        public const int MMAL_PARAMETER_MINIMISE_FRAGMENTATION = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 6;
-        public const int MMAL_PARAMETER_MB_ROWS_PER_SLICE = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 7;
-        public const int MMAL_PARAMETER_VIDEO_LEVEL_EXTENSION = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 8;
-        public const int MMAL_PARAMETER_VIDEO_EEDE_ENABLE = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 9;
-        public const int MMAL_PARAMETER_VIDEO_EEDE_LOSSRATE = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 10;
-        public const int MMAL_PARAMETER_VIDEO_REQUEST_I_FRAME = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 11;
-        public const int MMAL_PARAMETER_VIDEO_INTRA_REFRESH = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 12;
-        public const int MMAL_PARAMETER_VIDEO_IMMUTABLE_INPUT = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 13;
-        public const int MMAL_PARAMETER_VIDEO_BIT_RATE = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 14;
-        public const int MMAL_PARAMETER_VIDEO_FRAME_RATE = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 15;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_MIN_QUANT = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 16;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_MAX_QUANT = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 17;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_RC_MODEL = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 18;
-        public const int MMAL_PARAMETER_EXTRA_BUFFERS = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 19;
-        public const int MMAL_PARAMETER_VIDEO_ALIGN_HORIZ = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 20;
-        public const int MMAL_PARAMETER_VIDEO_ALIGN_VERT = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 21;
-        public const int MMAL_PARAMETER_VIDEO_DROPPABLE_PFRAMES = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 22;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_INITIAL_QUANT = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 23;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_QP_P = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 24;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_RC_SLICE_DQUANT = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 25;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_FRAME_LIMIT_BITS = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 26;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_PEAK_RATE = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 27;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_H264_DISABLE_CABAC = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 28;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_H264_LOW_LATENCY = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 29;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_H264_AU_DELIMITERS = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 30;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_H264_DEBLOCK_IDC = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 31;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_H264_MB_INTRA_MODE = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 32;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_HEADER_ON_OPEN = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 33;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_PRECODE_FOR_QP = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 34;
-        public const int MMAL_PARAMETER_VIDEO_DRM_INIT_INFO = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 35;
-        public const int MMAL_PARAMETER_VIDEO_TIMESTAMP_FIFO = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 36;
-        public const int MMAL_PARAMETER_VIDEO_DECODE_ERROR_CONCEALMENT = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 37;
-        public const int MMAL_PARAMETER_VIDEO_DRM_PROTECT_BUFFER = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 38;
-        public const int MMAL_PARAMETER_VIDEO_DECODE_CONFIG_VD3 = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 39;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_H264_VCL_HRD_PARAMETERS = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 40;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_H264_LOW_DELAY_HRD_FLAG = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 41;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_INLINE_HEADER = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 42;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_SEI_ENABLE = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 43;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_INLINE_VECTORS = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 44;
-        public const int MMAL_PARAMETER_VIDEO_RENDER_STATS = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 45;
-        public const int MMAL_PARAMETER_VIDEO_INTERLACE_TYPE = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 46;
-        public const int MMAL_PARAMETER_VIDEO_INTERPOLATE_TIMESTAMPS = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 47;
-        public const int MMAL_PARAMETER_VIDEO_ENCODE_SPS_TIMINGS = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 48;
-        public const int MMAL_PARAMETER_VIDEO_MAX_NUM_CALLBACKS = MMALParametersCommon.MMAL_PARAMETER_GROUP_VIDEO + 49;
+        public const int MmalParameterDisplayregion = MmalParametersCommon.MmalParameterGroupVideo;
+        public const int MmalParameterSupportedProfiles = MmalParametersCommon.MmalParameterGroupVideo + 1;
+        public const int MmalParameterProfile = MmalParametersCommon.MmalParameterGroupVideo + 2;
+        public const int MmalParameterIntraperiod = MmalParametersCommon.MmalParameterGroupVideo + 3;
+        public const int MmalParameterRatecontrol = MmalParametersCommon.MmalParameterGroupVideo + 4;
+        public const int MmalParameterNalunitformat = MmalParametersCommon.MmalParameterGroupVideo + 5;
+        public const int MmalParameterMinimiseFragmentation = MmalParametersCommon.MmalParameterGroupVideo + 6;
+        public const int MmalParameterMbRowsPerSlice = MmalParametersCommon.MmalParameterGroupVideo + 7;
+        public const int MmalParameterVideoLevelExtension = MmalParametersCommon.MmalParameterGroupVideo + 8;
+        public const int MmalParameterVideoEedeEnable = MmalParametersCommon.MmalParameterGroupVideo + 9;
+        public const int MmalParameterVideoEedeLossrate = MmalParametersCommon.MmalParameterGroupVideo + 10;
+        public const int MmalParameterVideoRequestIFrame = MmalParametersCommon.MmalParameterGroupVideo + 11;
+        public const int MmalParameterVideoIntraRefresh = MmalParametersCommon.MmalParameterGroupVideo + 12;
+        public const int MmalParameterVideoImmutableInput = MmalParametersCommon.MmalParameterGroupVideo + 13;
+        public const int MmalParameterVideoBitRate = MmalParametersCommon.MmalParameterGroupVideo + 14;
+        public const int MmalParameterVideoFrameRate = MmalParametersCommon.MmalParameterGroupVideo + 15;
+        public const int MmalParameterVideoEncodeMinQuant = MmalParametersCommon.MmalParameterGroupVideo + 16;
+        public const int MmalParameterVideoEncodeMaxQuant = MmalParametersCommon.MmalParameterGroupVideo + 17;
+        public const int MmalParameterVideoEncodeRcModel = MmalParametersCommon.MmalParameterGroupVideo + 18;
+        public const int MmalParameterExtraBuffers = MmalParametersCommon.MmalParameterGroupVideo + 19;
+        public const int MmalParameterVideoAlignHoriz = MmalParametersCommon.MmalParameterGroupVideo + 20;
+        public const int MmalParameterVideoAlignVert = MmalParametersCommon.MmalParameterGroupVideo + 21;
+        public const int MmalParameterVideoDroppablePframes = MmalParametersCommon.MmalParameterGroupVideo + 22;
+        public const int MmalParameterVideoEncodeInitialQuant = MmalParametersCommon.MmalParameterGroupVideo + 23;
+        public const int MmalParameterVideoEncodeQpP = MmalParametersCommon.MmalParameterGroupVideo + 24;
+        public const int MmalParameterVideoEncodeRcSliceDquant = MmalParametersCommon.MmalParameterGroupVideo + 25;
+        public const int MmalParameterVideoEncodeFrameLimitBits = MmalParametersCommon.MmalParameterGroupVideo + 26;
+        public const int MmalParameterVideoEncodePeakRate = MmalParametersCommon.MmalParameterGroupVideo + 27;
+        public const int MmalParameterVideoEncodeH264DisableCabac = MmalParametersCommon.MmalParameterGroupVideo + 28;
+        public const int MmalParameterVideoEncodeH264LowLatency = MmalParametersCommon.MmalParameterGroupVideo + 29;
+        public const int MmalParameterVideoEncodeH264AuDelimiters = MmalParametersCommon.MmalParameterGroupVideo + 30;
+        public const int MmalParameterVideoEncodeH264DeblockIdc = MmalParametersCommon.MmalParameterGroupVideo + 31;
+        public const int MmalParameterVideoEncodeH264MbIntraMode = MmalParametersCommon.MmalParameterGroupVideo + 32;
+        public const int MmalParameterVideoEncodeHeaderOnOpen = MmalParametersCommon.MmalParameterGroupVideo + 33;
+        public const int MmalParameterVideoEncodePrecodeForQp = MmalParametersCommon.MmalParameterGroupVideo + 34;
+        public const int MmalParameterVideoDrmInitInfo = MmalParametersCommon.MmalParameterGroupVideo + 35;
+        public const int MmalParameterVideoTimestampFifo = MmalParametersCommon.MmalParameterGroupVideo + 36;
+        public const int MmalParameterVideoDecodeErrorConcealment = MmalParametersCommon.MmalParameterGroupVideo + 37;
+        public const int MmalParameterVideoDrmProtectBuffer = MmalParametersCommon.MmalParameterGroupVideo + 38;
+        public const int MmalParameterVideoDecodeConfigVd3 = MmalParametersCommon.MmalParameterGroupVideo + 39;
+        public const int MmalParameterVideoEncodeH264VclHrdParameters = MmalParametersCommon.MmalParameterGroupVideo + 40;
+        public const int MmalParameterVideoEncodeH264LowDelayHrdFlag = MmalParametersCommon.MmalParameterGroupVideo + 41;
+        public const int MmalParameterVideoEncodeInlineHeader = MmalParametersCommon.MmalParameterGroupVideo + 42;
+        public const int MmalParameterVideoEncodeSeiEnable = MmalParametersCommon.MmalParameterGroupVideo + 43;
+        public const int MmalParameterVideoEncodeInlineVectors = MmalParametersCommon.MmalParameterGroupVideo + 44;
+        public const int MmalParameterVideoRenderStats = MmalParametersCommon.MmalParameterGroupVideo + 45;
+        public const int MmalParameterVideoInterlaceType = MmalParametersCommon.MmalParameterGroupVideo + 46;
+        public const int MmalParameterVideoInterpolateTimestamps = MmalParametersCommon.MmalParameterGroupVideo + 47;
+        public const int MmalParameterVideoEncodeSpsTimings = MmalParametersCommon.MmalParameterGroupVideo + 48;
+        public const int MmalParameterVideoMaxNumCallbacks = MmalParametersCommon.MmalParameterGroupVideo + 49;
 
-        public enum MMAL_DISPLAYTRANSFORM_T
+        public enum MmalDisplaytransformT
         {
-            MMAL_DISPLAY_ROT0,
-            MMAL_DISPLAY_MIRROR_ROT0,
-            MMAL_DISPLAY_MIRROR_ROT180,
-            MMAL_DISPLAY_ROT180,
-            MMAL_DISPLAY_MIRROR_ROT90,
-            MMAL_DISPLAY_ROT270,
-            MMAL_DISPLAY_ROT90,
-            MMAL_DISPLAY_MIRROR_ROT270,
-            MMAL_DISPLAY_DUMMY = 0x7FFFFFFF
+            MmalDisplayRot0,
+            MmalDisplayMirrorRot0,
+            MmalDisplayMirrorRot180,
+            MmalDisplayRot180,
+            MmalDisplayMirrorRot90,
+            MmalDisplayRot270,
+            MmalDisplayRot90,
+            MmalDisplayMirrorRot270,
+            MmalDisplayDummy = 0x7FFFFFFF
         }
 
-        public enum MMAL_DISPLAYMODE_T
+        public enum MmalDisplaymodeT
         {
-            /// <summary>
-            /// Fill the screen.
-            /// </summary>
-            MMAL_DISPLAY_MODE_FILL,
-            
-            /// <summary>
-            /// All the source region should be displayed and black bars added if necessary.
-            /// </summary>
-            MMAL_DISPLAY_MODE_LETTERBOX,
-            MMAL_DISPLAY_MODE_DUMMY = 0x7FFFFFFF
+            MmalDisplayModeFill,
+            MmalDisplayModeLetterbox,
+            MmalDisplayModeDummy = 0x7FFFFFFF
         }
 
-        public enum MMAL_DISPLAYSET_T
+        public enum MmalDisplaysetT
         {
-            MMAL_DISPLAY_SET_NONE = 0,
-            MMAL_DISPLAY_SET_NUM = 1,
-            MMAL_DISPLAY_SET_FULLSCREEN = 2,
-            MMAL_DISPLAY_SET_TRANSFORM = 4,
-            MMAL_DISPLAY_SET_DEST_RECT = 8,
-            MMAL_DISPLAY_SET_SRC_RECT = 0x10,
-            MMAL_DISPLAY_SET_MODE = 0x20,
-            MMAL_DISPLAY_SET_PIXEL = 0x40,
-            MMAL_DISPLAY_SET_NOASPECT = 0x80,
-            MMAL_DISPLAY_SET_LAYER = 0x100,
-            MMAL_DISPLAY_SET_COPYPROTECT = 0x200,
-            MMAL_DISPLAY_SET_ALPHA = 0x400,
-            MMAL_DISPLAY_SET_DUMMY = 0x7FFFFFFF
+            MmalDisplaySetNone = 0,
+            MmalDisplaySetNum = 1,
+            MmalDisplaySetFullscreen = 2,
+            MmalDisplaySetTransform = 4,
+            MmalDisplaySetDestRect = 8,
+            MmalDisplaySetSrcRect = 0x10,
+            MmalDisplaySetMode = 0x20,
+            MmalDisplaySetPixel = 0x40,
+            MmalDisplaySetNoAspect = 0x80,
+            MmalDisplaySetLayer = 0x100,
+            MmalDisplaySetCopyProtect = 0x200,
+            MmalDisplaySetAlpha = 0x400,
+            MmalDisplaySetDummy = 0x7FFFFFFF
         }
 
-        public enum MMAL_VIDEO_PROFILE_T
+        public enum MmalVideoProfileT
         {
-            MMAL_VIDEO_PROFILE_H263_BASELINE,
-            MMAL_VIDEO_PROFILE_H263_H320CODING,
-            MMAL_VIDEO_PROFILE_H263_BACKWARDCOMPATIBLE,
-            MMAL_VIDEO_PROFILE_H263_ISWV2,
-            MMAL_VIDEO_PROFILE_H263_ISWV3,
-            MMAL_VIDEO_PROFILE_H263_HIGHCOMPRESSION,
-            MMAL_VIDEO_PROFILE_H263_INTERNET,
-            MMAL_VIDEO_PROFILE_H263_INTERLACE,
-            MMAL_VIDEO_PROFILE_H263_HIGHLATENCY,
-            MMAL_VIDEO_PROFILE_MP4V_SIMPLE,
-            MMAL_VIDEO_PROFILE_MP4V_SIMPLESCALABLE,
-            MMAL_VIDEO_PROFILE_MP4V_CORE,
-            MMAL_VIDEO_PROFILE_MP4V_MAIN,
-            MMAL_VIDEO_PROFILE_MP4V_NBIT,
-            MMAL_VIDEO_PROFILE_MP4V_SCALABLETEXTURE,
-            MMAL_VIDEO_PROFILE_MP4V_SIMPLEFACE,
-            MMAL_VIDEO_PROFILE_MP4V_SIMPLEFBA,
-            MMAL_VIDEO_PROFILE_MP4V_BASICANIMATED,
-            MMAL_VIDEO_PROFILE_MP4V_HYBRID,
-            MMAL_VIDEO_PROFILE_MP4V_ADVANCEDREALTIME,
-            MMAL_VIDEO_PROFILE_MP4V_CORESCALABLE,
-            MMAL_VIDEO_PROFILE_MP4V_ADVANCEDCODING,
-            MMAL_VIDEO_PROFILE_MP4V_ADVANCEDCORE,
-            MMAL_VIDEO_PROFILE_MP4V_ADVANCEDSCALABLE,
-            MMAL_VIDEO_PROFILE_MP4V_ADVANCEDSIMPLE,
-            MMAL_VIDEO_PROFILE_H264_BASELINE,
-            MMAL_VIDEO_PROFILE_H264_MAIN,
-            MMAL_VIDEO_PROFILE_H264_EXTENDED,
-            MMAL_VIDEO_PROFILE_H264_HIGH,
-            MMAL_VIDEO_PROFILE_H264_HIGH10,
-            MMAL_VIDEO_PROFILE_H264_HIGH422,
-            MMAL_VIDEO_PROFILE_H264_HIGH444,
-            MMAL_VIDEO_PROFILE_H264_CONSTRAINED_BASELINE,
-            MMAL_VIDEO_PROFILE_DUMMY = 0x7FFFFFFF
+            MmalVideoProfileH263Baseline,
+            MmalVideoProfileH263H320Coding,
+            MmalVideoProfileH263Backwardcompatible,
+            MmalVideoProfileH263Iswv2,
+            MmalVideoProfileH263Iswv3,
+            MmalVideoProfileH263Highcompression,
+            MmalVideoProfileH263Internet,
+            MmalVideoProfileH263Interlace,
+            MmalVideoProfileH263Highlatency,
+            MmalVideoProfileMp4VSimple,
+            MmalVideoProfileMp4VSimplescalable,
+            MmalVideoProfileMp4VCore,
+            MmalVideoProfileMp4VMain,
+            MmalVideoProfileMp4VNbit,
+            MmalVideoProfileMp4VScalabletexture,
+            MmalVideoProfileMp4VSimpleface,
+            MmalVideoProfileMp4VSimplefba,
+            MmalVideoProfileMp4VBasicanimated,
+            MmalVideoProfileMp4VHybrid,
+            MmalVideoProfileMp4VAdvancedrealtime,
+            MmalVideoProfileMp4VCorescalable,
+            MmalVideoProfileMp4VAdvancedcoding,
+            MmalVideoProfileMp4VAdvancedcore,
+            MmalVideoProfileMp4VAdvancedscalable,
+            MmalVideoProfileMp4VAdvancedsimple,
+            MmalVideoProfileH264Baseline,
+            MmalVideoProfileH264Main,
+            MmalVideoProfileH264Extended,
+            MmalVideoProfileH264High,
+            MmalVideoProfileH264High10,
+            MmalVideoProfileH264High422,
+            MmalVideoProfileH264High444,
+            MmalVideoProfileH264ConstrainedBaseline,
+            MmalVideoProfileDummy = 0x7FFFFFFF
         }
 
-        public enum MMAL_VIDEO_LEVEL_T
+        public enum MmalVideoLevelT
         {
-            MMAL_VIDEO_LEVEL_H263_10,
-            MMAL_VIDEO_LEVEL_H263_20,
-            MMAL_VIDEO_LEVEL_H263_30,
-            MMAL_VIDEO_LEVEL_H263_40,
-            MMAL_VIDEO_LEVEL_H263_45,
-            MMAL_VIDEO_LEVEL_H263_50,
-            MMAL_VIDEO_LEVEL_H263_60,
-            MMAL_VIDEO_LEVEL_H263_70,
-            MMAL_VIDEO_LEVEL_MP4V_0,
-            MMAL_VIDEO_LEVEL_MP4V_0b,
-            MMAL_VIDEO_LEVEL_MP4V_1,
-            MMAL_VIDEO_LEVEL_MP4V_2,
-            MMAL_VIDEO_LEVEL_MP4V_3,
-            MMAL_VIDEO_LEVEL_MP4V_4,
-            MMAL_VIDEO_LEVEL_MP4V_4a,
-            MMAL_VIDEO_LEVEL_MP4V_5,
-            MMAL_VIDEO_LEVEL_MP4V_6,
-            MMAL_VIDEO_LEVEL_H264_1,
-            MMAL_VIDEO_LEVEL_H264_1b,
-            MMAL_VIDEO_LEVEL_H264_11,
-            MMAL_VIDEO_LEVEL_H264_12,
-            MMAL_VIDEO_LEVEL_H264_13,
-            MMAL_VIDEO_LEVEL_H264_2,
-            MMAL_VIDEO_LEVEL_H264_21,
-            MMAL_VIDEO_LEVEL_H264_22,
-            MMAL_VIDEO_LEVEL_H264_3,
-            MMAL_VIDEO_LEVEL_H264_31,
-            MMAL_VIDEO_LEVEL_H264_32,
-            MMAL_VIDEO_LEVEL_H264_4,
-            MMAL_VIDEO_LEVEL_H264_41,
-            MMAL_VIDEO_LEVEL_H264_42,
-            MMAL_VIDEO_LEVEL_H264_5,
-            MMAL_VIDEO_LEVEL_H264_51,
-            MMAL_VIDEO_LEVEL_DUMMY = 0x7FFFFFFF
+            MmalVideoLevelH26310,
+            MmalVideoLevelH26320,
+            MmalVideoLevelH26330,
+            MmalVideoLevelH26340,
+            MmalVideoLevelH26345,
+            MmalVideoLevelH26350,
+            MmalVideoLevelH26360,
+            MmalVideoLevelH26370,
+            MmalVideoLevelMp4V0,
+            MmalVideoLevelMp4V0B,
+            MmalVideoLevelMp4V1,
+            MmalVideoLevelMp4V2,
+            MmalVideoLevelMp4V3,
+            MmalVideoLevelMp4V4,
+            MmalVideoLevelMp4V4A,
+            MmalVideoLevelMp4V5,
+            MmalVideoLevelMp4V6,
+            MmalVideoLevelH2641,
+            MmalVideoLevelH2641B,
+            MmalVideoLevelH26411,
+            MmalVideoLevelH26412,
+            MmalVideoLevelH26413,
+            MmalVideoLevelH2642,
+            MmalVideoLevelH26421,
+            MmalVideoLevelH26422,
+            MmalVideoLevelH2643,
+            MmalVideoLevelH26431,
+            MmalVideoLevelH26432,
+            MmalVideoLevelH2644,
+            MmalVideoLevelH26441,
+            MmalVideoLevelH26442,
+            MmalVideoLevelH2645,
+            MmalVideoLevelH26451,
+            MmalVideoLevelDummy = 0x7FFFFFFF
         }
 
-        public enum MMAL_VIDEO_RATECONTROL_T
+        public enum MmalVideoRatecontrolT
         {
-            MMAL_VIDEO_RATECONTROL_DEFAULT,
-            MMAL_VIDEO_RATECONTROL_VARIABLE,
-            MMAL_VIDEO_RATECONTROL_CONSTANT,
-            MMAL_VIDEO_RATECONTROL_VARIABLE_SKIP_FRAMES,
-            MMAL_VIDEO_RATECONTROL_CONSTANT_SKIP_FRAMES,
-            MMAL_VIDEO_RATECONTROL_DUMMY = 0x7FFFFFFF
+            MmalVideoRatecontrolDefault,
+            MmalVideoRatecontrolVariable,
+            MmalVideoRatecontrolConstant,
+            MmalVideoRatecontrolVariableSkipFrames,
+            MmalVideoRatecontrolConstantSkipFrames,
+            MmalVideoRatecontrolDummy = 0x7FFFFFFF
         }
 
-        public enum MMAL_VIDEO_INTRA_REFRESH_T
+        public enum MmalVideoIntraRefreshT
         {
-            MMAL_VIDEO_INTRA_REFRESH_DISABLED = -1,
-            MMAL_VIDEO_INTRA_REFRESH_CYCLIC,
-            MMAL_VIDEO_INTRA_REFRESH_ADAPTIVE,
-            MMAL_VIDEO_INTRA_REFRESH_BOTH,
-            MMAL_VIDEO_INTRA_REFRESH_KHRONOSEXTENSIONS = 0x6F000000,
-            MMAL_VIDEO_INTRA_REFRESH_VENDORSTARTUNUSED = 0x7F000000,
-            MMAL_VIDEO_INTRA_REFRESH_CYCLIC_MROWS = MMAL_VIDEO_INTRA_REFRESH_VENDORSTARTUNUSED,
-            MMAL_VIDEO_INTRA_REFRESH_PSEUDO_RAND = MMAL_VIDEO_INTRA_REFRESH_VENDORSTARTUNUSED + 1,
-            MMAL_VIDEO_INTRA_REFRESH_MAX = MMAL_VIDEO_INTRA_REFRESH_VENDORSTARTUNUSED + 2,
-            MMAL_VIDEO_INTRA_REFRESH_DUMMY = 0x7FFFFFFF
+            MmalVideoIntraRefreshDisabled = -1,
+            MmalVideoIntraRefreshCyclic,
+            MmalVideoIntraRefreshAdaptive,
+            MmalVideoIntraRefreshBoth,
+            MmalVideoIntraRefreshKhronosextensions = 0x6F000000,
+            MmalVideoIntraRefreshVendorstartunused = 0x7F000000,
+            MmalVideoIntraRefreshCyclicMrows = MmalVideoIntraRefreshVendorstartunused,
+            MmalVideoIntraRefreshPseudoRand = MmalVideoIntraRefreshVendorstartunused + 1,
+            MmalVideoIntraRefreshMax = MmalVideoIntraRefreshVendorstartunused + 2,
+            MmalVideoIntraRefreshDummy = 0x7FFFFFFF
         }
 
-        public enum MMAL_VIDEO_ENCODE_T
+        public enum MmalVideoEncodeT
         {
-            MMAL_VIDEO_ENCODER_RC_MODEL_T = 0,
-            MMAL_VIDEO_ENCODER_RC_MODEL_DEFAULT = 0,
-            MMAL_VIDEO_ENCODER_RC_MODEL_JVT = MMAL_VIDEO_ENCODER_RC_MODEL_DEFAULT,
-            MMAL_VIDEO_ENCODER_RC_MODEL_VOWIFI = MMAL_VIDEO_ENCODER_RC_MODEL_DEFAULT + 1,
-            MMAL_VIDEO_ENCODER_RC_MODEL_CBR = MMAL_VIDEO_ENCODER_RC_MODEL_DEFAULT + 2,
-            MMAL_VIDEO_ENCODER_RC_MODEL_LAST = MMAL_VIDEO_ENCODER_RC_MODEL_DEFAULT + 3,
-            MMAL_VIDEO_ENCODER_RC_MODEL_DUMMY = 0x7FFFFFFF
+            MmalVideoEncoderRcModelT = 0,
+            MmalVideoEncoderRcModelDefault = 0,
+            MmalVideoEncoderRcModelJvt = MmalVideoEncoderRcModelDefault,
+            MmalVideoEncoderRcModelVowifi = MmalVideoEncoderRcModelDefault + 1,
+            MmalVideoEncoderRcModelCbr = MmalVideoEncoderRcModelDefault + 2,
+            MmalVideoEncoderRcModelLast = MmalVideoEncoderRcModelDefault + 3,
+            MmalVideoEncoderRcModelDummy = 0x7FFFFFFF
         }
 
-        public enum MMAL_VIDEO_ENCODE_H264_MB_INTRA_MODES_T
+        public enum MmalVideoEncodeH264MbIntraModesT
         {
-            MMAL_VIDEO_ENCODER_H264_MB_4x4_INTRA,
-            MMAL_VIDEO_ENCODER_H264_MB_8x8_INTRA,
-            MMAL_VIDEO_ENCODER_H264_MB_16x16_INTRA,
-            MMAL_VIDEO_ENCODER_H264_MB_INTRA_DUMMY = 0x7FFFFFFF
+            MmalVideoEncoderH264Mb4X4Intra,
+            MmalVideoEncoderH264Mb8X8Intra,
+            MmalVideoEncoderH264Mb16X16Intra,
+            MmalVideoEncoderH264MbIntraDummy = 0x7FFFFFFF
         }
 
-        public enum MMAL_VIDEO_NALUNITFORMAT_T
+        public enum MmalVideoNalunitformatT
         {
-            MMAL_VIDEO_NALUNITFORMAT_STARTCODES,
-            MMAL_VIDEO_NALUNITFORMAT_NALUNITPERBUFFER,
-            MMAL_VIDEO_NALUNITFORMAT_ONEBYTEINTERLEAVELENGTH,
-            MMAL_VIDEO_NALUNITFORMAT_TWOBYTEINTERLEAVELENGTH,
-            MMAL_VIDEO_NALUNITFORMAT_FOURBYTEINTERLEAVELENGTH,
-            MMAL_VIDEO_NALUNITFORMAT_DUMMY = 0x7FFFFFFF
+            MmalVideoNalunitformatStartcodes,
+            MmalVideoNalunitformatNalunitperbuffer,
+            MmalVideoNalunitformatOnebyteinterleavelength,
+            MmalVideoNalunitformatTwobyteinterleavelength,
+            MmalVideoNalunitformatFourbyteinterleavelength,
+            MmalVideoNalunitformatDummy = 0x7FFFFFFF
         }
 
-        public enum MMAL_INTERLACE_TYPE_T
+        public enum MmalInterlaceTypeT
         {
-            MMAL_InterlaceProgressive,
-            MMAL_InterlaceFieldSingleUpperFirst,
-            MMAL_InterlaceFieldSingleLowerFirst,
-            MMAL_InterlaceFieldsInterleavedUpperFirst,
-            MMAL_InterlaceFieldsInterleavedLowerFirst,
-            MMAL_InterlaceMixed,
-            MMAL_InterlaceKhronosExtensions = 0x6F000000,
-            MMAL_InterlaceVendorStartUnused = 0x7F000000,
-            MMAL_InterlaceMax = 0x7FFFFFFF
+            MmalInterlaceProgressive,
+            MmalInterlaceFieldSingleUpperFirst,
+            MmalInterlaceFieldSingleLowerFirst,
+            MmalInterlaceFieldsInterleavedUpperFirst,
+            MmalInterlaceFieldsInterleavedLowerFirst,
+            MmalInterlaceMixed,
+            MmalInterlaceKhronosExtensions = 0x6F000000,
+            MmalInterlaceVendorStartUnused = 0x7F000000,
+            MmalInterlaceMax = 0x7FFFFFFF
         }
     }
 
@@ -2012,24 +2008,24 @@ namespace MMALSharp.Native
     public struct MMAL_DISPLAYREGION_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private uint set, displayNum;
-        private int fullscreen;
-        private MMALParametersVideo.MMAL_DISPLAYTRANSFORM_T transform;
-        private MMAL_RECT_T destRect, srcRect;
-        private int noAspect;
-        private MMALParametersVideo.MMAL_DISPLAYMODE_T mode;
-        private int pixelX, pixelY;
-        private int layer, copyrightRequired;
-        private int alpha;
+        uint set, displayNum;
+        int fullscreen;
+        MmalParametersVideo.MmalDisplaytransformT transform;
+        MMAL_RECT_T destRect, srcRect;
+        int noAspect;
+        MmalParametersVideo.MmalDisplaymodeT mode;
+        int pixelX, pixelY;
+        int layer, copyrightRequired;
+        int alpha;
 
         public uint Set => set;
         public uint DisplayNum => displayNum;
         public int Fullscreen => fullscreen;
-        public MMALParametersVideo.MMAL_DISPLAYTRANSFORM_T Transform => transform;
+        public MmalParametersVideo.MmalDisplaytransformT Transform => transform;
         public MMAL_RECT_T DestRect => destRect;
         public MMAL_RECT_T SrcRect => srcRect;
         public int NoAspect => noAspect;
-        public MMALParametersVideo.MMAL_DISPLAYMODE_T Mode => mode;
+        public MmalParametersVideo.MmalDisplaymodeT Mode => mode;
         public int PixelX => pixelX;
         public int PixelY => pixelY;
         public int Layer => layer;
@@ -2037,8 +2033,8 @@ namespace MMALSharp.Native
         public int Alpha => alpha;
 
         public MMAL_DISPLAYREGION_T(MMAL_PARAMETER_HEADER_T hdr, uint set, uint displayNum, int fullscreen,
-                                    MMALParametersVideo.MMAL_DISPLAYTRANSFORM_T transform, MMAL_RECT_T destRect, MMAL_RECT_T srcRect,
-                                    int noAspect, MMALParametersVideo.MMAL_DISPLAYMODE_T mode, int pixelX, int pixelY,
+                                    MmalParametersVideo.MmalDisplaytransformT transform, MMAL_RECT_T destRect, MMAL_RECT_T srcRect,
+                                    int noAspect, MmalParametersVideo.MmalDisplaymodeT mode, int pixelX, int pixelY,
                                     int layer, int copyrightRequired, int alpha)
         {
             this.Hdr = hdr;
@@ -2061,13 +2057,13 @@ namespace MMALSharp.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct MMAL_PARAMETER_VIDEO_PROFILE_S
     {
-        private MMALParametersVideo.MMAL_VIDEO_PROFILE_T profile;
-        private MMALParametersVideo.MMAL_VIDEO_LEVEL_T level;
+        MmalParametersVideo.MmalVideoProfileT profile;
+        MmalParametersVideo.MmalVideoLevelT level;
 
-        public MMALParametersVideo.MMAL_VIDEO_PROFILE_T Profile => profile;
-        public MMALParametersVideo.MMAL_VIDEO_LEVEL_T Level => level;
+        public MmalParametersVideo.MmalVideoProfileT Profile => profile;
+        public MmalParametersVideo.MmalVideoLevelT Level => level;
 
-        public MMAL_PARAMETER_VIDEO_PROFILE_S(MMALParametersVideo.MMAL_VIDEO_PROFILE_T profile, MMALParametersVideo.MMAL_VIDEO_LEVEL_T level)
+        public MMAL_PARAMETER_VIDEO_PROFILE_S(MmalParametersVideo.MmalVideoProfileT profile, MmalParametersVideo.MmalVideoLevelT level)
         {
             this.profile = profile;
             this.level = level;
@@ -2079,7 +2075,7 @@ namespace MMALSharp.Native
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)]
-        private MMAL_PARAMETER_VIDEO_PROFILE_S[] profile;
+        MMAL_PARAMETER_VIDEO_PROFILE_S[] profile;
 
         public MMAL_PARAMETER_VIDEO_PROFILE_S[] Profile => profile;
 
@@ -2094,7 +2090,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_VIDEO_ENCODE_RC_MODEL_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private uint rcModel;
+        uint rcModel;
 
         public uint RcModel => rcModel;
 
@@ -2109,7 +2105,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_VIDEO_RATECONTROL_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMALParametersVideo.MMAL_VIDEO_RATECONTROL_T control;
+        MmalParametersVideo.MmalVideoRatecontrolT control;
 
         public unsafe MMAL_PARAMETER_HEADER_T* HdrPtr
         {
@@ -2122,9 +2118,9 @@ namespace MMALSharp.Native
             }
         }
 
-        public MMALParametersVideo.MMAL_VIDEO_RATECONTROL_T Control => control;
+        public MmalParametersVideo.MmalVideoRatecontrolT Control => control;
 
-        public MMAL_PARAMETER_VIDEO_RATECONTROL_T(MMAL_PARAMETER_HEADER_T hdr, MMALParametersVideo.MMAL_VIDEO_RATECONTROL_T control)
+        public MMAL_PARAMETER_VIDEO_RATECONTROL_T(MMAL_PARAMETER_HEADER_T hdr, MmalParametersVideo.MmalVideoRatecontrolT control)
         {
             this.Hdr = hdr;
             this.control = control;
@@ -2135,11 +2131,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_VIDEO_ENCODER_H264_MB_INTRA_MODES_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMALParametersVideo.MMAL_VIDEO_ENCODE_H264_MB_INTRA_MODES_T mbMode;
+        MmalParametersVideo.MmalVideoEncodeH264MbIntraModesT mbMode;
 
-        public MMALParametersVideo.MMAL_VIDEO_ENCODE_H264_MB_INTRA_MODES_T MbMode => mbMode;
+        public MmalParametersVideo.MmalVideoEncodeH264MbIntraModesT MbMode => mbMode;
 
-        public MMAL_PARAMETER_VIDEO_ENCODER_H264_MB_INTRA_MODES_T(MMAL_PARAMETER_HEADER_T hdr, MMALParametersVideo.MMAL_VIDEO_ENCODE_H264_MB_INTRA_MODES_T mbMode)
+        public MMAL_PARAMETER_VIDEO_ENCODER_H264_MB_INTRA_MODES_T(MMAL_PARAMETER_HEADER_T hdr, MmalParametersVideo.MmalVideoEncodeH264MbIntraModesT mbMode)
         {
             this.Hdr = hdr;
             this.mbMode = mbMode;
@@ -2150,11 +2146,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_VIDEO_NALUNITFORMAT_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMALParametersVideo.MMAL_VIDEO_NALUNITFORMAT_T format;
+        MmalParametersVideo.MmalVideoNalunitformatT format;
 
-        public MMALParametersVideo.MMAL_VIDEO_NALUNITFORMAT_T Format => format;
+        public MmalParametersVideo.MmalVideoNalunitformatT Format => format;
 
-        public MMAL_PARAMETER_VIDEO_NALUNITFORMAT_T(MMAL_PARAMETER_HEADER_T hdr, MMALParametersVideo.MMAL_VIDEO_NALUNITFORMAT_T format)
+        public MMAL_PARAMETER_VIDEO_NALUNITFORMAT_T(MMAL_PARAMETER_HEADER_T hdr, MmalParametersVideo.MmalVideoNalunitformatT format)
         {
             this.Hdr = hdr;
             this.format = format;
@@ -2165,7 +2161,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_VIDEO_LEVEL_EXTENSION_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private uint customMaxMbps, customMaxFs, customMaxBrAndCpb;
+        uint customMaxMbps, customMaxFs, customMaxBrAndCpb;
 
         public uint CustomMaxMbps => customMaxMbps;
         public uint CustomMaxFs => customMaxFs;
@@ -2184,8 +2180,8 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_VIDEO_INTRA_REFRESH_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMALParametersVideo.MMAL_VIDEO_INTRA_REFRESH_T refreshMode;
-        private int airMbs, airRef, cirMbs, pirMbs;
+        MmalParametersVideo.MmalVideoIntraRefreshT refreshMode;
+        int airMbs, airRef, cirMbs, pirMbs;
 
         public unsafe MMAL_PARAMETER_HEADER_T* HdrPtr
         {
@@ -2198,13 +2194,13 @@ namespace MMALSharp.Native
             }
         }
 
-        public MMALParametersVideo.MMAL_VIDEO_INTRA_REFRESH_T RefreshMode => refreshMode;
+        public MmalParametersVideo.MmalVideoIntraRefreshT RefreshMode => refreshMode;
         public int AirMbs => airMbs;
         public int AirRef => airRef;
         public int CirMbs => cirMbs;
         public int PirMbs => pirMbs;
 
-        public MMAL_PARAMETER_VIDEO_INTRA_REFRESH_T(MMAL_PARAMETER_HEADER_T hdr, MMALParametersVideo.MMAL_VIDEO_INTRA_REFRESH_T refreshMode,
+        public MMAL_PARAMETER_VIDEO_INTRA_REFRESH_T(MMAL_PARAMETER_HEADER_T hdr, MmalParametersVideo.MmalVideoIntraRefreshT refreshMode,
                                                     int airMbs, int airRef, int cirMbs, int pirMbs)
         {
             this.Hdr = hdr;
@@ -2220,7 +2216,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_VIDEO_EEDE_ENABLE_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private int enable;
+        int enable;
 
         public int Enable => enable;
 
@@ -2235,7 +2231,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_VIDEO_EEDE_LOSSRATE_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private uint lossRate;
+        uint lossRate;
 
         public uint LossRate => lossRate;
 
@@ -2250,8 +2246,8 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_VIDEO_DRM_INIT_INFO_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private uint currentTime, ticksPerSec;
-        private uint[] lhs;
+        uint currentTime, ticksPerSec;
+        uint[] lhs;
 
         public uint CurrentTime => currentTime;
         public uint TicksPerSec => ticksPerSec;
@@ -2270,8 +2266,8 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_VIDEO_DRM_PROTECT_BUFFER_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private uint sizeWanted, protect, memHandle;
-        private IntPtr physAddr;
+        uint sizeWanted, protect, memHandle;
+        IntPtr physAddr;
 
         public uint SizeWanted => sizeWanted;
         public uint Protect => protect;
@@ -2293,9 +2289,9 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_VIDEO_RENDER_STATS_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private int valid;
-        private uint match, period, phase, pixelClockNominal, hvsStatus;
-        private uint[] dummy;
+        int valid;
+        uint match, period, phase, pixelClockNominal, hvsStatus;
+        uint[] dummy;
 
         public int Valid => valid;
         public uint Match => match;
@@ -2323,13 +2319,13 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_VIDEO_INTERLACE_TYPE_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMALParametersVideo.MMAL_INTERLACE_TYPE_T eMode;
-        private int bRepeatFirstField;
+        MmalParametersVideo.MmalInterlaceTypeT eMode;
+        int bRepeatFirstField;
 
-        public MMALParametersVideo.MMAL_INTERLACE_TYPE_T EMode => eMode;
+        public MmalParametersVideo.MmalInterlaceTypeT EMode => eMode;
         public int BRepeatFirstField => bRepeatFirstField;
 
-        public MMAL_PARAMETER_VIDEO_INTERLACE_TYPE_T(MMAL_PARAMETER_HEADER_T hdr, MMALParametersVideo.MMAL_INTERLACE_TYPE_T eMode,
+        public MMAL_PARAMETER_VIDEO_INTERLACE_TYPE_T(MMAL_PARAMETER_HEADER_T hdr, MmalParametersVideo.MmalInterlaceTypeT eMode,
                                                      int bRepeatFirstField)
         {
             this.Hdr = hdr;
@@ -2341,19 +2337,19 @@ namespace MMALSharp.Native
     // mmal_parameters_audio.h
     public static class MMALParametersAudio
     {
-        public const int MMAL_PARAMETER_AUDIO_DESTINATION = MMALParametersCommon.MMAL_PARAMETER_GROUP_AUDIO;
-        public const int MMAL_PARAMETER_AUDIO_LATENCY_TARGET = MMALParametersCommon.MMAL_PARAMETER_GROUP_AUDIO + 1;
-        public const int MMAL_PARAMETER_AUDIO_SOURCE = MMALParametersCommon.MMAL_PARAMETER_GROUP_AUDIO + 2;
-        public const int MMAL_PARAMETER_AUDIO_PASSTHROUGH = MMALParametersCommon.MMAL_PARAMETER_GROUP_AUDIO + 3;
+        public const int MMAL_PARAMETER_AUDIO_DESTINATION = MmalParametersCommon.MmalParameterGroupAudio;
+        public const int MMAL_PARAMETER_AUDIO_LATENCY_TARGET = MmalParametersCommon.MmalParameterGroupAudio + 1;
+        public const int MMAL_PARAMETER_AUDIO_SOURCE = MmalParametersCommon.MmalParameterGroupAudio + 2;
+        public const int MMAL_PARAMETER_AUDIO_PASSTHROUGH = MmalParametersCommon.MmalParameterGroupAudio + 3;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct MMAL_PARAMETER_AUDIO_LATENCY_TARGET_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private int enable;
-        private uint filter, target, shift;
-        private int speedFactor, interFactor, adjCap;
+        int enable;
+        uint filter, target, shift;
+        int speedFactor, interFactor, adjCap;
 
         public int Enable => enable;
         public uint Filter => filter;
@@ -2377,26 +2373,25 @@ namespace MMALSharp.Native
         }
     }
 
-    // mmal_parameters_clock.h
-    public static class MMALParametersClock
+    public static class MmalParametersClock
     {
-        public const int MMAL_PARAMETER_CLOCK_REFERENCE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CLOCK;
-        public const int MMAL_PARAMETER_CLOCK_ACTIVE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CLOCK + 1;
-        public const int MMAL_PARAMETER_CLOCK_SCALE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CLOCK + 2;
-        public const int MMAL_PARAMETER_CLOCK_TIME = MMALParametersCommon.MMAL_PARAMETER_GROUP_CLOCK + 3;
-        public const int MMAL_PARAMETER_CLOCK_UPDATE_THRESHOLD = MMALParametersCommon.MMAL_PARAMETER_GROUP_CLOCK + 4;
-        public const int MMAL_PARAMETER_CLOCK_DISCONT_THRESHOLD = MMALParametersCommon.MMAL_PARAMETER_GROUP_CLOCK + 5;
-        public const int MMAL_PARAMETER_CLOCK_REQUEST_THRESHOLD = MMALParametersCommon.MMAL_PARAMETER_GROUP_CLOCK + 6;
-        public const int MMAL_PARAMETER_CLOCK_ENABLE_BUFFER_INFO = MMALParametersCommon.MMAL_PARAMETER_GROUP_CLOCK + 7;
-        public const int MMAL_PARAMETER_CLOCK_FRAME_RATE = MMALParametersCommon.MMAL_PARAMETER_GROUP_CLOCK + 8;
-        public const int MMAL_PARAMETER_CLOCK_LATENCY = MMALParametersCommon.MMAL_PARAMETER_GROUP_CLOCK + 9;
+        public const int MmalParameterClockReference = MmalParametersCommon.MmalParameterGroupClock;
+        public const int MmalParameterClockActive = MmalParametersCommon.MmalParameterGroupClock + 1;
+        public const int MmalParameterClockScale = MmalParametersCommon.MmalParameterGroupClock + 2;
+        public const int MmalParameterClockTime = MmalParametersCommon.MmalParameterGroupClock + 3;
+        public const int MmalParameterClockUpdateThreshold = MmalParametersCommon.MmalParameterGroupClock + 4;
+        public const int MmalParameterClockDiscontThreshold = MmalParametersCommon.MmalParameterGroupClock + 5;
+        public const int MmalParameterClockRequestThreshold = MmalParametersCommon.MmalParameterGroupClock + 6;
+        public const int MmalParameterClockEnableBufferInfo = MmalParametersCommon.MmalParameterGroupClock + 7;
+        public const int MmalParameterClockFrameRate = MmalParametersCommon.MmalParameterGroupClock + 8;
+        public const int MmalParameterClockLatency = MmalParametersCommon.MmalParameterGroupClock + 9;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct MMAL_PARAMETER_CLOCK_UPDATE_THRESHOLD_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_CLOCK_UPDATE_THRESHOLD_T value;
+        MMAL_CLOCK_UPDATE_THRESHOLD_T value;
 
         public MMAL_CLOCK_UPDATE_THRESHOLD_T Value => value;
 
@@ -2411,7 +2406,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CLOCK_DISCONT_THRESHOLD_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_CLOCK_DISCONT_THRESHOLD_T value;
+        MMAL_CLOCK_DISCONT_THRESHOLD_T value;
 
         public MMAL_CLOCK_DISCONT_THRESHOLD_T Value => value;
 
@@ -2426,7 +2421,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CLOCK_REQUEST_THRESHOLD_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_CLOCK_REQUEST_THRESHOLD_T value;
+        MMAL_CLOCK_REQUEST_THRESHOLD_T value;
 
         public MMAL_CLOCK_REQUEST_THRESHOLD_T Value => value;
 
@@ -2441,7 +2436,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CLOCK_LATENCY_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_CLOCK_LATENCY_T value;
+        MMAL_CLOCK_LATENCY_T value;
 
         public MMAL_CLOCK_LATENCY_T Value => value;
 
@@ -2452,46 +2447,45 @@ namespace MMALSharp.Native
         }
     }
 
-    // mmal_parameters.h
-    public enum MMAL_PARAM_MIRROR_T
+    public enum MmalParamMirrorT
     {
-        MMAL_PARAM_MIRROR_NONE,
-        MMAL_PARAM_MIRROR_VERTICAL,
-        MMAL_PARAM_MIRROR_HORIZONTAL,
-        MMAL_PARAM_MIRROR_BOTH
+        MmalParamMirrorNone,
+        MmalParamMirrorVertical,
+        MmalParamMirrorHorizontal,
+        MmalParamMirrorBoth
     }
 
-    public static class MMALParameters
+    public static class MmalParameters
     {
-        public const string MMAL_COMPONENT_DEFAULT_VIDEO_DECODER = "vc.ril.video_decode";
-        public const string MMAL_COMPONENT_DEFAULT_VIDEO_ENCODER = "vc.ril.video_encode";
-        public const string MMAL_COMPONENT_DEFAULT_VIDEO_RENDERER = "vc.ril.video_render";
-        public const string MMAL_COMPONENT_DEFAULT_IMAGE_DECODER = "vc.ril.image_decode";
-        public const string MMAL_COMPONENT_DEFAULT_IMAGE_ENCODER = "vc.ril.image_encode";
-        public const string MMAL_COMPONENT_DEFAULT_CAMERA = "vc.ril.camera";
-        public const string MMAL_COMPONENT_DEFAULT_VIDEO_CONVERTER = "vc.video_convert";
-        public const string MMAL_COMPONENT_DEFAULT_SPLITTER = "vc.splitter";
-        public const string MMAL_COMPONENT_DEFAULT_SCHEDULER = "vc.scheduler";
-        public const string MMAL_COMPONENT_DEFAULT_VIDEO_INJECTER = "vc.video_inject";
-        public const string MMAL_COMPONENT_DEFAULT_VIDEO_SPLITTER = "vc.ril.video_splitter";
-        public const string MMAL_COMPONENT_DEFAULT_AUDIO_DECODER = "none";
-        public const string MMAL_COMPONENT_DEFAULT_AUDIO_RENDERER = "vc.ril.audio_render";
-        public const string MMAL_COMPONENT_DEFAULT_MIRACAST = "vc.miracast";
-        public const string MMAL_COMPONENT_DEFAULT_CLOCK = "vc.clock";
-        public const string MMAL_COMPONENT_DEFAULT_CAMERA_INFO = "vc.camera_info";
+        public const string MmalComponentDefaultVideoDecoder = "vc.ril.video_decode";
+        public const string MmalComponentDefaultVideoEncoder = "vc.ril.video_encode";
+        public const string MmalComponentDefaultVideoRenderer = "vc.ril.video_render";
+        public const string MmalComponentDefaultImageDecoder = "vc.ril.image_decode";
+        public const string MmalComponentDefaultImageEncoder = "vc.ril.image_encode";
+        public const string MmalComponentDefaultCamera = "vc.ril.camera";
+        public const string MmalComponentDefaultVideoConverter = "vc.video_convert";
+        public const string MmalComponentDefaultSplitter = "vc.splitter";
+        public const string MmalComponentDefaultScheduler = "vc.scheduler";
+        public const string MmalComponentDefaultVideoInjecter = "vc.video_inject";
+        public const string MmalComponentDefaultVideoSplitter = "vc.ril.video_splitter";
+        public const string MmalComponentDefaultAudioDecoder = "none";
+        public const string MmalComponentDefaultAudioRenderer = "vc.ril.audio_render";
+        public const string MmalComponentDefaultMiracast = "vc.miracast";
+        public const string MmalComponentDefaultClock = "vc.clock";
+        public const string MmalComponentDefaultCameraInfo = "vc.camera_info";
         
         // These components are not present in the userland headers but do exist.
-        public const string MMAL_COMPONENT_DEFAULT_NULL_SINK = "vc.null_sink";
-        public const string MMAL_COMPONENT_DEFAULT_RESIZER = "vc.ril.resize";
-        public const string MMAL_COMPONENT_DEFAULT_IMAGE_FX = "vc.ril.image_fx";
-        public const string MMAL_COMPONENT_ISP = "vc.ril.isp";
+        public const string MmalComponentDefaultNullSink = "vc.null_sink";
+        public const string MmalComponentDefaultResizer = "vc.ril.resize";
+        public const string MmalComponentDefaultImageFx = "vc.ril.image_fx";
+        public const string MmalComponentIsp = "vc.ril.isp";
     }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct MMAL_PARAMETER_UINT64_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private ulong value;
+        ulong value;
 
         public ulong Value => value;
 
@@ -2506,7 +2500,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_INT64_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private long value;
+        long value;
 
         public long Value => value;
 
@@ -2521,7 +2515,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_UINT32_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private uint value;
+        uint value;
 
         public uint Value => value;
 
@@ -2536,7 +2530,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_INT32_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private int value;
+        int value;
 
         public int Value => value;
 
@@ -2551,7 +2545,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_RATIONAL_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_RATIONAL_T value;
+        MMAL_RATIONAL_T value;
 
         public MMAL_RATIONAL_T Value => value;
 
@@ -2566,7 +2560,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_BOOLEAN_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private int value;
+        int value;
 
         public int Value => value;
 
@@ -2581,7 +2575,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_STRING_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private string value;
+        string value;
 
         public string Value => value;
 
@@ -2596,7 +2590,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_SCALEFACTOR_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private uint scaleX, scaleY;
+        uint scaleX, scaleY;
 
         public uint ScaleX => scaleX;
         public uint ScaleY => scaleY;
@@ -2613,11 +2607,11 @@ namespace MMALSharp.Native
     public unsafe struct MMAL_PARAMETER_MIRROR_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_PARAM_MIRROR_T value;
+        MmalParamMirrorT value;
 
-        public MMAL_PARAM_MIRROR_T Value => value;
+        public MmalParamMirrorT Value => value;
 
-        public MMAL_PARAMETER_MIRROR_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_PARAM_MIRROR_T value)
+        public MMAL_PARAMETER_MIRROR_T(MMAL_PARAMETER_HEADER_T hdr, MmalParamMirrorT value)
         {
             this.Hdr = hdr;
             this.value = value;
@@ -2628,7 +2622,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_URI_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private string value;
+        string value;
 
         public string Value => value;
 
@@ -2645,7 +2639,7 @@ namespace MMALSharp.Native
         public MMAL_PARAMETER_HEADER_T Hdr;
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 20)]
-        private int[] value;
+        int[] value;
 
         public int[] Value => value;
 
@@ -2660,7 +2654,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_FRAME_RATE_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private MMAL_RATIONAL_T value;
+        MMAL_RATIONAL_T value;
 
         public MMAL_RATIONAL_T Value => value;
 
@@ -2675,7 +2669,7 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CONFIGFILE_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private uint value;
+        uint value;
 
         public uint Value => value;
 
@@ -2690,8 +2684,8 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_CONFIGFILE_CHUNK_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        private uint size, offset;
-        private string data;
+        uint size, offset;
+        string data;
 
         public uint Size => size;
         public uint Offset => offset;

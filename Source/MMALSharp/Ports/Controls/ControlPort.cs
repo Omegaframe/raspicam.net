@@ -25,9 +25,9 @@ namespace MMALSharp.Ports.Controls
 
             CallbackHandler = new DefaultPortCallbackHandler(this, null);
 
-            NativeCallback = new MMALPort.MMAL_PORT_BH_CB_T(NativeControlPortCallback);
+            NativeCallback = NativeControlPortCallback;
 
-            IntPtr ptrCallback = Marshal.GetFunctionPointerForDelegate(NativeCallback);
+            var ptrCallback = Marshal.GetFunctionPointerForDelegate(NativeCallback);
 
             MmalLog.Logger.LogDebug($"{Name}: Enabling control port.");
 
@@ -35,19 +35,13 @@ namespace MMALSharp.Ports.Controls
         }
         public void Start() => Enable();
 
-        /// <summary>
-        /// This is the camera's control port callback function. The callback is used if
-        /// MMALCameraConfig.SetChangeEventRequest is set to true.
-        /// </summary>
-        /// <param name="port">Native port struct pointer.</param>
-        /// <param name="buffer">Native buffer header pointer.</param>
         internal void NativeControlPortCallback(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)
         {
-            if (buffer->Cmd == MMALEvents.MMAL_EVENT_PARAMETER_CHANGED)
+            if (buffer->Cmd == MmalEvents.MmalEventParameterChanged)
             {
                 var data = (MMAL_EVENT_PARAMETER_CHANGED_T*)buffer->Data;
 
-                if (data->Hdr.Id == MMALParametersCamera.MMAL_PARAMETER_CAMERA_SETTINGS)
+                if (data->Hdr.Id == MmalParametersCamera.MmalParameterCameraSettings)
                 {
                     var settings = (MMAL_PARAMETER_CAMERA_SETTINGS_T*)data;
 
@@ -57,7 +51,7 @@ namespace MMALSharp.Ports.Controls
                     MmalLog.Logger.LogDebug($"{Name}: Focus position {settings->FocusPosition}");
                 }
             }
-            else if (buffer->Cmd == MMALEvents.MMAL_EVENT_ERROR)
+            else if (buffer->Cmd == MmalEvents.MmalEventError)
             {
                 MmalLog.Logger.LogInformation($"{Name}: Error buffer event returned. If using camera, check all connections, including the Sunny one on the camera board.");
             }

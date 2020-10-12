@@ -9,14 +9,6 @@ namespace MMALSharp.Utility
 {
     internal static class MmalColor
     {
-        /// <summary>
-        /// Returns a new <see cref="Color"/> structure based from CIE 1960 floating point values.
-        /// See: https://en.wikipedia.org/wiki/CIE_1960_color_space
-        /// </summary>
-        /// <param name="u">The chrominance U value.</param>
-        /// <param name="v">The chrominance V value.</param>
-        /// <param name="y">The CIE XYZ Y tristimulus value.</param>
-        /// <returns>A <see cref="Color"/> structure representing the CIE 1960 parameter values.</returns>
         public static Color FromCie1960(float u, float v, float y)
         {
             // x and y chromaticity values
@@ -29,12 +21,6 @@ namespace MMALSharp.Utility
             return FromCieXyz(x, y, z);
         }
 
-        /// <summary>
-        /// Converts a RGB <see cref="Color"/> structure to the CIE 1960 uniform colour space.
-        /// See: https://en.wikipedia.org/wiki/CIE_1960_color_space        
-        /// </summary>
-        /// <param name="c">The <see cref="Color"/> structure.</param>        
-        /// <returns>A 2 pair <see cref="Tuple"/> of floating point values representing the RGB conversion to CIE 1960.</returns>
         public static (float cu, float cv, float y) RgbToCie1960(Color c)
         {
             var (x, v, z) = RgbToCieXyz(c);
@@ -49,12 +35,6 @@ namespace MMALSharp.Utility
             return (cu, cv, v);
         }
 
-        /// <summary>
-        /// Converts a RGB <see cref="Color"/> structure to the CIE XYZ colour space.
-        /// See: https://en.wikipedia.org/wiki/SRGB#The_forward_transformation_(CIE_XYZ_to_sRGB)
-        /// </summary>
-        /// <param name="c">The <see cref="Color"/> structure.</param>        
-        /// <returns>A 3 pair <see cref="Tuple"/> of floating point values representing the RGB conversion to CIE XYZ.</returns>
         public static (float x, float y, float z) RgbToCieXyz(Color c)
         {
             var r = c.R.ToFloat();
@@ -76,13 +56,6 @@ namespace MMALSharp.Utility
             return (x, y, z);
         }
 
-        /// <summary>
-        /// Converts a RGB <see cref="Color"/> structure to the YIQ colour space.
-        /// See: https://en.wikipedia.org/wiki/YIQ
-        /// Math conversion from: https://github.com/python/cpython/blob/2.7/Lib/colorsys.py
-        /// </summary>
-        /// <param name="c">The <see cref="Color"/> structure.</param>        
-        /// <returns>A 3 pair <see cref="Tuple"/> of floating point values representing the RGB conversion to YIQ.</returns>
         public static (float y, float i, float q) RgbToYiq(Color c)
         {
             var r = c.R.ToFloat();
@@ -96,13 +69,6 @@ namespace MMALSharp.Utility
             return (y.Clamp(0, 1), i.Clamp(-1, 1), q.Clamp(-1, 1));
         }
 
-        /// <summary>
-        /// Converts a RGB <see cref="Color"/> structure to the HLS colour space.
-        /// See: https://en.wikipedia.org/wiki/HSL_and_HSV
-        /// Math conversion from: https://github.com/python/cpython/blob/2.7/Lib/colorsys.py
-        /// </summary>
-        /// <param name="c">The <see cref="Color"/> structure.</param>        
-        /// <returns>A 3 pair <see cref="Tuple"/> of floating point values representing the RGB conversion to HLS.</returns>
         public static (float h, float l, float s) RgbToHls(Color c)
         {
             float h, s;
@@ -140,13 +106,6 @@ namespace MMALSharp.Utility
             return (h.Clamp(0, 1), l.Clamp(0, 1), s.Clamp(0, 1));
         }
 
-        /// <summary>
-        /// Converts a RGB <see cref="Color"/> structure to the HSV colour space.
-        /// See: https://en.wikipedia.org/wiki/HSL_and_HSV
-        /// Math conversion from: https://github.com/python/cpython/blob/2.7/Lib/colorsys.py
-        /// </summary>
-        /// <param name="c">The <see cref="Color"/> structure.</param>        
-        /// <returns>A 3 pair <see cref="Tuple"/> of floating point values representing the RGB conversion to HSV.</returns>
         public static (float h, float s, float v) RgbToHsv(Color c)
         {
             float h;
@@ -181,12 +140,6 @@ namespace MMALSharp.Utility
             return (h.Clamp(0, 1), s.Clamp(0, 1), v.Clamp(0, 1));
         }
 
-        /// <summary>
-        /// Converts a RGB <see cref="Color"/> structure to the YUV colour space.
-        /// See: https://en.wikipedia.org/wiki/YUV#Converting_between_Y%E2%80%B2UV_and_RGB
-        /// </summary>
-        /// <param name="c">The <see cref="Color"/> structure.</param>        
-        /// <returns>A 3 pair <see cref="Tuple"/> of floating point values representing the RGB conversion to YUV.</returns>
         public static (float y, float u, float v) RgbToYuv(Color c)
         {
             var r = c.R.ToFloat();
@@ -200,12 +153,6 @@ namespace MMALSharp.Utility
             return (y, u, v);
         }
 
-        /// <summary>
-        /// Converts a RGB <see cref="Color"/> structure to the YUV colour space as byte values.
-        /// See: https://en.wikipedia.org/wiki/YUV#Converting_between_Y%E2%80%B2UV_and_RGB
-        /// </summary>
-        /// <param name="c">The <see cref="Color"/> structure.</param>
-        /// <returns>A 3 pair <see cref="Tuple"/> of byte values representing the RGB conversion to YUV.</returns>
         public static (byte y, byte u, byte v) RgbToYuvBytes(Color c)
         {
             var y = (((66 * c.R) + (129 * c.G) + (25 * c.B) + 128) >> 8) + 16;
@@ -215,14 +162,6 @@ namespace MMALSharp.Utility
             return ((byte)y, (byte)u, (byte)v);
         }
 
-        /// <summary>
-        /// Returns a new <see cref="Color"/> structure based from YUV floating point values.
-        /// See: https://en.wikipedia.org/wiki/YUV#Conversion_to/from_RGB
-        /// </summary>
-        /// <param name="y">The luma value.</param>
-        /// <param name="u">The chrominance U value.</param>
-        /// <param name="v">The chrominance V value.</param>
-        /// <returns>A <see cref="Color"/> structure representing the YUV parameter values.</returns>
         public static Color FromYuv(float y, float u, float v)
         {
             y = y.Clamp(0, 1);
@@ -236,14 +175,6 @@ namespace MMALSharp.Utility
             return Color.FromArgb(255, r.ToByte(), g.ToByte(), b.ToByte());
         }
 
-        /// <summary>
-        /// Returns a new <see cref="Color"/> structure based from YUV byte values.
-        /// See: https://en.wikipedia.org/wiki/YUV#Converting_between_Y%E2%80%B2UV_and_RGB
-        /// </summary>
-        /// <param name="y">The luma value.</param>
-        /// <param name="u">The chrominance U value.</param>
-        /// <param name="v">The chrominance V value.</param>
-        /// <returns>A <see cref="Color"/> structure representing the YUV parameter values.</returns>
         public static Color FromYuvBytes(byte y, byte u, byte v)
         {
             var c = y - 16;
@@ -257,15 +188,6 @@ namespace MMALSharp.Utility
             return Color.FromArgb(255, r, g, b);
         }
 
-        /// <summary>
-        /// Returns a new <see cref="Color"/> structure based from YIQ floating point values.
-        /// See: https://en.wikipedia.org/wiki/YIQ
-        /// Math conversion from: https://github.com/python/cpython/blob/2.7/Lib/colorsys.py
-        /// </summary>
-        /// <param name="y">The luma value (between 0 - 1).</param>
-        /// <param name="i">The chrominance I value (between -1 - 1).</param>
-        /// <param name="q">The chrominance Q value (between -1 - 1).</param>
-        /// <returns>A <see cref="Color"/> structure representing the YIQ parameter values.</returns>
         public static Color FromYiq(float y, float i, float q)
         {
             y = y.Clamp(0, 1);
@@ -279,15 +201,6 @@ namespace MMALSharp.Utility
             return Color.FromArgb(255, r.ToByte(), g.ToByte(), b.ToByte());
         }
 
-        /// <summary>
-        /// Returns a new <see cref="Color"/> structure based from HLS floating point values.
-        /// See: https://en.wikipedia.org/wiki/HSL_and_HSV
-        /// Math conversion from: https://github.com/python/cpython/blob/2.7/Lib/colorsys.py
-        /// </summary>
-        /// <param name="h">The hue value.</param>
-        /// <param name="l">The lightness value.</param>
-        /// <param name="s">The saturation value.</param>
-        /// <returns>A <see cref="Color"/> structure representing the HLS parameter values.</returns>
         public static Color FromHls(float h, float l, float s)
         {
             h = h.Clamp(0, 1);
@@ -313,15 +226,6 @@ namespace MMALSharp.Utility
             return Color.FromArgb(255, r.ToByte(), g.ToByte(), b.ToByte());
         }
 
-        /// <summary>
-        /// Returns a new <see cref="Color"/> structure based from HSV floating point values.
-        /// See: https://en.wikipedia.org/wiki/HSL_and_HSV
-        /// Math conversion from: https://github.com/python/cpython/blob/2.7/Lib/colorsys.py
-        /// </summary>
-        /// <param name="h">The hue value.</param>
-        /// <param name="s">The saturation value.</param>
-        /// <param name="v">The 'value' (lightness) value.</param>
-        /// <returns>A <see cref="Color"/> structure representing the HSV parameter values.</returns>
         public static Color FromHsv(float h, float s, float v)
         {
             h = h.Clamp(0, 1);
@@ -351,14 +255,6 @@ namespace MMALSharp.Utility
             };
         }
 
-        /// <summary>
-        /// Returns a new <see cref="Color"/> structure based from CIEXYZ floating point values. Assumes D65 illuminant.
-        /// See: https://en.wikipedia.org/wiki/SRGB#The_forward_transformation_(CIE_XYZ_to_sRGB) 
-        /// </summary>
-        /// <param name="x">The chrominance X value (0 &lt;= x &lt;= 0.9505).</param>
-        /// <param name="y">The luminance Y value (0 &lt;= y &lt;= 1.0000).</param>
-        /// <param name="z">The chrominance Z value (0 &lt;= z &lt;= 1.0890).</param>
-        /// <returns>A <see cref="Color"/> structure representing the CIEXYZ parameter values.</returns>
         public static Color FromCieXyz(float x, float y, float z)
         {
             x = x.Clamp(0, 0.9505f);

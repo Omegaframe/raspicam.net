@@ -3,25 +3,25 @@ using System.Runtime.InteropServices;
 
 namespace MMALSharp.Native
 {
-    public static class MMALPort
+    public static class MmalPort
     {
-        public enum MMAL_PORT_TYPE_T
+        public enum MmalPortTypeT
         {
-            MMAL_PORT_TYPE_UNKNOWN,
-            MMAL_PORT_TYPE_CONTROL,
-            MMAL_PORT_TYPE_INPUT,
-            MMAL_PORT_TYPE_OUTPUT,
-            MMAL_PORT_TYPE_CLOCK
+            MmalPortTypeUnknown,
+            MmalPortTypeControl,
+            MmalPortTypeInput,
+            MmalPortTypeOutput,
+            MmalPortTypeClock
         }
 
-        public const uint MMAL_PORT_TYPE_INVALID = 0xffffffff;
-        public const int MMAL_PORT_CAPABILITY_PASSTHROUGH = 0x01;
-        public const int MMAL_PORT_CAPABILITY_ALLOCATION = 0x02;
-        public const int MMAL_PORT_CAPABILITY_SUPPORTS_EVENT_FORMAT_CHANGE = 0x04;
+        public const uint MmalPortTypeInvalid = 0xffffffff;
+        public const int MmalPortCapabilityPassthrough = 0x01;
+        public const int MmalPortCapabilityAllocation = 0x02;
+        public const int MmalPortCapabilitySupportsEventFormatChange = 0x04;
 
         // MMAL_PORT_T* port    
         [DllImport("libmmal.so", EntryPoint = "mmal_port_format_commit", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_port_format_commit(MMAL_PORT_T* port);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_port_format_commit(MMAL_PORT_T* port);
 
         // typedef - Pointer to MMAL_PORT_T * Pointer to MMAL_BUFFER_HEADER_T -> Returns void
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -29,41 +29,41 @@ namespace MMALSharp.Native
 
         // MMAL_PORT_T* port * MMAL_PORT_BH_CB_T cb -> Returns MMAL_STATUS_T
         [DllImport("libmmal.so", EntryPoint = "mmal_port_enable", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_port_enable(MMAL_PORT_T* port, IntPtr cb);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_port_enable(MMAL_PORT_T* port, IntPtr cb);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_wrapper_port_enable", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_wrapper_port_enable(MMAL_PORT_T* port, uint flags);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_wrapper_port_enable(MMAL_PORT_T* port, uint flags);
         
         // MMAL_PORT_T* port -> Returns MMAL_STATUS_T
         [DllImport("libmmal.so", EntryPoint = "mmal_port_disable", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_port_disable(MMAL_PORT_T* port);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_port_disable(MMAL_PORT_T* port);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_wrapper_port_disable", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_wrapper_port_disable(MMAL_PORT_T* port);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_wrapper_port_disable(MMAL_PORT_T* port);
 
         // MMAL_PORT_T* port -> Returns MMAL_STATUS_T
         [DllImport("libmmal.so", EntryPoint = "mmal_port_flush", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_port_flush(MMAL_PORT_T* port);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_port_flush(MMAL_PORT_T* port);
 
         // MMAL_PORT_T* port * MMAL_PARAMETER_HEADER_T* header
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_set", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_port_parameter_set(MMAL_PORT_T* port, MMAL_PARAMETER_HEADER_T* header);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_port_parameter_set(MMAL_PORT_T* port, MMAL_PARAMETER_HEADER_T* header);
 
         // MMAL_PORT_T* port * MMAL_PARAMETER_HEADER_T* header
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_get", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_port_parameter_get(MMAL_PORT_T* port, MMAL_PARAMETER_HEADER_T* header);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_port_parameter_get(MMAL_PORT_T* port, MMAL_PARAMETER_HEADER_T* header);
 
         // MMAL_PORT_T* port * MMAL_BUFFER_HEADER_T* header
         [DllImport("libmmal.so", EntryPoint = "mmal_port_send_buffer", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_port_send_buffer(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* header);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_port_send_buffer(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* header);
 
         // MMAL_PORT_T* port * MMAL_PORT_T* port2
         [DllImport("libmmal.so", EntryPoint = "mmal_port_connect", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_port_connect(MMAL_PORT_T* port, MMAL_PORT_T* port2);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_port_connect(MMAL_PORT_T* port, MMAL_PORT_T* port2);
 
         // MMAL_PORT_T* port
         [DllImport("libmmal.so", EntryPoint = "mmal_port_disconnect", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_port_disconnect(MMAL_PORT_T* port);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_port_disconnect(MMAL_PORT_T* port);
 
         // MMAL_PORT_T* port * UInt32 payload_size 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_payload_alloc", CallingConvention = CallingConvention.Cdecl)]
@@ -75,7 +75,7 @@ namespace MMALSharp.Native
 
         // MMAL_PORT_T* port * MMAL_BUFFER_HEADER_T** buffer
         [DllImport("libmmal.so", EntryPoint = "mmal_port_event_get", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_port_event_get(MMAL_PORT_T* port, IntPtr* buffer);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_port_event_get(MMAL_PORT_T* port, IntPtr* buffer);
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -86,20 +86,20 @@ namespace MMALSharp.Native
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct MMAL_PORT_T
     {
-        private IntPtr priv;
-        private char* name;
-        private MMALPort.MMAL_PORT_TYPE_T type;
-        private ushort index, indexAll;
-        private int isEnabled;
-        private MMAL_ES_FORMAT_T* format;
-        private int bufferNumMin, bufferSizeMin, bufferAlignmentMin, bufferNumRecommended, bufferSizeRecommended, bufferNum, bufferSize;
-        private MMAL_COMPONENT_T* component;
-        private IntPtr userData;
-        private uint capabilities;
+        IntPtr priv;
+        char* name;
+        MmalPort.MmalPortTypeT type;
+        ushort index, indexAll;
+        int isEnabled;
+        MMAL_ES_FORMAT_T* format;
+        int bufferNumMin, bufferSizeMin, bufferAlignmentMin, bufferNumRecommended, bufferSizeRecommended, bufferNum, bufferSize;
+        MMAL_COMPONENT_T* component;
+        IntPtr userData;
+        uint capabilities;
 
         public IntPtr Priv => priv;
         public char* Name => name;
-        public MMALPort.MMAL_PORT_TYPE_T Type => type;
+        public MmalPort.MmalPortTypeT Type => type;
         public ushort Index => index;
         public ushort IndexAll => indexAll;
         public int IsEnabled => isEnabled;
@@ -138,7 +138,7 @@ namespace MMALSharp.Native
         public IntPtr UserData => userData;
         public uint Capabilities => capabilities;
 
-        public MMAL_PORT_T(IntPtr priv, char* name, MMALPort.MMAL_PORT_TYPE_T type, ushort index, ushort indexAll,
+        public MMAL_PORT_T(IntPtr priv, char* name, MmalPort.MmalPortTypeT type, ushort index, ushort indexAll,
                            int isEnabled, MMAL_ES_FORMAT_T* format, int bufferNumMin, int bufferSizeMin, int bufferAlignmentMin,
                            int bufferNumRecommended, int bufferSizeRecommended, int bufferNum, int bufferSize, MMAL_COMPONENT_T* component,
                            IntPtr userData, uint capabilities)

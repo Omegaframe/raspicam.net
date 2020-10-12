@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
+using MMALSharp.Components.EncoderComponents;
 using MMALSharp.Config;
 using MMALSharp.Extensions;
 using MMALSharp.Native;
@@ -23,13 +24,13 @@ namespace MMALSharp
 
         static readonly Lazy<MalCamera> Lazy = new Lazy<MalCamera>(() => new MalCamera());
 
-        public MMALCameraComponent Camera { get; }
+        public MmalCameraComponent Camera { get; }
 
         MalCamera()
         {
             BcmHost.bcm_host_init();
 
-            Camera = new MMALCameraComponent();
+            Camera = new MmalCameraComponent();
         }
 
         public void StartCapture(IOutputPort port)
@@ -51,11 +52,11 @@ namespace MMALSharp
 
         public async Task TakeRawVideo(IVideoCaptureHandler handler, CancellationToken cancellationToken)
         {
-            using var splitter = new MMALSplitterComponent();
-            using var renderer = new MMALVideoRenderer();
+            using var splitter = new MmalSplitterComponent();
+            using var renderer = new MmalVideoRenderer();
             ConfigureCameraSettings();
 
-            var splitterOutputConfig = new MMALPortConfig(MmalCameraConfig.Encoding, MmalCameraConfig.EncodingSubFormat);
+            var splitterOutputConfig = new MmalPortConfig(MmalCameraConfig.Encoding, MmalCameraConfig.EncodingSubFormat);
 
             // Force port type to SplitterVideoPort to prevent resolution from being set against splitter component.
             splitter.ConfigureOutputPort<SplitterVideoPort>(0, splitterOutputConfig, handler);
@@ -80,11 +81,11 @@ namespace MMALSharp
                 split = null;
             }
 
-            using var vidEncoder = new MMALVideoEncoder();
-            using var renderer = new MMALVideoRenderer();
+            using var vidEncoder = new MmalVideoEncoder();
+            using var renderer = new MmalVideoRenderer();
             ConfigureCameraSettings();
 
-            var portConfig = new MMALPortConfig(MmalEncoding.H264, MmalEncoding.I420, 10, MMALVideoEncoder.MaxBitrateLevel4, split: split);
+            var portConfig = new MmalPortConfig(MmalEncoding.H264, MmalEncoding.I420, 10, MmalVideoEncoder.MaxBitrateLevel4, split: split);
 
             vidEncoder.ConfigureOutputPort(portConfig, handler);
 
@@ -108,7 +109,7 @@ namespace MMALSharp
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
 
-            using var renderer = new MMALNullSinkComponent();
+            using var renderer = new MmalNullSinkComponent();
             ConfigureCameraSettings(handler);
             Camera.PreviewPort.ConnectTo(renderer);
 
@@ -122,11 +123,11 @@ namespace MMALSharp
 
         public async Task TakePicture(IOutputCaptureHandler handler, MmalEncoding encodingType, MmalEncoding pixelFormat)
         {
-            using var imgEncoder = new MMALImageEncoder();
-            using var renderer = new MMALNullSinkComponent();
+            using var imgEncoder = new MmalImageEncoder();
+            using var renderer = new MmalNullSinkComponent();
             ConfigureCameraSettings();
 
-            var portConfig = new MMALPortConfig(encodingType, pixelFormat, 90);
+            var portConfig = new MmalPortConfig(encodingType, pixelFormat, 90);
 
             imgEncoder.ConfigureOutputPort(portConfig, handler);
 
@@ -147,11 +148,11 @@ namespace MMALSharp
             if (burstMode)
                 MmalCameraConfig.StillBurstMode = true;
 
-            using var imgEncoder = new MMALImageEncoder();
-            using var renderer = new MMALNullSinkComponent();
+            using var imgEncoder = new MmalImageEncoder();
+            using var renderer = new MmalNullSinkComponent();
             ConfigureCameraSettings();
 
-            var portConfig = new MMALPortConfig(encodingType, pixelFormat, 90);
+            var portConfig = new MmalPortConfig(encodingType, pixelFormat, 90);
 
             imgEncoder.ConfigureOutputPort(portConfig, handler);
 
@@ -178,11 +179,11 @@ namespace MMALSharp
             if (timelapse == null)
                 throw new ArgumentNullException(nameof(timelapse), "Timelapse object null. This must be initialized for Timelapse mode");
 
-            using var imgEncoder = new MMALImageEncoder();
-            using var renderer = new MMALNullSinkComponent();
+            using var imgEncoder = new MmalImageEncoder();
+            using var renderer = new MmalNullSinkComponent();
             ConfigureCameraSettings();
 
-            var portConfig = new MMALPortConfig(encodingType, pixelFormat, 90);
+            var portConfig = new MmalPortConfig(encodingType, pixelFormat, 90);
 
             imgEncoder.ConfigureOutputPort(portConfig, handler);
 
@@ -319,7 +320,7 @@ namespace MMALSharp
             return this;
         }
 
-        public MMALOverlayRenderer AddOverlay(MMALVideoRenderer parent, PreviewOverlayConfiguration config, byte[] source) => new MMALOverlayRenderer(parent, config, source);
+        public MmalOverlayRenderer AddOverlay(MmalVideoRenderer parent, PreviewOverlayConfiguration config, byte[] source) => new MmalOverlayRenderer(parent, config, source);
 
         public MalCamera WithMotionDetection(IMotionCaptureHandler handler, MotionConfig config, Action onDetect)
         {
@@ -332,7 +333,7 @@ namespace MMALSharp
         {
             MmalLog.Logger.LogDebug("Destroying final components");
 
-            var tempList = new List<MMALDownstreamComponent>(MmalBootstrapper.DownstreamComponents);
+            var tempList = new List<MmalDownstreamComponent>(MmalBootstrapper.DownstreamComponents);
 
             tempList.ForEach(c => c.Dispose());
             Camera.Dispose();
@@ -407,8 +408,8 @@ namespace MMALSharp
                 return;
             }
 
-            if (downstream.GetType().BaseType == typeof(MMALDownstreamHandlerComponent))
-                list.Add((MMALDownstreamHandlerComponent)downstream);
+            if (downstream.GetType().BaseType == typeof(MmalDownstreamHandlerComponent))
+                list.Add((MmalDownstreamHandlerComponent)downstream);
 
             foreach (var output in downstream.Outputs.Where(output => output.ConnectedReference != null))
                 FindComponents(output.ConnectedReference.DownstreamComponent, list);

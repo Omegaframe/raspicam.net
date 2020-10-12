@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using MMALSharp.Common;
 using MMALSharp.Components;
+using MMALSharp.Components.EncoderComponents;
 using MMALSharp.Ports;
 using MMALSharp.Processing.Handlers;
 
@@ -75,13 +76,13 @@ namespace MMALSharp.Demo
         private async Task TakePictureManual(string extension, MmalEncoding encoding, MmalEncoding pixelFormat)
         {
             using (var imgCaptureHandler = new ImageStreamCaptureHandler("/home/pi/images/", extension))
-            using (var imgEncoder = new MMALImageEncoder())
-            using (var nullSink = new MMALNullSinkComponent())
+            using (var imgEncoder = new MmalImageEncoder())
+            using (var nullSink = new MmalNullSinkComponent())
             {
                 this.Cam.ConfigureCameraSettings();
                 await Task.Delay(2000);
 
-                var encoderConfig = new MMALPortConfig(encoding, pixelFormat, quality: 90);
+                var encoderConfig = new MmalPortConfig(encoding, pixelFormat, quality: 90);
 
                 // Create our component pipeline.         
                 imgEncoder.ConfigureOutputPort(encoderConfig, imgCaptureHandler);
@@ -104,19 +105,19 @@ namespace MMALSharp.Demo
         private async Task ResizePicture(string extension, MmalEncoding encoding, MmalEncoding pixelFormat, int width, int height)
         {
             using (var imgCaptureHandler = new ImageStreamCaptureHandler("/home/pi/images/", extension))
-            using (var resizer = new MMALResizerComponent())
-            using (var imgEncoder = new MMALImageEncoder())
-            using (var nullSink = new MMALNullSinkComponent())
+            using (var resizer = new MmalResizerComponent())
+            using (var imgEncoder = new MmalImageEncoder())
+            using (var nullSink = new MmalNullSinkComponent())
             {
                 this.Cam.ConfigureCameraSettings();
 
                 await Task.Delay(2000);
                 
-                var resizerConfig = new MMALPortConfig(pixelFormat, pixelFormat, width: width, height: height);
-                var encoderConfig = new MMALPortConfig(encoding, pixelFormat, quality: 90);
+                var resizerConfig = new MmalPortConfig(pixelFormat, pixelFormat, width: width, height: height);
+                var encoderConfig = new MmalPortConfig(encoding, pixelFormat, quality: 90);
 
                 // Create our component pipeline.         
-                resizer.ConfigureInputPort(new MMALPortConfig(MmalCameraConfig.Encoding, MmalCameraConfig.EncodingSubFormat), this.Cam.Camera.StillPort, null);
+                resizer.ConfigureInputPort(new MmalPortConfig(MmalCameraConfig.Encoding, MmalCameraConfig.EncodingSubFormat), this.Cam.Camera.StillPort, null);
                 resizer.ConfigureOutputPort(resizerConfig, null);
                 imgEncoder.ConfigureOutputPort(encoderConfig, imgCaptureHandler);
                     

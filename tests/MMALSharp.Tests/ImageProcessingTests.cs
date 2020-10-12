@@ -13,6 +13,7 @@ using System;
 using System.Text;
 using System.IO;
 using System.Drawing.Imaging;
+using MMALSharp.Components.EncoderComponents;
 using MMALSharp.Processing;
 using MMALSharp.Processing.Handlers;
 using MMALSharp.Processing.Processors.Bayer;
@@ -36,12 +37,12 @@ namespace MMALSharp.Tests
             TestHelper.CleanDirectory("/home/pi/images/tests");
 
             using (var imgCaptureHandler = new ImageStreamCaptureHandler("/home/pi/images/tests", extension))
-            using (var preview = new MMALNullSinkComponent())
-            using (var imgEncoder = new MMALImageEncoder())
+            using (var preview = new MmalNullSinkComponent())
+            using (var imgEncoder = new MmalImageEncoder())
             {
                 Fixture.MalCamera.ConfigureCameraSettings();
 
-                var portConfig = new MMALPortConfig(encodingType, pixelFormat, quality: 90);
+                var portConfig = new MmalPortConfig(encodingType, pixelFormat, quality: 90);
 
                 imgEncoder.ConfigureOutputPort(portConfig, imgCaptureHandler);
 
@@ -74,12 +75,12 @@ namespace MMALSharp.Tests
             TestHelper.CleanDirectory("/home/pi/images/tests");
 
             using (var imgCaptureHandler = new ImageStreamCaptureHandler("/home/pi/images/tests", extension))
-            using (var preview = new MMALNullSinkComponent())
-            using (var imgEncoder = new MMALImageEncoder())
+            using (var preview = new MmalNullSinkComponent())
+            using (var imgEncoder = new MmalImageEncoder())
             {
                 Fixture.MalCamera.ConfigureCameraSettings();
 
-                var portConfig = new MMALPortConfig(encodingType, pixelFormat, quality: 90);
+                var portConfig = new MmalPortConfig(encodingType, pixelFormat, quality: 90);
 
                 imgEncoder.ConfigureOutputPort(portConfig, imgCaptureHandler);
 
@@ -112,12 +113,12 @@ namespace MMALSharp.Tests
             TestHelper.CleanDirectory("/home/pi/images/tests");
 
             using (var imgCaptureHandler = new ImageStreamCaptureHandler("/home/pi/images/tests", extension))
-            using (var preview = new MMALNullSinkComponent())
-            using (var imgEncoder = new MMALImageEncoder())
+            using (var preview = new MmalNullSinkComponent())
+            using (var imgEncoder = new MmalImageEncoder())
             {
                 Fixture.MalCamera.ConfigureCameraSettings();
 
-                var portConfig = new MMALPortConfig(encodingType, pixelFormat, quality: 90);
+                var portConfig = new MmalPortConfig(encodingType, pixelFormat, quality: 90);
 
                 imgEncoder.ConfigureOutputPort(portConfig, imgCaptureHandler);
 
@@ -151,12 +152,12 @@ namespace MMALSharp.Tests
             string filepath = string.Empty;
 
             using (var imgCaptureHandler = new ImageStreamCaptureHandler("/home/pi/images/tests", "raw"))
-            using (var preview = new MMALNullSinkComponent())
-            using (var imgEncoder = new MMALImageEncoder(true))
+            using (var preview = new MmalNullSinkComponent())
+            using (var imgEncoder = new MmalImageEncoder(true))
             {
                 Fixture.MalCamera.ConfigureCameraSettings();
 
-                var portConfig = new MMALPortConfig(MmalEncoding.Jpeg, MmalEncoding.I420, quality: 90);
+                var portConfig = new MmalPortConfig(MmalEncoding.Jpeg, MmalEncoding.I420, quality: 90);
 
                 imgEncoder.ConfigureOutputPort(portConfig, imgCaptureHandler);
 

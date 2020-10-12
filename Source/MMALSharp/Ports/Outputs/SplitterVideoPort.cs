@@ -17,7 +17,7 @@ namespace MMALSharp.Ports.Outputs
 
         public SplitterVideoPort(IPort copyFrom) : base((IntPtr)copyFrom.Ptr, copyFrom.ComponentReference, copyFrom.Guid) { }
 
-        public override void Configure(IMMALPortConfig config, IInputPort copyFrom, IOutputCaptureHandler handler)
+        public override void Configure(IMmalPortConfig config, IInputPort copyFrom, IOutputCaptureHandler handler)
         {
             // The splitter component should not have its resolution set on the output port so override method accordingly.
             if (config != null)
@@ -32,7 +32,7 @@ namespace MMALSharp.Ports.Outputs
                 if (config.PixelFormat != null)
                     NativeEncodingSubformat = config.PixelFormat.EncodingVal;
 
-                MMAL_VIDEO_FORMAT_T tempVid = Ptr->Format->Es->Video;
+                var tempVid = Ptr->Format->Es->Video;
 
                 try
                 {
@@ -49,7 +49,7 @@ namespace MMALSharp.Ports.Outputs
                 if (config.ZeroCopy)
                 {
                     ZeroCopy = true;
-                    this.SetParameter(MMALParametersCommon.MMAL_PARAMETER_ZERO_COPY, true);
+                    this.SetParameter(MmalParametersCommon.MmalParameterZeroCopy, true);
                 }
 
                 if (MmalCameraConfig.VideoColorSpace != null && MmalCameraConfig.VideoColorSpace.EncType == MmalEncoding.EncodingType.ColorSpace)

@@ -10,9 +10,6 @@ using MMALSharp.Processing.Handlers;
 
 namespace MMALSharp.Ports.Outputs
 {
-    /// <summary>
-    /// Represents a still port used specifically when capturing rapid single image frames from the camera's video port.
-    /// </summary>
     public unsafe class FastStillPort : OutputPort, IVideoPort
     {
         public override Resolution Resolution
@@ -37,18 +34,13 @@ namespace MMALSharp.Ports.Outputs
 
         public FastStillPort(IPort copyFrom) : base((IntPtr)copyFrom.Ptr, copyFrom.ComponentReference, copyFrom.Guid) { }
 
-        public override void Configure(IMMALPortConfig config, IInputPort copyFrom, IOutputCaptureHandler handler)
+        public override void Configure(IMmalPortConfig config, IInputPort copyFrom, IOutputCaptureHandler handler)
         {
             base.Configure(config, copyFrom, handler);
 
             CallbackHandler = new FastImageOutputCallbackHandler(this, handler);
         }
 
-        /// <summary>
-        /// The native callback MMAL passes buffer headers to.
-        /// </summary>
-        /// <param name="port">The port the buffer is sent to.</param>
-        /// <param name="buffer">The buffer header.</param>
         internal override void NativeOutputPortCallback(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)
         {
             if (MmalCameraConfig.Debug)
@@ -58,7 +50,7 @@ namespace MMALSharp.Ports.Outputs
 
             bufferImpl.PrintProperties();
 
-            var failed = bufferImpl.AssertProperty(MMALBufferProperties.MMAL_BUFFER_HEADER_FLAG_TRANSMISSION_FAILED);
+            var failed = bufferImpl.AssertProperty(MmalBufferProperties.MmalBufferHeaderFlagTransmissionFailed);
 
             if ((bufferImpl.CheckState() && bufferImpl.Length > 0 && !ComponentReference.ForceStopProcessing && !failed && !Trigger.Task.IsCompleted) ||
                 (ComponentReference.ForceStopProcessing && !Trigger.Task.IsCompleted))

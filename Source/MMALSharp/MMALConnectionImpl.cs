@@ -28,7 +28,7 @@ namespace MMALSharp
         public long TimeDisable => (*Ptr).TimeDisable;
         public MMAL_CONNECTION_T* Ptr { get; }
 
-        MMALConnection.MMAL_CONNECTION_CALLBACK_T NativeCallback;
+        MmalConnection.MmalConnectionCallbackT NativeCallback;
 
         public override bool CheckState() => Ptr != null && (IntPtr)Ptr != IntPtr.Zero;
 
@@ -69,7 +69,7 @@ namespace MMALSharp
                 return;
 
             MmalLog.Logger.LogDebug($"Enabling connection between {OutputPort.Name} and {InputPort.Name}");
-            MmalCheck(MMALConnection.mmal_connection_enable(Ptr), "Unable to enable connection");
+            MmalCheck(MmalConnection.mmal_connection_enable(Ptr), "Unable to enable connection");
         }
 
         public void Disable()
@@ -78,7 +78,7 @@ namespace MMALSharp
                 return;
 
             MmalLog.Logger.LogDebug($"Disabling connection between {OutputPort.Name} and {InputPort.Name}");
-            MmalCheck(MMALConnection.mmal_connection_disable(Ptr), "Unable to disable connection");
+            MmalCheck(MmalConnection.mmal_connection_disable(Ptr), "Unable to disable connection");
         }
 
         public void Destroy()
@@ -86,7 +86,7 @@ namespace MMALSharp
             UpstreamComponent.CleanPortPools();
             DownstreamComponent.CleanPortPools();
 
-            MmalCheck(MMALConnection.mmal_connection_destroy(Ptr), "Unable to destroy connection");
+            MmalCheck(MmalConnection.mmal_connection_destroy(Ptr), "Unable to destroy connection");
         }
 
         public void RegisterCallbackHandler(IConnectionCallbackHandler handler) => CallbackHandler = handler;
@@ -96,9 +96,9 @@ namespace MMALSharp
             var ptr = IntPtr.Zero;
 
             if (useCallback)
-                MmalCheck(MMALConnection.mmal_connection_create(&ptr, output.Ptr, input.Ptr, MMALConnection.MMAL_CONNECTION_FLAG_ALLOCATION_ON_INPUT), "Unable to create connection");
+                MmalCheck(MmalConnection.mmal_connection_create(&ptr, output.Ptr, input.Ptr, MmalConnection.MmalConnectionFlagAllocationOnInput), "Unable to create connection");
             else
-                MmalCheck(MMALConnection.mmal_connection_create(&ptr, output.Ptr, input.Ptr, MMALConnection.MMAL_CONNECTION_FLAG_TUNNELLING | MMALConnection.MMAL_CONNECTION_FLAG_ALLOCATION_ON_INPUT), "Unable to create connection");
+                MmalCheck(MmalConnection.mmal_connection_create(&ptr, output.Ptr, input.Ptr, MmalConnection.MmalConnectionFlagTunnelling | MmalConnection.MmalConnectionFlagAllocationOnInput), "Unable to create connection");
 
             return new MmalConnectionImpl((MMAL_CONNECTION_T*)ptr, output, input, inputComponent, output.ComponentReference, useCallback);
         }
@@ -146,10 +146,10 @@ namespace MMALSharp
 
         void ConfigureConnectionCallback(IOutputPort output, IInputPort input)
         {
-            output.SetParameter(MMALParametersCommon.MMAL_PARAMETER_ZERO_COPY, true);
-            input.SetParameter(MMALParametersCommon.MMAL_PARAMETER_ZERO_COPY, true);
+            output.SetParameter(MmalParametersCommon.MmalParameterZeroCopy, true);
+            input.SetParameter(MmalParametersCommon.MmalParameterZeroCopy, true);
 
-            NativeCallback = new MMALConnection.MMAL_CONNECTION_CALLBACK_T(NativeConnectionCallback);
+            NativeCallback = new MmalConnection.MmalConnectionCallbackT(NativeConnectionCallback);
             var ptrCallback = Marshal.GetFunctionPointerForDelegate(NativeCallback);
 
             Ptr->Callback = ptrCallback;

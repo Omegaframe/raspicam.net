@@ -27,7 +27,7 @@ namespace MMALSharp.Callbacks
                 ? MotionType.MotionVector
                 : MotionType.FrameDiff;
 
-            if (handler != null && handler is IMotionCaptureHandler)
+            if (handler is IMotionCaptureHandler)
             {
                 var motionHandler = handler as IMotionCaptureHandler;
                 motionHandler.MotionType = motionType;
@@ -42,7 +42,7 @@ namespace MMALSharp.Callbacks
             if (MmalCameraConfig.Debug)
                 MmalLog.Logger.LogDebug("In video output callback");
 
-            if (PrepareSplit && buffer.AssertProperty(MMALBufferProperties.MMAL_BUFFER_HEADER_FLAG_CONFIG))
+            if (PrepareSplit && buffer.AssertProperty(MmalBufferProperties.MmalBufferHeaderFlagConfig))
             {
                 CaptureHandler.Split();
                 LastSplit = DateTime.Now;
@@ -52,25 +52,21 @@ namespace MMALSharp.Callbacks
             // Ensure that if we need to split then this is done before processing the buffer data.
             if (Split != null)
             {
-                if (!LastSplit.HasValue)
-                    LastSplit = DateTime.Now;
+                LastSplit ??= DateTime.Now;
 
                 if (DateTime.Now.CompareTo(CalculateSplit()) > 0)
                 {
                     MmalLog.Logger.LogInformation("Preparing to split.");
                     PrepareSplit = true;
-                    WorkingPort.SetParameter(MMALParametersVideo.MMAL_PARAMETER_VIDEO_REQUEST_I_FRAME, true);
+                    WorkingPort.SetParameter(MmalParametersVideo.MmalParameterVideoRequestIFrame, true);
                 }
             }
 
-            if (StoreMotionVectors && buffer.AssertProperty(MMALBufferProperties.MMAL_BUFFER_HEADER_FLAG_CODECSIDEINFO))
+            if (StoreMotionVectors && buffer.AssertProperty(MmalBufferProperties.MmalBufferHeaderFlagCodecSideInfo))
             {
                 // This is data containing Motion vectors. Check if the capture handler supports storing motion vectors.
-                if (CaptureHandler is IMotionVectorCaptureHandler)
-                {
-                    var handler = CaptureHandler as IMotionVectorCaptureHandler;
-                    handler?.ProcessMotionVectors(buffer.GetBufferData());
-                }
+                if (CaptureHandler is IMotionVectorCaptureHandler handler)
+                    handler.ProcessMotionVectors(buffer.GetBufferData());
             }
             else
             {
@@ -82,7 +78,7 @@ namespace MMALSharp.Callbacks
 
         DateTime CalculateSplit()
         {
-            DateTime tempDt = new DateTime(LastSplit.Value.Ticks);
+            var tempDt = new DateTime(LastSplit.Value.Ticks);
 
             return Split.Mode switch
             {

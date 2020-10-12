@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MMALSharp.Common;
 using MMALSharp.Components;
+using MMALSharp.Components.EncoderComponents;
 using MMALSharp.Native;
 using MMALSharp.Ports;
 using MMALSharp.Processing.Handlers;
@@ -53,12 +54,12 @@ namespace MMALSharp.Demo
         private async Task TakeVideoManual(string extension, MmalEncoding encoding, MmalEncoding pixelFormat, int bitrate, int seconds)
         {            
             using (var vidCaptureHandler = new VideoStreamCaptureHandler($"/home/pi/videos/", extension))
-            using (var vidEncoder = new MMALVideoEncoder())
-            using (var renderer = new MMALVideoRenderer())
+            using (var vidEncoder = new MmalVideoEncoder())
+            using (var renderer = new MmalVideoRenderer())
             {
                 this.Cam.ConfigureCameraSettings();
 
-                var portConfig = new MMALPortConfig(encoding, pixelFormat, bitrate: bitrate);
+                var portConfig = new MmalPortConfig(encoding, pixelFormat, bitrate: bitrate);
                 
                 vidEncoder.ConfigureOutputPort(portConfig, vidCaptureHandler);
 

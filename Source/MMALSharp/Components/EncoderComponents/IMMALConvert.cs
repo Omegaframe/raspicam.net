@@ -1,6 +1,6 @@
-﻿namespace MMALSharp.Components
+﻿namespace MMALSharp.Components.EncoderComponents
 {
-    public interface IMMALConvert
+    public interface IMmalConvert
     {
         void Convert(int outputPort);
     }

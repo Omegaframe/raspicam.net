@@ -6,7 +6,6 @@ using System.Text;
 using Microsoft.Extensions.Logging;
 using MMALSharp.Common;
 using MMALSharp.Common.Utility;
-using MMALSharp.Components;
 using MMALSharp.Native;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Clocks;
@@ -15,9 +14,9 @@ using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;
 using static MMALSharp.MmalNativeExceptionHelper;
 
-namespace MMALSharp
+namespace MMALSharp.Components
 {
-    public abstract unsafe class MMALComponentBase : MmalObject, IComponent
+    public abstract unsafe class MmalComponentBase : MmalObject, IComponent
     {
         public IControlPort Control { get; }
         public List<IInputPort> Inputs { get; }
@@ -31,7 +30,7 @@ namespace MMALSharp
 
         internal MMAL_COMPONENT_T* Ptr { get; }
 
-        protected MMALComponentBase(string name)
+        protected MmalComponentBase(string name)
         {
             Ptr = CreateComponent(name);
 
@@ -42,20 +41,15 @@ namespace MMALSharp
 
             Control = new ControlPort((IntPtr)Ptr->Control, this, Guid.NewGuid());
 
-            for (int i = 0; i < Ptr->ClockNum; i++)
+            for (var i = 0; i < Ptr->ClockNum; i++)
                 Clocks.Add(new ClockPort((IntPtr)(&(*Ptr->Clock[i])), this, Guid.NewGuid()));
 
-            for (int i = 0; i < Ptr->PortNum; i++)
+            for (var i = 0; i < Ptr->PortNum; i++)
                 Ports.Add(new GenericPort((IntPtr)(&(*Ptr->Port[i])), this, PortType.Generic, Guid.NewGuid()));
         }
 
         public override bool CheckState() => Ptr != null && (IntPtr)Ptr != IntPtr.Zero;
 
-        /// <summary>
-        /// Enables any connections associated with this component, traversing down the pipeline to enable those connections
-        /// also.
-        /// </summary>
-        /// <exception cref="MmalPortConnectedException">Thrown when port enabled prior to enabling connection.</exception>
         public void EnableConnections()
         {
             foreach (IOutputPort port in Outputs.Where(o => o.ConnectedReference != null))
@@ -68,14 +62,9 @@ namespace MMALSharp
             }
         }
 
-        /// <summary>
-        /// Disables any connections associated with this component, traversing down the pipeline to disable those connections
-        /// also.
-        /// </summary>
-        /// <exception cref="MmalPortConnectedException">Thrown when port still enabled prior to disabling connection.</exception>
         public void DisableConnections()
         {
-            foreach (IOutputPort port in Outputs.Where(o => o.ConnectedReference != null))
+            foreach (var port in Outputs.Where(o => o.ConnectedReference != null))
             {
                 MmalLog.Logger.LogDebug($"Disabling connection between {Name} and {port.ConnectedReference.DownstreamComponent.Name}");
 
@@ -87,9 +76,6 @@ namespace MMALSharp
             }
         }
 
-        /// <summary>
-        /// Prints a summary of the ports associated with this component to the console.
-        /// </summary>
         public virtual void PrintComponent()
         {
             MmalLog.Logger.LogInformation($"Component: {Name}");
@@ -98,36 +84,33 @@ namespace MMALSharp
 
             for (var i = 0; i < Inputs.Count; i++)
             {
-                if (Inputs[i].EncodingType != null)
-                {
-                    sb.Append($"    INPUT port {i} encoding: {Inputs[i].NativeEncodingType.ParseEncoding().EncodingName}. \n");
-                    sb.Append($"        Width: {Inputs[i].Resolution.Width}. Height: {Inputs[i].Resolution.Height} \n");
-                    sb.Append($"        Num buffers: {Inputs[i].BufferNum}. Buffer size: {Inputs[i].BufferSize}. \n");
-                    sb.Append($"        Rec num buffers: {Inputs[i].BufferNumRecommended}. Rec buffer size: {Inputs[i].BufferSizeRecommended} \n");
-                    sb.Append($"        Resolution: {Inputs[i].Resolution.Width} x {Inputs[i].Resolution.Height} \n");
-                    sb.Append($"        Crop: {Inputs[i].Crop.Width} x {Inputs[i].Crop.Height} \n \n");
-                }
+                if (Inputs[i].EncodingType == null)
+                    continue;
+
+                sb.Append($"    INPUT port {i} encoding: {Inputs[i].NativeEncodingType.ParseEncoding().EncodingName}. \n");
+                sb.Append($"        Width: {Inputs[i].Resolution.Width}. Height: {Inputs[i].Resolution.Height} \n");
+                sb.Append($"        Num buffers: {Inputs[i].BufferNum}. Buffer size: {Inputs[i].BufferSize}. \n");
+                sb.Append($"        Rec num buffers: {Inputs[i].BufferNumRecommended}. Rec buffer size: {Inputs[i].BufferSizeRecommended} \n");
+                sb.Append($"        Resolution: {Inputs[i].Resolution.Width} x {Inputs[i].Resolution.Height} \n");
+                sb.Append($"        Crop: {Inputs[i].Crop.Width} x {Inputs[i].Crop.Height} \n \n");
             }
 
             for (var i = 0; i < Outputs.Count; i++)
             {
-                if (Outputs[i].EncodingType != null)
-                {
-                    sb.Append($"    OUTPUT port {i} encoding: {Outputs[i].NativeEncodingType.ParseEncoding().EncodingName}. \n");
-                    sb.Append($"        Width: {Outputs[i].Resolution.Width}. Height: {Outputs[i].Resolution.Height} \n");
-                    sb.Append($"        Num buffers: {Outputs[i].BufferNum}. Buffer size: {Outputs[i].BufferSize}. \n");
-                    sb.Append($"        Rec num buffers: {Outputs[i].BufferNumRecommended}. Rec buffer size: {Outputs[i].BufferSizeRecommended} \n");
-                    sb.Append($"        Resolution: {Outputs[i].Resolution.Width} x {Outputs[i].Resolution.Height} \n");
-                    sb.Append($"        Crop: {Outputs[i].Crop.Width} x {Outputs[i].Crop.Height} \n \n");
-                }
+                if (Outputs[i].EncodingType == null)
+                    continue;
+
+                sb.Append($"    OUTPUT port {i} encoding: {Outputs[i].NativeEncodingType.ParseEncoding().EncodingName}. \n");
+                sb.Append($"        Width: {Outputs[i].Resolution.Width}. Height: {Outputs[i].Resolution.Height} \n");
+                sb.Append($"        Num buffers: {Outputs[i].BufferNum}. Buffer size: {Outputs[i].BufferSize}. \n");
+                sb.Append($"        Rec num buffers: {Outputs[i].BufferNumRecommended}. Rec buffer size: {Outputs[i].BufferSizeRecommended} \n");
+                sb.Append($"        Resolution: {Outputs[i].Resolution.Width} x {Outputs[i].Resolution.Height} \n");
+                sb.Append($"        Crop: {Outputs[i].Crop.Width} x {Outputs[i].Crop.Height} \n \n");
             }
 
             MmalLog.Logger.LogInformation(sb.ToString());
         }
 
-        /// <summary>
-        /// Disposes of the current component, and frees any native resources still in use by it.
-        /// </summary>
         public override void Dispose()
         {
             if (!CheckState())
@@ -158,46 +141,22 @@ namespace MMALSharp
             base.Dispose();
         }
 
-        /// <summary>
-        /// Acquire a reference on a component. Acquiring a reference on a component will prevent a component from being destroyed until the 
-        /// acquired reference is released (by a call to mmal_component_destroy). References are internally counted so all acquired references 
-        /// need a matching call to release them.
-        /// </summary>
-        public void AcquireComponent() => MMALComponent.mmal_component_acquire(Ptr);
+        public void AcquireComponent() => MmalComponent.mmal_component_acquire(Ptr);
+        public void ReleaseComponent() => MmalCheck(MmalComponent.mmal_component_release(Ptr), "Unable to release component");
+        public void DestroyComponent() => MmalCheck(MmalComponent.mmal_component_destroy(Ptr), "Unable to destroy component");
 
-        /// <summary>
-        /// Release a reference on a component Release an acquired reference on a component. Triggers the destruction of the component 
-        /// when the last reference is being released.
-        /// </summary>
-        public void ReleaseComponent() => MmalCheck(MMALComponent.mmal_component_release(Ptr), "Unable to release component");
-
-        /// <summary>
-        /// Destroy a previously created component Release an acquired reference on a component. 
-        /// Only actually destroys the component when the last reference is being released.
-        /// </summary>
-        public void DestroyComponent() => MmalCheck(MMALComponent.mmal_component_destroy(Ptr), "Unable to destroy component");
-
-        /// <summary>
-        /// Enable processing on a component.
-        /// </summary>
         public void EnableComponent()
         {
             if (!Enabled)
-                MmalCheck(MMALComponent.mmal_component_enable(Ptr), "Unable to enable component");
+                MmalCheck(MmalComponent.mmal_component_enable(Ptr), "Unable to enable component");
         }
 
-        /// <summary>
-        /// Disable processing on a component.
-        /// </summary>
         public void DisableComponent()
         {
             if (Enabled)
-                MmalCheck(MMALComponent.mmal_component_disable(Ptr), "Unable to disable component");
+                MmalCheck(MmalComponent.mmal_component_disable(Ptr), "Unable to disable component");
         }
 
-        /// <summary>
-        /// Helper method to destroy any port pools still in action. Failure to do this will cause MMAL to block indefinitely.
-        /// </summary>
         public void CleanPortPools()
         {
             // See if any pools need disposing before destroying component.
@@ -216,15 +175,10 @@ namespace MMALSharp
             }
         }
 
-        /// <summary>
-        /// Provides a facility to create a component with a given name.
-        /// </summary>
-        /// <param name="name">The name of the component to create.</param>
-        /// <returns>A pointer to the new component struct.</returns>
         static MMAL_COMPONENT_T* CreateComponent(string name)
         {
-            IntPtr ptr = IntPtr.Zero;
-            MmalCheck(MMALComponent.mmal_component_create(name, &ptr), "Unable to create component");
+            var ptr = IntPtr.Zero;
+            MmalCheck(MmalComponent.mmal_component_create(name, &ptr), "Unable to create component");
 
             var compPtr = (MMAL_COMPONENT_T*)ptr.ToPointer();
 

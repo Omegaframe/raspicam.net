@@ -5,6 +5,6 @@ namespace MMALSharp
 {
     public static class MmalBootstrapper
     {
-        public static List<MMALDownstreamComponent> DownstreamComponents { get; } = new List<MMALDownstreamComponent>();
+        public static List<MmalDownstreamComponent> DownstreamComponents { get; } = new List<MmalDownstreamComponent>();
     }
 }

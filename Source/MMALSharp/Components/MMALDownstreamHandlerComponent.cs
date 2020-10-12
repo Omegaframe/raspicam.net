@@ -1,10 +1,7 @@
 ﻿namespace MMALSharp.Components
 {
-    /// <summary>
-    /// Base class for all downstream components which support capture handlers.
-    /// </summary>
-    public abstract class MMALDownstreamHandlerComponent : MMALDownstreamComponent, IDownstreamHandlerComponent
+    public abstract class MmalDownstreamHandlerComponent : MmalDownstreamComponent, IDownstreamHandlerComponent
     {
-        protected MMALDownstreamHandlerComponent(string name) : base(name) { }
+        protected MmalDownstreamHandlerComponent(string name) : base(name) { }
     }
 }

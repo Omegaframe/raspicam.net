@@ -12,8 +12,8 @@ namespace MMALSharp.Callbacks
         {
             base.Callback(buffer);
 
-            var eos = buffer.AssertProperty(MMALBufferProperties.MMAL_BUFFER_HEADER_FLAG_FRAME_END) ||
-                      buffer.AssertProperty(MMALBufferProperties.MMAL_BUFFER_HEADER_FLAG_EOS);
+            var eos = buffer.AssertProperty(MmalBufferProperties.MmalBufferHeaderFlagFrameEnd) ||
+                      buffer.AssertProperty(MmalBufferProperties.MmalBufferHeaderFlagEos);
 
             if (eos && CaptureHandler is IFileStreamCaptureHandler handler)
                 handler.NewFile();

@@ -30,13 +30,13 @@ namespace MMALSharp.Tests
             TestHelper.CleanDirectory("/home/pi/videos/tests");
 
             using (var vidCaptureHandler = new VideoStreamCaptureHandler("/home/pi/videos/tests", "raw"))
-            using (var preview = new MMALVideoRenderer())
-            using (var resizer = new MMALResizerComponent())
+            using (var preview = new MmalVideoRenderer())
+            using (var resizer = new MmalResizerComponent())
             {
                 Fixture.MalCamera.ConfigureCameraSettings();
 
                 // Use the resizer to resize 1080p to 640x480.
-                var portConfig = new MMALPortConfig(MmalEncoding.I420, MmalEncoding.I420, width: 640, height: 480);
+                var portConfig = new MmalPortConfig(MmalEncoding.I420, MmalEncoding.I420, width: 640, height: 480);
 
                 resizer.ConfigureOutputPort<VideoPort>(0, portConfig, vidCaptureHandler);
 
@@ -68,15 +68,15 @@ namespace MMALSharp.Tests
             // I am only using a single output here because due to the disk IO performance on the Pi you ideally need to be
             // using a faster storage medium such as the ramdisk to output to multiple files.
             using (var vidCaptureHandler = new VideoStreamCaptureHandler("/home/pi/videos/tests", "raw"))
-            using (var preview = new MMALVideoRenderer())
-            using (var splitter = new MMALSplitterComponent())
+            using (var preview = new MmalVideoRenderer())
+            using (var splitter = new MmalSplitterComponent())
             {
                 Fixture.MalCamera.ConfigureCameraSettings();
 
-                var splitterPortConfig = new MMALPortConfig(MmalEncoding.I420, MmalEncoding.I420);
+                var splitterPortConfig = new MmalPortConfig(MmalEncoding.I420, MmalEncoding.I420);
 
                 // Create our component pipeline.         
-                splitter.ConfigureInputPort(new MMALPortConfig(MmalEncoding.Opaque, MmalEncoding.I420, 0), Fixture.MalCamera.Camera.VideoPort, null);
+                splitter.ConfigureInputPort(new MmalPortConfig(MmalEncoding.Opaque, MmalEncoding.I420, 0), Fixture.MalCamera.Camera.VideoPort, null);
                 splitter.ConfigureOutputPort(0, splitterPortConfig, vidCaptureHandler);
                
                 // Create our component pipeline.         
@@ -107,17 +107,17 @@ namespace MMALSharp.Tests
             // I am only using a single output here because due to the disk IO performance on the Pi you ideally need to be
             // using a faster storage medium such as the ramdisk to output to multiple files.
             using (var vidCaptureHandler = new VideoStreamCaptureHandler("/home/pi/videos/tests", "h264"))
-            using (var preview = new MMALVideoRenderer())
-            using (var splitter = new MMALSplitterComponent())
-            using (var resizer = new MMALResizerComponent())
+            using (var preview = new MmalVideoRenderer())
+            using (var splitter = new MmalSplitterComponent())
+            using (var resizer = new MmalResizerComponent())
             {
                 Fixture.MalCamera.ConfigureCameraSettings();
 
-                var splitterPortConfig = new MMALPortConfig(MmalEncoding.Opaque, MmalEncoding.I420);
-                var resizerPortConfig = new MMALPortConfig(MmalEncoding.I420, MmalEncoding.I420, width: 1024, height: 768, timeout: DateTime.Now.AddSeconds(15));
+                var splitterPortConfig = new MmalPortConfig(MmalEncoding.Opaque, MmalEncoding.I420);
+                var resizerPortConfig = new MmalPortConfig(MmalEncoding.I420, MmalEncoding.I420, width: 1024, height: 768, timeout: DateTime.Now.AddSeconds(15));
 
                 // Create our component pipeline.         
-                splitter.ConfigureInputPort(new MMALPortConfig(MmalEncoding.Opaque, MmalEncoding.I420), Fixture.MalCamera.Camera.VideoPort, null);
+                splitter.ConfigureInputPort(new MmalPortConfig(MmalEncoding.Opaque, MmalEncoding.I420), Fixture.MalCamera.Camera.VideoPort, null);
                 splitter.ConfigureOutputPort(0, splitterPortConfig, null);
                 
                 resizer.ConfigureOutputPort<VideoPort>(0, resizerPortConfig, vidCaptureHandler);

@@ -16,7 +16,7 @@ namespace MMALSharp
 
         public IBuffer GetBuffer()
         {
-            var ptr = MMALQueue.mmal_queue_get(Ptr);
+            var ptr = MmalQueue.mmal_queue_get(Ptr);
 
             if (!CheckState())
             {
@@ -38,16 +38,16 @@ namespace MMALSharp
 
         public override bool CheckState() => Ptr != null && (IntPtr)Ptr != IntPtr.Zero;
 
-        public uint QueueLength() => MMALQueue.mmal_queue_length(Ptr);
+        public uint QueueLength() => MmalQueue.mmal_queue_length(Ptr);
 
-        public IBuffer Wait() => new MmalBuffer(MMALQueue.mmal_queue_wait(Ptr));
+        public IBuffer Wait() => new MmalBuffer(MmalQueue.mmal_queue_wait(Ptr));
 
-        public IBuffer TimedWait(int waitms) => new MmalBuffer(MMALQueue.mmal_queue_timedwait(Ptr, waitms));
+        public IBuffer TimedWait(int waitms) => new MmalBuffer(MmalQueue.mmal_queue_timedwait(Ptr, waitms));
 
-        public void Put(IBuffer buffer) => MMALQueue.mmal_queue_put(Ptr, buffer.Ptr);
+        public void Put(IBuffer buffer) => MmalQueue.mmal_queue_put(Ptr, buffer.Ptr);
 
-        internal static MmalQueueImpl Create() => new MmalQueueImpl(MMALQueue.mmal_queue_create());
+        internal static MmalQueueImpl Create() => new MmalQueueImpl(MmalQueue.mmal_queue_create());
 
-        void Destroy() => MMALQueue.mmal_queue_destroy(Ptr);
+        void Destroy() => MmalQueue.mmal_queue_destroy(Ptr);
     }
 }

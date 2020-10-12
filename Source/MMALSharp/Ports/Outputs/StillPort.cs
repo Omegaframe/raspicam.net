@@ -34,13 +34,12 @@ namespace MMALSharp.Ports.Outputs
 
         public StillPort(IPort copyFrom) : base((IntPtr)copyFrom.Ptr, copyFrom.ComponentReference, copyFrom.Guid) { }
 
-        /// <inheritdoc />
-        public override void Configure(IMMALPortConfig config, IInputPort copyFrom, IOutputCaptureHandler handler)
+        public override void Configure(IMmalPortConfig config, IInputPort copyFrom, IOutputCaptureHandler handler)
         {
             base.Configure(config, copyFrom, handler);
 
             if (config != null && config.EncodingType == MmalEncoding.Jpeg)
-                this.SetParameter(MMALParametersCamera.MMAL_PARAMETER_JPEG_Q_FACTOR, config.Quality);
+                this.SetParameter(MmalParametersCamera.MmalParameterJpegQFactor, config.Quality);
         }
 
         internal override void NativeOutputPortCallback(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)

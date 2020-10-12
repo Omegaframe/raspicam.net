@@ -8,25 +8,17 @@ using MMALSharp.Native;
 
 namespace MMALSharp.Ports.Outputs
 {
-    /// <summary>
-    /// A custom port definition used specifically when using encoder conversion functionality.
-    /// </summary>
     public unsafe class FileEncodeOutputPort : OutputPort
-    {      
-        public FileEncodeOutputPort(IntPtr ptr, IComponent comp, Guid guid)            : base(ptr, comp, guid)        {        }
-      
-        public FileEncodeOutputPort(IPort copyFrom)            : base((IntPtr)copyFrom.Ptr, copyFrom.ComponentReference, copyFrom.Guid)        {        }
+    {
+        public FileEncodeOutputPort(IntPtr ptr, IComponent comp, Guid guid) : base(ptr, comp, guid) { }
 
-        /// <summary>
-        /// The native callback MMAL passes buffer headers to.
-        /// </summary>
-        /// <param name="port">The port the buffer is sent to.</param>
-        /// <param name="buffer">The buffer header.</param>
+        public FileEncodeOutputPort(IPort copyFrom) : base((IntPtr)copyFrom.Ptr, copyFrom.ComponentReference, copyFrom.Guid) { }
+
         internal override void NativeOutputPortCallback(MMAL_PORT_T* port, MMAL_BUFFER_HEADER_T* buffer)
         {
-            if (MmalCameraConfig.Debug)            
-                MmalLog.Logger.LogDebug($"{Name}: In native {nameof(FileEncodeOutputPort)} callback");            
-            
+            if (MmalCameraConfig.Debug)
+                MmalLog.Logger.LogDebug($"{Name}: In native {nameof(FileEncodeOutputPort)} callback");
+
             var bufferImpl = new MmalBuffer(buffer);
             bufferImpl.PrintProperties();
             bufferImpl.ParseEvents();
@@ -34,26 +26,26 @@ namespace MMALSharp.Ports.Outputs
             ProcessBuffer(bufferImpl);
         }
 
-        private void ProcessBuffer(IBuffer bufferImpl)
+        void ProcessBuffer(IBuffer bufferImpl)
         {
-            var eos = bufferImpl.AssertProperty(MMALBufferProperties.MMAL_BUFFER_HEADER_FLAG_EOS) || 
+            var eos = bufferImpl.AssertProperty(MmalBufferProperties.MmalBufferHeaderFlagEos) ||
                       ComponentReference.ForceStopProcessing;
-            
+
             if (bufferImpl.CheckState())
             {
                 if (bufferImpl.Cmd > 0)
                 {
-                    if (bufferImpl.Cmd == MMALEvents.MMAL_EVENT_FORMAT_CHANGED)                    
-                        Task.Run(() => { ProcessFormatChangedEvent(bufferImpl); });                    
-                    else                    
-                        ReleaseBuffer(bufferImpl, eos);                    
+                    if (bufferImpl.Cmd == MmalEvents.MmalEventFormatChanged)
+                        Task.Run(() => { ProcessFormatChangedEvent(bufferImpl); });
+                    else
+                        ReleaseBuffer(bufferImpl, eos);
                 }
                 else
                 {
-                    if ((bufferImpl.Length > 0 && !eos && !Trigger.Task.IsCompleted) || (eos && !Trigger.Task.IsCompleted))                    
-                        CallbackHandler.Callback(bufferImpl);                    
-                    else                    
-                        MmalLog.Logger.LogDebug($"{Name}: Buffer length empty.");                    
+                    if ((bufferImpl.Length > 0 && !eos && !Trigger.Task.IsCompleted) || (eos && !Trigger.Task.IsCompleted))
+                        CallbackHandler.Callback(bufferImpl);
+                    else
+                        MmalLog.Logger.LogDebug($"{Name}: Buffer length empty.");
 
                     // Ensure we release the buffer before any signalling or we will cause a memory leak due to there still being a reference count on the buffer.                    
                     ReleaseBuffer(bufferImpl, eos);
@@ -73,7 +65,7 @@ namespace MMALSharp.Ports.Outputs
             }
         }
 
-        private void ProcessFormatChangedEvent(IBuffer buffer)
+        void ProcessFormatChangedEvent(IBuffer buffer)
         {
             MmalLog.Logger.LogInformation($"{Name}: Received MMAL_EVENT_FORMAT_CHANGED event");
 
@@ -84,13 +76,13 @@ namespace MMALSharp.Ports.Outputs
 
             MmalLog.Logger.LogInformation("-- To -- ");
             LogFormat(ev, null);
-            
+
             MmalLog.Logger.LogDebug($"{Name}: Finished processing MMAL_EVENT_FORMAT_CHANGED event");
         }
 
-        private void LogFormat(MmalEventFormat format, IPort port)
+        static void LogFormat(MmalEventFormat format, IPort port)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             if (port != null)
             {
@@ -114,9 +106,9 @@ namespace MMALSharp.Ports.Outputs
             sb.AppendLine($"Crop: {format.CropX}, {format.CropY}, {format.CropWidth}, {format.CropHeight}");
             sb.AppendLine($"Pixel aspect ratio: {format.ParNum}, {format.ParDen}. Frame rate: {format.FramerateNum}, {format.FramerateDen}");
 
-            if (port != null)            
+            if (port != null)
                 sb.AppendLine($"Port info: Buffers num: {port.BufferNum}(opt {port.BufferNumRecommended}, min {port.BufferNumMin}). Size: {port.BufferSize} (opt {port.BufferSizeRecommended}, min {port.BufferSizeMin}). Alignment: {port.BufferAlignmentMin}");
-            
+
             MmalLog.Logger.LogInformation(sb.ToString());
         }
     }

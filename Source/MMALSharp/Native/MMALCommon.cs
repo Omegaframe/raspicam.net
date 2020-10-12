@@ -5,7 +5,7 @@ namespace MMALSharp.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct MMAL_CORE_STATISTICS_T
     {
-        private uint bufferCount, firstBufferTime, lastBufferTime, maxDelay;
+        uint bufferCount, firstBufferTime, lastBufferTime, maxDelay;
 
         public uint BufferCount => bufferCount;
         public uint FirstBufferTime => firstBufferTime;
@@ -24,7 +24,7 @@ namespace MMALSharp.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct MMAL_CORE_PORT_STATISTICS_T
     {
-        private MMAL_CORE_STATISTICS_T rx, tx;
+        MMAL_CORE_STATISTICS_T rx, tx;
 
         public MMAL_CORE_STATISTICS_T Rx => rx;
         public MMAL_CORE_STATISTICS_T Tx => tx;

@@ -14,26 +14,26 @@ namespace MMALSharp.Tests.Data
             => new List<object[]>
             {
                 // { Effect, throws exception }
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_CARTOON, false },
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_BLACKBOARD, true },
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_BLUR, false },
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_COLOURBALANCE, false },
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_COLOURPOINT, false },
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_COLOURSWAP, false },
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_DENOISE, false },
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_EMBOSS, false },
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_FILM, false },
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_GPEN, false },
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_HATCH, false },
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_NEGATIVE, false },
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_OILPAINT, false },
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_PASTEL, false },
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_POSTERISE, false },
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_SATURATION, false },
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_SKETCH, false },
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_SOLARIZE, false },
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_WASHEDOUT, false },
-                new object[] { MMAL_PARAM_IMAGEFX_T.MMAL_PARAM_IMAGEFX_WHITEBOARD, true }
+                new object[] { MmalParamImagefxT.MmalParamImagefxCartoon, false },
+                new object[] { MmalParamImagefxT.MmalParamImagefxBlackboard, true },
+                new object[] { MmalParamImagefxT.MmalParamImagefxBlur, false },
+                new object[] { MmalParamImagefxT.MmalParamImagefxColourbalance, false },
+                new object[] { MmalParamImagefxT.MmalParamImagefxColourpoint, false },
+                new object[] { MmalParamImagefxT.MmalParamImagefxColourswap, false },
+                new object[] { MmalParamImagefxT.MmalParamImagefxDenoise, false },
+                new object[] { MmalParamImagefxT.MmalParamImagefxEmboss, false },
+                new object[] { MmalParamImagefxT.MmalParamImagefxFilm, false },
+                new object[] { MmalParamImagefxT.MmalParamImagefxGpen, false },
+                new object[] { MmalParamImagefxT.MmalParamImagefxHatch, false },
+                new object[] { MmalParamImagefxT.MmalParamImagefxNegative, false },
+                new object[] { MmalParamImagefxT.MmalParamImagefxOilpaint, false },
+                new object[] { MmalParamImagefxT.MmalParamImagefxPastel, false },
+                new object[] { MmalParamImagefxT.MmalParamImagefxPosterise, false },
+                new object[] { MmalParamImagefxT.MmalParamImagefxSaturation, false },
+                new object[] { MmalParamImagefxT.MmalParamImagefxSketch, false },
+                new object[] { MmalParamImagefxT.MmalParamImagefxSolarize, false },
+                new object[] { MmalParamImagefxT.MmalParamImagefxWashedout, false },
+                new object[] { MmalParamImagefxT.MmalParamImagefxWhiteboard, true }
             };
     }
 }

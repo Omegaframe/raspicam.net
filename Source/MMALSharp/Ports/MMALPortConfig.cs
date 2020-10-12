@@ -5,96 +5,24 @@ using MMALSharp.Config;
 
 namespace MMALSharp.Ports
 {
-    public class MMALPortConfig : IMMALPortConfig
+    public class MmalPortConfig : IMmalPortConfig
     {
-        /// <summary>
-        /// The encoding type this output port will send data in.
-        /// </summary>
         public MmalEncoding EncodingType { get; }
-
-        /// <summary>
-        /// The pixel format this output port will send data in.
-        /// </summary>
         public MmalEncoding PixelFormat { get; }
-
-        /// <summary>
-        /// The input/output width value.
-        /// </summary>
         public int Width { get; }
-
-        /// <summary>
-        /// The input/output height value.
-        /// </summary>
         public int Height { get; }
-
-        /// <summary>
-        /// The framerate of the outputted data.
-        /// </summary>
         public double Framerate { get; }
-
-        /// <summary>
-        /// The quality value. Can be used with JPEG encoding (value between 1-100). Can be used with H.264 encoding which affects the quantization parameter (typical values between 10-40, see wiki for info). Set both bitrate param and quality param to 0 for variable bitrate.
-        /// </summary>
         public int Quality { get; }
-
-        /// <summary>
-        /// The bitrate we are sending data at.
-        /// </summary>
         public int Bitrate { get; }
-
-        /// <summary>
-        /// Instruct MMAL to not copy buffers to ARM memory (useful for large buffers and handling raw data).
-        /// </summary>
         public bool ZeroCopy { get; }
-
-        /// <summary>
-        /// Time that processing shall stop. Relevant for video recording.
-        /// </summary>
         public DateTime? Timeout { get; }
-
-        /// <summary>
-        /// Requested number of buffer headers.
-        /// </summary>
         public int BufferNum { get; }
-
-        /// <summary>
-        /// Requested size of buffer headers.
-        /// </summary>
         public int BufferSize { get; }
-
-        /// <summary>
-        /// The Region of Interest requested.
-        /// </summary>
         public Rectangle? Crop { get; }
-
-        /// <summary>
-        /// Video split configuration object.
-        /// </summary>
         public Split Split { get; }
-
-        /// <summary>
-        /// Indicates whether motion vector data should be stored to a separate output stream. Only applies to Video recording.
-        /// </summary>
         public bool StoreMotionVectors { get; }
 
-        /// <summary>
-        /// Create a new instance of <see cref="MMALPortConfig"/>.
-        /// </summary>
-        /// <param name="encodingType">The encoding type.</param>
-        /// <param name="pixelFormat">The pixel format.</param>
-        /// <param name="quality">The quality value. Can be used with JPEG encoding (value between 1-100). Can be used with H.264 encoding which affects the quantization parameter (typical values between 10-40, see wiki for info). Set both bitrate param and quality param to 0 for variable bitrate.</param>
-        /// <param name="bitrate">The working bitrate, applies to Video Encoder only.</param>
-        /// <param name="timeout">Video record timeout. This is useful if you have multiple video recording streams which you want to stop at different times.</param>
-        /// <param name="split">Video split configuration object.</param>
-        /// <param name="storeMotionVectors">Indicates whether to store motion vectors. Applies to H.264 video encoding.</param>
-        /// <param name="width">The input/output width value.</param>
-        /// <param name="height">The input/output height value.</param>
-        /// <param name="framerate">Framerate value. Only useful when not using the camera component to specify input framerate.</param>
-        /// <param name="zeroCopy">Instruct MMAL to not copy buffers to ARM memory (useful for large buffers and handling raw data).</param>
-        /// <param name="bufferNum">Requested number of buffer headers.</param>
-        /// <param name="bufferSize">Requested size of buffer headers.</param>
-        /// <param name="crop">The Region of Interest requested.</param>
-        public MMALPortConfig(
+        public MmalPortConfig(
             MmalEncoding encodingType,
             MmalEncoding pixelFormat,
             int quality = 0,

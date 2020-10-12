@@ -1,13 +1,8 @@
-﻿// <copyright file="MMALQueue.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace MMALSharp.Native
 {
-    public static class MMALQueue
+    public static class MmalQueue
     {
         // MMAL_QUEUE_T*
         [DllImport("libmmal.so", EntryPoint = "mmal_queue_create", CallingConvention = CallingConvention.Cdecl)]
@@ -41,9 +36,9 @@ namespace MMALSharp.Native
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct MMAL_QUEUE_T
     {
-        private uint length;
-        private MMAL_BUFFER_HEADER_T* first;
-        private MMAL_BUFFER_HEADER_T** last;
+        uint length;
+        MMAL_BUFFER_HEADER_T* first;
+        MMAL_BUFFER_HEADER_T** last;
 
         public uint Length => length;
         public MMAL_BUFFER_HEADER_T* First => first;

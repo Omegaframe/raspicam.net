@@ -2,9 +2,6 @@
 
 namespace MMALSharp.Native
 {
-    /// <summary>
-    /// Provides interop methods for libbcm_host, the Broadcom hardware interface library.
-    /// </summary>
     public static class BcmHost
     {
         [DllImport("libbcm_host.so", EntryPoint = "bcm_host_init", CallingConvention = CallingConvention.Cdecl)]

@@ -7,14 +7,9 @@ using MMALSharp.Processing.Handlers;
 
 namespace MMALSharp.Components
 {
-    /// <summary>
-    /// The Splitter Component is intended on being connected to the camera video output port. In turn, it
-    /// provides an additional 4 output ports which can be used to produce multiple image/video outputs
-    /// from the single camera video port.
-    /// </summary>
-    public class MMALSplitterComponent : MMALDownstreamHandlerComponent
+    public class MmalSplitterComponent : MmalDownstreamHandlerComponent
     {
-        public unsafe MMALSplitterComponent()            : base(MMALParameters.MMAL_COMPONENT_DEFAULT_VIDEO_SPLITTER)
+        public unsafe MmalSplitterComponent()            : base(MmalParameters.MmalComponentDefaultVideoSplitter)
         {
             Inputs.Add(new InputPort((IntPtr)(&(*Ptr->Input[0])), this, Guid.NewGuid()));
 
@@ -22,12 +17,11 @@ namespace MMALSharp.Components
                 Outputs.Add(new SplitterVideoPort((IntPtr)(&(*Ptr->Output[i])), this, Guid.NewGuid()));            
         }
 
-        /// <inheritdoc />
-        public override IDownstreamComponent ConfigureInputPort(IMMALPortConfig config, IPort copyPort, IInputCaptureHandler handler)
+        public override IDownstreamComponent ConfigureInputPort(IMmalPortConfig config, IPort copyPort, IInputCaptureHandler handler)
         {
             var bufferNum = Math.Max(Math.Max(Inputs[0].BufferNumRecommended, 3), config.BufferNum);
             
-            config = new MMALPortConfig(
+            config = new MmalPortConfig(
                 config.EncodingType,
                 config.PixelFormat,
                 config.Quality,

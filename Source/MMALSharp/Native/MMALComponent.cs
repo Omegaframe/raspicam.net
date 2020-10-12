@@ -3,32 +3,32 @@ using System.Runtime.InteropServices;
 
 namespace MMALSharp.Native
 {
-    public static class MMALComponent
+    public static class MmalComponent
     {
         // name: char* * comp: MMAL_COMPONENT_T** 
         [DllImport("libmmal.so", EntryPoint = "mmal_component_create", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_component_create(string name, IntPtr* comp);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_component_create(string name, IntPtr* comp);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_component_acquire", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe void mmal_component_acquire(MMAL_COMPONENT_T* comp);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_component_release", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_component_release(MMAL_COMPONENT_T* comp);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_component_release(MMAL_COMPONENT_T* comp);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_component_destroy", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_component_destroy(MMAL_COMPONENT_T* comp);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_component_destroy(MMAL_COMPONENT_T* comp);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_component_enable", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_component_enable(MMAL_COMPONENT_T* comp);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_component_enable(MMAL_COMPONENT_T* comp);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_component_disable", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_component_disable(MMAL_COMPONENT_T* comp);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_component_disable(MMAL_COMPONENT_T* comp);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_wrapper_create", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_wrapper_create(IntPtr* wrapper, string name);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_wrapper_create(IntPtr* wrapper, string name);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_wrapper_destroy", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_wrapper_destroy(IntPtr* wrapper);
+        public static extern unsafe MmalUtil.MmalStatusT mmal_wrapper_destroy(IntPtr* wrapper);
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -39,19 +39,19 @@ namespace MMALSharp.Native
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct MMAL_COMPONENT_T
     {
-        private IntPtr priv, userData;
-        private char* name;
-        private uint isEnabled;
-        private MMAL_PORT_T* control;
-        private uint inputNum;
-        private MMAL_PORT_T** input;
-        private uint outputNum;
-        private MMAL_PORT_T** output;
-        private uint clockNum;
-        private MMAL_PORT_T** clock;
-        private uint portNum;
-        private MMAL_PORT_T** port;
-        private uint id;
+        IntPtr priv, userData;
+        char* name;
+        uint isEnabled;
+        MMAL_PORT_T* control;
+        uint inputNum;
+        MMAL_PORT_T** input;
+        uint outputNum;
+        MMAL_PORT_T** output;
+        uint clockNum;
+        MMAL_PORT_T** clock;
+        uint portNum;
+        MMAL_PORT_T** port;
+        uint id;
 
         public IntPtr Priv => this.priv;
 
@@ -117,24 +117,24 @@ namespace MMALSharp.Native
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct MMAL_WRAPPER_T
     {
-        private IntPtr userData, callback;
-        private MMAL_COMPONENT_T* component;
-        private MMALUtil.MMAL_STATUS_T status;
-        private MMAL_PORT_T* control;
-        private uint inputNum;
-        private MMAL_PORT_T** input;
-        private MMAL_POOL_T** inputPool;
-        private uint outputNum;
-        private MMAL_PORT_T** output;
-        private MMAL_POOL_T** outputPool;
-        private MMAL_QUEUE_T** outputQueue;
-        private long timeSetup, timeEnable, timeDisable;
+        IntPtr userData, callback;
+        MMAL_COMPONENT_T* component;
+        MmalUtil.MmalStatusT status;
+        MMAL_PORT_T* control;
+        uint inputNum;
+        MMAL_PORT_T** input;
+        MMAL_POOL_T** inputPool;
+        uint outputNum;
+        MMAL_PORT_T** output;
+        MMAL_POOL_T** outputPool;
+        MMAL_QUEUE_T** outputQueue;
+        long timeSetup, timeEnable, timeDisable;
 
         public IntPtr UserData => this.userData;
 
         public IntPtr Callback => this.callback;
 
-        public MMALUtil.MMAL_STATUS_T Status => this.status;
+        public MmalUtil.MmalStatusT Status => this.status;
 
         public MMAL_PORT_T* Control => this.control;
 
@@ -162,7 +162,7 @@ namespace MMALSharp.Native
                                IntPtr userData,
                                IntPtr callback,
                                MMAL_COMPONENT_T* component,
-                               MMALUtil.MMAL_STATUS_T status,
+                               MmalUtil.MmalStatusT status,
                                MMAL_PORT_T* control,
                                uint inputNum,
                                MMAL_PORT_T** input,

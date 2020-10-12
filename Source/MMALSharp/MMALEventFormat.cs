@@ -48,7 +48,7 @@ namespace MMALSharp
 
         internal static MmalEventFormat GetEventFormat(IBuffer buffer)
         {
-            var ev = MMALEvents.mmal_event_format_changed_get(buffer.Ptr);
+            var ev = MmalEvents.mmal_event_format_changed_get(buffer.Ptr);
             return new MmalEventFormat(Marshal.PtrToStructure<MMAL_ES_FORMAT_T>((IntPtr)ev->Format), ev->Format);
         }
     }
