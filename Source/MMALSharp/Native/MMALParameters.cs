@@ -1156,9 +1156,9 @@ namespace MMALSharp.Native
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
         private int numCameras, numFlashes;
-        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.Struct, SizeConst = 4)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
         private MMAL_PARAMETER_CAMERA_INFO_CAMERA_V2_T[] cameras;
-        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.Struct, SizeConst = 2)]
+        [MarshalAs(UnmanagedType.ByValArray,SizeConst = 2)]
         private MMAL_PARAMETER_CAMERA_INFO_FLASH_T[] flashes;
 
         public int NumCameras => numCameras;
