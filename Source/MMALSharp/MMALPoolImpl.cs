@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using MMALSharp.Common.Utility;
 using MMALSharp.Native;
 using MMALSharp.Native.Pool;
+using MMALSharp.Native.Util;
 using MMALSharp.Ports;
 using static MMALSharp.MmalNativeExceptionHelper;
 
@@ -19,7 +20,7 @@ namespace MMALSharp
         {
             MmalLog.Logger.LogDebug($"Creating buffer pool with {port.BufferNum} buffers of size {port.BufferSize}");
 
-            Ptr = MmalUtil.mmal_port_pool_create(port.Ptr, port.BufferNum, port.BufferSize);
+            Ptr = MmalUtil.PoolCreate(port.Ptr, port.BufferNum, port.BufferSize);
             Queue = new MmalQueueImpl((*Ptr).Queue);
         }
 

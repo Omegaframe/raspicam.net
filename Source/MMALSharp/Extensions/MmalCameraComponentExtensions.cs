@@ -9,6 +9,7 @@ using MMALSharp.Components.EncoderComponents;
 using MMALSharp.Config;
 using MMALSharp.Native;
 using MMALSharp.Native.Port;
+using MMALSharp.Native.Util;
 using MMALSharp.Ports.Controls;
 using MMALSharp.Utility;
 using static MMALSharp.MmalNativeExceptionHelper;
@@ -335,7 +336,7 @@ namespace MMALSharp.Extensions
         {
             MmalLog.Logger.LogDebug($"Setting saturation: {saturation}");
 
-            var value = new MMAL_RATIONAL_T(saturation, 100);
+            var value = new MmalRational(saturation, 100);
 
             if (saturation >= -100 && saturation <= 100)
                 camera.Control.SetParameter(MmalParameterSaturation, value);
@@ -352,7 +353,7 @@ namespace MMALSharp.Extensions
         {
             MmalLog.Logger.LogDebug($"Setting sharpness: {sharpness}");
 
-            var value = new MMAL_RATIONAL_T(sharpness, 100);
+            var value = new MmalRational(sharpness, 100);
 
             if (sharpness >= -100 && sharpness <= 100)
                 camera.Control.SetParameter(MmalParameterSharpness, value);
@@ -369,7 +370,7 @@ namespace MMALSharp.Extensions
         {
             MmalLog.Logger.LogDebug($"Setting contrast: {contrast}");
 
-            var value = new MMAL_RATIONAL_T(contrast, 100);
+            var value = new MmalRational(contrast, 100);
 
             if (contrast >= -100 && contrast <= 100)
                 camera.Control.SetParameter(MmalParameterContrast, value);
@@ -391,7 +392,7 @@ namespace MMALSharp.Extensions
         {
             MmalLog.Logger.LogDebug($"Setting brightness: {brightness}");
 
-            var value = new MMAL_RATIONAL_T(brightness, 100);
+            var value = new MmalRational(brightness, 100);
 
             if (brightness >= 0 && brightness <= 100)
                 camera.Control.SetParameter(MmalParameterBrightness, value);
@@ -512,8 +513,8 @@ namespace MMALSharp.Extensions
         {
             var settings = new MMAL_PARAMETER_CAMERA_SETTINGS_T(
                 new MMAL_PARAMETER_HEADER_T(MmalParameterCameraSettings, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_SETTINGS_T>()),
-                0, new MMAL_RATIONAL_T(0, 0), new MMAL_RATIONAL_T(0, 0),
-                new MMAL_RATIONAL_T(0, 0), new MMAL_RATIONAL_T(0, 0), 0);
+                0, new MmalRational(0, 0), new MmalRational(0, 0),
+                new MmalRational(0, 0), new MmalRational(0, 0), 0);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &settings.Hdr), "Unable to get camera settings");
 
@@ -524,8 +525,8 @@ namespace MMALSharp.Extensions
         {
             var settings = new MMAL_PARAMETER_CAMERA_SETTINGS_T(
                 new MMAL_PARAMETER_HEADER_T(MmalParameterCameraSettings, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_SETTINGS_T>()),
-                0, new MMAL_RATIONAL_T(0, 0), new MMAL_RATIONAL_T(0, 0),
-                new MMAL_RATIONAL_T(0, 0), new MMAL_RATIONAL_T(0, 0), 0);
+                0, new MmalRational(0, 0), new MmalRational(0, 0),
+                new MmalRational(0, 0), new MmalRational(0, 0), 0);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &settings.Hdr), "Unable to get camera settings");
 
@@ -536,8 +537,8 @@ namespace MMALSharp.Extensions
         {
             var settings = new MMAL_PARAMETER_CAMERA_SETTINGS_T(
                 new MMAL_PARAMETER_HEADER_T(MmalParameterCameraSettings, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_SETTINGS_T>()),
-                0, new MMAL_RATIONAL_T(0, 0), new MMAL_RATIONAL_T(0, 0),
-                new MMAL_RATIONAL_T(0, 0), new MMAL_RATIONAL_T(0, 0), 0);
+                0, new MmalRational(0, 0), new MmalRational(0, 0),
+                new MmalRational(0, 0), new MmalRational(0, 0), 0);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &settings.Hdr), "Unable to get camera settings");
 
@@ -548,8 +549,8 @@ namespace MMALSharp.Extensions
         {
             var settings = new MMAL_PARAMETER_CAMERA_SETTINGS_T(
                 new MMAL_PARAMETER_HEADER_T(MmalParameterCameraSettings, Marshal.SizeOf<MMAL_PARAMETER_CAMERA_SETTINGS_T>()),
-                0, new MMAL_RATIONAL_T(0, 0), new MMAL_RATIONAL_T(0, 0),
-                new MMAL_RATIONAL_T(0, 0), new MMAL_RATIONAL_T(0, 0), 0);
+                0, new MmalRational(0, 0), new MmalRational(0, 0),
+                new MmalRational(0, 0), new MmalRational(0, 0), 0);
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &settings.Hdr), "Unable to get camera settings");
 
@@ -565,8 +566,8 @@ namespace MMALSharp.Extensions
 
             var awbGains = new MMAL_PARAMETER_AWB_GAINS_T(
                 new MMAL_PARAMETER_HEADER_T(MmalParameterCustomAwbGains, Marshal.SizeOf<MMAL_PARAMETER_AWB_GAINS_T>()),
-                                                                                                        new MMAL_RATIONAL_T((int)(rGain * 65536), 65536),
-                                                                                                        new MMAL_RATIONAL_T((int)(bGain * 65536), 65536));
+                                                                                                        new MmalRational((int)(rGain * 65536), 65536),
+                                                                                                        new MmalRational((int)(bGain * 65536), 65536));
 
             MmalCheck(MmalPort.SetParameter(camera.Control.Ptr, &awbGains.Hdr), "Unable to set awb gains");
         }
@@ -669,11 +670,11 @@ namespace MMALSharp.Extensions
             MmalCheck(MmalPort.SetParameter(camera.VideoPort.Ptr, &mirror.Hdr), "Unable to set flips");
         }
 
-        public static MMAL_RECT_T GetZoom(this MmalCameraComponent camera)
+        public static MmalRect GetZoom(this MmalCameraComponent camera)
         {
             var crop = new MMAL_PARAMETER_INPUT_CROP_T(
                 new MMAL_PARAMETER_HEADER_T(MmalParameterInputCrop, Marshal.SizeOf<MMAL_PARAMETER_INPUT_CROP_T>()),
-                default(MMAL_RECT_T));
+                default(MmalRect));
 
             MmalCheck(MmalPort.GetParameter(camera.Control.Ptr, &crop.Hdr), "Unable to get zoom");
 
@@ -687,7 +688,7 @@ namespace MMALSharp.Extensions
 
             var crop = new MMAL_PARAMETER_INPUT_CROP_T(
                 new MMAL_PARAMETER_HEADER_T(MmalParameterInputCrop, Marshal.SizeOf<MMAL_PARAMETER_INPUT_CROP_T>()),
-                new MMAL_RECT_T(Convert.ToInt32(65536 * rect.X), Convert.ToInt32(65536 * rect.Y), Convert.ToInt32(65536 * rect.Width), Convert.ToInt32(65536 * rect.Height)));
+                new MmalRect(Convert.ToInt32(65536 * rect.X), Convert.ToInt32(65536 * rect.Y), Convert.ToInt32(65536 * rect.Width), Convert.ToInt32(65536 * rect.Height)));
 
             MmalCheck(MmalPort.SetParameter(camera.Control.Ptr, &crop.Hdr), "Unable to set zoom");
         }
@@ -759,7 +760,7 @@ namespace MMALSharp.Extensions
 
             var num = (int)analogGain * 65536;
 
-            camera.Control.SetParameter(MmalParameterAnalogGain, new MMAL_RATIONAL_T(num, 65536));
+            camera.Control.SetParameter(MmalParameterAnalogGain, new MmalRational(num, 65536));
         }
 
         public static double GetDigitalGain(this MmalCameraComponent camera)
@@ -774,7 +775,7 @@ namespace MMALSharp.Extensions
 
             var num = (int)digitalGain * 65536;
 
-            camera.Control.SetParameter(MmalParameterDigitalGain, new MMAL_RATIONAL_T(num, 65536));
+            camera.Control.SetParameter(MmalParameterDigitalGain, new MmalRational(num, 65536));
         }
     }
 }

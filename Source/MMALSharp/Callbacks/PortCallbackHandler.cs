@@ -4,6 +4,7 @@ using MMALSharp.Common.Utility;
 using MMALSharp.Extensions;
 using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
+using MMALSharp.Native.Util;
 using MMALSharp.Ports;
 using MMALSharp.Processing.Handlers;
 
@@ -60,7 +61,7 @@ namespace MMALSharp.Callbacks
                 PixelFormat = WorkingPort.PixelFormat,
                 IsRaw = WorkingPort.EncodingType.EncType == MmalEncoding.EncodingType.PixelFormat,
                 Pts = pts,
-                Stride = MmalUtil.mmal_encoding_width_to_stride(WorkingPort.PixelFormat?.EncodingVal ?? WorkingPort.EncodingType.EncodingVal, WorkingPort.Resolution.Width)
+                Stride = MmalUtil.EncodingWidthToStride(WorkingPort.PixelFormat?.EncodingVal ?? WorkingPort.EncodingType.EncodingVal, WorkingPort.Resolution.Width)
             });
 
             if (eos)

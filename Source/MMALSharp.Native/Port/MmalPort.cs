@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using MMALSharp.Native.Buffer;
+using MMALSharp.Native.Util;
 
 namespace MMALSharp.Native.Port
 {
@@ -10,24 +11,24 @@ namespace MMALSharp.Native.Port
         public unsafe delegate void MmalPortBhCbT(MmalPortType* port, MmalBufferHeader* buffer);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_format_commit", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalUtil.MmalStatusT Commit(MmalPortType* port);
+        public static extern unsafe MmalStatusEnum Commit(MmalPortType* port);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_enable", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalUtil.MmalStatusT Enable(MmalPortType* port, IntPtr cb);
+        public static extern unsafe MmalStatusEnum Enable(MmalPortType* port, IntPtr cb);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_disable", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalUtil.MmalStatusT Disable(MmalPortType* port);
+        public static extern unsafe MmalStatusEnum Disable(MmalPortType* port);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_flush", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalUtil.MmalStatusT Flush(MmalPortType* port);
+        public static extern unsafe MmalStatusEnum Flush(MmalPortType* port);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_set", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalUtil.MmalStatusT SetParameter(MmalPortType* port, MMAL_PARAMETER_HEADER_T* header);
+        public static extern unsafe MmalStatusEnum SetParameter(MmalPortType* port, MMAL_PARAMETER_HEADER_T* header);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_get", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalUtil.MmalStatusT GetParameter(MmalPortType* port, MMAL_PARAMETER_HEADER_T* header);
+        public static extern unsafe MmalStatusEnum GetParameter(MmalPortType* port, MMAL_PARAMETER_HEADER_T* header);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_port_send_buffer", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalUtil.MmalStatusT SendBuffer(MmalPortType* port, MmalBufferHeader* header);
+        public static extern unsafe MmalStatusEnum SendBuffer(MmalPortType* port, MmalBufferHeader* header);
     }
 }

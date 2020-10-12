@@ -9,6 +9,7 @@ using MMALSharp.Extensions;
 using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Events;
+using MMALSharp.Native.Util;
 using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp

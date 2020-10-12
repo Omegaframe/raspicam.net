@@ -6,6 +6,7 @@ using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Extensions;
 using MMALSharp.Native;
+using MMALSharp.Native.Util;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Outputs;
 using MMALSharp.Processing.Handlers;
@@ -90,7 +91,7 @@ namespace MMALSharp.Components
                                                                 1,
                                                                 MmalCameraConfig.Resolution.Width,
                                                                 MmalCameraConfig.Resolution.Height,
-                                                                3 + Math.Max(0, (new MMAL_RATIONAL_T(MmalCameraConfig.Framerate).Num - 30) / 10),
+                                                                3 + Math.Max(0, (new MmalRational(MmalCameraConfig.Framerate).Num - 30) / 10),
                                                                 0,
                                                                 0,
                                                                 MmalCameraConfig.ClockMode);
@@ -134,9 +135,9 @@ namespace MMALSharp.Components
 
             // Use Raspistill values.
             if (MmalCameraConfig.ShutterSpeed > 6000000)
-                PreviewPort.SetFramerateRange(new MMAL_RATIONAL_T(5, 1000), new MMAL_RATIONAL_T(166, 1000));
+                PreviewPort.SetFramerateRange(new MmalRational(5, 1000), new MmalRational(166, 1000));
             else if (MmalCameraConfig.ShutterSpeed > 1000000)
-                PreviewPort.SetFramerateRange(new MMAL_RATIONAL_T(166, 1000), new MMAL_RATIONAL_T(999, 1000));
+                PreviewPort.SetFramerateRange(new MmalRational(166, 1000), new MmalRational(999, 1000));
         }
 
         void InitialiseVideo(IOutputCaptureHandler handler)
@@ -166,9 +167,9 @@ namespace MMALSharp.Components
 
             // Use Raspistill values.
             if (MmalCameraConfig.ShutterSpeed > 6000000)
-                VideoPort.SetFramerateRange(new MMAL_RATIONAL_T(5, 1000), new MMAL_RATIONAL_T(166, 1000));
+                VideoPort.SetFramerateRange(new MmalRational(5, 1000), new MmalRational(166, 1000));
             else if (MmalCameraConfig.ShutterSpeed > 1000000)
-                VideoPort.SetFramerateRange(new MMAL_RATIONAL_T(167, 1000), new MMAL_RATIONAL_T(999, 1000));
+                VideoPort.SetFramerateRange(new MmalRational(167, 1000), new MmalRational(999, 1000));
         }
 
         void InitialiseStill(IOutputCaptureHandler handler)
@@ -238,9 +239,9 @@ namespace MMALSharp.Components
 
             // Use Raspistill values.
             if (MmalCameraConfig.ShutterSpeed > 6000000)            
-                StillPort.SetFramerateRange(new MMAL_RATIONAL_T(5, 1000), new MMAL_RATIONAL_T(166, 1000));            
+                StillPort.SetFramerateRange(new MmalRational(5, 1000), new MmalRational(166, 1000));            
             else if (MmalCameraConfig.ShutterSpeed > 1000000)            
-                StillPort.SetFramerateRange(new MMAL_RATIONAL_T(167, 1000), new MMAL_RATIONAL_T(999, 1000));            
+                StillPort.SetFramerateRange(new MmalRational(167, 1000), new MmalRational(999, 1000));            
         }
 
         void SetCameraParameters()

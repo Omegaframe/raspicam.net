@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using MMALSharp.Native.Util;
 
 namespace MMALSharp.Native.Format
 {
@@ -14,12 +15,12 @@ namespace MMALSharp.Native.Format
         }
 
         [DllImport("libmmal.so", EntryPoint = "mmal_format_extradata_alloc", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalUtil.MmalStatusT AllocExtradata(MmalEsFormat* format, uint extradata_size);
+        public static extern unsafe MmalStatusEnum AllocExtradata(MmalEsFormat* format, uint extradata_size);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_format_copy", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe void CopyFormat(MmalEsFormat* fmt_dst, MmalEsFormat* fmt_src);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_format_full_copy", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalUtil.MmalStatusT CopyFull(MmalEsFormat* fmt_dst, MmalEsFormat* fmt_src);
+        public static extern unsafe MmalStatusEnum CopyFull(MmalEsFormat* fmt_dst, MmalEsFormat* fmt_src);
     }
 }

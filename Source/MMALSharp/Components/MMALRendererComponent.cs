@@ -9,6 +9,7 @@ using MMALSharp.Common.Utility;
 using MMALSharp.Config;
 using MMALSharp.Native;
 using MMALSharp.Native.Port;
+using MMALSharp.Native.Util;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Inputs;
 using static MMALSharp.MmalNativeExceptionHelper;
@@ -65,11 +66,11 @@ namespace MMALSharp.Components
 
             int fullScreen = 0, noAspect = 0, copyProtect = 0;
 
-            MMAL_RECT_T? previewWindow = default(MMAL_RECT_T);
+            MmalRect? previewWindow = default(MmalRect);
 
             if (!Configuration.FullScreen)
             {
-                previewWindow = new MMAL_RECT_T(
+                previewWindow = new MmalRect(
                     Configuration.PreviewWindow.X, Configuration.PreviewWindow.Y,
                     Configuration.PreviewWindow.Width, Configuration.PreviewWindow.Height);
             }
@@ -105,7 +106,7 @@ namespace MMALSharp.Components
             var displayRegion = new MMAL_DISPLAYREGION_T(
                 new MMAL_PARAMETER_HEADER_T(
                     MmalParametersVideo.MmalParameterDisplayregion,
-                    Marshal.SizeOf<MMAL_DISPLAYREGION_T>()), displaySet, 0, fullScreen, Configuration.DisplayTransform, (MMAL_RECT_T) previewWindow, new MMAL_RECT_T(0, 0, 0, 0), noAspect,
+                    Marshal.SizeOf<MMAL_DISPLAYREGION_T>()), displaySet, 0, fullScreen, Configuration.DisplayTransform, (MmalRect) previewWindow, new MmalRect(0, 0, 0, 0), noAspect,
                     Configuration.DisplayMode, 0, 0, Configuration.Layer, copyProtect, Configuration.Opacity);
 
             Marshal.StructureToPtr(displayRegion, ptr, false);

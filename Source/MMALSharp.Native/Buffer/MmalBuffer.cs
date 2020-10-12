@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using MMALSharp.Native.Util;
 
 namespace MMALSharp.Native.Buffer
 {
@@ -14,7 +15,7 @@ namespace MMALSharp.Native.Buffer
         public static extern unsafe void HeaderRelease(MmalBufferHeader* header);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_buffer_header_mem_lock", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalUtil.MmalStatusT MemLock(MmalBufferHeader* header);
+        public static extern unsafe MmalStatusEnum MemLock(MmalBufferHeader* header);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_buffer_header_mem_unlock", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe void MemUnlock(MmalBufferHeader* header);

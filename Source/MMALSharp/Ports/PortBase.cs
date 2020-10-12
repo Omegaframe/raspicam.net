@@ -11,6 +11,7 @@ using MMALSharp.Native;
 using MMALSharp.Native.Component;
 using MMALSharp.Native.Format;
 using MMALSharp.Native.Port;
+using MMALSharp.Native.Util;
 using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp.Ports
@@ -56,16 +57,16 @@ namespace MMALSharp.Ports
         public Rectangle Crop
         {
             get => new Rectangle(Ptr->Format->Es->Video.Crop.X, Ptr->Format->Es->Video.Crop.Y, Ptr->Format->Es->Video.Crop.Width, Ptr->Format->Es->Video.Crop.Height);
-            internal set => Ptr->Format->Es->Video.Crop = new MMAL_RECT_T(value.X, value.Y, value.Width, value.Height);
+            internal set => Ptr->Format->Es->Video.Crop = new MmalRect(value.X, value.Y, value.Width, value.Height);
         }
 
         public double FrameRate
         {
             get => Ptr->Format->Es->Video.FrameRate.Num;
-            internal set => Ptr->Format->Es->Video.FrameRate = new MMAL_RATIONAL_T(value);
+            internal set => Ptr->Format->Es->Video.FrameRate = new MmalRational(value);
         }
 
-        public MMAL_RATIONAL_T FrameRateRational
+        public MmalRational FrameRateRational
         {
             get => Ptr->Format->Es->Video.FrameRate;
         }
@@ -104,7 +105,7 @@ namespace MMALSharp.Ports
             internal set => Ptr->Format->Bitrate = value;
         }
 
-        public MMAL_RATIONAL_T Par
+        public MmalRational Par
         {
             get => Ptr->Format->Es->Video.Par;
             internal set => Ptr->Format->Es->Video.Par = value;

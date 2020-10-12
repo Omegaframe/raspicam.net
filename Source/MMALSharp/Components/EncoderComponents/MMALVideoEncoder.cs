@@ -8,6 +8,7 @@ using MMALSharp.Common.Utility;
 using MMALSharp.Extensions;
 using MMALSharp.Native;
 using MMALSharp.Native.Port;
+using MMALSharp.Native.Util;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;
@@ -143,7 +144,7 @@ namespace MMALSharp.Components.EncoderComponents
 
         void ConfigureVideoProfile(int outputPort)
         {
-            var rational = new MMAL_RATIONAL_T(MmalCameraConfig.Framerate);
+            var rational = new MmalRational(MmalCameraConfig.Framerate);
             var macroblocks = (MmalCameraConfig.Resolution.Width >> 4) * (MmalCameraConfig.Resolution.Height >> 4);
             var macroblocksPSec = macroblocks * (rational.Num / rational.Den);
 

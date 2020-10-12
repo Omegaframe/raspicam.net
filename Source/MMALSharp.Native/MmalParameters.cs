@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using MMALSharp.Native.Clock;
+using MMALSharp.Native.Util;
 
 namespace MMALSharp.Native
 {
@@ -988,17 +989,17 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_FACE_TRACK_FACE_T
     {
         int faceId, score;
-        MMAL_RECT_T faceRect;
-        MMAL_RECT_T[] eyeRect;
-        MMAL_RECT_T mouthRect;
+        MmalRect faceRect;
+        MmalRect[] eyeRect;
+        MmalRect mouthRect;
 
         public int FaceId => faceId;
         public int Score => score;
-        public MMAL_RECT_T FaceRect => faceRect;
-        public MMAL_RECT_T[] EyeRect => eyeRect;
-        public MMAL_RECT_T MouthRect => mouthRect;
+        public MmalRect FaceRect => faceRect;
+        public MmalRect[] EyeRect => eyeRect;
+        public MmalRect MouthRect => mouthRect;
 
-        public MMAL_PARAMETER_FACE_TRACK_FACE_T(int faceId, int score, MMAL_RECT_T faceRect, MMAL_RECT_T[] eyeRect, MMAL_RECT_T mouthRect)
+        public MMAL_PARAMETER_FACE_TRACK_FACE_T(int faceId, int score, MmalRect faceRect, MmalRect[] eyeRect, MmalRect mouthRect)
         {
             this.faceId = faceId;
             this.score = score;
@@ -1196,16 +1197,16 @@ namespace MMALSharp.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct MMAL_PARAMETER_FOCUS_REGION_T
     {
-        MMAL_RECT_T rect;
+        MmalRect rect;
         int weight, mask;
         MmalParameterFocusRegionTypeT type;
 
-        public MMAL_RECT_T Rect => rect;
+        public MmalRect Rect => rect;
         public int Weight => weight;
         public int Mask => mask;
         public MmalParameterFocusRegionTypeT Type => type;
 
-        public MMAL_PARAMETER_FOCUS_REGION_T(MMAL_RECT_T rect, int weight, int mask, MmalParameterFocusRegionTypeT type)
+        public MMAL_PARAMETER_FOCUS_REGION_T(MmalRect rect, int weight, int mask, MmalParameterFocusRegionTypeT type)
         {
             this.rect = rect;
             this.weight = weight;
@@ -1239,11 +1240,11 @@ namespace MMALSharp.Native
     public unsafe struct MMAL_PARAMETER_INPUT_CROP_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        MMAL_RECT_T rect;
+        MmalRect rect;
 
-        public MMAL_RECT_T Rect => rect;
+        public MmalRect Rect => rect;
 
-        public MMAL_PARAMETER_INPUT_CROP_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_RECT_T rect)
+        public MMAL_PARAMETER_INPUT_CROP_T(MMAL_PARAMETER_HEADER_T hdr, MmalRect rect)
         {
             this.Hdr = hdr;
             this.rect = rect;
@@ -1254,16 +1255,16 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_SENSOR_INFORMATION_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        MMAL_RATIONAL_T fNumber, focalLength;
+        MmalRational fNumber, focalLength;
         uint modelId, manufacturerId, revision;
 
-        public MMAL_RATIONAL_T FNumber => fNumber;
-        public MMAL_RATIONAL_T FocalLength => focalLength;
+        public MmalRational FNumber => fNumber;
+        public MmalRational FocalLength => focalLength;
         public uint ModelId => modelId;
         public uint ManufacturerId => manufacturerId;
         public uint Revision => revision;
 
-        public MMAL_PARAMETER_SENSOR_INFORMATION_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_RATIONAL_T fNumber, MMAL_RATIONAL_T focalLength,
+        public MMAL_PARAMETER_SENSOR_INFORMATION_T(MMAL_PARAMETER_HEADER_T hdr, MmalRational fNumber, MmalRational focalLength,
                                                    uint modelId, uint manufacturerId, uint revision)
         {
             this.Hdr = hdr;
@@ -1294,12 +1295,12 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_FIELD_OF_VIEW_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        MMAL_RATIONAL_T fovH, fovV;
+        MmalRational fovH, fovV;
 
-        public MMAL_RATIONAL_T FovH => fovH;
-        public MMAL_RATIONAL_T FovV => fovV;
+        public MmalRational FovH => fovH;
+        public MmalRational FovV => fovV;
 
-        public MMAL_PARAMETER_FIELD_OF_VIEW_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_RATIONAL_T fovH, MMAL_RATIONAL_T fovV)
+        public MMAL_PARAMETER_FIELD_OF_VIEW_T(MMAL_PARAMETER_HEADER_T hdr, MmalRational fovH, MmalRational fovV)
         {
             this.Hdr = hdr;
             this.fovH = fovH;
@@ -1360,12 +1361,12 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_FPS_RANGE_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        MMAL_RATIONAL_T fpsLow, fpsHigh;
+        MmalRational fpsLow, fpsHigh;
 
-        public MMAL_RATIONAL_T FpsLow => fpsLow;
-        public MMAL_RATIONAL_T FpsHigh => fpsHigh;
+        public MmalRational FpsLow => fpsLow;
+        public MmalRational FpsHigh => fpsHigh;
 
-        public MMAL_PARAMETER_FPS_RANGE_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_RATIONAL_T fpsLow, MMAL_RATIONAL_T fpsHigh)
+        public MMAL_PARAMETER_FPS_RANGE_T(MMAL_PARAMETER_HEADER_T hdr, MmalRational fpsLow, MmalRational fpsHigh)
         {
             this.Hdr = hdr;
             this.fpsLow = fpsLow;
@@ -1394,12 +1395,12 @@ namespace MMALSharp.Native
     public unsafe struct MMAL_PARAMETER_AWB_GAINS_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        MMAL_RATIONAL_T rGain, bGain;
+        MmalRational rGain, bGain;
 
-        public MMAL_RATIONAL_T RGain => rGain;
-        public MMAL_RATIONAL_T BGain => bGain;
+        public MmalRational RGain => rGain;
+        public MmalRational BGain => bGain;
 
-        public MMAL_PARAMETER_AWB_GAINS_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_RATIONAL_T rGain, MMAL_RATIONAL_T bGain)
+        public MMAL_PARAMETER_AWB_GAINS_T(MMAL_PARAMETER_HEADER_T hdr, MmalRational rGain, MmalRational bGain)
         {
             this.Hdr = hdr;
             this.rGain = rGain;
@@ -1412,18 +1413,18 @@ namespace MMALSharp.Native
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
         int exposure;
-        MMAL_RATIONAL_T analogGain, digitalGain, awbRedGain, awbBlueGain;
+        MmalRational analogGain, digitalGain, awbRedGain, awbBlueGain;
         int focusPosition;
 
         public int Exposure => exposure;
-        public MMAL_RATIONAL_T AnalogGain => analogGain;
-        public MMAL_RATIONAL_T DigitalGain => digitalGain;
-        public MMAL_RATIONAL_T AwbRedGain => awbRedGain;
-        public MMAL_RATIONAL_T AwbBlueGain => awbBlueGain;
+        public MmalRational AnalogGain => analogGain;
+        public MmalRational DigitalGain => digitalGain;
+        public MmalRational AwbRedGain => awbRedGain;
+        public MmalRational AwbBlueGain => awbBlueGain;
         public int FocusPosition => focusPosition;
 
-        public MMAL_PARAMETER_CAMERA_SETTINGS_T(MMAL_PARAMETER_HEADER_T hdr, int exposure, MMAL_RATIONAL_T analogGain,
-                                                MMAL_RATIONAL_T digitalGain, MMAL_RATIONAL_T awbRedGain, MMAL_RATIONAL_T awbBlueGain,
+        public MMAL_PARAMETER_CAMERA_SETTINGS_T(MMAL_PARAMETER_HEADER_T hdr, int exposure, MmalRational analogGain,
+                                                MmalRational digitalGain, MmalRational awbRedGain, MmalRational awbBlueGain,
                                                 int focusPosition)
         {
             this.Hdr = hdr;
@@ -2012,7 +2013,7 @@ namespace MMALSharp.Native
         uint set, displayNum;
         int fullscreen;
         MmalParametersVideo.MmalDisplaytransformT transform;
-        MMAL_RECT_T destRect, srcRect;
+        MmalRect destRect, srcRect;
         int noAspect;
         MmalParametersVideo.MmalDisplaymodeT mode;
         int pixelX, pixelY;
@@ -2023,8 +2024,8 @@ namespace MMALSharp.Native
         public uint DisplayNum => displayNum;
         public int Fullscreen => fullscreen;
         public MmalParametersVideo.MmalDisplaytransformT Transform => transform;
-        public MMAL_RECT_T DestRect => destRect;
-        public MMAL_RECT_T SrcRect => srcRect;
+        public MmalRect DestRect => destRect;
+        public MmalRect SrcRect => srcRect;
         public int NoAspect => noAspect;
         public MmalParametersVideo.MmalDisplaymodeT Mode => mode;
         public int PixelX => pixelX;
@@ -2034,7 +2035,7 @@ namespace MMALSharp.Native
         public int Alpha => alpha;
 
         public MMAL_DISPLAYREGION_T(MMAL_PARAMETER_HEADER_T hdr, uint set, uint displayNum, int fullscreen,
-                                    MmalParametersVideo.MmalDisplaytransformT transform, MMAL_RECT_T destRect, MMAL_RECT_T srcRect,
+                                    MmalParametersVideo.MmalDisplaytransformT transform, MmalRect destRect, MmalRect srcRect,
                                     int noAspect, MmalParametersVideo.MmalDisplaymodeT mode, int pixelX, int pixelY,
                                     int layer, int copyrightRequired, int alpha)
         {
@@ -2546,11 +2547,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_RATIONAL_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        MMAL_RATIONAL_T value;
+        MmalRational value;
 
-        public MMAL_RATIONAL_T Value => value;
+        public MmalRational Value => value;
 
-        public MMAL_PARAMETER_RATIONAL_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_RATIONAL_T value)
+        public MMAL_PARAMETER_RATIONAL_T(MMAL_PARAMETER_HEADER_T hdr, MmalRational value)
         {
             this.Hdr = hdr;
             this.value = value;
@@ -2655,11 +2656,11 @@ namespace MMALSharp.Native
     public struct MMAL_PARAMETER_FRAME_RATE_T
     {
         public MMAL_PARAMETER_HEADER_T Hdr;
-        MMAL_RATIONAL_T value;
+        MmalRational value;
 
-        public MMAL_RATIONAL_T Value => value;
+        public MmalRational Value => value;
 
-        public MMAL_PARAMETER_FRAME_RATE_T(MMAL_PARAMETER_HEADER_T hdr, MMAL_RATIONAL_T value)
+        public MMAL_PARAMETER_FRAME_RATE_T(MMAL_PARAMETER_HEADER_T hdr, MmalRational value)
         {
             this.Hdr = hdr;
             this.value = value;

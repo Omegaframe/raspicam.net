@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using MMALSharp.Native.Port;
+using MMALSharp.Native.Util;
 
 namespace MMALSharp.Native.Connection
 {
@@ -12,15 +13,15 @@ namespace MMALSharp.Native.Connection
         public unsafe delegate int MmalConnectionCallbackT(MmalConnectionType* conn);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_connection_create", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalUtil.MmalStatusT Create(IntPtr* connection, MmalPortType* output, MmalPortType* input, uint flags);
+        public static extern unsafe MmalStatusEnum Create(IntPtr* connection, MmalPortType* output, MmalPortType* input, uint flags);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_connection_destroy", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalUtil.MmalStatusT Destroy(MmalConnectionType* connection);
+        public static extern unsafe MmalStatusEnum Destroy(MmalConnectionType* connection);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_connection_enable", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalUtil.MmalStatusT Enable(MmalConnectionType* connection);
+        public static extern unsafe MmalStatusEnum Enable(MmalConnectionType* connection);
 
         [DllImport("libmmal.so", EntryPoint = "mmal_connection_disable", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalUtil.MmalStatusT Disable(MmalConnectionType* connection);
+        public static extern unsafe MmalStatusEnum Disable(MmalConnectionType* connection);
     }
 }

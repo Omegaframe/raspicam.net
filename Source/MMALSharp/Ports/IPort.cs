@@ -7,6 +7,7 @@ using MMALSharp.Components;
 using MMALSharp.Native;
 using MMALSharp.Native.Format;
 using MMALSharp.Native.Port;
+using MMALSharp.Native.Util;
 
 namespace MMALSharp.Ports
 {
@@ -34,7 +35,7 @@ namespace MMALSharp.Ports
         Resolution Resolution { get; }
         Rectangle Crop { get; }
         double FrameRate { get; }
-        MMAL_RATIONAL_T FrameRateRational { get; }
+        MmalRational FrameRateRational { get; }
         MmalEncoding VideoColorSpace { get; }
         int CropWidth { get; }
         int CropHeight { get; }
@@ -42,7 +43,7 @@ namespace MMALSharp.Ports
         int NativeEncodingType { get; }
         int NativeEncodingSubformat { get; }
         int Bitrate { get; }
-        MMAL_RATIONAL_T Par { get; }
+        MmalRational Par { get; }
         bool ZeroCopy { get; set; }
         TaskCompletionSource<bool> Trigger { get; }
         void EnablePort(IntPtr callback);

@@ -1,5 +1,4 @@
-﻿using MMALSharp.Native;
-using MMALSharp.Native.Que;
+﻿using MMALSharp.Native.Que;
 
 namespace MMALSharp
 {

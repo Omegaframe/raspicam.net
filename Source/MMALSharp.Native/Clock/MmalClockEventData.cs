@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using MMALSharp.Native.Util;
 
 namespace MMALSharp.Native.Clock
 {
@@ -6,14 +7,14 @@ namespace MMALSharp.Native.Clock
     public struct MmalClockEventData
     {
         public int Enable;
-        public MMAL_RATIONAL_T Scale;
+        public MmalRational Scale;
         public MmalClockUpdateThreshold UpdateThreshold;
         public MmalClockDiscontThreshold DiscontThreshold;
         public MmalClockRequestThreshold RequestThreshold;
         public MmalClockBufferInfo Buffer;
         public MmalClockLatency Latency;
 
-        public MmalClockEventData(int enable, MMAL_RATIONAL_T scale, MmalClockUpdateThreshold updateThreshold,
+        public MmalClockEventData(int enable, MmalRational scale, MmalClockUpdateThreshold updateThreshold,
             MmalClockDiscontThreshold discontThreshold, MmalClockRequestThreshold requestThreshold,
             MmalClockBufferInfo buffer, MmalClockLatency latency)
         {

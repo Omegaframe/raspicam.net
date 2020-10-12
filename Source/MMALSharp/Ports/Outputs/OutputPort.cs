@@ -11,6 +11,7 @@ using MMALSharp.Extensions;
 using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Port;
+using MMALSharp.Native.Util;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Processing.Handlers;
 
@@ -44,7 +45,7 @@ namespace MMALSharp.Ports.Outputs
                 if (config.PixelFormat != null)
                     NativeEncodingSubformat = config.PixelFormat.EncodingVal;
 
-                Par = new MMAL_RATIONAL_T(1, 1);
+                Par = new MmalRational(1, 1);
 
                 var tempVid = Ptr->Format->Es->Video;
 
