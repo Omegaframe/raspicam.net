@@ -1,16 +1,8 @@
-﻿// <copyright file="MMALClock.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using MMALSharp.Common.Utility;
 
 namespace MMALSharp.Native
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable SA1132 // Each field should be declared on its own line
-
     public static class MMALClock
     {
         public static int MMAL_CLOCK_EVENT_MAGIC = Helpers.FourCCFromString("CKLM");
@@ -157,8 +149,7 @@ namespace MMALSharp.Native
         public MMAL_CLOCK_EVENT_DATA Data => data;
         public long Padding1 => padding1;
 
-        public MMAL_CLOCK_EVENT_T(uint id, uint magic, MMAL_BUFFER_HEADER_T* buffer, uint padding0,
-                                  MMAL_CLOCK_EVENT_DATA data, long padding1)
+        public MMAL_CLOCK_EVENT_T(uint id, uint magic, MMAL_BUFFER_HEADER_T* buffer, uint padding0, MMAL_CLOCK_EVENT_DATA data, long padding1)
         {
             this.id = id;
             this.magic = magic;

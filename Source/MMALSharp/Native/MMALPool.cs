@@ -1,15 +1,8 @@
-﻿// <copyright file="MMALPool.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace MMALSharp.Native
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-
     public static class MMALPool
     {
         public delegate void mmal_pool_allocator_alloc_t(IntPtr ptr, uint value);
@@ -17,8 +10,6 @@ namespace MMALSharp.Native
 
         // typedef - Pointer to MMAL_POOL_T struct * Pointer to MMAL_BUFFER_HEADER_T struct * Pointer to void -> Returns MMAL_BOOL_T struct
         public unsafe delegate int MMAL_POOL_BH_CB_T(MMAL_POOL_T* pool, MMAL_BUFFER_HEADER_T* buffer);
-
-#pragma warning disable IDE1006 // Naming Styles
 
         // MMAL_POOL_T*
         [DllImport("libmmal.so", EntryPoint = "mmal_pool_create", CallingConvention = CallingConvention.Cdecl)]
@@ -43,7 +34,6 @@ namespace MMALSharp.Native
 
         [DllImport("libmmal.so", EntryPoint = "mmal_pool_pre_release_callback_set", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe void mmal_pool_pre_release_callback_set(MMAL_POOL_T* pool, [MarshalAs(UnmanagedType.FunctionPtr)] MMAL_POOL_BH_CB_T cb, IntPtr userdata);
-#pragma warning restore IDE1006 // Naming Styles
     }
 
     [StructLayout(LayoutKind.Sequential)]

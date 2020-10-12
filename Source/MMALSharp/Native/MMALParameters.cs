@@ -1,16 +1,8 @@
-﻿// <copyright file="MMALParameters.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace MMALSharp.Native
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable SA1132 // Each field should be declared on its own line
-
     // mmal_parameters_common.h
     public static class MMALParametersCommon
     {

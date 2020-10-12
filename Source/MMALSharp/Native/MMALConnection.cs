@@ -1,16 +1,8 @@
-﻿// <copyright file="MMALConnection.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace MMALSharp.Native
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable SA1132 // Each field should be declared on its own line
-
     public static class MMALConnection
     {
         public const uint MMAL_CONNECTION_FLAG_TUNNELLING = 0x1u;
@@ -22,7 +14,6 @@ namespace MMALSharp.Native
         // typedef - Pointer to MMAL_CONNECTION_T -> Returns MMAL_BOOL_T
         public unsafe delegate int MMAL_CONNECTION_CALLBACK_T(MMAL_CONNECTION_T* conn);
 
-#pragma warning disable IDE1006 // Naming Styles
         [DllImport("libmmal.so", EntryPoint = "mmal_connection_create", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_connection_create(IntPtr* connection, MMAL_PORT_T* output, MMAL_PORT_T* input, uint flags);
 
@@ -43,7 +34,6 @@ namespace MMALSharp.Native
 
         [DllImport("libmmal.so", EntryPoint = "mmal_connection_event_format_changed", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe MMALUtil.MMAL_STATUS_T mmal_connection_event_format_changed(MMAL_CONNECTION_T* connection, MMAL_BUFFER_HEADER_T* buffer);
-#pragma warning restore IDE1006 // Naming Styles
     }
 
     [StructLayout(LayoutKind.Sequential)]

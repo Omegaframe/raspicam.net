@@ -1,16 +1,8 @@
-﻿// <copyright file="MMALBuffer.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace MMALSharp.Native
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable SA1132 // Each field should be declared on its own line
-
     public enum MMALBufferProperties
     {
         /// <summary>
@@ -97,7 +89,6 @@ namespace MMALSharp.Native
         // Pointer to void * Pointer to MMAL_BUFFER_HEADER_T -> Returns MMAL_BOOL_T
         public unsafe delegate int MMAL_BH_PRE_RELEASE_CB_T(IntPtr ptr, MMAL_BUFFER_HEADER_T* ptr2);
 
-#pragma warning disable IDE1006 // Naming Styles
         [DllImport("libmmal.so", EntryPoint = "mmal_buffer_header_acquire", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe void mmal_buffer_header_acquire(MMAL_BUFFER_HEADER_T* header);
 
@@ -121,7 +112,6 @@ namespace MMALSharp.Native
 
         [DllImport("libmmal.so", EntryPoint = "mmal_buffer_header_mem_unlock", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe void mmal_buffer_header_mem_unlock(MMAL_BUFFER_HEADER_T* header);
-#pragma warning restore IDE1006 // Naming Styles
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -171,7 +161,6 @@ namespace MMALSharp.Native
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct MMAL_BUFFER_HEADER_T
     {
-#pragma warning disable SA1202
         private MMAL_BUFFER_HEADER_T* next;
         private IntPtr priv;
         private uint cmd;
@@ -221,5 +210,4 @@ namespace MMALSharp.Native
             this.userData = userData;
         }
     }
-#pragma warning restore SA1202
 }

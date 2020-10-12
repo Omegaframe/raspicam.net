@@ -1,16 +1,8 @@
-﻿// <copyright file="MMALFormat.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace MMALSharp.Native
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable SA1132 // Each field should be declared on its own line
-
     public static class MMALFormat
     {
         public enum MMAL_ES_TYPE_T
@@ -37,7 +29,6 @@ namespace MMALSharp.Native
 
         public static int MMAL_ES_FORMAT_COMPARE_FLAG_ES_OTHER = 0x10000000;
 
-#pragma warning disable IDE1006 // Naming Styles
         [DllImport("libmmal.so", EntryPoint = "mmal_format_alloc", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe MMAL_ES_FORMAT_T* mmal_format_alloc();
 
@@ -55,7 +46,6 @@ namespace MMALSharp.Native
 
         [DllImport("libmmal.so", EntryPoint = "mmal_format_compare", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe uint mmal_format_compare(MMAL_ES_FORMAT_T* ptr, MMAL_ES_FORMAT_T* ptr2);
-#pragma warning restore IDE1006 // Naming Styles
     }
 
     [StructLayout(LayoutKind.Sequential)]

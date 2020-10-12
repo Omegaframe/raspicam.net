@@ -7,9 +7,6 @@ using System.Runtime.InteropServices;
 
 namespace MMALSharp.Native
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable SA1132 // Each field should be declared on its own line
-
     public static class MMALUtil
     {
         /// <summary>
@@ -40,7 +37,6 @@ namespace MMALSharp.Native
             MMAL_STATUS_MAX = 0x7FFFFFFF
         }
 
-#pragma warning disable IDE1006 // Naming Styles
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_set_boolean", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe MMAL_STATUS_T mmal_port_parameter_set_boolean(MMAL_PORT_T* port, uint id, int value);
 
@@ -136,7 +132,6 @@ namespace MMALSharp.Native
         
         [DllImport("libmmal.so", EntryPoint = "mmal_4cc_to_string", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe string mmal_4cc_to_string([MarshalAs(UnmanagedType.LPTStr)] string buffer, ushort len, uint fourcc);
-#pragma warning restore IDE1006 // Naming Styles
     }
 
     [StructLayout(LayoutKind.Sequential)]

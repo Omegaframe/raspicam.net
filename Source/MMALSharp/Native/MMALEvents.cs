@@ -1,16 +1,8 @@
-﻿// <copyright file="MMALEvents.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using MMALSharp.Common.Utility;
 
 namespace MMALSharp.Native
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable SA1132 // Each field should be declared on its own line
-
     public static class MMALEvents
     {
         public static int MMAL_EVENT_ERROR = Helpers.FourCCFromString("ERRO");
@@ -18,10 +10,8 @@ namespace MMALSharp.Native
         public static int MMAL_EVENT_FORMAT_CHANGED = Helpers.FourCCFromString("EFCH");
         public static int MMAL_EVENT_PARAMETER_CHANGED = Helpers.FourCCFromString("EPCH");
 
-#pragma warning disable IDE1006 // Naming Styles
         [DllImport("libmmal.so", EntryPoint = "mmal_event_format_changed_get", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe MMAL_EVENT_FORMAT_CHANGED_T* mmal_event_format_changed_get(MMAL_BUFFER_HEADER_T* buffer);
-#pragma warning restore IDE1006 // Naming Styles
     }
 
     [StructLayout(LayoutKind.Sequential)]
