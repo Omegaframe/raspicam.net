@@ -1,9 +1,4 @@
-﻿// <copyright file="AnnotateImage.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace MMALSharp.Config
 {
@@ -196,22 +191,22 @@ namespace MMALSharp.Config
             bool showCafSettings, bool showMotionSettings, bool showFrameNumber, bool allowCustomBackground,
             bool showDateText, bool showTimeText, JustifyText justify, int xOffset, int yOffset)
         {
-            this.CustomText = customText;
-            this.TextSize = textSize;
-            this.TextColour = textColour;
-            this.BgColour = bgColour;
-            this.ShowShutterSettings = showShutterSettings;
-            this.ShowGainSettings = showGainSettings;
-            this.ShowLensSettings = showLensSettings;
-            this.ShowCafSettings = showCafSettings;
-            this.ShowMotionSettings = showMotionSettings;
-            this.ShowFrameNumber = showFrameNumber;
-            this.AllowCustomBackgroundColour = allowCustomBackground;
-            this.ShowDateText = showDateText;
-            this.ShowTimeText = showTimeText;
-            this.Justify = justify;
-            this.XOffset = xOffset;
-            this.YOffset = yOffset;
+            CustomText = customText;
+            TextSize = textSize;
+            TextColour = textColour;
+            BgColour = bgColour;
+            ShowShutterSettings = showShutterSettings;
+            ShowGainSettings = showGainSettings;
+            ShowLensSettings = showLensSettings;
+            ShowCafSettings = showCafSettings;
+            ShowMotionSettings = showMotionSettings;
+            ShowFrameNumber = showFrameNumber;
+            AllowCustomBackgroundColour = allowCustomBackground;
+            ShowDateText = showDateText;
+            ShowTimeText = showTimeText;
+            Justify = justify;
+            XOffset = xOffset;
+            YOffset = yOffset;
         }
 
         /// <summary>
@@ -222,12 +217,12 @@ namespace MMALSharp.Config
         /// <param name="textColour">The colour of displayed text.</param>
         public AnnotateImage(string customText, int textSize, Color textColour)
         {
-            this.CustomText = customText;
-            this.TextSize = textSize;
-            this.TextColour = textColour;
+            CustomText = customText;
+            TextSize = textSize;
+            TextColour = textColour;
             
-            this.ShowDateText = true;
-            this.ShowTimeText = true;
+            ShowDateText = true;
+            ShowTimeText = true;
         }
     }
 }

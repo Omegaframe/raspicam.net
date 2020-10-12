@@ -1,9 +1,4 @@
-﻿// <copyright file="Split.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-namespace MMALSharp.Config
+﻿namespace MMALSharp.Config
 {
     /// <summary>
     /// The <see cref="Split"/> type is used when taking video capture and a user wishes to split

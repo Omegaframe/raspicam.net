@@ -1,9 +1,4 @@
-﻿// <copyright file="JpegThumbnail.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-namespace MMALSharp.Config
+﻿namespace MMALSharp.Config
 {
     /// <summary>
     /// Provides config settings for JPEG thumbnail embedding.
@@ -39,10 +34,10 @@ namespace MMALSharp.Config
         /// <param name="quality">The quality of the thumbnail.</param>
         public JpegThumbnail(bool enable, int width, int height, int quality)
         {
-            this.Enable = enable;
-            this.Width = width;
-            this.Height = height;
-            this.Quality = quality;
+            Enable = enable;
+            Width = width;
+            Height = height;
+            Quality = quality;
         }
     }
 }

@@ -1,9 +1,4 @@
-﻿// <copyright file="TimelapseMode.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-namespace MMALSharp.Config
+﻿namespace MMALSharp.Config
 {
     /// <summary>
     /// The unit of time to use.

@@ -1,9 +1,4 @@
-﻿// <copyright file="ColourEffects.cs" company="Techyian">
-// Copyright (c) Ian Auty and contributors. All rights reserved.
-// Licensed under the MIT License. Please see LICENSE.txt for License info.
-// </copyright>
-
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace MMALSharp.Config
 {
