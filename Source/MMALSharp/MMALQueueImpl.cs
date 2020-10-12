@@ -2,21 +2,22 @@
 using Microsoft.Extensions.Logging;
 using MMALSharp.Common.Utility;
 using MMALSharp.Native;
+using MMALSharp.Native.Que;
 
 namespace MMALSharp
 {
     public unsafe class MmalQueueImpl : MmalObject, IBufferQueue
     {
-        public MMAL_QUEUE_T* Ptr { get; }
+        public MmalQueueType* Ptr { get; }
 
-        public MmalQueueImpl(MMAL_QUEUE_T* ptr)
+        public MmalQueueImpl(MmalQueueType* ptr)
         {
             Ptr = ptr;
         }
 
         public IBuffer GetBuffer()
         {
-            var ptr = MmalQueue.mmal_queue_get(Ptr);
+            var ptr = MmalQueue.Get(Ptr);
 
             if (!CheckState())
             {
@@ -38,16 +39,16 @@ namespace MMALSharp
 
         public override bool CheckState() => Ptr != null && (IntPtr)Ptr != IntPtr.Zero;
 
-        public uint QueueLength() => MmalQueue.mmal_queue_length(Ptr);
+        public uint QueueLength() => MmalQueue.Length(Ptr);
 
         public IBuffer Wait() => new MmalBuffer(MmalQueue.mmal_queue_wait(Ptr));
 
-        public IBuffer TimedWait(int waitms) => new MmalBuffer(MmalQueue.mmal_queue_timedwait(Ptr, waitms));
+        public IBuffer TimedWait(int waitms) => new MmalBuffer(MmalQueue.TimedWait(Ptr, waitms));
 
-        public void Put(IBuffer buffer) => MmalQueue.mmal_queue_put(Ptr, buffer.Ptr);
+        public void Put(IBuffer buffer) => MmalQueue.Put(Ptr, buffer.Ptr);
 
-        internal static MmalQueueImpl Create() => new MmalQueueImpl(MmalQueue.mmal_queue_create());
+        internal static MmalQueueImpl Create() => new MmalQueueImpl(MmalQueue.Create());
 
-        void Destroy() => MmalQueue.mmal_queue_destroy(Ptr);
+        void Destroy() => MmalQueue.Destroy(Ptr);
     }
 }

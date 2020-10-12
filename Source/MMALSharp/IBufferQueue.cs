@@ -1,10 +1,11 @@
 ﻿using MMALSharp.Native;
+using MMALSharp.Native.Que;
 
 namespace MMALSharp
 {
     public interface IBufferQueue : IMmalObject
     {
-        unsafe MMAL_QUEUE_T* Ptr { get; }
+        unsafe MmalQueueType* Ptr { get; }
 
         IBuffer GetBuffer();
         uint QueueLength();
