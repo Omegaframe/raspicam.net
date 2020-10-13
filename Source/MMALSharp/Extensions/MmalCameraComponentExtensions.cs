@@ -156,8 +156,6 @@ namespace MMALSharp.Extensions
             if (MmalCameraConfig.Annotate == null)
                 return;
 
-            MmalLog.Logger.LogDebug("Setting annotate");
-
             var sb = new StringBuilder();
 
             var showShutter = 0;
@@ -182,11 +180,11 @@ namespace MMALSharp.Extensions
             if (!string.IsNullOrEmpty(MmalCameraConfig.Annotate.CustomText))
                 sb.Append(MmalCameraConfig.Annotate.CustomText + " ");
 
-            if (MmalCameraConfig.Annotate.ShowTimeText)
-                sb.Append(DateTime.Now.ToString(MmalCameraConfig.Annotate.TimeFormat) + " ");
-
             if (MmalCameraConfig.Annotate.ShowDateText)
                 sb.Append(DateTime.Now.ToString(MmalCameraConfig.Annotate.DateFormat) + " ");
+
+            if (MmalCameraConfig.Annotate.ShowTimeText)
+                sb.Append(DateTime.Now.ToString(MmalCameraConfig.Annotate.TimeFormat) + " ");
 
             if (MmalCameraConfig.Annotate.ShowShutterSettings)
                 showShutter = 1;
@@ -235,8 +233,11 @@ namespace MMALSharp.Extensions
             // and is quite happy to pass an array of a lower size if asked. In order to get around this, I am creating
             // an array equaling "SizeConst" and copying the contents of the annotation text into it, minus the EOL character.
             var text = sb.ToString() + char.MinValue;
-            var arr = new byte[MmalParametersCamera.MmalCameraAnnotateMaxTextLenV3];
+            var arr = new byte[MmalCameraAnnotateMaxTextLenV3];
             var bytes = Encoding.ASCII.GetBytes(text);
+
+            if (MmalCameraConfig.Debug)
+                MmalLog.Logger.LogDebug($"Setting annotate: {text}");
 
             Array.Copy(bytes, arr, bytes.Length);
 
