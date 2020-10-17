@@ -198,8 +198,6 @@ namespace MMALSharp.Components
                 width: width,
                 height: height);
 
-            ConfigureInputPort(portConfig, null);
-
             Control.Start();
             Inputs[0].Start();
         }

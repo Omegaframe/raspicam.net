@@ -22,28 +22,11 @@ namespace MMALSharp.Components
             ProcessingPorts = new Dictionary<int, IOutputPort>();
         }
 
-        public virtual IDownstreamComponent ConfigureInputPort(IMmalPortConfig config, IInputCaptureHandler handler) => ConfigureInputPort(config, null, handler);
+        
 
-        public virtual unsafe IDownstreamComponent ConfigureInputPort(IMmalPortConfig config, IPort copyPort, IInputCaptureHandler handler)
-        {
-            Inputs[0].Configure(config, copyPort, handler);
+        public virtual IDownstreamComponent ConfigureOutputPort(IMmalPortConfig config, ICaptureHandler handler) => ConfigureOutputPort(0, config, handler);
 
-            if (Outputs.Count > 0 && Outputs[0].Ptr->Format->Type == MmalFormat.MmalEsTypeT.MmalEsTypeUnknown)
-                throw new PiCameraError("Unable to determine settings for output port.");
-
-            return this;
-        }
-
-        public virtual unsafe IDownstreamComponent ConfigureInputPort<TPort>(IMmalPortConfig config, IInputCaptureHandler handler) where TPort : IInputPort
-        {
-            Inputs[0] = (IInputPort)Activator.CreateInstance(typeof(TPort), (IntPtr)(&(*Ptr->Input[0])), this, Guid.NewGuid());
-
-            return ConfigureInputPort(config, null, handler);
-        }
-
-        public virtual IDownstreamComponent ConfigureOutputPort(IMmalPortConfig config, IOutputCaptureHandler handler) => ConfigureOutputPort(0, config, handler);
-
-        public virtual IDownstreamComponent ConfigureOutputPort(int outputPort, IMmalPortConfig config, IOutputCaptureHandler handler)
+        public virtual IDownstreamComponent ConfigureOutputPort(int outputPort, IMmalPortConfig config, ICaptureHandler handler)
         {
             if (ProcessingPorts.ContainsKey(outputPort))
                 ProcessingPorts.Remove(outputPort);
@@ -55,7 +38,7 @@ namespace MMALSharp.Components
             return this;
         }
 
-        public virtual unsafe IDownstreamComponent ConfigureOutputPort<TPort>(int outputPort, IMmalPortConfig config, IOutputCaptureHandler handler) where TPort : IOutputPort
+        public virtual unsafe IDownstreamComponent ConfigureOutputPort<TPort>(int outputPort, IMmalPortConfig config, ICaptureHandler handler) where TPort : IOutputPort
         {
             Outputs[outputPort] = (IOutputPort)Activator.CreateInstance(typeof(TPort), (IntPtr)(&(*Ptr->Output[outputPort])), this, Guid.NewGuid());
 

@@ -32,7 +32,7 @@ namespace MMALSharp.Ports.Outputs
 
         public OutputPort(IntPtr ptr, IComponent comp, Guid guid) : base(ptr, comp, PortType.Output, guid) { }
 
-        public virtual void Configure(IMmalPortConfig config, IInputPort copyFrom, IOutputCaptureHandler handler)
+        public virtual void Configure(IMmalPortConfig config, IInputPort copyFrom, ICaptureHandler handler)
         {
             if (config != null)
             {

@@ -80,7 +80,7 @@ namespace MMALSharp.Components
             MmalLog.Logger.LogInformation($"    Max Width: {CameraInfo.MaxWidth}. Video Height: {CameraInfo.MaxHeight}");
         }
 
-        public void Initialise(IOutputCaptureHandler stillCaptureHandler = null, IOutputCaptureHandler videoCaptureHandler = null)
+        public void Initialise(ICaptureHandler stillCaptureHandler = null, ICaptureHandler videoCaptureHandler = null)
         {
             DisableComponent();
 
@@ -141,7 +141,7 @@ namespace MMALSharp.Components
                 PreviewPort.SetFramerateRange(new MmalRational(166, 1000), new MmalRational(999, 1000));
         }
 
-        void InitialiseVideo(IOutputCaptureHandler handler)
+        void InitialiseVideo(ICaptureHandler handler)
         {
             var currentWidth = MmalCameraConfig.Resolution.Width;
             var currentHeight = MmalCameraConfig.Resolution.Height;
@@ -173,7 +173,7 @@ namespace MMALSharp.Components
                 VideoPort.SetFramerateRange(new MmalRational(167, 1000), new MmalRational(999, 1000));
         }
 
-        void InitialiseStill(IOutputCaptureHandler handler)
+        void InitialiseStill(ICaptureHandler handler)
         {
             var currentWidth = MmalCameraConfig.Resolution.Width;
             var currentHeight = MmalCameraConfig.Resolution.Height;

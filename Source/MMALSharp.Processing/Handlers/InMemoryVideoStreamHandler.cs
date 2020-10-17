@@ -1,28 +1,24 @@
 ﻿using MMALSharp.Common;
 using System;
-using System.IO;
 
 namespace MMALSharp.Processing.Handlers
 {
-    public class InMemoryVideoStreamHandler : StreamCaptureHandler<Stream>, IVideoCaptureHandler
+    public class InMemoryVideoStreamHandler : ICaptureHandler
     {
         Action<byte[]> _onDataAvailable;
-
-        public InMemoryVideoStreamHandler()
-        {
-            CurrentStream = new MemoryStream();
-        }
 
         public void SetOnDataAvailable(Action<byte[]> onDataAvailable)
         {
             _onDataAvailable = onDataAvailable;
         }
 
-        public override void Process(ImageContext context)
+        public void Process(ImageContext context)
         {
             _onDataAvailable?.Invoke(context.Data);
         }
 
-        public void Split() { }
+        public void PostProcess() { }
+
+        public void Dispose() { }
     }
 }

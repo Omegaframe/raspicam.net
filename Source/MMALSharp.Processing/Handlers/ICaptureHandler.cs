@@ -1,9 +1,11 @@
-﻿using System;
+﻿using MMALSharp.Common;
+using System;
 
 namespace MMALSharp.Processing.Handlers
 {
     public interface ICaptureHandler : IDisposable
     {
-        string TotalProcessed();
+        void Process(ImageContext context);
+        void PostProcess();
     }
 }

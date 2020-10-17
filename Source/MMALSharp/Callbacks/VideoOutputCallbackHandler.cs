@@ -4,16 +4,14 @@ using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Config;
 using MMALSharp.Extensions;
-using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Ports.Outputs;
 using MMALSharp.Processing.Handlers;
-using MMALSharp.Processing.Processors.Motion;
 
 namespace MMALSharp.Callbacks
 {
-    public class VideoOutputCallbackHandler : PortCallbackHandler<IVideoPort, IVideoCaptureHandler>, IVideoOutputCallbackHandler
+    public class VideoOutputCallbackHandler : PortCallbackHandler<IVideoPort, ICaptureHandler>, IVideoOutputCallbackHandler
     {
         public Split Split { get; }
 
@@ -23,18 +21,8 @@ namespace MMALSharp.Callbacks
         bool StoreMotionVectors { get; }
 
 
-        public VideoOutputCallbackHandler(IVideoPort port, IVideoCaptureHandler handler, Split split, bool storeMotionVectors = false) : base(port, handler)
+        public VideoOutputCallbackHandler(IVideoPort port, ICaptureHandler handler, Split split, bool storeMotionVectors = false) : base(port, handler)
         {
-            var motionType = WorkingPort.EncodingType == MmalEncoding.H264
-                ? MotionType.MotionVector
-                : MotionType.FrameDiff;
-
-            if (handler is IMotionCaptureHandler)
-            {
-                var motionHandler = handler as IMotionCaptureHandler;
-                motionHandler.MotionType = motionType;
-            }
-
             Split = split;
             StoreMotionVectors = storeMotionVectors;
         }
@@ -46,7 +34,6 @@ namespace MMALSharp.Callbacks
 
             if (PrepareSplit && buffer.AssertProperty(MmalBufferProperties.MmalBufferHeaderFlagConfig))
             {
-                CaptureHandler.Split();
                 LastSplit = DateTime.Now;
                 PrepareSplit = false;
             }
@@ -66,9 +53,7 @@ namespace MMALSharp.Callbacks
 
             if (StoreMotionVectors && buffer.AssertProperty(MmalBufferProperties.MmalBufferHeaderFlagCodecSideInfo))
             {
-                // This is data containing Motion vectors. Check if the capture handler supports storing motion vectors.
-                if (CaptureHandler is IMotionVectorCaptureHandler handler)
-                    handler.ProcessMotionVectors(buffer.GetBufferData());
+               
             }
             else
             {

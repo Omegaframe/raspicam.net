@@ -3,8 +3,8 @@ using MMALSharp.Processing.Handlers;
 
 namespace MMALSharp.Callbacks
 {
-    public class DefaultOutputPortCallbackHandler : PortCallbackHandler<IOutputPort, IOutputCaptureHandler>
+    public class DefaultOutputPortCallbackHandler : PortCallbackHandler<IOutputPort, ICaptureHandler>
     {
-        public DefaultOutputPortCallbackHandler(IOutputPort port, IOutputCaptureHandler handler) : base(port, handler) { }
+        public DefaultOutputPortCallbackHandler(IOutputPort port, ICaptureHandler handler) : base(port, handler) { }
     }
 }

@@ -20,7 +20,7 @@ namespace MMALSharp.Ports.Outputs
 
         public SplitterVideoPort(IPort copyFrom) : base((IntPtr)copyFrom.Ptr, copyFrom.ComponentReference, copyFrom.Guid) { }
 
-        public override void Configure(IMmalPortConfig config, IInputPort copyFrom, IOutputCaptureHandler handler)
+        public override void Configure(IMmalPortConfig config, IInputPort copyFrom, ICaptureHandler handler)
         {
             // The splitter component should not have its resolution set on the output port so override method accordingly.
             if (config != null)
@@ -70,7 +70,7 @@ namespace MMALSharp.Ports.Outputs
                 Commit();
             }
 
-            CallbackHandler = new VideoOutputCallbackHandler(this, (IVideoCaptureHandler)handler, null);
+            CallbackHandler = new VideoOutputCallbackHandler(this, (ICaptureHandler)handler, null);
         }
 
         internal override void NativeOutputPortCallback(MmalPortType* port, MmalBufferHeader* buffer)

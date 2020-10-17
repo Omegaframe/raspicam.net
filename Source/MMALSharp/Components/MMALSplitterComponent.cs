@@ -17,30 +17,5 @@ namespace MMALSharp.Components
             for (var i = 0; i < 4; i++)            
                 Outputs.Add(new SplitterVideoPort((IntPtr)(&(*Ptr->Output[i])), this, Guid.NewGuid()));            
         }
-
-        public override IDownstreamComponent ConfigureInputPort(IMmalPortConfig config, IPort copyPort, IInputCaptureHandler handler)
-        {
-            var bufferNum = Math.Max(Math.Max(Inputs[0].BufferNumRecommended, 3), config.BufferNum);
-            
-            config = new MmalPortConfig(
-                config.EncodingType,
-                config.PixelFormat,
-                config.Quality,
-                config.Bitrate,
-                config.Timeout,
-                config.Split,
-                config.StoreMotionVectors,
-                config.Width,
-                config.Height,
-                config.Framerate,
-                config.ZeroCopy,
-                bufferNum,
-                config.BufferSize,
-                config.Crop);
-
-            base.ConfigureInputPort(config, copyPort, handler);
-
-            return this;
-        }
     }
 }

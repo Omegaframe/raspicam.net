@@ -4,7 +4,6 @@
 // </copyright>
 
 using MMALSharp.Components;
-using MMALSharp.Native;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -22,9 +21,7 @@ using Xunit;
 using MMALSharp.Extensions;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Processing;
-using MMALSharp.Processing.Handlers;
-using MMALSharp.Processing.Processors.Bayer;
-
+s
 namespace MMALSharp.Tests
 {
     public class ImageEncoderTests : TestBase

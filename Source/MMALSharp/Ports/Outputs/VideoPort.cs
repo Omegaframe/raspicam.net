@@ -36,11 +36,11 @@ namespace MMALSharp.Ports.Outputs
 
         public VideoPort(IPort copyFrom) : base((IntPtr)copyFrom.Ptr, copyFrom.ComponentReference, copyFrom.Guid) { }
 
-        public override void Configure(IMmalPortConfig config, IInputPort copyFrom, IOutputCaptureHandler handler)
+        public override void Configure(IMmalPortConfig config, IInputPort copyFrom, ICaptureHandler handler)
         {
             base.Configure(config, copyFrom, handler);
 
-            CallbackHandler = new VideoOutputCallbackHandler(this, (IVideoCaptureHandler)handler, config.Split, config.StoreMotionVectors);
+            CallbackHandler = new VideoOutputCallbackHandler(this, (ICaptureHandler)handler, config.Split, config.StoreMotionVectors);
         }
         
         internal override void NativeOutputPortCallback(MmalPortType* port, MmalBufferHeader* buffer)

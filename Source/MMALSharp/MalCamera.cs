@@ -14,7 +14,6 @@ using MMALSharp.Native;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Outputs;
 using MMALSharp.Processing.Handlers;
-using MMALSharp.Processing.Processors.Motion;
 
 namespace MMALSharp
 {
@@ -50,7 +49,7 @@ namespace MMALSharp
             Task.Run(() => port.Trigger.SetResult(true));
         }
 
-        public async Task TakeRawVideo(IVideoCaptureHandler handler, CancellationToken cancellationToken)
+        public async Task TakeRawVideo(ICaptureHandler handler, CancellationToken cancellationToken)
         {
             using var splitter = new MmalSplitterComponent();
             using var renderer = new MmalVideoRenderer();
@@ -73,7 +72,7 @@ namespace MMALSharp
             await ProcessAsync(Camera.VideoPort, cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task TakeVideo(IVideoCaptureHandler handler, CancellationToken cancellationToken, Split split = null)
+        public async Task TakeVideo(ICaptureHandler handler, CancellationToken cancellationToken, Split split = null)
         {
             if (split != null && !MmalCameraConfig.InlineHeaders)
             {
@@ -101,7 +100,7 @@ namespace MMALSharp
             await ProcessAsync(Camera.VideoPort, cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task TakeRawPicture(IOutputCaptureHandler handler)
+        public async Task TakeRawPicture(ICaptureHandler handler)
         {
             if (Camera.StillPort.ConnectedReference != null)
                 throw new PiCameraError("A connection was found to the Camera still port. No encoder should be connected to the Camera's still port for raw capture.");
@@ -121,7 +120,7 @@ namespace MMALSharp
             await ProcessAsync(Camera.StillPort).ConfigureAwait(false);
         }
 
-        public async Task TakePicture(IOutputCaptureHandler handler, MmalEncoding encodingType, MmalEncoding pixelFormat)
+        public async Task TakePicture(ICaptureHandler handler, MmalEncoding encodingType, MmalEncoding pixelFormat)
         {
             using var imgEncoder = new MmalImageEncoder();
             using var renderer = new MmalNullSinkComponent();
@@ -143,7 +142,7 @@ namespace MMALSharp
             await ProcessAsync(Camera.StillPort).ConfigureAwait(false);
         }
 
-        public async Task TakePictureTimeout(IFileStreamCaptureHandler handler, MmalEncoding encodingType, MmalEncoding pixelFormat, CancellationToken cancellationToken, bool burstMode = false)
+        public async Task TakePictureTimeout(ICaptureHandler handler, MmalEncoding encodingType, MmalEncoding pixelFormat, CancellationToken cancellationToken, bool burstMode = false)
         {
             if (burstMode)
                 MmalCameraConfig.StillBurstMode = true;
@@ -166,13 +165,10 @@ namespace MMALSharp
             while (!cancellationToken.IsCancellationRequested)
             {
                 await ProcessAsync(Camera.StillPort, cancellationToken).ConfigureAwait(false);
-
-                if (!cancellationToken.IsCancellationRequested)
-                    handler.NewFile();
             }
         }
 
-        public async Task TakePictureTimelapse(IFileStreamCaptureHandler handler, MmalEncoding encodingType, MmalEncoding pixelFormat, Timelapse timelapse)
+        public async Task TakePictureTimelapse(ICaptureHandler handler, MmalEncoding encodingType, MmalEncoding pixelFormat, Timelapse timelapse)
         {
             var interval = 0;
 
@@ -211,8 +207,6 @@ namespace MMALSharp
 
                 await ProcessAsync(Camera.StillPort).ConfigureAwait(false);
 
-                if (!timelapse.CancellationToken.IsCancellationRequested)
-                    handler.NewFile();
             }
         }
 
@@ -302,7 +296,7 @@ namespace MMALSharp
         public void DisableCamera() => Camera.DisableComponent();
         public void EnableCamera() => Camera.EnableComponent();
 
-        public MalCamera ConfigureCameraSettings(IOutputCaptureHandler stillCaptureHandler = null, IOutputCaptureHandler videoCaptureHandler = null)
+        public MalCamera ConfigureCameraSettings(ICaptureHandler stillCaptureHandler = null, ICaptureHandler videoCaptureHandler = null)
         {
             Camera.Initialise(stillCaptureHandler, videoCaptureHandler);
             return this;
@@ -322,12 +316,6 @@ namespace MMALSharp
 
         public MmalOverlayRenderer AddOverlay(MmalVideoRenderer parent, PreviewOverlayConfiguration config, byte[] source) => new MmalOverlayRenderer(parent, config, source);
 
-        public MalCamera WithMotionDetection(IMotionCaptureHandler handler, MotionConfig config, Action onDetect)
-        {
-            MmalCameraConfig.InlineMotionVectors = true;
-            handler.ConfigureMotionDetection(config, onDetect);
-            return this;
-        }
 
         public void Cleanup()
         {

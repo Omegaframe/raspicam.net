@@ -1,14 +1,11 @@
-﻿using Microsoft.Extensions.Logging;
-using MMALSharp.Common;
-using MMALSharp.Common.Utility;
+﻿using MMALSharp.Common;
 using System;
 using System.IO;
 
 namespace MMALSharp.Processing.Handlers
 {
-    public class InMemoryImageStreamHandler : IOutputCaptureHandler
+    public class InMemoryImageStreamHandler : ICaptureHandler
     {
-        long _processed;
         MemoryStream _currentStream;
         Action<Stream> _onImageAvailable;
 
@@ -24,7 +21,7 @@ namespace MMALSharp.Processing.Handlers
 
         public void PostProcess()
         {
-            if (_currentStream == null || !_currentStream.CanSeek || !_currentStream.CanRead)
+            if (_currentStream == null || _onImageAvailable == null)
                 return;
 
             var stream = new MemoryStream();
@@ -40,22 +37,13 @@ namespace MMALSharp.Processing.Handlers
             _onImageAvailable?.Invoke(stream);
         }
 
-        public void Process(ImageContext context)
-        {
-            if (_currentStream == null || !_currentStream.CanSeek || !_currentStream.CanWrite)
-                return;
-
-            _currentStream.Write(context.Data);
-
-            _processed += context.Data.Length;
-        }
-
-        public string TotalProcessed() => $"{Helpers.ConvertBytesToMegabytes(_processed)}";
+        public void Process(ImageContext context) => _currentStream?.Write(context.Data);
 
         public void Dispose()
         {
-            MmalLog.Logger.LogInformation($"Successfully processed {Helpers.ConvertBytesToMegabytes(_processed)}.");
+            _onImageAvailable = null;
             _currentStream?.Dispose();
+            _currentStream = null;
         }
     }
 }

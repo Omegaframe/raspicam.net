@@ -12,7 +12,7 @@ namespace MMALSharp.Callbacks
 {   
     public abstract class PortCallbackHandler<TPort, TCaptureHandler> : IOutputCallbackHandler
         where TPort : IPort
-        where TCaptureHandler : IOutputCaptureHandler
+        where TCaptureHandler : ICaptureHandler
     { 
         public TPort WorkingPort { get; }
 

@@ -17,7 +17,7 @@ using MMALSharp.Processing.Handlers;
 
 namespace MMALSharp.Ports.Inputs
 {
-    public class InputPort : PortBase<IInputCallbackHandler>, IInputPort
+    public class InputPort : PortBase<IOutputCallbackHandler>, IInputPort
     {
         public override Resolution Resolution
         {
@@ -33,7 +33,7 @@ namespace MMALSharp.Ports.Inputs
 
         public void ConnectTo(IOutputPort outputPort, IConnection connection) => ConnectedReference = connection;
 
-        public virtual void Configure(IMmalPortConfig config, IPort copyPort, IInputCaptureHandler handler)
+        public virtual void Configure(IMmalPortConfig config, IPort copyPort)
         {
             copyPort?.ShallowCopy(this);
 
@@ -85,8 +85,6 @@ namespace MMALSharp.Ports.Inputs
             BufferSize = Math.Max(BufferSizeMin, config.BufferSize > 0 ? config.BufferSize : BufferSizeRecommended);
 
             Commit();
-
-            CallbackHandler = new DefaultInputPortCallbackHandler(this, handler);
         }
 
         public unsafe void Enable()
@@ -130,21 +128,6 @@ namespace MMALSharp.Ports.Inputs
                 if (newBuffer != null)
                     break;
             }
-
-            // Populate the new input buffer with user provided image data.
-            var result = CallbackHandler.CallbackWithResult(newBuffer);
-
-            if (result.Success)
-                newBuffer.ReadIntoBuffer(result.BufferFeed, result.DataLength, result.IsEof);
-
-            SendBuffer(newBuffer);
-
-            if (result.IsEof || ComponentReference.ForceStopProcessing)
-            {
-                MmalLog.Logger.LogDebug($"{Name}: Received IsEof. Releasing.");
-
-                Task.Run(() => { Trigger.SetResult(true); });
-            }
         }
 
         public void Start()
@@ -153,8 +136,6 @@ namespace MMALSharp.Ports.Inputs
             Trigger = new TaskCompletionSource<bool>();
             Enable();
         }
-
-        public void RegisterCallbackHandler(IInputCallbackHandler callbackHandler) => CallbackHandler = callbackHandler;
 
         internal virtual unsafe void NativeInputPortCallback(MmalPortType* port, MmalBufferHeader* buffer)
         {

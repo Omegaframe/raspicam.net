@@ -32,7 +32,7 @@ namespace MMALSharp.Components.EncoderComponents
             Outputs.Add(new VideoPort((IntPtr)(&(*Ptr->Output[0])), this, Guid.NewGuid()));
         }
 
-        public override IDownstreamComponent ConfigureOutputPort(int outputPort, IMmalPortConfig config, IOutputCaptureHandler handler)
+        public override IDownstreamComponent ConfigureOutputPort(int outputPort, IMmalPortConfig config, ICaptureHandler handler)
         {
             Quality = config.Quality;
 
