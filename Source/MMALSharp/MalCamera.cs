@@ -4,14 +4,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
-using MMALSharp.Components.EncoderComponents;
-using MMALSharp.Config;
 using MMALSharp.Extensions;
 using MMALSharp.Native;
-using MMALSharp.Ports;
 using MMALSharp.Ports.Outputs;
 using MMALSharp.Processing.Handlers;
 
@@ -47,167 +43,6 @@ namespace MMALSharp
         public void ForceStop(IOutputPort port)
         {
             Task.Run(() => port.Trigger.SetResult(true));
-        }
-
-        public async Task TakeRawVideo(ICaptureHandler handler, CancellationToken cancellationToken)
-        {
-            using var splitter = new MmalSplitterComponent();
-            using var renderer = new MmalVideoRenderer();
-            ConfigureCameraSettings();
-
-            var splitterOutputConfig = new MmalPortConfig(MmalCameraConfig.Encoding, MmalCameraConfig.EncodingSubFormat);
-
-            // Force port type to SplitterVideoPort to prevent resolution from being set against splitter component.
-            splitter.ConfigureOutputPort<SplitterVideoPort>(0, splitterOutputConfig, handler);
-
-            // Create our component pipeline.
-            Camera.VideoPort.ConnectTo(splitter);
-            Camera.PreviewPort.ConnectTo(renderer);
-
-            MmalLog.Logger.LogInformation($"Preparing to take raw video. Resolution: {Camera.VideoPort.Resolution.Width} x {Camera.VideoPort.Resolution.Height}. " +
-                                          $"Encoder: {MmalCameraConfig.Encoding.EncodingName}. Pixel Format: {MmalCameraConfig.EncodingSubFormat.EncodingName}.");
-
-            // Camera warm up time
-            await Task.Delay(2000, cancellationToken).ConfigureAwait(false);
-            await ProcessAsync(Camera.VideoPort, cancellationToken).ConfigureAwait(false);
-        }
-
-        public async Task TakeVideo(ICaptureHandler handler, CancellationToken cancellationToken, Split split = null)
-        {
-            if (split != null && !MmalCameraConfig.InlineHeaders)
-            {
-                MmalLog.Logger.LogWarning("Inline headers not enabled. Split mode not supported when this is disabled.");
-                split = null;
-            }
-
-            using var vidEncoder = new MmalVideoEncoder();
-            using var renderer = new MmalVideoRenderer();
-            ConfigureCameraSettings();
-
-            var portConfig = new MmalPortConfig(MmalEncoding.H264, MmalEncoding.I420, 10, MmalVideoEncoder.MaxBitrateLevel4, split: split);
-
-            vidEncoder.ConfigureOutputPort(portConfig, handler);
-
-            // Create our component pipeline.
-            Camera.VideoPort.ConnectTo(vidEncoder);
-            Camera.PreviewPort.ConnectTo(renderer);
-
-            MmalLog.Logger.LogInformation($"Preparing to take video. Resolution: {Camera.VideoPort.Resolution.Width} x {Camera.VideoPort.Resolution.Height}. " +
-                                          $"Encoder: {vidEncoder.Outputs[0].EncodingType.EncodingName}. Pixel Format: {vidEncoder.Outputs[0].PixelFormat.EncodingName}.");
-
-            // Camera warm up time
-            await Task.Delay(2000, cancellationToken).ConfigureAwait(false);
-            await ProcessAsync(Camera.VideoPort, cancellationToken).ConfigureAwait(false);
-        }
-
-        public async Task TakeRawPicture(ICaptureHandler handler)
-        {
-            if (Camera.StillPort.ConnectedReference != null)
-                throw new PiCameraError("A connection was found to the Camera still port. No encoder should be connected to the Camera's still port for raw capture.");
-
-            if (handler == null)
-                throw new ArgumentNullException(nameof(handler));
-
-            using var renderer = new MmalNullSinkComponent();
-            ConfigureCameraSettings(handler);
-            Camera.PreviewPort.ConnectTo(renderer);
-
-            MmalLog.Logger.LogInformation($"Preparing to take raw picture - Resolution: {Camera.StillPort.Resolution.Width} x {Camera.StillPort.Resolution.Height}. " +
-                                          $"Encoder: {MmalCameraConfig.Encoding.EncodingName}. Pixel Format: {MmalCameraConfig.EncodingSubFormat.EncodingName}.");
-
-            // Camera warm up time
-            await Task.Delay(2000).ConfigureAwait(false);
-            await ProcessAsync(Camera.StillPort).ConfigureAwait(false);
-        }
-
-        public async Task TakePicture(ICaptureHandler handler, MmalEncoding encodingType, MmalEncoding pixelFormat)
-        {
-            using var imgEncoder = new MmalImageEncoder();
-            using var renderer = new MmalNullSinkComponent();
-            ConfigureCameraSettings();
-
-            var portConfig = new MmalPortConfig(encodingType, pixelFormat, 90);
-
-            imgEncoder.ConfigureOutputPort(portConfig, handler);
-
-            // Create our component pipeline.
-            Camera.StillPort.ConnectTo(imgEncoder);
-            Camera.PreviewPort.ConnectTo(renderer);
-
-            MmalLog.Logger.LogInformation($"Preparing to take picture. Resolution: {Camera.StillPort.Resolution.Width} x {Camera.StillPort.Resolution.Height}. " +
-                                          $"Encoder: {encodingType.EncodingName}. Pixel Format: {pixelFormat.EncodingName}.");
-
-            // Camera warm up time
-            await Task.Delay(2000).ConfigureAwait(false);
-            await ProcessAsync(Camera.StillPort).ConfigureAwait(false);
-        }
-
-        public async Task TakePictureTimeout(ICaptureHandler handler, MmalEncoding encodingType, MmalEncoding pixelFormat, CancellationToken cancellationToken, bool burstMode = false)
-        {
-            if (burstMode)
-                MmalCameraConfig.StillBurstMode = true;
-
-            using var imgEncoder = new MmalImageEncoder();
-            using var renderer = new MmalNullSinkComponent();
-            ConfigureCameraSettings();
-
-            var portConfig = new MmalPortConfig(encodingType, pixelFormat, 90);
-
-            imgEncoder.ConfigureOutputPort(portConfig, handler);
-
-            // Create our component pipeline.
-            Camera.StillPort.ConnectTo(imgEncoder);
-            Camera.PreviewPort.ConnectTo(renderer);
-
-            // Camera warm up time
-            await Task.Delay(2000, cancellationToken).ConfigureAwait(false);
-
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                await ProcessAsync(Camera.StillPort, cancellationToken).ConfigureAwait(false);
-            }
-        }
-
-        public async Task TakePictureTimelapse(ICaptureHandler handler, MmalEncoding encodingType, MmalEncoding pixelFormat, Timelapse timelapse)
-        {
-            var interval = 0;
-
-            if (timelapse == null)
-                throw new ArgumentNullException(nameof(timelapse), "Timelapse object null. This must be initialized for Timelapse mode");
-
-            using var imgEncoder = new MmalImageEncoder();
-            using var renderer = new MmalNullSinkComponent();
-            ConfigureCameraSettings();
-
-            var portConfig = new MmalPortConfig(encodingType, pixelFormat, 90);
-
-            imgEncoder.ConfigureOutputPort(portConfig, handler);
-
-            // Create our component pipeline.
-            Camera.StillPort.ConnectTo(imgEncoder);
-            Camera.PreviewPort.ConnectTo(renderer);
-
-            // Camera warm up time
-            await Task.Delay(2000).ConfigureAwait(false);
-
-            while (!timelapse.CancellationToken.IsCancellationRequested)
-            {
-                interval = timelapse.Mode switch
-                {
-                    TimelapseMode.Millisecond => timelapse.Value,
-                    TimelapseMode.Second => timelapse.Value * 1000,
-                    TimelapseMode.Minute => (timelapse.Value * 60) * 1000,
-                    _ => interval
-                };
-
-                await Task.Delay(interval).ConfigureAwait(false);
-
-                MmalLog.Logger.LogInformation($"Preparing to take picture. Resolution: {MmalCameraConfig.Resolution.Width} x {MmalCameraConfig.Resolution.Height}. " +
-                                              $"Encoder: {encodingType.EncodingName}. Pixel Format: {pixelFormat.EncodingName}.");
-
-                await ProcessAsync(Camera.StillPort).ConfigureAwait(false);
-
-            }
         }
 
         public async Task ProcessAsync(IOutputPort cameraPort, CancellationToken cancellationToken = default)
@@ -313,9 +148,6 @@ namespace MMALSharp
             Camera.DisableAnnotate();
             return this;
         }
-
-        public MmalOverlayRenderer AddOverlay(MmalVideoRenderer parent, PreviewOverlayConfiguration config, byte[] source) => new MmalOverlayRenderer(parent, config, source);
-
 
         public void Cleanup()
         {
