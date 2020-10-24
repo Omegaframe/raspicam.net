@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
 using MMALSharp.Common.Utility;
-using MMALSharp.Native;
 using MMALSharp.Native.Pool;
 using MMALSharp.Native.Util;
 using MMALSharp.Ports;
@@ -9,7 +8,7 @@ using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp
 {
-    public unsafe class MmalPoolImpl : MmalObject, IBufferPool
+    unsafe class MmalPoolImpl : MmalObject, IBufferPool
     {
         public MmalPoolType* Ptr { get; }
 

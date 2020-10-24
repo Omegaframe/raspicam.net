@@ -5,7 +5,7 @@ using MMALSharp.Ports.Outputs;
 
 namespace MMALSharp.Components
 {
-    public interface IDownstreamComponent : IComponent
+    interface IDownstreamComponent : IComponent
     {
         Dictionary<int, IOutputPort> ProcessingPorts { get; }
 

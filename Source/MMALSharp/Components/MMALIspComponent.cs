@@ -5,7 +5,7 @@ using static MMALSharp.Native.Parameters.MmalParameters;
 
 namespace MMALSharp.Components
 {
-    public class MmalIspComponent : MmalDownstreamHandlerComponent
+    class MmalIspComponent : MmalDownstreamHandlerComponent
     {
         public unsafe MmalIspComponent() : base(MmalComponentIsp)
         {

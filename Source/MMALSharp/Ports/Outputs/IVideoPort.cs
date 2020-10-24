@@ -1,4 +1,4 @@
 ﻿namespace MMALSharp.Ports.Outputs
 {
-    public interface IVideoPort : IOutputPort { }
+    interface IVideoPort : IOutputPort { }
 }

@@ -1,4 +1,4 @@
 namespace MMALSharp.Callbacks
 {
-    public interface ICallbackHandler { }
+    interface ICallbackHandler { }
 }

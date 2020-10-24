@@ -3,7 +3,7 @@ using MMALSharp.Ports.Outputs;
 
 namespace MMALSharp.Components
 {
-    public interface ICameraComponent : IComponent
+    interface ICameraComponent : IComponent
     {
         IOutputPort PreviewPort { get; }
         IOutputPort VideoPort { get; }

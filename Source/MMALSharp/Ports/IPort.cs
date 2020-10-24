@@ -4,14 +4,13 @@ using System.Threading.Tasks;
 using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
-using MMALSharp.Native;
 using MMALSharp.Native.Format;
 using MMALSharp.Native.Port;
 using MMALSharp.Native.Util;
 
 namespace MMALSharp.Ports
 {
-    public interface IPort : IMmalObject
+    interface IPort : IMmalObject
     {
         unsafe MmalPortType* Ptr { get; }
         PortType PortType { get; }

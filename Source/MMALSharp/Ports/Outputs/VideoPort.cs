@@ -5,14 +5,13 @@ using MMALSharp.Callbacks;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Handlers;
-using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Port;
 using MMALSharp.Ports.Inputs;
 
 namespace MMALSharp.Ports.Outputs
 {
-    public unsafe class VideoPort : OutputPort, IVideoPort
+    unsafe class VideoPort : OutputPort, IVideoPort
     {
         public override Resolution Resolution
         {

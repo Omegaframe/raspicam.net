@@ -5,7 +5,7 @@ using static MMALSharp.Native.Parameters.MmalParameters;
 
 namespace MMALSharp.Components
 {
-    public sealed class MmalResizerComponent : MmalDownstreamHandlerComponent
+    sealed class MmalResizerComponent : MmalDownstreamHandlerComponent
     {
         public unsafe MmalResizerComponent() : base(MmalComponentDefaultResizer)
         {

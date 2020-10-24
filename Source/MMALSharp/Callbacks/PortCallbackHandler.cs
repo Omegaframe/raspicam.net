@@ -3,14 +3,13 @@ using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Extensions;
 using MMALSharp.Handlers;
-using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Util;
 using MMALSharp.Ports;
 
 namespace MMALSharp.Callbacks
 {   
-    public abstract class PortCallbackHandler<TPort, TCaptureHandler> : IOutputCallbackHandler
+    abstract class PortCallbackHandler<TPort, TCaptureHandler> : IOutputCallbackHandler
         where TPort : IPort
         where TCaptureHandler : ICaptureHandler
     { 

@@ -1,5 +1,4 @@
-﻿using MMALSharp.Native;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MMALSharp.Native.Parameters;
 
 namespace MMALSharp

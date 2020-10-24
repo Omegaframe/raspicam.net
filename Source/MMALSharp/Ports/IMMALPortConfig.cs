@@ -5,7 +5,7 @@ using MMALSharp.Config;
 
 namespace MMALSharp.Ports
 {
-    public interface IMmalPortConfig
+    interface IMmalPortConfig
     {
         MmalEncoding EncodingType { get; }
         MmalEncoding PixelFormat { get; }

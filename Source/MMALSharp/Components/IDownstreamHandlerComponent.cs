@@ -1,5 +1,5 @@
 ﻿
 namespace MMALSharp.Components
 {
-    public interface IDownstreamHandlerComponent : IDownstreamComponent { }
+    interface IDownstreamHandlerComponent : IDownstreamComponent { }
 }

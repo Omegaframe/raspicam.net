@@ -5,7 +5,6 @@ using MMALSharp.Callbacks;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Extensions;
-using MMALSharp.Native;
 using MMALSharp.Native.Connection;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Ports.Inputs;
@@ -14,7 +13,7 @@ using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp
 {
-    public unsafe class MmalConnectionImpl : MmalObject, IConnection
+    unsafe class MmalConnectionImpl : MmalObject, IConnection
     {
         public IConnectionCallbackHandler CallbackHandler { get; internal set; }
         public IBufferPool ConnectionPool { get; set; }

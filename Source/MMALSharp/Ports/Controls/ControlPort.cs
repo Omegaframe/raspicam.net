@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using MMALSharp.Callbacks;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
-using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Events;
 using MMALSharp.Native.Parameters;
@@ -12,7 +11,7 @@ using MMALSharp.Native.Port;
 
 namespace MMALSharp.Ports.Controls
 {
-    public unsafe class ControlPort : PortBase<IOutputCallbackHandler>, IControlPort
+    unsafe class ControlPort : PortBase<IOutputCallbackHandler>, IControlPort
     {
         public override Resolution Resolution // todo: this does nothing? why?
         {

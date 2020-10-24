@@ -1,6 +1,6 @@
 ﻿namespace MMALSharp.Ports
 {
-    public enum PortType
+    enum PortType
     {
         Input,
         Output,

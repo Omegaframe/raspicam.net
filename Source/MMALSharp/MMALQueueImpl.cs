@@ -1,12 +1,11 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
 using MMALSharp.Common.Utility;
-using MMALSharp.Native;
 using MMALSharp.Native.Que;
 
 namespace MMALSharp
 {
-    public unsafe class MmalQueueImpl : MmalObject, IBufferQueue
+    unsafe class MmalQueueImpl : MmalObject, IBufferQueue
     {
         public MmalQueueType* Ptr { get; }
 

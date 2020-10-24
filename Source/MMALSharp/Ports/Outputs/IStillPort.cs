@@ -1,4 +1,4 @@
 ﻿namespace MMALSharp.Ports.Outputs
 {
-    public interface IStillPort : IOutputPort { }
+    interface IStillPort : IOutputPort { }
 }

@@ -5,7 +5,7 @@ using MMALSharp.Ports.Inputs;
 
 namespace MMALSharp.Ports.Outputs
 {
-    public interface IOutputPort : IPort
+    interface IOutputPort : IPort
     {
         void Configure(IMmalPortConfig config, IInputPort copyFrom, ICaptureHandler handler);
         IConnection ConnectTo(IDownstreamComponent component, int inputPort = 0, bool useCallback = false);

@@ -16,7 +16,7 @@ using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp.Components.EncoderComponents
 {
-    public unsafe class MmalImageEncoder : MmalEncoderBase, IImageEncoder
+    unsafe class MmalImageEncoder : MmalEncoderBase, IImageEncoder
     {
         public const int MaxExifPayloadLength = 128;
 

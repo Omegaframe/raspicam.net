@@ -9,7 +9,7 @@ namespace MMALSharp
     public static class MmalCameraConfig
     {
         public static bool Debug { get; set; }
-        public static MmalSensorMode SensorMode { get; set; }
+        public static SensorMode SensorMode { get; set; }
         public static int Sharpness { get; set; }
         public static int Contrast { get; set; }
         public static int Brightness { get; set; } = 50;

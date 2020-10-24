@@ -3,7 +3,7 @@ using MMALSharp.Common.Utility;
 
 namespace MMALSharp.Callbacks
 {
-    public abstract class ConnectionCallbackHandler : IConnectionCallbackHandler
+    abstract class ConnectionCallbackHandler : IConnectionCallbackHandler
     {
         public IConnection WorkingConnection { get; }
 

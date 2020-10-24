@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Config;
-using MMALSharp.Native;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 using MMALSharp.Native.Util;
@@ -15,7 +14,7 @@ using static MMALSharp.Native.Parameters.MmalParametersCamera;
 
 namespace MMALSharp.Extensions
 {
-    public static class PortExtensions
+    static class PortExtensions
     {
         public static unsafe dynamic GetParameter(this IPort port, int key)
         {

@@ -1,6 +1,6 @@
 ﻿namespace MMALSharp.Components
 {
-    public interface ICameraInfoComponent : IComponent
+    interface ICameraInfoComponent : IComponent
     {
         string SensorName { get; }      
         int MaxWidth { get; }       

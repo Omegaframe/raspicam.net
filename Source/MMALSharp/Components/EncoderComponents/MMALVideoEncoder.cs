@@ -7,7 +7,6 @@ using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Extensions;
 using MMALSharp.Handlers;
-using MMALSharp.Native;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 using MMALSharp.Native.Util;
@@ -18,7 +17,7 @@ using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp.Components.EncoderComponents
 {
-    public unsafe class MmalVideoEncoder : MmalEncoderBase, IVideoEncoder
+    unsafe class MmalVideoEncoder : MmalEncoderBase, IVideoEncoder
     {
         public const int MaxBitrateMJPEG = 25000000;
         public const int MaxBitrateLevel4 = 25000000; // 25Mbits/s

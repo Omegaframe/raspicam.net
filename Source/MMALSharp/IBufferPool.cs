@@ -1,9 +1,8 @@
-﻿using MMALSharp.Native;
-using MMALSharp.Native.Pool;
+﻿using MMALSharp.Native.Pool;
 
 namespace MMALSharp
 {
-    public interface IBufferPool : IMmalObject
+    interface IBufferPool : IMmalObject
     {
         unsafe MmalPoolType* Ptr { get; }
         IBufferQueue Queue { get; }

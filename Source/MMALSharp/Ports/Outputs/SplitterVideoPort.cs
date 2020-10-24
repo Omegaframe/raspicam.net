@@ -6,7 +6,6 @@ using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Extensions;
 using MMALSharp.Handlers;
-using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
@@ -14,7 +13,7 @@ using MMALSharp.Ports.Inputs;
 
 namespace MMALSharp.Ports.Outputs
 {
-    public unsafe class SplitterVideoPort : VideoPort
+    unsafe class SplitterVideoPort : VideoPort
     {
         public SplitterVideoPort(IntPtr ptr, IComponent comp, Guid guid) : base(ptr, comp, guid) { }
 

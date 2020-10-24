@@ -7,7 +7,6 @@ using MMALSharp.Callbacks;
 using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
-using MMALSharp.Native;
 using MMALSharp.Native.Component;
 using MMALSharp.Native.Format;
 using MMALSharp.Native.Port;
@@ -16,7 +15,7 @@ using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp.Ports
 {
-    public abstract unsafe class PortBase<TCallback> : MmalObject, IPort where TCallback : ICallbackHandler
+    abstract unsafe class PortBase<TCallback> : MmalObject, IPort where TCallback : ICallbackHandler
     {
         public TCallback CallbackHandler { get; internal set; }
         public PortType PortType { get; }

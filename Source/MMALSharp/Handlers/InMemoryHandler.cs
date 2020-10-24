@@ -4,7 +4,7 @@ using MMALSharp.Common;
 
 namespace MMALSharp.Handlers
 {
-    public class InMemoryHandler : ICaptureHandler
+    class InMemoryHandler : ICaptureHandler
     {
         MemoryStream _currentStream;
         Action<Stream> _onFullFrameAvailable;

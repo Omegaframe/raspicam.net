@@ -1,4 +1,4 @@
 ﻿namespace MMALSharp.Components.EncoderComponents
 {
-    public interface IImageDecoder : IEncoder { }
+    interface IImageDecoder : IEncoder { }
 }

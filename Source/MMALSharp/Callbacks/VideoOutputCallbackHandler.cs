@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Config;
 using MMALSharp.Extensions;
@@ -11,7 +10,7 @@ using MMALSharp.Ports.Outputs;
 
 namespace MMALSharp.Callbacks
 {
-    public class VideoOutputCallbackHandler : PortCallbackHandler<IVideoPort, ICaptureHandler>, IVideoOutputCallbackHandler
+    class VideoOutputCallbackHandler : PortCallbackHandler<IVideoPort, ICaptureHandler>, IVideoOutputCallbackHandler
     {
         public Split Split { get; }
 

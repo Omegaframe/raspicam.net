@@ -2,14 +2,13 @@
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
 using MMALSharp.Common.Utility;
-using MMALSharp.Native;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp.Components
 {
-    public unsafe class MmalCameraInfoComponent : MmalComponentBase, ICameraInfoComponent
+    unsafe class MmalCameraInfoComponent : MmalComponentBase, ICameraInfoComponent
     {
         public string SensorName { get; set; }
         public int MaxWidth { get; set; }

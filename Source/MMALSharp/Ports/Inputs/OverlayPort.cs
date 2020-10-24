@@ -1,12 +1,11 @@
 ﻿using System;
 using MMALSharp.Components;
-using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Port;
 
 namespace MMALSharp.Ports.Inputs
 {
-    public unsafe class OverlayPort : InputPort
+    unsafe class OverlayPort : InputPort
     {
         public OverlayPort(IntPtr ptr, IComponent comp, Guid guid) : base(ptr, comp, guid) { }
 

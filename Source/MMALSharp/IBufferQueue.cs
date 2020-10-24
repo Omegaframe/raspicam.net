@@ -2,7 +2,7 @@
 
 namespace MMALSharp
 {
-    public interface IBufferQueue : IMmalObject
+    interface IBufferQueue : IMmalObject
     {
         unsafe MmalQueueType* Ptr { get; }
 

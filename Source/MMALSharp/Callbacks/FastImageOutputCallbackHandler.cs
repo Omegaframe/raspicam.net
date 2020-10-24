@@ -3,7 +3,7 @@ using MMALSharp.Ports.Outputs;
 
 namespace MMALSharp.Callbacks
 {
-    public class FastImageOutputCallbackHandler : PortCallbackHandler<IVideoPort, ICaptureHandler>
+    class FastImageOutputCallbackHandler : PortCallbackHandler<IVideoPort, ICaptureHandler>
     {
         public FastImageOutputCallbackHandler(IVideoPort port, ICaptureHandler handler) : base(port, handler) { }
 

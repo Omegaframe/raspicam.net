@@ -5,7 +5,7 @@ using MMALSharp.Components;
 
 namespace MMALSharp.Ports
 {
-    public class GenericPort : PortBase<ICallbackHandler>
+    class GenericPort : PortBase<ICallbackHandler>
     {
         public override Resolution Resolution
         {

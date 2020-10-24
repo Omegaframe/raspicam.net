@@ -7,7 +7,6 @@ using Microsoft.Extensions.Logging;
 using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Config;
-using MMALSharp.Native;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 using MMALSharp.Native.Util;
@@ -17,7 +16,7 @@ using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp.Components
 {
-    public abstract class MmalRendererBase : MmalDownstreamComponent
+    abstract class MmalRendererBase : MmalDownstreamComponent
     {
         protected unsafe MmalRendererBase(string name) : base(name)
         {
@@ -25,7 +24,7 @@ namespace MMALSharp.Components
         }
     }
 
-    public class MmalNullSinkComponent : MmalRendererBase
+    class MmalNullSinkComponent : MmalRendererBase
     {
         public MmalNullSinkComponent() : base(MmalParameters.MmalComponentDefaultNullSink)
         {
@@ -38,7 +37,7 @@ namespace MMALSharp.Components
         }
     }
 
-    public class MmalVideoRenderer : MmalRendererBase
+    class MmalVideoRenderer : MmalRendererBase
     {
         public PreviewConfiguration Configuration { get; }
         public List<MmalOverlayRenderer> Overlays { get; } = new List<MmalOverlayRenderer>();
@@ -136,7 +135,7 @@ namespace MMALSharp.Components
         }
     }
 
-    public sealed class MmalOverlayRenderer : MmalVideoRenderer
+    sealed class MmalOverlayRenderer : MmalVideoRenderer
     {
         public byte[] Source { get; }
         public MmalVideoRenderer ParentRenderer { get; }

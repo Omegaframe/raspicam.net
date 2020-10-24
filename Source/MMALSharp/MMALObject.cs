@@ -1,6 +1,6 @@
 ﻿namespace MMALSharp
 {
-    public abstract class MmalObject : IMmalObject
+    abstract class MmalObject : IMmalObject
     {
         public bool IsDisposed { get; internal set; }
 

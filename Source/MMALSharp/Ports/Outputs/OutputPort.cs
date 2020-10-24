@@ -9,7 +9,6 @@ using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Extensions;
 using MMALSharp.Handlers;
-using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
@@ -18,7 +17,7 @@ using MMALSharp.Ports.Inputs;
 
 namespace MMALSharp.Ports.Outputs
 {
-    public unsafe class OutputPort : PortBase<IOutputCallbackHandler>, IOutputPort
+    unsafe class OutputPort : PortBase<IOutputCallbackHandler>, IOutputPort
     {
         public override Resolution Resolution
         {

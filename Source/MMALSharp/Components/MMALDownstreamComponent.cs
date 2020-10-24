@@ -4,15 +4,12 @@ using System.Linq;
 using Microsoft.Extensions.Logging;
 using MMALSharp.Common.Utility;
 using MMALSharp.Handlers;
-using MMALSharp.Native;
-using MMALSharp.Native.Format;
 using MMALSharp.Ports;
-using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;
 
 namespace MMALSharp.Components
 {
-    public abstract class MmalDownstreamComponent : MmalComponentBase, IDownstreamComponent
+    abstract class MmalDownstreamComponent : MmalComponentBase, IDownstreamComponent
     {
         public Dictionary<int, IOutputPort> ProcessingPorts { get; set; }
 

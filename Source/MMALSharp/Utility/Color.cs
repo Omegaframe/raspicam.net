@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Numerics;
-using System.Runtime.CompilerServices;
 using MMALSharp.Extensions;
 
-[assembly: InternalsVisibleTo("MMALSharp.Tests")]
 namespace MMALSharp.Utility
 {
     internal static class MmalColor

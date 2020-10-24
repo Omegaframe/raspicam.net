@@ -13,19 +13,7 @@ using MMALSharp.Ports.Outputs;
 
 namespace MMALSharp.Components
 {
-    public enum MmalSensorMode
-    {
-        Mode0,
-        Mode1,
-        Mode2,
-        Mode3,
-        Mode4,
-        Mode5,
-        Mode6,
-        Mode7
-    }
-
-    public sealed class MmalCameraComponent : MmalComponentBase, ICameraComponent
+    sealed class MmalCameraComponent : MmalComponentBase, ICameraComponent
     {
         public const int MmalCameraPreviewPort = 0;
         public const int MmalCameraVideoPort = 1;

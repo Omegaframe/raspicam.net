@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using MMALSharp.Config;
-using MMALSharp.Native;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 using MMALSharp.Ports.Inputs;
@@ -12,7 +11,7 @@ using static MMALSharp.Native.Parameters.MmalParametersCamera;
 
 namespace MMALSharp.Components
 {
-    public class MmalImageFxComponent : MmalDownstreamHandlerComponent
+    class MmalImageFxComponent : MmalDownstreamHandlerComponent
     {
         public MmalParamImagefxType ImageEffect
         {

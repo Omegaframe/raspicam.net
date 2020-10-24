@@ -7,7 +7,6 @@ using MMALSharp.Callbacks;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Extensions;
-using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Events;
 using MMALSharp.Native.Parameters;
@@ -16,7 +15,7 @@ using MMALSharp.Ports.Outputs;
 
 namespace MMALSharp.Ports.Inputs
 {
-    public class InputPort : PortBase<IOutputCallbackHandler>, IInputPort
+    class InputPort : PortBase<IOutputCallbackHandler>, IInputPort
     {
         public override Resolution Resolution
         {

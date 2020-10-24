@@ -6,7 +6,6 @@ using System.Text;
 using Microsoft.Extensions.Logging;
 using MMALSharp.Common.Utility;
 using MMALSharp.Extensions;
-using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Events;
 using MMALSharp.Native.Util;
@@ -14,7 +13,7 @@ using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp
 {
-    public unsafe class MmalBuffer : MmalObject, IBuffer
+    unsafe class MmalBuffer : MmalObject, IBuffer
     {
         public byte* Data => Ptr->Data;
         public uint Cmd => Ptr->Cmd;

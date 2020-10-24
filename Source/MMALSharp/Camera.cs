@@ -17,12 +17,12 @@ using MMALSharp.Ports.Outputs;
 
 namespace MMALSharp
 {
-    public sealed class MalCamera : IDisposable
+    public sealed class Camera : IDisposable
     {
         readonly MmalCameraComponent _camera;
         readonly List<IDisposable> _cameraDisposables;
 
-        MalCamera()
+        Camera()
         {
             BcmHost.Initialize();
 

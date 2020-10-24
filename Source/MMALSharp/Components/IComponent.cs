@@ -6,7 +6,7 @@ using MMALSharp.Ports.Outputs;
 
 namespace MMALSharp.Components
 {
-    public interface IComponent : IMmalObject
+    interface IComponent : IMmalObject
     {
         IControlPort Control { get; }
         List<IInputPort> Inputs { get; }

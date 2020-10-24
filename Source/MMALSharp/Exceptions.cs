@@ -3,7 +3,7 @@ using MMALSharp.Native.Util;
 
 namespace MMALSharp
 {
-    public static class MmalNativeExceptionHelper
+    static class MmalNativeExceptionHelper
     {
         public static void MmalCheck(MmalStatusEnum status, string message)
         {

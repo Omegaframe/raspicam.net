@@ -1,6 +1,6 @@
 namespace MMALSharp.Callbacks
 {
-    public interface IConnectionCallbackHandler : ICallbackHandler
+    interface IConnectionCallbackHandler : ICallbackHandler
     {
         IConnection WorkingConnection { get; }
 

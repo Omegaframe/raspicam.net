@@ -5,7 +5,7 @@ using MMALSharp.Ports.Outputs;
 
 namespace MMALSharp
 {
-    public interface IConnection : IMmalObject
+    interface IConnection : IMmalObject
     {
         IConnectionCallbackHandler CallbackHandler { get; }
         IDownstreamComponent DownstreamComponent { get; }

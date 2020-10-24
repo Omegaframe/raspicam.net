@@ -4,14 +4,13 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
-using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Events;
 using MMALSharp.Native.Port;
 
 namespace MMALSharp.Ports.Outputs
 {
-    public unsafe class FileEncodeOutputPort : OutputPort
+    unsafe class FileEncodeOutputPort : OutputPort
     {
         public FileEncodeOutputPort(IntPtr ptr, IComponent comp, Guid guid) : base(ptr, comp, guid) { }
 

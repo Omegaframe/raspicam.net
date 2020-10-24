@@ -16,7 +16,7 @@ using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp.Components
 {
-    public abstract unsafe class MmalComponentBase : MmalObject, IComponent
+    abstract unsafe class MmalComponentBase : MmalObject, IComponent
     {
         public IControlPort Control { get; }
         public List<IInputPort> Inputs { get; }

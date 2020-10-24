@@ -1,5 +1,4 @@
-﻿using MMALSharp.Native;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using MMALSharp.Common;
 using MMALSharp.Native.Events;
@@ -7,7 +6,7 @@ using MMALSharp.Native.Format;
 
 namespace MMALSharp
 {
-    public unsafe class MmalEventFormat : IBufferEvent
+    unsafe class MmalEventFormat : IBufferEvent
     {
         public MmalEsFormat* Ptr { get; }
 

@@ -2,7 +2,7 @@
 
 namespace MMALSharp.Components.EncoderComponents
 {
-    public interface IImageEncoder : IEncoder
+    interface IImageEncoder : IEncoder
     {
         bool RawBayer { get; }
         bool UseExif { get; }

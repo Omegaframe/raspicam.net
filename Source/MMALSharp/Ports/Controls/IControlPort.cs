@@ -1,6 +1,6 @@
 ﻿namespace MMALSharp.Ports.Controls
 {
-    public interface IControlPort : IPort
+    interface IControlPort : IPort
     {
         void Start();
     }

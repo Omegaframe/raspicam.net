@@ -7,7 +7,6 @@ using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Components.EncoderComponents;
 using MMALSharp.Config;
-using MMALSharp.Native;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 using MMALSharp.Native.Util;
@@ -18,7 +17,7 @@ using static MMALSharp.Native.Parameters.MmalParametersCamera;
 
 namespace MMALSharp.Extensions
 {
-    public static unsafe class MmalCameraComponentExtensions
+    static unsafe class MmalCameraComponentExtensions
     {
         internal static void SetCameraConfig(this MmalCameraComponent camera, MmalParameterCameraConfigType value)
         {
@@ -315,9 +314,9 @@ namespace MMALSharp.Extensions
             }
         }
 
-        public static MmalSensorMode GetSensorMode(this MmalCameraComponent camera)
+        public static SensorMode GetSensorMode(this MmalCameraComponent camera)
         {
-            return (MmalSensorMode)(int)camera.Control.GetParameter(MmalParameterCameraCustomSensorConfig);
+            return (SensorMode)(int)camera.Control.GetParameter(MmalParameterCameraCustomSensorConfig);
         }
 
         internal static void SetSensorMode(this MmalCameraComponent camera)

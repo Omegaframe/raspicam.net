@@ -1,13 +1,11 @@
 ﻿using System;
-using MMALSharp.Native;
 using MMALSharp.Native.Parameters;
-using MMALSharp.Ports;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;
 
 namespace MMALSharp.Components
 {
-    public class MmalSplitterComponent : MmalDownstreamHandlerComponent
+    class MmalSplitterComponent : MmalDownstreamHandlerComponent
     {
         public unsafe MmalSplitterComponent()            : base(MmalParameters.MmalComponentDefaultVideoSplitter)
         {

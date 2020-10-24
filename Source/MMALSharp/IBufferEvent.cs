@@ -1,9 +1,8 @@
-﻿using MMALSharp.Native;
-using MMALSharp.Native.Format;
+﻿using MMALSharp.Native.Format;
 
 namespace MMALSharp
 {
-    public interface IBufferEvent
+    interface IBufferEvent
     {
         unsafe MmalEsFormat* Ptr { get; }
         string FourCC { get; }
