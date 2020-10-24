@@ -22,7 +22,7 @@ namespace MMALSharp
         readonly MmalCameraComponent _camera;
         readonly List<IDisposable> _cameraDisposables;
 
-        Camera()
+        public Camera()
         {
             BcmHost.Initialize();
 
