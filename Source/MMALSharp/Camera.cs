@@ -34,16 +34,17 @@ namespace MMALSharp
         {
             _camera.Initialise();
 
-            var captureHandler = new InMemoryHandler();
+            var imageCaptureHandler = new InMemoryHandler();
+            var videoCaptureHandler = new InMemoryHandler();
             var imgEncoder = new MmalImageEncoder(_camera, continuousCapture: true);
             var vidEncoder = new MmalVideoEncoder();
             var splitter = new MmalSplitterComponent();
             var nullSink = new MmalNullSinkComponent();
 
-            captureHandler.SetOnVideoDataAvailable(data => onVideoDataAvailable?.Invoke(data));
-            captureHandler.SetOnFullFrameAvailable(stream => onFullFrameAvailable?.Invoke(stream));
+            videoCaptureHandler.SetOnVideoDataAvailable(data => onVideoDataAvailable?.Invoke(data));
+            imageCaptureHandler.SetOnFullFrameAvailable(stream => onFullFrameAvailable?.Invoke(stream));
 
-            _cameraDisposables.AddRange(new IDisposable[] { captureHandler, imgEncoder, vidEncoder, splitter, nullSink });
+            _cameraDisposables.AddRange(new IDisposable[] { imageCaptureHandler, videoCaptureHandler, imgEncoder, vidEncoder, splitter, nullSink });
 
             var imagePortConfig = new MmalPortConfig(MmalEncoding.Jpeg, MmalEncoding.I420, jpegQuality);
 
@@ -58,8 +59,8 @@ namespace MMALSharp
                 CameraConfig.Resolution.Width,
                 CameraConfig.Resolution.Height);
 
-            imgEncoder.ConfigureOutputPort(imagePortConfig, captureHandler);
-            vidEncoder.ConfigureOutputPort(videoPortConfig, captureHandler);
+            imgEncoder.ConfigureOutputPort(imagePortConfig, imageCaptureHandler);
+            vidEncoder.ConfigureOutputPort(videoPortConfig, videoCaptureHandler);
 
             _camera.VideoPort.ConnectTo(splitter);
             splitter.Outputs[0].ConnectTo(imgEncoder);
