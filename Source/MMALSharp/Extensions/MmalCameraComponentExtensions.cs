@@ -3,13 +3,13 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Components;
-using MMALSharp.Components.EncoderComponents;
 using MMALSharp.Config;
+using MMALSharp.Mmal.Components;
+using MMALSharp.Mmal.Components.EncoderComponents;
+using MMALSharp.Mmal.Ports.Controls;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 using MMALSharp.Native.Util;
-using MMALSharp.Ports.Controls;
 using MMALSharp.Utility;
 using static MMALSharp.MmalNativeExceptionHelper;
 using static MMALSharp.Native.Parameters.MmalParametersCamera;
@@ -151,7 +151,7 @@ namespace MMALSharp.Extensions
 
         internal static void SetAnnotateSettings(this MmalCameraComponent camera)
         {
-            if (MmalCameraConfig.Annotate == null)
+            if (CameraConfig.Annotate == null)
                 return;
 
             var sb = new StringBuilder();
@@ -171,56 +171,56 @@ namespace MMALSharp.Extensions
             var customBackgroundY = (byte)0;
             var customBackgroundU = (byte)0;
             var customBackgroundV = (byte)0;
-            var justify = MmalCameraConfig.Annotate.Justify;
-            var xOffset = MmalCameraConfig.Annotate.XOffset;
-            var yOffset = MmalCameraConfig.Annotate.YOffset;
+            var justify = CameraConfig.Annotate.Justify;
+            var xOffset = CameraConfig.Annotate.XOffset;
+            var yOffset = CameraConfig.Annotate.YOffset;
 
-            if (!string.IsNullOrEmpty(MmalCameraConfig.Annotate.CustomText))
-                sb.Append(MmalCameraConfig.Annotate.CustomText + " ");
+            if (!string.IsNullOrEmpty(CameraConfig.Annotate.CustomText))
+                sb.Append(CameraConfig.Annotate.CustomText + " ");
 
-            if (MmalCameraConfig.Annotate.ShowDateText)
-                sb.Append(DateTime.Now.ToString(MmalCameraConfig.Annotate.DateFormat) + " ");
+            if (CameraConfig.Annotate.ShowDateText)
+                sb.Append(DateTime.Now.ToString(CameraConfig.Annotate.DateFormat) + " ");
 
-            if (MmalCameraConfig.Annotate.ShowTimeText)
-                sb.Append(DateTime.Now.ToString(MmalCameraConfig.Annotate.TimeFormat) + " ");
+            if (CameraConfig.Annotate.ShowTimeText)
+                sb.Append(DateTime.Now.ToString(CameraConfig.Annotate.TimeFormat) + " ");
 
-            if (MmalCameraConfig.Annotate.ShowShutterSettings)
+            if (CameraConfig.Annotate.ShowShutterSettings)
                 showShutter = 1;
 
-            if (MmalCameraConfig.Annotate.ShowGainSettings)
+            if (CameraConfig.Annotate.ShowGainSettings)
                 showAnalogGain = 1;
 
-            if (MmalCameraConfig.Annotate.ShowLensSettings)
+            if (CameraConfig.Annotate.ShowLensSettings)
                 showLens = 1;
 
-            if (MmalCameraConfig.Annotate.ShowCafSettings)
+            if (CameraConfig.Annotate.ShowCafSettings)
                 showCaf = 1;
 
-            if (MmalCameraConfig.Annotate.ShowMotionSettings)
+            if (CameraConfig.Annotate.ShowMotionSettings)
                 showMotion = 1;
 
-            if (MmalCameraConfig.Annotate.ShowFrameNumber)
+            if (CameraConfig.Annotate.ShowFrameNumber)
                 showFrame = 1;
 
-            if (MmalCameraConfig.Annotate.AllowCustomBackgroundColour)
+            if (CameraConfig.Annotate.AllowCustomBackgroundColour)
                 enableTextBackground = 1;
 
-            var textSize = Convert.ToByte(MmalCameraConfig.Annotate.TextSize);
+            var textSize = Convert.ToByte(CameraConfig.Annotate.TextSize);
 
-            if (MmalCameraConfig.Annotate.TextColour != Color.Empty)
+            if (CameraConfig.Annotate.TextColour != Color.Empty)
             {
                 customTextColor = 1;
 
-                var (y, u, v) = MmalColor.RgbToYuvBytes(MmalCameraConfig.Annotate.TextColour);
+                var (y, u, v) = MmalColor.RgbToYuvBytes(CameraConfig.Annotate.TextColour);
                 customTextY = y;
                 customTextU = u;
                 customTextV = v;
             }
 
-            if (MmalCameraConfig.Annotate.BgColour != Color.Empty)
+            if (CameraConfig.Annotate.BgColour != Color.Empty)
             {
                 customBackgroundColor = 1;
-                var (y, u, v) = MmalColor.RgbToYuvBytes(MmalCameraConfig.Annotate.BgColour);
+                var (y, u, v) = MmalColor.RgbToYuvBytes(CameraConfig.Annotate.BgColour);
                 customBackgroundY = y;
                 customBackgroundU = u;
                 customBackgroundV = v;
@@ -234,7 +234,7 @@ namespace MMALSharp.Extensions
             var arr = new byte[MmalCameraAnnotateMaxTextLenV3];
             var bytes = Encoding.ASCII.GetBytes(text);
 
-            if (MmalCameraConfig.Debug)
+            if (CameraConfig.Debug)
                 MmalLog.Logger.LogDebug($"Setting annotate: {text}");
 
             Array.Copy(bytes, arr, bytes.Length);
@@ -323,8 +323,8 @@ namespace MMALSharp.Extensions
             var currentMode = (int)camera.Control.GetParameter(MmalParameterCameraCustomSensorConfig);
 
             // Don't try and set the sensor mode if we aren't changing it.
-            if (currentMode != 0 || MmalCameraConfig.SensorMode != 0)
-                camera.Control.SetParameter(MmalParameterCameraCustomSensorConfig, MmalCameraConfig.SensorMode);
+            if (currentMode != 0 || CameraConfig.SensorMode != 0)
+                camera.Control.SetParameter(MmalParameterCameraCustomSensorConfig, CameraConfig.SensorMode);
         }
 
         public static int GetSaturation(this MmalCameraComponent camera)
@@ -561,7 +561,7 @@ namespace MMALSharp.Extensions
         {
             MmalLog.Logger.LogDebug($"Setting AWB gains: {rGain}, {bGain}");
 
-            if (MmalCameraConfig.AwbMode != MmalParamAwbmodeType.MmalParamAwbmodeOff && (rGain > 0 || bGain > 0))
+            if (CameraConfig.AwbMode != MmalParamAwbmodeType.MmalParamAwbmodeOff && (rGain > 0 || bGain > 0))
                 throw new PiCameraError("AWB Mode must be off when setting AWB gains");
 
             var awbGains = new MmalParameterAwbGainsType(

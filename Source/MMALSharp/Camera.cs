@@ -5,13 +5,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Components;
-using MMALSharp.Components.EncoderComponents;
 using MMALSharp.Extensions;
-using MMALSharp.Handlers;
+using MMALSharp.Mmal;
+using MMALSharp.Mmal.Components;
+using MMALSharp.Mmal.Components.EncoderComponents;
+using MMALSharp.Mmal.Handlers;
+using MMALSharp.Mmal.Ports;
+using MMALSharp.Mmal.Ports.Outputs;
 using MMALSharp.Native;
-using MMALSharp.Ports;
-using MMALSharp.Ports.Outputs;
 using MMALSharp.Utility;
 
 namespace MMALSharp
@@ -54,8 +55,8 @@ namespace MMALSharp
                 null,
                 null,
                 false,
-                MmalCameraConfig.Resolution.Width,
-                MmalCameraConfig.Resolution.Height);
+                CameraConfig.Resolution.Width,
+                CameraConfig.Resolution.Height);
 
             imgEncoder.ConfigureOutputPort(imagePortConfig, captureHandler);
             vidEncoder.ConfigureOutputPort(videoPortConfig, captureHandler);
@@ -130,13 +131,13 @@ namespace MMALSharp
                 component.EnableConnections();
             }
 
-            _camera.SetShutterSpeed(MmalCameraConfig.ShutterSpeed);
+            _camera.SetShutterSpeed(CameraConfig.ShutterSpeed);
 
             // Prepare arguments for the annotation-refresh task
             var ctsRefreshAnnotation = new CancellationTokenSource();
-            var refreshInterval = (int)(MmalCameraConfig.Annotate?.RefreshRate ?? 0);
+            var refreshInterval = (int)(CameraConfig.Annotate?.RefreshRate ?? 0);
 
-            if (!(MmalCameraConfig.Annotate?.ShowDateText ?? false) && !(MmalCameraConfig.Annotate?.ShowTimeText ?? false))
+            if (!(CameraConfig.Annotate?.ShowDateText ?? false) && !(CameraConfig.Annotate?.ShowTimeText ?? false))
                 refreshInterval = 0;
 
             // We now begin capturing on the camera, processing will commence based on the pipeline configured.
