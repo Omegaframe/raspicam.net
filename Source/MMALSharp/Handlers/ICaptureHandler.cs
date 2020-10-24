@@ -1,7 +1,7 @@
-﻿using MMALSharp.Common;
-using System;
+﻿using System;
+using MMALSharp.Common;
 
-namespace MMALSharp.Processing.Handlers
+namespace MMALSharp.Handlers
 {
     public interface ICaptureHandler : IDisposable
     {

@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MMALSharp", "Source\MMALSha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MMALSharp.Common", "Source\MMALSharp.Common\MMALSharp.Common.csproj", "{D8CA0BC9-CA3B-4EC1-9898-542A6F5346F8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MMALSharp.Processing", "Source\MMALSharp.Processing\MMALSharp.Processing.csproj", "{DABC9991-56AD-4235-BA86-63DEF12C261A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MMALSharp.Native", "Source\MMALSharp.Native\MMALSharp.Native.csproj", "{7ED419CF-C037-4880-882E-97FD1130EA73}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{D8CA0BC9-CA3B-4EC1-9898-542A6F5346F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8CA0BC9-CA3B-4EC1-9898-542A6F5346F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8CA0BC9-CA3B-4EC1-9898-542A6F5346F8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DABC9991-56AD-4235-BA86-63DEF12C261A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DABC9991-56AD-4235-BA86-63DEF12C261A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DABC9991-56AD-4235-BA86-63DEF12C261A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DABC9991-56AD-4235-BA86-63DEF12C261A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7ED419CF-C037-4880-882E-97FD1130EA73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7ED419CF-C037-4880-882E-97FD1130EA73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7ED419CF-C037-4880-882E-97FD1130EA73}.Release|Any CPU.ActiveCfg = Release|Any CPU

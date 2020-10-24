@@ -4,10 +4,10 @@ using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Config;
 using MMALSharp.Extensions;
+using MMALSharp.Handlers;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Ports.Outputs;
-using MMALSharp.Processing.Handlers;
 
 namespace MMALSharp.Callbacks
 {

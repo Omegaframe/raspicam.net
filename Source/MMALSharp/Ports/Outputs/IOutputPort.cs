@@ -1,7 +1,7 @@
 ﻿using MMALSharp.Callbacks;
 using MMALSharp.Components;
+using MMALSharp.Handlers;
 using MMALSharp.Ports.Inputs;
-using MMALSharp.Processing.Handlers;
 
 namespace MMALSharp.Ports.Outputs
 {

@@ -13,7 +13,6 @@ using MMALSharp.Native.Events;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 using MMALSharp.Ports.Outputs;
-using MMALSharp.Processing.Handlers;
 
 namespace MMALSharp.Ports.Inputs
 {

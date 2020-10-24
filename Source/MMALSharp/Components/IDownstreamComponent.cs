@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using MMALSharp.Handlers;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Outputs;
-using MMALSharp.Processing.Handlers;
 
 namespace MMALSharp.Components
 {

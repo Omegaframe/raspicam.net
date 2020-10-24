@@ -8,13 +8,13 @@ using MMALSharp.Common;
 using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Extensions;
+using MMALSharp.Handlers;
 using MMALSharp.Native;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 using MMALSharp.Native.Util;
 using MMALSharp.Ports.Inputs;
-using MMALSharp.Processing.Handlers;
 
 namespace MMALSharp.Ports.Outputs
 {

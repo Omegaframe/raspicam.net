@@ -6,13 +6,12 @@ using Microsoft.Extensions.Logging;
 using MMALSharp.Common.Utility;
 using MMALSharp.Config;
 using MMALSharp.Extensions;
-using MMALSharp.Native;
+using MMALSharp.Handlers;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;
-using MMALSharp.Processing.Handlers;
 using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp.Components.EncoderComponents
@@ -27,13 +26,16 @@ namespace MMALSharp.Components.EncoderComponents
         public bool ContinuousCapture { get; }
         public JpegThumbnail JpegThumbnailConfig { get; set; }
 
-        public MmalImageEncoder(bool rawBayer = false, bool useExif = true, bool continuousCapture = false, JpegThumbnail thumbnailConfig = null, params ExifTag[] exifTags) : base(MmalParameters.MmalComponentDefaultImageEncoder)
+        readonly MmalCameraComponent _camera;
+
+        public MmalImageEncoder(MmalCameraComponent camera, bool rawBayer = false, bool useExif = true, bool continuousCapture = false, JpegThumbnail thumbnailConfig = null, params ExifTag[] exifTags) : base(MmalParameters.MmalComponentDefaultImageEncoder)
         {
             RawBayer = rawBayer;
             UseExif = useExif;
             ExifTags = exifTags;
             ContinuousCapture = continuousCapture;
             JpegThumbnailConfig = thumbnailConfig;
+            _camera = camera;
 
             Inputs.Add(new InputPort((IntPtr)(&(*Ptr->Input[0])), this, Guid.NewGuid()));
 
@@ -48,7 +50,7 @@ namespace MMALSharp.Components.EncoderComponents
             base.ConfigureOutputPort(outputPort, config, handler);
 
             if (RawBayer)
-                MalCamera.Instance.Camera.StillPort.SetRawCapture(true);
+                _camera.StillPort.SetRawCapture(true);
 
             if (UseExif)
                 AddExifTags(ExifTags);
@@ -75,7 +77,7 @@ namespace MMALSharp.Components.EncoderComponents
 
             try
             {
-                sensorName = MalCamera.Instance.Camera.CameraInfo.SensorName;
+                sensorName = _camera.CameraInfo.SensorName;
             }
             catch
             {
