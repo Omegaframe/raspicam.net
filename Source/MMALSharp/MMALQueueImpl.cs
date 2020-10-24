@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Common.Utility;
 using MMALSharp.Native.Que;
+using MMALSharp.Utility;
 
 namespace MMALSharp
 {

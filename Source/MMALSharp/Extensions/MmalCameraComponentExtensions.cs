@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Components.EncoderComponents;
 using MMALSharp.Config;

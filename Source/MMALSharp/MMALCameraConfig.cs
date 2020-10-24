@@ -1,8 +1,7 @@
-﻿using MMALSharp.Common;
-using MMALSharp.Common.Utility;
-using MMALSharp.Components;
+﻿using MMALSharp.Components;
 using MMALSharp.Config;
 using MMALSharp.Native.Parameters;
+using MMALSharp.Utility;
 
 namespace MMALSharp
 {

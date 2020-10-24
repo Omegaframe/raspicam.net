@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Common.Utility;
 using MMALSharp.Config;
 using MMALSharp.Extensions;
 using MMALSharp.Handlers;
@@ -12,6 +11,7 @@ using MMALSharp.Native.Port;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;
+using MMALSharp.Utility;
 using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp.Components.EncoderComponents

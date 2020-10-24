@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Drawing;
 using System.Threading.Tasks;
-using MMALSharp.Common;
-using MMALSharp.Common.Utility;
 using MMALSharp.Components;
+using MMALSharp.Config;
 using MMALSharp.Native.Format;
 using MMALSharp.Native.Port;
 using MMALSharp.Native.Util;
+using MMALSharp.Utility;
 
 namespace MMALSharp.Ports
 {

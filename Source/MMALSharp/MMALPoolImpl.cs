@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Common.Utility;
 using MMALSharp.Native.Pool;
 using MMALSharp.Native.Util;
 using MMALSharp.Ports;
+using MMALSharp.Utility;
 using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp

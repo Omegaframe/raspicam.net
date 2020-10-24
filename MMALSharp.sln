@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MMALSharp", "Source\MMALSharp\MMALSharp.csproj", "{5B03E4B4-13AA-4EC8-8FD3-9DAA176EAA70}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MMALSharp.Common", "Source\MMALSharp.Common\MMALSharp.Common.csproj", "{D8CA0BC9-CA3B-4EC1-9898-542A6F5346F8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MMALSharp.Native", "Source\MMALSharp.Native\MMALSharp.Native.csproj", "{7ED419CF-C037-4880-882E-97FD1130EA73}"
 EndProject
 Global
@@ -19,10 +17,6 @@ Global
 		{5B03E4B4-13AA-4EC8-8FD3-9DAA176EAA70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B03E4B4-13AA-4EC8-8FD3-9DAA176EAA70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B03E4B4-13AA-4EC8-8FD3-9DAA176EAA70}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D8CA0BC9-CA3B-4EC1-9898-542A6F5346F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8CA0BC9-CA3B-4EC1-9898-542A6F5346F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D8CA0BC9-CA3B-4EC1-9898-542A6F5346F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D8CA0BC9-CA3B-4EC1-9898-542A6F5346F8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7ED419CF-C037-4880-882E-97FD1130EA73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7ED419CF-C037-4880-882E-97FD1130EA73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7ED419CF-C037-4880-882E-97FD1130EA73}.Release|Any CPU.ActiveCfg = Release|Any CPU

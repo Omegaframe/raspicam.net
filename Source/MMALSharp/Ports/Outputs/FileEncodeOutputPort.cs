@@ -2,11 +2,11 @@
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Events;
 using MMALSharp.Native.Port;
+using MMALSharp.Utility;
 
 namespace MMALSharp.Ports.Outputs
 {

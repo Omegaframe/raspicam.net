@@ -1,12 +1,7 @@
-﻿namespace MMALSharp.Common.Utility
+﻿namespace MMALSharp.Utility
 {
-    public class Helpers
+    static class Helpers
     {
-        public static string ConvertBytesToMegabytes(long bytes)
-        {
-            return ((bytes / 1024f) / 1024f).ToString("0.00mb");
-        }
-
         public static int FourCcFromString(string s)
         {
             int a1 = s[0];

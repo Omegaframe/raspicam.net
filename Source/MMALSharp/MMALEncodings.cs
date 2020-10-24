@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using MMALSharp.Common.Utility;
+using MMALSharp.Utility;
 
-namespace MMALSharp.Common
+namespace MMALSharp
 {
     public static class MmalEncodingHelpers
     {

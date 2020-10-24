@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using MMALSharp.Common.Utility;
+using MMALSharp.Utility;
 
 namespace MMALSharp.Callbacks
 {

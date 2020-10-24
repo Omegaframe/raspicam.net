@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using MMALSharp.Common;
 using MMALSharp.Config;
 
 namespace MMALSharp.Ports

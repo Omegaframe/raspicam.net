@@ -1,6 +1,6 @@
 using System;
 
-namespace MMALSharp.Common.Utility
+namespace MMALSharp.Config
 {
     public readonly struct Resolution : IComparable<Resolution>
     {

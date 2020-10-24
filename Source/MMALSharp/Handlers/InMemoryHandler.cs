@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using MMALSharp.Common;
 
 namespace MMALSharp.Handlers
 {

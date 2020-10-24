@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Common.Utility;
 using MMALSharp.Handlers;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Outputs;
+using MMALSharp.Utility;
 
 namespace MMALSharp.Components
 {

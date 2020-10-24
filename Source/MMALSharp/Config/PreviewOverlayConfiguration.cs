@@ -1,5 +1,4 @@
-﻿using MMALSharp.Common;
-using MMALSharp.Common.Utility;
+﻿using MMALSharp.Utility;
 
 namespace MMALSharp.Config
 {

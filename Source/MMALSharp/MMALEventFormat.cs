@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using MMALSharp.Common;
 using MMALSharp.Native.Events;
 using MMALSharp.Native.Format;
 

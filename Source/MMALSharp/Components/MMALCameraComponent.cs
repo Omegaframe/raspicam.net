@@ -2,14 +2,14 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Common;
-using MMALSharp.Common.Utility;
+using MMALSharp.Config;
 using MMALSharp.Extensions;
 using MMALSharp.Handlers;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Util;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Outputs;
+using MMALSharp.Utility;
 
 namespace MMALSharp.Components
 {

@@ -2,13 +2,12 @@
 using System.Linq;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Common;
-using MMALSharp.Common.Utility;
 using MMALSharp.Config;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Native.Port;
 using MMALSharp.Native.Util;
 using MMALSharp.Ports;
+using MMALSharp.Utility;
 using static MMALSharp.MmalNativeExceptionHelper;
 using static MMALSharp.Native.Parameters.MmalParametersCamera;
 

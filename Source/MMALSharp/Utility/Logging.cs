@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
+using Microsoft.Extensions.Logging;
 
-namespace MMALSharp.Common.Utility
+namespace MMALSharp.Utility
 {
-    public static class MmalLog
+    static class MmalLog
     {
         public static ILogger Logger { get; set; } = new MmalLogger();
 

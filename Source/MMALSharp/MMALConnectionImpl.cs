@@ -2,13 +2,13 @@
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
 using MMALSharp.Callbacks;
-using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Extensions;
 using MMALSharp.Native.Connection;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Ports.Inputs;
 using MMALSharp.Ports.Outputs;
+using MMALSharp.Utility;
 using static MMALSharp.MmalNativeExceptionHelper;
 
 namespace MMALSharp

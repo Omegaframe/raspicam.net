@@ -1,12 +1,12 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Common.Utility;
 using MMALSharp.Config;
 using MMALSharp.Extensions;
 using MMALSharp.Handlers;
 using MMALSharp.Native.Buffer;
 using MMALSharp.Native.Parameters;
 using MMALSharp.Ports.Outputs;
+using MMALSharp.Utility;
 
 namespace MMALSharp.Callbacks
 {

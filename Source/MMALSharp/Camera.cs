@@ -5,8 +5,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Common;
-using MMALSharp.Common.Utility;
 using MMALSharp.Components;
 using MMALSharp.Components.EncoderComponents;
 using MMALSharp.Extensions;
@@ -14,6 +12,7 @@ using MMALSharp.Handlers;
 using MMALSharp.Native;
 using MMALSharp.Ports;
 using MMALSharp.Ports.Outputs;
+using MMALSharp.Utility;
 
 namespace MMALSharp
 {
