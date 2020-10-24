@@ -34,8 +34,8 @@ namespace MMALSharp
         {
             _camera.Initialise();
 
-            var imageCaptureHandler = new InMemoryHandler();
-            var videoCaptureHandler = new InMemoryHandler();
+            var imageCaptureHandler = new InMemoryImageHandler();
+            var videoCaptureHandler = new InMemoryVideoHandler();
             var imgEncoder = new MmalImageEncoder(_camera, continuousCapture: true);
             var vidEncoder = new MmalVideoEncoder();
             var splitter = new MmalSplitterComponent();
