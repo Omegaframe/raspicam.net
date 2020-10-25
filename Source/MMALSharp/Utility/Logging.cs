@@ -7,15 +7,13 @@ namespace MMALSharp.Utility
     {
         public static ILogger Logger { get; set; } = new MmalLogger();
 
-        class MmalLogger : ILogger
+        class MmalLogger : ILogger, IDisposable
         {
-            public IDisposable BeginScope<TState>(TState state) => Logger?.BeginScope(state);
-            bool ILogger.IsEnabled(LogLevel logLevel) => Logger?.IsEnabled(logLevel) ?? false;
+            public IDisposable BeginScope<TState>(TState state) => this;
+            bool ILogger.IsEnabled(LogLevel logLevel) => true;
+            void ILogger.Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter) => Console.WriteLine(formatter);
 
-            void ILogger.Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
-            {
-                Logger?.Log(logLevel, eventId, state, exception, formatter);
-            }
+            public void Dispose() { }
         }
     }
 }
