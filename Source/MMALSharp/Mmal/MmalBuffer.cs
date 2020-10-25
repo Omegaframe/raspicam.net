@@ -6,7 +6,6 @@ using System.Text;
 using Microsoft.Extensions.Logging;
 using MMALSharp.Extensions;
 using MMALSharp.Native.Buffer;
-using MMALSharp.Native.Events;
 using MMALSharp.Native.Util;
 using MMALSharp.Utility;
 using static MMALSharp.MmalNativeExceptionHelper;
@@ -15,7 +14,6 @@ namespace MMALSharp.Mmal
 {
     unsafe class MmalBuffer : MmalObject, IBuffer
     {
-        public byte* Data => Ptr->Data;
         public uint Cmd => Ptr->Cmd;
         public uint AllocSize => Ptr->AllocSize;
         public uint Length => Ptr->Length;
@@ -33,27 +31,6 @@ namespace MMALSharp.Mmal
             Ptr = ptr;
             Properties = new List<MmalBufferProperties>();
             Events = new List<int>();
-        }
-
-        public void PrintProperties()
-        {
-            if (CameraConfig.Debug)
-                MmalLog.Logger.LogDebug(ToString());
-        }
-
-        public void ParseEvents()
-        {
-            if (Cmd == MmalEvents.MmalEventEos)
-                MmalLog.Logger.LogDebug("Buffer event: MMAL_EVENT_EOS");
-
-            if (Cmd == MmalEvents.MmalEventError)
-                MmalLog.Logger.LogDebug("Buffer event: MMAL_EVENT_ERROR");
-
-            if (Cmd == MmalEvents.MmalEventFormatChanged)
-                MmalLog.Logger.LogDebug("Buffer event: MMAL_EVENT_FORMAT_CHANGED");
-
-            if (Cmd == MmalEvents.MmalEventParameterChanged)
-                MmalLog.Logger.LogDebug("Buffer event: MMAL_EVENT_PARAMETER_CHANGED");
         }
 
         public bool AssertProperty(MmalBufferProperties property) => ((int)Flags & (int)property) == (int)property;
@@ -83,9 +60,6 @@ namespace MMALSharp.Mmal
 
         public byte[] GetBufferData()
         {
-            if (CameraConfig.Debug)
-                MmalLog.Logger.LogDebug("Getting data from buffer");
-
             MmalCheck(Native.Buffer.MmalBuffer.MemLock(Ptr), "Unable to lock buffer header.");
 
             try
@@ -108,9 +82,6 @@ namespace MMALSharp.Mmal
 
         public void ReadIntoBuffer(byte[] source, int length, bool eof)
         {
-            if (CameraConfig.Debug)
-                MmalLog.Logger.LogDebug($"Reading {length} bytes into buffer");
-
             Ptr->Length = (uint)length;
             Ptr->Dts = Ptr->Pts = MmalUtil.MmalTimeUnknown;
             Ptr->Offset = 0;
@@ -130,16 +101,9 @@ namespace MMALSharp.Mmal
         public void Release()
         {
             if (CheckState())
-            {
-                if (CameraConfig.Debug)
-                    MmalLog.Logger.LogDebug("Releasing buffer.");
-
                 Native.Buffer.MmalBuffer.HeaderRelease(Ptr);
-            }
             else
-            {
                 MmalLog.Logger.LogWarning("Buffer null, could not release.");
-            }
 
             Dispose();
         }

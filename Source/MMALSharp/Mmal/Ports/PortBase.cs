@@ -198,13 +198,7 @@ namespace MMALSharp.Mmal.Ports
             if (!Enabled)
                 return;
 
-            if (CameraConfig.Debug)
-                MmalLog.Logger.LogDebug($"{Name}: Sending buffer start.");
-
             MmalCheck(MmalPort.SendBuffer(Ptr, buffer.Ptr), $"{Name}: Unable to send buffer header.");
-
-            if (CameraConfig.Debug)
-                MmalLog.Logger.LogDebug($"{Name}: Sending buffer complete.");
         }
 
         public void SendAllBuffers()

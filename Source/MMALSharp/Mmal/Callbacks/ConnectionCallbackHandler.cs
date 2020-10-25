@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using MMALSharp.Utility;
-
-namespace MMALSharp.Mmal.Callbacks
+﻿namespace MMALSharp.Mmal.Callbacks
 {
     abstract class ConnectionCallbackHandler : IConnectionCallbackHandler
     {
@@ -12,16 +9,8 @@ namespace MMALSharp.Mmal.Callbacks
             WorkingConnection = connection;
         }
 
-        public virtual void InputCallback(IBuffer buffer)
-        {
-            if (CameraConfig.Debug)
-                MmalLog.Logger.LogDebug("Inside Managed input port connection callback");
-        }
+        public virtual void InputCallback(IBuffer buffer) { }
 
-        public virtual void OutputCallback(IBuffer buffer)
-        {
-            if (CameraConfig.Debug)
-                MmalLog.Logger.LogDebug("Inside Managed output port connection callback");
-        }
+        public virtual void OutputCallback(IBuffer buffer) { }
     }
 }

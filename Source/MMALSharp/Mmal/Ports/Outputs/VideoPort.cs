@@ -34,23 +34,16 @@ namespace MMALSharp.Mmal.Ports.Outputs
 
         public VideoPort(IntPtr ptr, IComponent comp, Guid guid) : base(ptr, comp, guid) { }
 
-        public VideoPort(IPort copyFrom) : base((IntPtr)copyFrom.Ptr, copyFrom.ComponentReference, copyFrom.Guid) { }
-
         public override void Configure(IMmalPortConfig config, IInputPort copyFrom, ICaptureHandler handler)
         {
             base.Configure(config, copyFrom, handler);
 
-            CallbackHandler = new VideoOutputCallbackHandler(this, (ICaptureHandler)handler, config.Split, config.StoreMotionVectors);
+            CallbackHandler = new VideoOutputCallbackHandler(this, handler);
         }
-        
+
         internal override void NativeOutputPortCallback(MmalPortType* port, MmalBufferHeader* buffer)
         {
-            if (CameraConfig.Debug)
-                MmalLog.Logger.LogDebug($"{Name}: In native {nameof(VideoPort)} output callback");
-
             var bufferImpl = new MmalBuffer(buffer);
-
-            bufferImpl.PrintProperties();
 
             var eos = (PortConfig.Timeout.HasValue && DateTime.Now.CompareTo(PortConfig.Timeout.Value) > 0) || ComponentReference.ForceStopProcessing;
 

@@ -19,6 +19,8 @@ namespace MMALSharp
 {
     public sealed class Camera : IDisposable
     {
+        const int CameraWarmUpMs = 2000;
+
         readonly MmalCameraComponent _camera;
         readonly List<IDisposable> _cameraDisposables;
 
@@ -36,7 +38,7 @@ namespace MMALSharp
 
             var imageCaptureHandler = new InMemoryImageHandler();
             var videoCaptureHandler = new InMemoryVideoHandler();
-            var imgEncoder = new MmalImageEncoder(_camera, continuousCapture: true);
+            var imgEncoder = new MmalImageEncoder();
             var vidEncoder = new MmalVideoEncoder();
             var splitter = new MmalSplitterComponent();
             var nullSink = new MmalNullSinkComponent();
@@ -68,7 +70,7 @@ namespace MMALSharp
             _camera.PreviewPort.ConnectTo(nullSink);
 
             // Camera warm up time
-            Task.Delay(2000).Wait();
+            Task.Delay(CameraWarmUpMs).Wait();
 
             return ProcessAsync(_camera.VideoPort, cancellationToken);
         }

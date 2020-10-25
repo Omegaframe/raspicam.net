@@ -5,6 +5,6 @@ namespace MMALSharp.Mmal.Callbacks
 {
     class DefaultOutputPortCallbackHandler : PortCallbackHandler<IOutputPort, ICaptureHandler>
     {
-        public DefaultOutputPortCallbackHandler(IOutputPort port, ICaptureHandler handler) : base(port, handler) { }
+        public DefaultOutputPortCallbackHandler(IOutputPort port) : base(port, null) { }
     }
 }

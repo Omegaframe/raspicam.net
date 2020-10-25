@@ -17,8 +17,6 @@ namespace MMALSharp.Mmal
         List<int> Events { get; }
         unsafe MmalBufferHeader* Ptr { get; }
 
-        void PrintProperties();
-        void ParseEvents();
         bool AssertProperty(MmalBufferProperties property);
         byte[] GetBufferData();
         void ReadIntoBuffer(byte[] source, int length, bool eof);

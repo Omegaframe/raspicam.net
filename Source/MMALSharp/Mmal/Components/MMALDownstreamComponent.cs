@@ -11,15 +11,13 @@ namespace MMALSharp.Mmal.Components
 {
     abstract class MmalDownstreamComponent : MmalComponentBase, IDownstreamComponent
     {
-        public Dictionary<int, IOutputPort> ProcessingPorts { get; set; }
+        public Dictionary<int, IOutputPort> ProcessingPorts { get; }
 
         protected MmalDownstreamComponent(string name) : base(name)
         {
             MmalBootstrapper.DownstreamComponents.Add(this);
             ProcessingPorts = new Dictionary<int, IOutputPort>();
         }
-
-        
 
         public virtual IDownstreamComponent ConfigureOutputPort(IMmalPortConfig config, ICaptureHandler handler) => ConfigureOutputPort(0, config, handler);
 

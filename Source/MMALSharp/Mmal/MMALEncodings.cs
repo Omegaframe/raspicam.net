@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using MMALSharp.Utility;
@@ -8,7 +7,7 @@ namespace MMALSharp.Mmal
 {
     public static class MmalEncodingHelpers
     {
-        public static IReadOnlyCollection<MmalEncoding> EncodingList { get; } = new ReadOnlyCollection<MmalEncoding>(new List<MmalEncoding>
+        static IReadOnlyCollection<MmalEncoding> EncodingList { get; } = new ReadOnlyCollection<MmalEncoding>(new List<MmalEncoding>
         {
             MmalEncoding.H264,
             MmalEncoding.Mvc,
@@ -119,7 +118,6 @@ namespace MMALSharp.Mmal
         });
 
         public static MmalEncoding ParseEncoding(this int encodingType) => EncodingList.FirstOrDefault(c => c.EncodingVal == encodingType);
-        public static MmalEncoding ParseEncoding(this string encodingName) => EncodingList.FirstOrDefault(c => c.EncodingName.TrimEnd().Equals(encodingName, StringComparison.InvariantCultureIgnoreCase));
     }
 
     public class MmalEncoding

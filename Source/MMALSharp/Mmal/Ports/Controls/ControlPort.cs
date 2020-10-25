@@ -14,15 +14,17 @@ namespace MMALSharp.Mmal.Ports.Controls
 {
     unsafe class ControlPort : PortBase<IOutputCallbackHandler>, IControlPort
     {
-        public override Resolution Resolution // todo: this does nothing? why?
+        public override Resolution Resolution
         {
             get => new Resolution(0, 0);
             internal set { }
         }
 
         public ControlPort(IntPtr ptr, IComponent comp, Guid guid) : base(ptr, comp, PortType.Control, guid) { }
+        
+        public void Start() => Enable();
 
-        public void Enable()
+        void Enable()
         {
             if (Enabled)
                 return;
@@ -37,9 +39,8 @@ namespace MMALSharp.Mmal.Ports.Controls
 
             EnablePort(ptrCallback);
         }
-        public void Start() => Enable();
 
-        internal void NativeControlPortCallback(MmalPortType* port, MmalBufferHeader* buffer)
+        void NativeControlPortCallback(MmalPortType* port, MmalBufferHeader* buffer)
         {
             if (buffer->Cmd == MmalEvents.MmalEventParameterChanged)
             {
@@ -64,9 +65,6 @@ namespace MMALSharp.Mmal.Ports.Controls
                 MmalLog.Logger.LogInformation($"{Name}: Received unexpected camera control callback event");
             }
 
-            if (CameraConfig.Debug)
-                MmalLog.Logger.LogDebug($"{Name}: In native control callback.");
-
             var bufferImpl = new MmalBuffer(buffer);
 
             if (!bufferImpl.CheckState())
@@ -75,15 +73,7 @@ namespace MMALSharp.Mmal.Ports.Controls
                 return;
             }
 
-            if (CameraConfig.Debug)
-                bufferImpl.ParseEvents();
-
-            bufferImpl.PrintProperties();
-
             CallbackHandler.Callback(bufferImpl);
-
-            if (CameraConfig.Debug)
-                MmalLog.Logger.LogDebug($"{Name}: Releasing buffer.");
 
             bufferImpl.Release();
         }

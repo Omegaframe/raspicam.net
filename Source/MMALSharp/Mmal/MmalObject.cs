@@ -2,7 +2,7 @@
 {
     abstract class MmalObject : IMmalObject
     {
-        public bool IsDisposed { get; internal set; }
+        public bool IsDisposed { get; private set; }
 
         protected MmalObject() { }
 

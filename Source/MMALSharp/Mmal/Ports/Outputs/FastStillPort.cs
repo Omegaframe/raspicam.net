@@ -34,8 +34,6 @@ namespace MMALSharp.Mmal.Ports.Outputs
 
         public FastStillPort(IntPtr ptr, IComponent comp, Guid guid) : base(ptr, comp, guid) { }
 
-        public FastStillPort(IPort copyFrom) : base((IntPtr)copyFrom.Ptr, copyFrom.ComponentReference, copyFrom.Guid) { }
-
         public override void Configure(IMmalPortConfig config, IInputPort copyFrom, ICaptureHandler handler)
         {
             base.Configure(config, copyFrom, handler);
@@ -45,12 +43,7 @@ namespace MMALSharp.Mmal.Ports.Outputs
 
         internal override void NativeOutputPortCallback(MmalPortType* port, MmalBufferHeader* buffer)
         {
-            if (CameraConfig.Debug)
-                MmalLog.Logger.LogDebug($"{Name}: In native {nameof(FastStillPort)} output callback.");
-
             var bufferImpl = new MmalBuffer(buffer);
-
-            bufferImpl.PrintProperties();
 
             var failed = bufferImpl.AssertProperty(MmalBufferProperties.MmalBufferHeaderFlagTransmissionFailed);
 

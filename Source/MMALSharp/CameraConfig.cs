@@ -1,12 +1,13 @@
-﻿using MMALSharp.Config;
+﻿using Microsoft.Extensions.Logging;
+using MMALSharp.Config;
 using MMALSharp.Mmal;
 using MMALSharp.Native.Parameters;
+using MMALSharp.Utility;
 
 namespace MMALSharp
 {
     public static class CameraConfig
     {
-        public static bool Debug { get; set; }
         public static SensorMode SensorMode { get; set; }
         public static int Sharpness { get; set; }
         public static int Contrast { get; set; }
@@ -31,7 +32,6 @@ namespace MMALSharp
         public static bool StatsPass { get; set; }
         public static AnnotateImage Annotate { get; set; }
         public static StereoMode StereoMode { get; set; } = new StereoMode();
-        public static bool SetChangeEventRequest { get; set; }
         public static MmalParameterCameraConfigTimestampModeType ClockMode { get; set; } = MmalParameterCameraConfigTimestampModeType.MmalParamTimestampModeResetStc;
         public static MmalEncoding Encoding { get; set; } = MmalEncoding.Opaque;
         public static MmalEncoding EncodingSubFormat { get; set; } = MmalEncoding.I420;
@@ -48,5 +48,10 @@ namespace MMALSharp
         public static MmalParametersVideo.MmalVideoIntraRefreshT IntraRefresh { get; set; } = MmalParametersVideo.MmalVideoIntraRefreshT.MmalVideoIntraRefreshDisabled;
         public static MmalEncoding VideoColorSpace { get; set; }
         public static bool StillBurstMode { get; set; }
+        public static ILogger Logger
+        {
+            get => MmalLog.Logger;
+            set => MmalLog.Logger = value;
+        }
     }
 }

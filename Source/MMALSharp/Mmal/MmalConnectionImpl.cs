@@ -29,11 +29,11 @@ namespace MMALSharp.Mmal
         public long TimeDisable => (*Ptr).TimeDisable;
         public MmalConnectionType* Ptr { get; }
 
-        MmalConnection.MmalConnectionCallbackT NativeCallback;
+        MmalConnection.MmalConnectionCallbackT _nativeCallback;
 
         public override bool CheckState() => Ptr != null && (IntPtr)Ptr != IntPtr.Zero;
 
-        protected MmalConnectionImpl(MmalConnectionType* ptr, IOutputPort output, IInputPort input, IDownstreamComponent inputComponent, IComponent outputComponent, bool useCallback)
+        MmalConnectionImpl(MmalConnectionType* ptr, IOutputPort output, IInputPort input, IDownstreamComponent inputComponent, IComponent outputComponent, bool useCallback)
         {
             Ptr = ptr;
             OutputPort = output;
@@ -106,17 +106,11 @@ namespace MMALSharp.Mmal
 
         protected virtual int NativeConnectionCallback(MmalConnectionType* connection)
         {
-            if (CameraConfig.Debug)
-                MmalLog.Logger.LogDebug("Inside native connection callback");
-
             var queue = new MmalQueueImpl(connection->Queue);
             var bufferImpl = queue.GetBuffer();
 
             if (bufferImpl.CheckState())
             {
-                if (CameraConfig.Debug)
-                    bufferImpl.PrintProperties();
-
                 if (bufferImpl.Length > 0)
                     CallbackHandler.InputCallback(bufferImpl);
 
@@ -134,9 +128,6 @@ namespace MMALSharp.Mmal
                 return (int)connection->Flags;
             }
 
-            if (CameraConfig.Debug)
-                bufferImpl.PrintProperties();
-
             if (bufferImpl.Length > 0)
                 CallbackHandler.OutputCallback(bufferImpl);
 
@@ -150,8 +141,8 @@ namespace MMALSharp.Mmal
             output.SetParameter(MmalParametersCommon.MmalParameterZeroCopy, true);
             input.SetParameter(MmalParametersCommon.MmalParameterZeroCopy, true);
 
-            NativeCallback = new MmalConnection.MmalConnectionCallbackT(NativeConnectionCallback);
-            var ptrCallback = Marshal.GetFunctionPointerForDelegate(NativeCallback);
+            _nativeCallback = NativeConnectionCallback;
+            var ptrCallback = Marshal.GetFunctionPointerForDelegate(_nativeCallback);
 
             Ptr->Callback = ptrCallback;
 

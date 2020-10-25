@@ -120,10 +120,9 @@ namespace MMALSharp.Mmal.Ports.Inputs
             if (!Enabled || BufferPool == null || Trigger.Task.IsCompleted)
                 return;
 
-            IBuffer newBuffer;
             while (true)
             {
-                newBuffer = BufferPool.Queue.GetBuffer();
+                var newBuffer = BufferPool.Queue.GetBuffer();
                 if (newBuffer != null)
                     break;
             }
@@ -136,24 +135,9 @@ namespace MMALSharp.Mmal.Ports.Inputs
             Enable();
         }
 
-        internal virtual unsafe void NativeInputPortCallback(MmalPortType* port, MmalBufferHeader* buffer)
+        protected virtual unsafe void NativeInputPortCallback(MmalPortType* port, MmalBufferHeader* buffer)
         {
-            if (CameraConfig.Debug)
-                MmalLog.Logger.LogDebug($"{Name}: In native input callback.");
-
             var bufferImpl = new MmalBuffer(buffer);
-
-            if (bufferImpl.CheckState())
-            {
-                if (bufferImpl.Cmd > 0)
-                {
-                    if (bufferImpl.Cmd == MmalEvents.MmalEventFormatChanged)
-                        MmalLog.Logger.LogInformation("EVENT FORMAT CHANGED");
-                }
-            }
-
-            bufferImpl.PrintProperties();
-
             ReleaseBuffer(bufferImpl);
         }
     }

@@ -46,8 +46,6 @@ namespace MMALSharp.Mmal
 
         public void Put(IBuffer buffer) => MmalQueue.Put(Ptr, buffer.Ptr);
 
-        internal static MmalQueueImpl Create() => new MmalQueueImpl(MmalQueue.Create());
-
         void Destroy() => MmalQueue.Destroy(Ptr);
     }
 }
