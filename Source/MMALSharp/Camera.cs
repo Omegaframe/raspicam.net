@@ -75,6 +75,65 @@ namespace MMALSharp
             return ProcessAsync(_camera.VideoPort, cancellationToken);
         }
 
+        public Task Capture(Action<byte[]> onVideoDataAvailable, CancellationToken cancellationToken, int videoQuantisation = 0, int videoBitrate = 2386093)
+        {
+            _camera.Initialise();
+
+            var videoCaptureHandler = new InMemoryVideoHandler();
+            var vidEncoder = new MmalVideoEncoder();
+            var nullSink = new MmalNullSinkComponent();
+
+            videoCaptureHandler.SetOnVideoDataAvailable(data => onVideoDataAvailable?.Invoke(data));
+
+            _cameraDisposables.AddRange(new IDisposable[] { videoCaptureHandler, vidEncoder, nullSink });
+
+            var videoPortConfig = new MmalPortConfig(
+                MmalEncoding.H264,
+                MmalEncoding.I420,
+                videoQuantisation,
+                videoBitrate,
+                null,
+                null,
+                false,
+                CameraConfig.Resolution.Width,
+                CameraConfig.Resolution.Height);
+            ;
+            vidEncoder.ConfigureOutputPort(videoPortConfig, videoCaptureHandler);
+
+            _camera.VideoPort.ConnectTo(vidEncoder);
+            _camera.PreviewPort.ConnectTo(nullSink);
+
+            // Camera warm up time
+            Task.Delay(CameraWarmUpMs).Wait();
+
+            return ProcessAsync(_camera.VideoPort, cancellationToken);
+        }
+
+        public Task Capture(Action<Stream> onFullFrameAvailable, CancellationToken cancellationToken, int jpegQuality = 80)
+        {
+            _camera.Initialise();
+
+            var imageCaptureHandler = new InMemoryImageHandler();
+            var imgEncoder = new MmalImageEncoder();
+            var nullSink = new MmalNullSinkComponent();
+
+            imageCaptureHandler.SetOnFullFrameAvailable(stream => onFullFrameAvailable?.Invoke(stream));
+
+            _cameraDisposables.AddRange(new IDisposable[] { imageCaptureHandler, imgEncoder, nullSink });
+
+            var imagePortConfig = new MmalPortConfig(MmalEncoding.Jpeg, MmalEncoding.I420, jpegQuality);
+
+            imgEncoder.ConfigureOutputPort(imagePortConfig, imageCaptureHandler);
+
+            _camera.VideoPort.ConnectTo(imgEncoder);
+            _camera.PreviewPort.ConnectTo(nullSink);
+
+            // Camera warm up time
+            Task.Delay(CameraWarmUpMs).Wait();
+
+            return ProcessAsync(_camera.VideoPort, cancellationToken);
+        }
+
         public void PrintPipeline()
         {
             MmalLog.Logger.LogInformation("Current pipeline:");
