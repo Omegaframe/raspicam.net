@@ -193,8 +193,6 @@ namespace MMALSharp
                 component.EnableConnections();
             }
 
-            _camera.SetShutterSpeed(CameraConfig.ShutterSpeed);
-
             // Prepare arguments for the annotation-refresh task
             var ctsRefreshAnnotation = new CancellationTokenSource();
             var refreshInterval = (int)(CameraConfig.Annotate?.RefreshRate ?? 0);
