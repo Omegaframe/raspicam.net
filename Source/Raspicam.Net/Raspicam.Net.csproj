@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<Version>1.0.0</Version>
+		<LangVersion>latest</LangVersion>
+		<Authors>Jörn Roddelkopf</Authors>
+		<Company>Omegaframe</Company>
+		<Description>Control the Raspberry Pi Camerea Module in your C# Application. Uses native MMAL bindings. Supports V1 and V2 of Camera Module.</Description>
+		<Copyright>© 2020 Omegaframe</Copyright>
+		<PackageProjectUrl>http://omegaframe.com/opensource/raspicam.net</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/omegaframe/raspicam.net</RepositoryUrl>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Raspicam.Net.Native\Raspicam.Net.Native.csproj" />
+	</ItemGroup>
+</Project>

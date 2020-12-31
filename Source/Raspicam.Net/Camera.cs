@@ -97,7 +97,7 @@ namespace MMALSharp
                 false,
                 CameraConfig.Resolution.Width,
                 CameraConfig.Resolution.Height);
-            ;
+            
             vidEncoder.ConfigureOutputPort(videoPortConfig, videoCaptureHandler);
 
             _camera.VideoPort.ConnectTo(vidEncoder);
