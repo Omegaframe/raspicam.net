@@ -1,4 +1,4 @@
-﻿namespace MMALSharp.Config
+﻿namespace Raspicam.Net.Config
 {
     public enum SensorMode
     {

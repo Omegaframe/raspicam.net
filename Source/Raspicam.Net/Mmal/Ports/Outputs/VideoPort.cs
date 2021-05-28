@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Config;
-using MMALSharp.Mmal.Callbacks;
-using MMALSharp.Mmal.Components;
-using MMALSharp.Mmal.Handlers;
-using MMALSharp.Mmal.Ports.Inputs;
-using MMALSharp.Native.Buffer;
-using MMALSharp.Native.Port;
-using MMALSharp.Utility;
+using Raspicam.Net.Config;
+using Raspicam.Net.Mmal.Callbacks;
+using Raspicam.Net.Mmal.Components;
+using Raspicam.Net.Mmal.Handlers;
+using Raspicam.Net.Mmal.Ports.Inputs;
+using Raspicam.Net.Native.Buffer;
+using Raspicam.Net.Native.Port;
+using Raspicam.Net.Utility;
 
-namespace MMALSharp.Mmal.Ports.Outputs
+namespace Raspicam.Net.Mmal.Ports.Outputs
 {
     unsafe class VideoPort : OutputPort, IVideoPort
     {

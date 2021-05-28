@@ -1,9 +1,9 @@
 using System;
-using MMALSharp.Config;
-using MMALSharp.Mmal.Callbacks;
-using MMALSharp.Mmal.Components;
+using Raspicam.Net.Config;
+using Raspicam.Net.Mmal.Callbacks;
+using Raspicam.Net.Mmal.Components;
 
-namespace MMALSharp.Mmal.Ports
+namespace Raspicam.Net.Mmal.Ports
 {
     class GenericPort : PortBase<ICallbackHandler>
     {

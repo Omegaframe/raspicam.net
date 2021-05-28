@@ -1,6 +1,6 @@
-﻿using MMALSharp.Mmal.Ports.Outputs;
+﻿using Raspicam.Net.Mmal.Ports.Outputs;
 
-namespace MMALSharp.Mmal.Ports.Inputs
+namespace Raspicam.Net.Mmal.Ports.Inputs
 {
     interface IInputPort : IPort
     {

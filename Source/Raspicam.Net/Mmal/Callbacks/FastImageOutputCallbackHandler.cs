@@ -1,7 +1,7 @@
-using MMALSharp.Mmal.Handlers;
-using MMALSharp.Mmal.Ports.Outputs;
+using Raspicam.Net.Mmal.Handlers;
+using Raspicam.Net.Mmal.Ports.Outputs;
 
-namespace MMALSharp.Mmal.Callbacks
+namespace Raspicam.Net.Mmal.Callbacks
 {
     class FastImageOutputCallbackHandler : PortCallbackHandler<IVideoPort, ICaptureHandler>
     {

@@ -1,12 +1,12 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Mmal.Ports;
-using MMALSharp.Native.Pool;
-using MMALSharp.Native.Util;
-using MMALSharp.Utility;
-using static MMALSharp.MmalNativeExceptionHelper;
+using Raspicam.Net.Mmal.Ports;
+using Raspicam.Net.Native.Pool;
+using Raspicam.Net.Native.Util;
+using Raspicam.Net.Utility;
+using static Raspicam.Net.MmalNativeExceptionHelper;
 
-namespace MMALSharp.Mmal
+namespace Raspicam.Net.Mmal
 {
     unsafe class MmalPoolImpl : MmalObject, IBufferPool
     {

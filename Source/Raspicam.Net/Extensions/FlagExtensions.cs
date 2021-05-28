@@ -1,6 +1,6 @@
-﻿using MMALSharp.Native.Buffer;
+﻿using Raspicam.Net.Native.Buffer;
 
-namespace MMALSharp.Extensions
+namespace Raspicam.Net.Extensions
 {
     static class FlagExtensions
     {

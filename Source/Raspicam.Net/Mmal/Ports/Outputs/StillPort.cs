@@ -1,12 +1,12 @@
 ﻿using System;
-using MMALSharp.Config;
-using MMALSharp.Extensions;
-using MMALSharp.Mmal.Components;
-using MMALSharp.Mmal.Handlers;
-using MMALSharp.Mmal.Ports.Inputs;
-using MMALSharp.Native.Parameters;
+using Raspicam.Net.Config;
+using Raspicam.Net.Extensions;
+using Raspicam.Net.Mmal.Components;
+using Raspicam.Net.Mmal.Handlers;
+using Raspicam.Net.Mmal.Ports.Inputs;
+using Raspicam.Net.Native.Parameters;
 
-namespace MMALSharp.Mmal.Ports.Outputs
+namespace Raspicam.Net.Mmal.Ports.Outputs
 {
     class StillPort : OutputPort, IStillPort
     {

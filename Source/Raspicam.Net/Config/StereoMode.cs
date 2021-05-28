@@ -1,7 +1,6 @@
-﻿using MMALSharp.Native;
-using MMALSharp.Native.Parameters;
+﻿using Raspicam.Net.Native.Parameters;
 
-namespace MMALSharp.Config
+namespace Raspicam.Net.Config
 {
     public class StereoMode
     {

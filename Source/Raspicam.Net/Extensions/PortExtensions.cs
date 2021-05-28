@@ -2,17 +2,17 @@
 using System.Linq;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Config;
-using MMALSharp.Mmal;
-using MMALSharp.Mmal.Ports;
-using MMALSharp.Native.Parameters;
-using MMALSharp.Native.Port;
-using MMALSharp.Native.Util;
-using MMALSharp.Utility;
-using static MMALSharp.MmalNativeExceptionHelper;
-using static MMALSharp.Native.Parameters.MmalParametersCamera;
+using Raspicam.Net.Config;
+using Raspicam.Net.Mmal;
+using Raspicam.Net.Mmal.Ports;
+using Raspicam.Net.Native.Parameters;
+using Raspicam.Net.Native.Port;
+using Raspicam.Net.Native.Util;
+using Raspicam.Net.Utility;
+using static Raspicam.Net.MmalNativeExceptionHelper;
+using static Raspicam.Net.Native.Parameters.MmalParametersCamera;
 
-namespace MMALSharp.Extensions
+namespace Raspicam.Net.Extensions
 {
     static class PortExtensions
     {
@@ -62,45 +62,6 @@ namespace MMALSharp.Extensions
                 MmalLog.Logger.LogWarning($"Unable to get port parameter {t.ParamName}");
                 throw;
             }
-        }
-
-        public static bool GetRawCapture(this IPort port)
-        {
-            return port.GetParameter(MmalParameterEnableRawCapture);
-        }
-
-        public static unsafe int[] GetSupportedEncodings(this IPort port)
-        {
-            var ptr1 = Marshal.AllocHGlobal(Marshal.SizeOf<MmalParameterEncodingType>() + 20);
-            var str1 = (MmalParameterHeaderType*)ptr1;
-
-            str1->Id = MmalParametersCommon.MmalParameterSupportedEncodings;
-
-            // Deliberately undersize to check if running on older firmware.
-            str1->Size = Marshal.SizeOf<MmalParameterEncodingType>() + 20;
-
-            try
-            {
-                MmalCheck(MmalPort.GetParameter(port.Ptr, str1), "Unable to get supported encodings");
-                var encodings = (MmalParameterEncodingType)Marshal.PtrToStructure(ptr1, typeof(MmalParameterEncodingType));
-                return encodings.Value;
-            }
-            finally
-            {
-                Marshal.FreeHGlobal(ptr1);
-            }
-        }
-
-        public static string GetPortType(this PortType type)
-        {
-            return type switch
-            {
-                PortType.Input => "Input",
-                PortType.Output => "Output",
-                PortType.Clock => "Clock",
-                PortType.Control => "Control",
-                _ => string.Empty
-            };
         }
 
         internal static unsafe void SetParameter(this IPort port, int key, dynamic value)
@@ -154,11 +115,6 @@ namespace MMALSharp.Extensions
             port.SetParameter(MmalParameterCapture, enable);
         }
 
-        internal static void SetRawCapture(this IPort port, bool raw)
-        {
-            port.SetParameter(MmalParameterEnableRawCapture, raw);
-        }
-
         internal static unsafe void SetStereoMode(this IPort port, StereoMode mode)
         {
             var stereo = new MmalParameterStereoscopicModeType(
@@ -168,43 +124,6 @@ namespace MMALSharp.Extensions
                 mode.SwapEyes);
 
             MmalCheck(MmalPort.SetParameter(port.Ptr, &stereo.Hdr), "Unable to set Stereo mode");
-        }
-
-        internal static void CheckSupportedEncoding(this IPort port, MmalEncoding encoding)
-        {
-            var encodings = port.GetSupportedEncodings();
-
-            if (encodings.All(c => c != encoding.EncodingVal))
-                throw new PiCameraError("Unsupported encoding type for this port");
-        }
-
-        internal static bool RgbOrderFixed(this IPort port)
-        {
-            var newFirmware = 0;
-            var encodings = port.GetSupportedEncodings();
-
-            foreach (var enc in encodings)
-            {
-                if (enc == Helpers.FourCcFromString("BGR3"))
-                    break;
-
-                if (enc == Helpers.FourCcFromString("RGB3"))
-                    newFirmware = 1;
-            }
-
-            return newFirmware == 1;
-        }
-        
-        public static unsafe MmalParameterFpsRangeType GetFramerateRange(this IPort port)
-        {
-            var str = new MmalParameterFpsRangeType(
-                    new MmalParameterHeaderType(
-                        MmalParametersCamera.MmalParameterFpsRange,
-                        Marshal.SizeOf<MmalParameterFpsRangeType>()), default, default);
-
-            MmalCheck(MmalPort.GetParameter(port.Ptr, &str.Hdr), "Unable to get framerate range for port.");
-
-            return str;
         }
 
         internal static unsafe void SetFramerateRange(this IPort port, MmalRational fpsLow, MmalRational fpsHigh)

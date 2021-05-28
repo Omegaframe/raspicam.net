@@ -1,4 +1,4 @@
-﻿namespace MMALSharp.Mmal
+﻿namespace Raspicam.Net.Mmal
 {
     abstract class MmalObject : IMmalObject
     {

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Mmal.Handlers;
-using MMALSharp.Mmal.Ports;
-using MMALSharp.Mmal.Ports.Outputs;
-using MMALSharp.Utility;
+using Raspicam.Net.Mmal.Handlers;
+using Raspicam.Net.Mmal.Ports;
+using Raspicam.Net.Mmal.Ports.Outputs;
+using Raspicam.Net.Utility;
 
-namespace MMALSharp.Mmal.Components
+namespace Raspicam.Net.Mmal.Components
 {
     abstract class MmalDownstreamComponent : MmalComponentBase, IDownstreamComponent
     {

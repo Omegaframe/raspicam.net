@@ -1,7 +1,7 @@
 ﻿using System;
-using MMALSharp.Native.Util;
+using Raspicam.Net.Native.Util;
 
-namespace MMALSharp
+namespace Raspicam.Net
 {
     static class MmalNativeExceptionHelper
     {

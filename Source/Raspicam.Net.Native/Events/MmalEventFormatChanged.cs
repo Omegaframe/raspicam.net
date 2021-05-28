@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
-using MMALSharp.Native.Format;
+using Raspicam.Net.Native.Format;
 
-namespace MMALSharp.Native.Events
+namespace Raspicam.Net.Native.Events
 {
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct MmalEventFormatChanged

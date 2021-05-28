@@ -1,6 +1,6 @@
 using System;
 
-namespace MMALSharp.Config
+namespace Raspicam.Net.Config
 {
     public readonly struct Resolution : IComparable<Resolution>
     {

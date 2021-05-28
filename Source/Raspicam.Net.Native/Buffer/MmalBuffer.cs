@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
-using MMALSharp.Native.Util;
+using Raspicam.Net.Native.Util;
 
-namespace MMALSharp.Native.Buffer
+namespace Raspicam.Net.Native.Buffer
 {
     public static class MmalBuffer
     {

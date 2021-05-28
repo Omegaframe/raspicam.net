@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using MMALSharp.Native.Util;
+using Raspicam.Net.Native.Util;
 
-namespace MMALSharp.Native.Component
+namespace Raspicam.Net.Native.Component
 {
     public static class MmalComponent
     {

@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
-using MMALSharp.Native.Parameters;
+using Raspicam.Net.Native.Parameters;
 
-namespace MMALSharp.Native.Events
+namespace Raspicam.Net.Native.Events
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct MmalEventParameterChanged

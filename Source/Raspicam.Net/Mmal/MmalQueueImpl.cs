@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Native.Que;
-using MMALSharp.Utility;
+using Raspicam.Net.Native.Que;
+using Raspicam.Net.Utility;
 
-namespace MMALSharp.Mmal
+namespace Raspicam.Net.Mmal
 {
     unsafe class MmalQueueImpl : MmalObject, IBufferQueue
     {

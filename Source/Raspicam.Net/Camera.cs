@@ -5,21 +5,21 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Extensions;
-using MMALSharp.Mmal;
-using MMALSharp.Mmal.Components;
-using MMALSharp.Mmal.Components.EncoderComponents;
-using MMALSharp.Mmal.Handlers;
-using MMALSharp.Mmal.Ports;
-using MMALSharp.Mmal.Ports.Outputs;
-using MMALSharp.Native;
-using MMALSharp.Utility;
+using Raspicam.Net.Extensions;
+using Raspicam.Net.Mmal;
+using Raspicam.Net.Mmal.Components;
+using Raspicam.Net.Mmal.Components.EncoderComponents;
+using Raspicam.Net.Mmal.Handlers;
+using Raspicam.Net.Mmal.Ports;
+using Raspicam.Net.Mmal.Ports.Outputs;
+using Raspicam.Net.Native;
+using Raspicam.Net.Utility;
 
-namespace MMALSharp
+namespace Raspicam.Net
 {
     public sealed class Camera : IDisposable
     {
-        const int CameraWarmUpMs = 2000;
+        const int MmalCameraWarmUpMs = 2000;
 
         readonly MmalCameraComponent _camera;
         readonly List<IDisposable> _cameraDisposables;
@@ -32,7 +32,7 @@ namespace MMALSharp
             _cameraDisposables = new List<IDisposable>();
         }
 
-        public Task Capture(Action<byte[]> onVideoDataAvailable, Action<Stream> onFullFrameAvailable, CancellationToken cancellationToken, int videoQuantisation = 0, int videoBitrate = 2386093, int jpegQuality = 80)
+        public async Task Capture(Action<byte[]> onVideoDataAvailable, Action<Stream> onFullFrameAvailable, CancellationToken cancellationToken, int videoQuantisation = 0, int videoBitrate = 2386093, int jpegQuality = 80)
         {
             _camera.Initialise();
 
@@ -70,12 +70,12 @@ namespace MMALSharp
             _camera.PreviewPort.ConnectTo(nullSink);
 
             // Camera warm up time
-            Task.Delay(CameraWarmUpMs).Wait();
+            await Task.Delay(MmalCameraWarmUpMs, cancellationToken);
 
-            return ProcessAsync(_camera.VideoPort, cancellationToken);
+            await ProcessAsync(_camera.VideoPort, cancellationToken);
         }
 
-        public Task Capture(Action<byte[]> onVideoDataAvailable, CancellationToken cancellationToken, int videoQuantisation = 0, int videoBitrate = 2386093)
+        public async Task Capture(Action<byte[]> onVideoDataAvailable, CancellationToken cancellationToken, int videoQuantisation = 0, int videoBitrate = 2386093)
         {
             _camera.Initialise();
 
@@ -97,19 +97,19 @@ namespace MMALSharp
                 false,
                 CameraConfig.Resolution.Width,
                 CameraConfig.Resolution.Height);
-            
+
             vidEncoder.ConfigureOutputPort(videoPortConfig, videoCaptureHandler);
 
             _camera.VideoPort.ConnectTo(vidEncoder);
             _camera.PreviewPort.ConnectTo(nullSink);
 
             // Camera warm up time
-            Task.Delay(CameraWarmUpMs).Wait();
+            await Task.Delay(MmalCameraWarmUpMs, cancellationToken);
 
-            return ProcessAsync(_camera.VideoPort, cancellationToken);
+            await ProcessAsync(_camera.VideoPort, cancellationToken);
         }
 
-        public Task Capture(Action<Stream> onFullFrameAvailable, CancellationToken cancellationToken, int jpegQuality = 80)
+        public async Task Capture(Action<Stream> onFullFrameAvailable, CancellationToken cancellationToken, int jpegQuality = 80)
         {
             _camera.Initialise();
 
@@ -129,9 +129,9 @@ namespace MMALSharp
             _camera.PreviewPort.ConnectTo(nullSink);
 
             // Camera warm up time
-            Task.Delay(CameraWarmUpMs).Wait();
+            await Task.Delay(MmalCameraWarmUpMs, cancellationToken);
 
-            return ProcessAsync(_camera.VideoPort, cancellationToken);
+            await ProcessAsync(_camera.VideoPort, cancellationToken);
         }
 
         public void PrintPipeline()
@@ -258,13 +258,14 @@ namespace MMALSharp
                 }
             }
             catch (OperationCanceledException)
-            { // disregard token cancellation
+            {
+                // disregard token cancellation
             }
         }
 
         async Task ProcessRawAsync(IOutputPort cameraPort, CancellationToken cancellationToken = default)
         {
-            using (cancellationToken.Register(() => cameraPort.Trigger.SetResult(true)))
+            await using (cancellationToken.Register(() => cameraPort.Trigger.SetResult(true)))
             {
                 cameraPort.DisablePort();
                 cameraPort.Start();
@@ -298,7 +299,7 @@ namespace MMALSharp
 
         static void FindComponents(IDownstreamComponent downstream, List<IDownstreamComponent> list)
         {
-            if (downstream.Outputs.Count == 0)
+            if (!downstream.Outputs.Any())
                 return;
 
             if (downstream.Outputs.Count == 1 && downstream.Outputs[0].ConnectedReference == null)

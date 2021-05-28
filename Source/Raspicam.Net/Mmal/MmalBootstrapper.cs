@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using MMALSharp.Mmal.Components;
+using Raspicam.Net.Mmal.Components;
 
-namespace MMALSharp.Mmal
+namespace Raspicam.Net.Mmal
 {
     static class MmalBootstrapper
     {

@@ -3,16 +3,16 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Config;
-using MMALSharp.Mmal.Components;
-using MMALSharp.Native.Parameters;
-using MMALSharp.Native.Port;
-using MMALSharp.Native.Util;
-using MMALSharp.Utility;
-using static MMALSharp.MmalNativeExceptionHelper;
-using static MMALSharp.Native.Parameters.MmalParametersCamera;
+using Raspicam.Net.Config;
+using Raspicam.Net.Mmal.Components;
+using Raspicam.Net.Native.Parameters;
+using Raspicam.Net.Native.Port;
+using Raspicam.Net.Native.Util;
+using Raspicam.Net.Utility;
+using static Raspicam.Net.MmalNativeExceptionHelper;
+using static Raspicam.Net.Native.Parameters.MmalParametersCamera;
 
-namespace MMALSharp.Extensions
+namespace Raspicam.Net.Extensions
 {
     static unsafe class MmalCameraComponentExtensions
     {

@@ -1,9 +1,9 @@
-﻿using MMALSharp.Mmal.Callbacks;
-using MMALSharp.Mmal.Components;
-using MMALSharp.Mmal.Ports.Inputs;
-using MMALSharp.Mmal.Ports.Outputs;
+﻿using Raspicam.Net.Mmal.Callbacks;
+using Raspicam.Net.Mmal.Components;
+using Raspicam.Net.Mmal.Ports.Inputs;
+using Raspicam.Net.Mmal.Ports.Outputs;
 
-namespace MMALSharp.Mmal
+namespace Raspicam.Net.Mmal
 {
     interface IConnection : IMmalObject
     {

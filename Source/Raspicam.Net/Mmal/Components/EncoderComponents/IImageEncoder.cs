@@ -1,4 +1,4 @@
-﻿namespace MMALSharp.Mmal.Components.EncoderComponents
+﻿namespace Raspicam.Net.Mmal.Components.EncoderComponents
 {
     interface IImageEncoder : IEncoder { }
 }

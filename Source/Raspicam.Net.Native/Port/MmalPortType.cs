@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using MMALSharp.Native.Component;
-using MMALSharp.Native.Format;
+using Raspicam.Net.Native.Component;
+using Raspicam.Net.Native.Format;
 
-namespace MMALSharp.Native.Port
+namespace Raspicam.Net.Native.Port
 {
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct MmalPortType

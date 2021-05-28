@@ -1,4 +1,4 @@
-﻿namespace MMALSharp.Native.Buffer
+﻿namespace Raspicam.Net.Native.Buffer
 {
     public enum MmalBufferProperties
     {

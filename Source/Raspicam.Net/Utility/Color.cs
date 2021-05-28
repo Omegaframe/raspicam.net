@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace MMALSharp.Utility
+namespace Raspicam.Net.Utility
 {
     internal static class MmalColor
     {

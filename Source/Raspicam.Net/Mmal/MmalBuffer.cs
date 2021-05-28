@@ -4,13 +4,13 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Extensions;
-using MMALSharp.Native.Buffer;
-using MMALSharp.Native.Util;
-using MMALSharp.Utility;
-using static MMALSharp.MmalNativeExceptionHelper;
+using Raspicam.Net.Extensions;
+using Raspicam.Net.Native.Buffer;
+using Raspicam.Net.Native.Util;
+using Raspicam.Net.Utility;
+using static Raspicam.Net.MmalNativeExceptionHelper;
 
-namespace MMALSharp.Mmal
+namespace Raspicam.Net.Mmal
 {
     unsafe class MmalBuffer : MmalObject, IBuffer
     {

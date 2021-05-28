@@ -1,9 +1,9 @@
-﻿using MMALSharp.Mmal.Callbacks;
-using MMALSharp.Mmal.Components;
-using MMALSharp.Mmal.Handlers;
-using MMALSharp.Mmal.Ports.Inputs;
+﻿using Raspicam.Net.Mmal.Callbacks;
+using Raspicam.Net.Mmal.Components;
+using Raspicam.Net.Mmal.Handlers;
+using Raspicam.Net.Mmal.Ports.Inputs;
 
-namespace MMALSharp.Mmal.Ports.Outputs
+namespace Raspicam.Net.Mmal.Ports.Outputs
 {
     interface IOutputPort : IPort
     {

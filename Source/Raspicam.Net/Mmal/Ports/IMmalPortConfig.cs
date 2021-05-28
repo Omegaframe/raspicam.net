@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using MMALSharp.Config;
+using Raspicam.Net.Config;
 
-namespace MMALSharp.Mmal.Ports
+namespace Raspicam.Net.Mmal.Ports
 {
     interface IMmalPortConfig
     {

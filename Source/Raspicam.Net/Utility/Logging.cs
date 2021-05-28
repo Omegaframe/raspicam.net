@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
 
-namespace MMALSharp.Utility
+namespace Raspicam.Net.Utility
 {
     static class MmalLog
     {

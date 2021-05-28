@@ -1,7 +1,7 @@
-﻿using MMALSharp.Mmal.Handlers;
-using MMALSharp.Mmal.Ports;
+﻿using Raspicam.Net.Mmal.Handlers;
+using Raspicam.Net.Mmal.Ports;
 
-namespace MMALSharp.Mmal.Callbacks
+namespace Raspicam.Net.Mmal.Callbacks
 {
     class DefaultPortCallbackHandler : PortCallbackHandler<IPort, ICaptureHandler>
     {

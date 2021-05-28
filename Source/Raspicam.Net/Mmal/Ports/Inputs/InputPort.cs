@@ -3,18 +3,17 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Config;
-using MMALSharp.Extensions;
-using MMALSharp.Mmal.Callbacks;
-using MMALSharp.Mmal.Components;
-using MMALSharp.Mmal.Ports.Outputs;
-using MMALSharp.Native.Buffer;
-using MMALSharp.Native.Events;
-using MMALSharp.Native.Parameters;
-using MMALSharp.Native.Port;
-using MMALSharp.Utility;
+using Raspicam.Net.Config;
+using Raspicam.Net.Extensions;
+using Raspicam.Net.Mmal.Callbacks;
+using Raspicam.Net.Mmal.Components;
+using Raspicam.Net.Mmal.Ports.Outputs;
+using Raspicam.Net.Native.Buffer;
+using Raspicam.Net.Native.Parameters;
+using Raspicam.Net.Native.Port;
+using Raspicam.Net.Utility;
 
-namespace MMALSharp.Mmal.Ports.Inputs
+namespace Raspicam.Net.Mmal.Ports.Inputs
 {
     class InputPort : PortBase<IOutputCallbackHandler>, IInputPort
     {

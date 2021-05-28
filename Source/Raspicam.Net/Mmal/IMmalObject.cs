@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MMALSharp.Mmal
+namespace Raspicam.Net.Mmal
 {
     interface IMmalObject : IDisposable
     {

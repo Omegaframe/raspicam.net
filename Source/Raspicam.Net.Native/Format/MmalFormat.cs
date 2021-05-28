@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
-using MMALSharp.Native.Util;
+using Raspicam.Net.Native.Util;
 
-namespace MMALSharp.Native.Format
+namespace Raspicam.Net.Native.Format
 {
     public static class MmalFormat
     {

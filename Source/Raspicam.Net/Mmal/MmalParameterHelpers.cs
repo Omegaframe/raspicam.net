@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using MMALSharp.Native.Parameters;
+using Raspicam.Net.Native.Parameters;
 
-namespace MMALSharp.Mmal
+namespace Raspicam.Net.Mmal
 {
     internal static class MmalParameterHelpers
     {

@@ -1,4 +1,4 @@
-﻿namespace MMALSharp.Native.Port
+﻿namespace Raspicam.Net.Native.Port
 {
     public enum MmalPortTypeEnum
     {

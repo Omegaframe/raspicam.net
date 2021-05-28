@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Extensions;
-using MMALSharp.Mmal.Callbacks;
-using MMALSharp.Mmal.Components;
-using MMALSharp.Mmal.Ports.Inputs;
-using MMALSharp.Mmal.Ports.Outputs;
-using MMALSharp.Native.Connection;
-using MMALSharp.Native.Parameters;
-using MMALSharp.Utility;
-using static MMALSharp.MmalNativeExceptionHelper;
+using Raspicam.Net.Extensions;
+using Raspicam.Net.Mmal.Callbacks;
+using Raspicam.Net.Mmal.Components;
+using Raspicam.Net.Mmal.Ports.Inputs;
+using Raspicam.Net.Mmal.Ports.Outputs;
+using Raspicam.Net.Native.Connection;
+using Raspicam.Net.Native.Parameters;
+using Raspicam.Net.Utility;
+using static Raspicam.Net.MmalNativeExceptionHelper;
 
-namespace MMALSharp.Mmal
+namespace Raspicam.Net.Mmal
 {
     unsafe class MmalConnectionImpl : MmalObject, IConnection
     {

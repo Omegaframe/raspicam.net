@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using MMALSharp.Extensions;
-using MMALSharp.Mmal.Handlers;
-using MMALSharp.Mmal.Ports;
-using MMALSharp.Mmal.Ports.Inputs;
-using MMALSharp.Mmal.Ports.Outputs;
-using MMALSharp.Native.Parameters;
-using MMALSharp.Native.Port;
-using MMALSharp.Native.Util;
-using static MMALSharp.MmalNativeExceptionHelper;
+using Raspicam.Net.Extensions;
+using Raspicam.Net.Mmal.Handlers;
+using Raspicam.Net.Mmal.Ports;
+using Raspicam.Net.Mmal.Ports.Inputs;
+using Raspicam.Net.Mmal.Ports.Outputs;
+using Raspicam.Net.Native.Parameters;
+using Raspicam.Net.Native.Port;
+using Raspicam.Net.Native.Util;
+using static Raspicam.Net.MmalNativeExceptionHelper;
 
-namespace MMALSharp.Mmal.Components.EncoderComponents
+namespace Raspicam.Net.Mmal.Components.EncoderComponents
 {
     unsafe class MmalVideoEncoder : MmalEncoderBase, IVideoEncoder
     {

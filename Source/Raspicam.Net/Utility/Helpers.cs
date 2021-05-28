@@ -1,4 +1,4 @@
-﻿namespace MMALSharp.Utility
+﻿namespace Raspicam.Net.Utility
 {
     static class Helpers
     {

@@ -1,4 +1,4 @@
-﻿namespace MMALSharp.Mmal.Ports.Controls
+﻿namespace Raspicam.Net.Mmal.Ports.Controls
 {
     interface IControlPort : IPort
     {

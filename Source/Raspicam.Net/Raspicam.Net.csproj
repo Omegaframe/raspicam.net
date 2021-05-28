@@ -2,12 +2,12 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<LangVersion>latest</LangVersion>
 		<Authors>Jörn Roddelkopf</Authors>
 		<Company>Omegaframe</Company>
-		<Description>Control the Raspberry Pi Camerea Module in your C# Application. Uses native MMAL bindings. Supports V1 and V2 of Camera Module.</Description>
-		<Copyright>© 2020 Omegaframe</Copyright>
+		<Description>Control the Raspberry Pi Camerea Module in your C# Application. Uses native MMAL bindings. Supports V1, V2 and HQ Version of Camera Module.</Description>
+		<Copyright>© 2021 Omegaframe</Copyright>
 		<PackageProjectUrl>http://omegaframe.com/opensource/raspicam.net</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/omegaframe/raspicam.net</RepositoryUrl>
 	</PropertyGroup>

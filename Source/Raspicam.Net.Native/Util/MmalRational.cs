@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace MMALSharp.Native.Util
+namespace Raspicam.Net.Native.Util
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct MmalRational

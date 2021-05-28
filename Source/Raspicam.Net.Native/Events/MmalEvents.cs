@@ -1,8 +1,8 @@
 ﻿using System.Runtime.InteropServices;
-using MMALSharp.Native.Buffer;
-using MMALSharp.Native.Internal;
+using Raspicam.Net.Native.Buffer;
+using Raspicam.Net.Native.Internal;
 
-namespace MMALSharp.Native.Events
+namespace Raspicam.Net.Native.Events
 {
     public static class MmalEvents
     {

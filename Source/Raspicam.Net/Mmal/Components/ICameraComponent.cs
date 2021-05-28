@@ -1,6 +1,6 @@
-﻿using MMALSharp.Mmal.Ports.Outputs;
+﻿using Raspicam.Net.Mmal.Ports.Outputs;
 
-namespace MMALSharp.Mmal.Components
+namespace Raspicam.Net.Mmal.Components
 {
     interface ICameraComponent : IComponent
     {

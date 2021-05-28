@@ -1,4 +1,4 @@
-﻿namespace MMALSharp.Mmal.Ports.Outputs
+﻿namespace Raspicam.Net.Mmal.Ports.Outputs
 {
     interface IStillPort : IOutputPort { }
 }

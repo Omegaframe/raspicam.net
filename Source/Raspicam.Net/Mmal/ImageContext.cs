@@ -1,6 +1,6 @@
-using MMALSharp.Config;
+using Raspicam.Net.Config;
 
-namespace MMALSharp.Mmal
+namespace Raspicam.Net.Mmal
 {
     class ImageContext
     {

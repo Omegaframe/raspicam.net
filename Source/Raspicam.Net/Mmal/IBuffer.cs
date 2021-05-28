@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using MMALSharp.Native.Buffer;
+using Raspicam.Net.Native.Buffer;
 
-namespace MMALSharp.Mmal
+namespace Raspicam.Net.Mmal
 {
     interface IBuffer : IMmalObject
     {

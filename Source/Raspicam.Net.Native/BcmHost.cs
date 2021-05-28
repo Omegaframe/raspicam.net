@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace MMALSharp.Native
+namespace Raspicam.Net.Native
 {
     public static class BcmHost
     {

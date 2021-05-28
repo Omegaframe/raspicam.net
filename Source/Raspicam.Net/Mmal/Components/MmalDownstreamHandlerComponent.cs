@@ -1,4 +1,4 @@
-﻿namespace MMALSharp.Mmal.Components
+﻿namespace Raspicam.Net.Mmal.Components
 {
     abstract class MmalDownstreamHandlerComponent : MmalDownstreamComponent, IDownstreamHandlerComponent
     {

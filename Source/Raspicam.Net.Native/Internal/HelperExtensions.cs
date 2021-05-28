@@ -1,4 +1,4 @@
-﻿namespace MMALSharp.Native.Internal
+﻿namespace Raspicam.Net.Native.Internal
 {
     static class HelperExtensions
     {

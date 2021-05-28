@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using MMALSharp.Native.Buffer;
-using MMALSharp.Native.Parameters;
-using MMALSharp.Native.Util;
+using Raspicam.Net.Native.Buffer;
+using Raspicam.Net.Native.Parameters;
+using Raspicam.Net.Native.Util;
 
-namespace MMALSharp.Native.Port
+namespace Raspicam.Net.Native.Port
 {
     public static class MmalPort
     {

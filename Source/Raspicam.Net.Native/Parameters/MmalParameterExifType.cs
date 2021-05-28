@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace MMALSharp.Native.Parameters
+namespace Raspicam.Net.Native.Parameters
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct MmalParameterExifType

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace MMALSharp.Mmal.Handlers
+namespace Raspicam.Net.Mmal.Handlers
 {
     class InMemoryImageHandler : ICaptureHandler
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using MMALSharp.Native.Que;
+using Raspicam.Net.Native.Que;
 
-namespace MMALSharp.Native.Pool
+namespace Raspicam.Net.Native.Pool
 {
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct MmalPoolType

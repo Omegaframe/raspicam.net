@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Drawing;
 using System.Threading.Tasks;
-using MMALSharp.Config;
-using MMALSharp.Mmal.Components;
-using MMALSharp.Native.Format;
-using MMALSharp.Native.Port;
-using MMALSharp.Native.Util;
+using Raspicam.Net.Config;
+using Raspicam.Net.Mmal.Components;
+using Raspicam.Net.Native.Format;
+using Raspicam.Net.Native.Port;
+using Raspicam.Net.Native.Util;
 
-namespace MMALSharp.Mmal.Ports
+namespace Raspicam.Net.Mmal.Ports
 {
     interface IPort : IMmalObject
     {

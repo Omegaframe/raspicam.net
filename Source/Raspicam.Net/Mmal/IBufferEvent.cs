@@ -1,6 +1,6 @@
-﻿using MMALSharp.Native.Format;
+﻿using Raspicam.Net.Native.Format;
 
-namespace MMALSharp.Mmal
+namespace Raspicam.Net.Mmal
 {
     interface IBufferEvent
     {

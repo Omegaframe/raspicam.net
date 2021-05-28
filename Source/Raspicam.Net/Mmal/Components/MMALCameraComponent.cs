@@ -2,15 +2,15 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Config;
-using MMALSharp.Extensions;
-using MMALSharp.Mmal.Ports;
-using MMALSharp.Mmal.Ports.Outputs;
-using MMALSharp.Native.Parameters;
-using MMALSharp.Native.Util;
-using MMALSharp.Utility;
+using Raspicam.Net.Config;
+using Raspicam.Net.Extensions;
+using Raspicam.Net.Mmal.Ports;
+using Raspicam.Net.Mmal.Ports.Outputs;
+using Raspicam.Net.Native.Parameters;
+using Raspicam.Net.Native.Util;
+using Raspicam.Net.Utility;
 
-namespace MMALSharp.Mmal.Components
+namespace Raspicam.Net.Mmal.Components
 {
     sealed class MmalCameraComponent : MmalComponentBase, ICameraComponent
     {

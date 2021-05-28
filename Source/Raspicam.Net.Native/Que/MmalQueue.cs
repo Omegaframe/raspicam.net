@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
-using MMALSharp.Native.Buffer;
+using Raspicam.Net.Native.Buffer;
 
-namespace MMALSharp.Native.Que
+namespace Raspicam.Net.Native.Que
 {
     public static class MmalQueue
     {

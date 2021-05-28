@@ -1,7 +1,7 @@
 using System;
-using MMALSharp.Mmal.Components;
+using Raspicam.Net.Mmal.Components;
 
-namespace MMALSharp.Mmal.Ports.Clocks
+namespace Raspicam.Net.Mmal.Ports.Clocks
 {
     class ClockPort : GenericPort
     {

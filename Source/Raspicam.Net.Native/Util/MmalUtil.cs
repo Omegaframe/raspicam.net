@@ -1,8 +1,8 @@
 ﻿using System.Runtime.InteropServices;
-using MMALSharp.Native.Pool;
-using MMALSharp.Native.Port;
+using Raspicam.Net.Native.Pool;
+using Raspicam.Net.Native.Port;
 
-namespace MMALSharp.Native.Util
+namespace Raspicam.Net.Native.Util
 {
     public static class MmalUtil
     {

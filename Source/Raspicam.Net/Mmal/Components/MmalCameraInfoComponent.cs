@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Native.Parameters;
-using MMALSharp.Native.Port;
-using MMALSharp.Utility;
-using static MMALSharp.MmalNativeExceptionHelper;
+using Raspicam.Net.Native.Parameters;
+using Raspicam.Net.Native.Port;
+using Raspicam.Net.Utility;
+using static Raspicam.Net.MmalNativeExceptionHelper;
 
-namespace MMALSharp.Mmal.Components
+namespace Raspicam.Net.Mmal.Components
 {
     unsafe class MmalCameraInfoComponent : MmalComponentBase, ICameraInfoComponent
     {

@@ -3,17 +3,17 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Config;
-using MMALSharp.Mmal.Callbacks;
-using MMALSharp.Mmal.Components;
-using MMALSharp.Native.Component;
-using MMALSharp.Native.Format;
-using MMALSharp.Native.Port;
-using MMALSharp.Native.Util;
-using MMALSharp.Utility;
-using static MMALSharp.MmalNativeExceptionHelper;
+using Raspicam.Net.Config;
+using Raspicam.Net.Mmal.Callbacks;
+using Raspicam.Net.Mmal.Components;
+using Raspicam.Net.Native.Component;
+using Raspicam.Net.Native.Format;
+using Raspicam.Net.Native.Port;
+using Raspicam.Net.Native.Util;
+using Raspicam.Net.Utility;
+using static Raspicam.Net.MmalNativeExceptionHelper;
 
-namespace MMALSharp.Mmal.Ports
+namespace Raspicam.Net.Mmal.Ports
 {
     abstract unsafe class PortBase<TCallback> : MmalObject, IPort where TCallback : ICallbackHandler
     {

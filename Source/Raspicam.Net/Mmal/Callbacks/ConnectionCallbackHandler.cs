@@ -1,4 +1,4 @@
-﻿namespace MMALSharp.Mmal.Callbacks
+﻿namespace Raspicam.Net.Mmal.Callbacks
 {
     abstract class ConnectionCallbackHandler : IConnectionCallbackHandler
     {

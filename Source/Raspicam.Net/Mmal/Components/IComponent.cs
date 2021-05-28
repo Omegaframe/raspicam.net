@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using MMALSharp.Mmal.Ports;
-using MMALSharp.Mmal.Ports.Controls;
-using MMALSharp.Mmal.Ports.Inputs;
-using MMALSharp.Mmal.Ports.Outputs;
+using Raspicam.Net.Mmal.Ports;
+using Raspicam.Net.Mmal.Ports.Controls;
+using Raspicam.Net.Mmal.Ports.Inputs;
+using Raspicam.Net.Mmal.Ports.Outputs;
 
-namespace MMALSharp.Mmal.Components
+namespace Raspicam.Net.Mmal.Components
 {
     interface IComponent : IMmalObject
     {

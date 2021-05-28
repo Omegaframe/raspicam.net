@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using MMALSharp.Utility;
+using Raspicam.Net.Utility;
 
-namespace MMALSharp.Mmal
+namespace Raspicam.Net.Mmal
 {
     public static class MmalEncodingHelpers
     {

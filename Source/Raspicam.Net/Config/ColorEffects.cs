@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace MMALSharp.Config
+namespace Raspicam.Net.Config
 {
     public struct ColorEffects
     {

@@ -1,11 +1,11 @@
 ﻿using System;
-using MMALSharp.Mmal.Handlers;
-using MMALSharp.Mmal.Ports;
-using MMALSharp.Mmal.Ports.Inputs;
-using MMALSharp.Mmal.Ports.Outputs;
-using MMALSharp.Native.Parameters;
+using Raspicam.Net.Mmal.Handlers;
+using Raspicam.Net.Mmal.Ports;
+using Raspicam.Net.Mmal.Ports.Inputs;
+using Raspicam.Net.Mmal.Ports.Outputs;
+using Raspicam.Net.Native.Parameters;
 
-namespace MMALSharp.Mmal.Components.EncoderComponents
+namespace Raspicam.Net.Mmal.Components.EncoderComponents
 {
     unsafe class MmalImageEncoder : MmalEncoderBase, IImageEncoder
     {

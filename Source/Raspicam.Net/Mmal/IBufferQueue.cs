@@ -1,6 +1,6 @@
-﻿using MMALSharp.Native.Que;
+﻿using Raspicam.Net.Native.Que;
 
-namespace MMALSharp.Mmal
+namespace Raspicam.Net.Mmal
 {
     interface IBufferQueue : IMmalObject
     {

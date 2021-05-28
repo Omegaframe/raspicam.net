@@ -1,4 +1,4 @@
-﻿namespace MMALSharp.Native.Util
+﻿namespace Raspicam.Net.Native.Util
 {
     public enum MmalStatusEnum
     {

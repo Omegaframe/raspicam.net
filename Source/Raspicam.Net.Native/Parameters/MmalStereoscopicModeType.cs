@@ -1,4 +1,4 @@
-﻿namespace MMALSharp.Native.Parameters
+﻿namespace Raspicam.Net.Native.Parameters
 {
     public enum MmalStereoscopicModeType
     {

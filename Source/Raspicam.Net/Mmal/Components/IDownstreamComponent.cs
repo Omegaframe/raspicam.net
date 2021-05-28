@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using MMALSharp.Mmal.Handlers;
-using MMALSharp.Mmal.Ports;
-using MMALSharp.Mmal.Ports.Outputs;
+using Raspicam.Net.Mmal.Handlers;
+using Raspicam.Net.Mmal.Ports;
+using Raspicam.Net.Mmal.Ports.Outputs;
 
-namespace MMALSharp.Mmal.Components
+namespace Raspicam.Net.Mmal.Components
 {
     interface IDownstreamComponent : IComponent
     {

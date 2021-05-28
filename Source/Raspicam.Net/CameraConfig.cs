@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
-using MMALSharp.Config;
-using MMALSharp.Mmal;
-using MMALSharp.Native.Parameters;
-using MMALSharp.Utility;
+using Raspicam.Net.Config;
+using Raspicam.Net.Mmal;
+using Raspicam.Net.Native.Parameters;
+using Raspicam.Net.Utility;
 
-namespace MMALSharp
+namespace Raspicam.Net
 {
     public static class CameraConfig
     {

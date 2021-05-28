@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MMALSharp.Mmal.Handlers
+namespace Raspicam.Net.Mmal.Handlers
 {
     class InMemoryVideoHandler : ICaptureHandler
     {

@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Config;
-using MMALSharp.Mmal.Callbacks;
-using MMALSharp.Mmal.Components;
-using MMALSharp.Native.Buffer;
-using MMALSharp.Native.Events;
-using MMALSharp.Native.Parameters;
-using MMALSharp.Native.Port;
-using MMALSharp.Utility;
+using Raspicam.Net.Config;
+using Raspicam.Net.Mmal.Callbacks;
+using Raspicam.Net.Mmal.Components;
+using Raspicam.Net.Native.Buffer;
+using Raspicam.Net.Native.Events;
+using Raspicam.Net.Native.Parameters;
+using Raspicam.Net.Native.Port;
+using Raspicam.Net.Utility;
 
-namespace MMALSharp.Mmal.Ports.Controls
+namespace Raspicam.Net.Mmal.Ports.Controls
 {
     unsafe class ControlPort : PortBase<IOutputCallbackHandler>, IControlPort
     {

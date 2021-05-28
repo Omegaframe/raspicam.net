@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Mmal.Ports.Inputs;
-using MMALSharp.Native.Parameters;
-using MMALSharp.Utility;
+using Raspicam.Net.Mmal.Ports.Inputs;
+using Raspicam.Net.Native.Parameters;
+using Raspicam.Net.Utility;
 
-namespace MMALSharp.Mmal.Components
+namespace Raspicam.Net.Mmal.Components
 {
     abstract class MmalRendererBase : MmalDownstreamComponent
     {

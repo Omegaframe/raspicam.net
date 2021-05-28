@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using MMALSharp.Native.Pool;
-using MMALSharp.Native.Port;
-using MMALSharp.Native.Que;
+using Raspicam.Net.Native.Pool;
+using Raspicam.Net.Native.Port;
+using Raspicam.Net.Native.Que;
 
-namespace MMALSharp.Native.Connection
+namespace Raspicam.Net.Native.Connection
 {
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct MmalConnectionType

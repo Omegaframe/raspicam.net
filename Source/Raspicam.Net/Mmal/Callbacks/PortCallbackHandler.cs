@@ -1,9 +1,9 @@
-﻿using MMALSharp.Mmal.Handlers;
-using MMALSharp.Mmal.Ports;
-using MMALSharp.Native.Buffer;
-using MMALSharp.Native.Util;
+﻿using Raspicam.Net.Mmal.Handlers;
+using Raspicam.Net.Mmal.Ports;
+using Raspicam.Net.Native.Buffer;
+using Raspicam.Net.Native.Util;
 
-namespace MMALSharp.Mmal.Callbacks
+namespace Raspicam.Net.Mmal.Callbacks
 {
     abstract class PortCallbackHandler<TPort, TCaptureHandler> : IOutputCallbackHandler
         where TPort : IPort

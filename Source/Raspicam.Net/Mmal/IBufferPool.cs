@@ -1,6 +1,6 @@
-﻿using MMALSharp.Native.Pool;
+﻿using Raspicam.Net.Native.Pool;
 
-namespace MMALSharp.Mmal
+namespace Raspicam.Net.Mmal
 {
     interface IBufferPool : IMmalObject
     {

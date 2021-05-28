@@ -4,16 +4,16 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.Extensions.Logging;
-using MMALSharp.Mmal.Ports;
-using MMALSharp.Mmal.Ports.Clocks;
-using MMALSharp.Mmal.Ports.Controls;
-using MMALSharp.Mmal.Ports.Inputs;
-using MMALSharp.Mmal.Ports.Outputs;
-using MMALSharp.Native.Component;
-using MMALSharp.Utility;
-using static MMALSharp.MmalNativeExceptionHelper;
+using Raspicam.Net.Mmal.Ports;
+using Raspicam.Net.Mmal.Ports.Clocks;
+using Raspicam.Net.Mmal.Ports.Controls;
+using Raspicam.Net.Mmal.Ports.Inputs;
+using Raspicam.Net.Mmal.Ports.Outputs;
+using Raspicam.Net.Native.Component;
+using Raspicam.Net.Utility;
+using static Raspicam.Net.MmalNativeExceptionHelper;
 
-namespace MMALSharp.Mmal.Components
+namespace Raspicam.Net.Mmal.Components
 {
     abstract unsafe class MmalComponentBase : MmalObject, IComponent
     {

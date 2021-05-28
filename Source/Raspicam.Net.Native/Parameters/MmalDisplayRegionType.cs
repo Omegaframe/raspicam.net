@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
-using MMALSharp.Native.Util;
+using Raspicam.Net.Native.Util;
 
-namespace MMALSharp.Native.Parameters
+namespace Raspicam.Net.Native.Parameters
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct MmalDisplayRegionType

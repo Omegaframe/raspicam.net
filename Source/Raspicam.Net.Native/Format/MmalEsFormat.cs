@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace MMALSharp.Native.Format
+namespace Raspicam.Net.Native.Format
 {
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct MmalEsFormat

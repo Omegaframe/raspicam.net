@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace MMALSharp.Native.Buffer
+namespace Raspicam.Net.Native.Buffer
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct MmalBufferHeaderVideoSpecific
