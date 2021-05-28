@@ -4,7 +4,7 @@ namespace Raspicam.Net.Mmal.Handlers
 {
     interface ICaptureHandler : IDisposable
     {
-        void Process(ImageContext context);
+        void Process(byte[] data);
         void PostProcess();
     }
 }

@@ -37,9 +37,9 @@ namespace Raspicam.Net.Mmal.Handlers
             _onFullFrameAvailable?.Invoke(stream);
         }
 
-        public void Process(ImageContext context)
+        public void Process(byte[] data)
         {
-            _currentStream?.Write(context.Data);
+            _currentStream?.Write(data);
         }
 
         public void Dispose()

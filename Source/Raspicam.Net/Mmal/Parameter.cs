@@ -2,7 +2,7 @@
 
 namespace Raspicam.Net.Mmal
 {
-    internal class Parameter
+    class Parameter
     {
         public int ParamValue { get; set; }
 

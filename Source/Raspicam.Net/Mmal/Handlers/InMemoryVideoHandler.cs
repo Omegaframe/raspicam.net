@@ -11,7 +11,7 @@ namespace Raspicam.Net.Mmal.Handlers
             _onVideoDataAvailable = onDataAvailable;
         }
 
-        public void Process(ImageContext context) => _onVideoDataAvailable?.Invoke(context.Data);
+        public void Process(byte[] data) => _onVideoDataAvailable?.Invoke(data);
 
         public void PostProcess() { }
 
