@@ -5,9 +5,6 @@ namespace Raspicam.Net.Native.Que
 {
     public static class MmalQueue
     {
-        [DllImport("libmmal.so", EntryPoint = "mmal_queue_create", CallingConvention = CallingConvention.Cdecl)]
-        public static extern unsafe MmalQueueType* Create();
-
         [DllImport("libmmal.so", EntryPoint = "mmal_queue_put", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe void Put(MmalQueueType* ptr, MmalBufferHeader* header);
 

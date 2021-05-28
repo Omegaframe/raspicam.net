@@ -48,9 +48,6 @@ namespace Raspicam.Net.Native.Util
         [DllImport("libmmal.so", EntryPoint = "mmal_port_parameter_set_string", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe MmalStatusEnum SetString(MmalPortType* port, uint id, [MarshalAs(UnmanagedType.LPTStr)] string value);
 
-        [DllImport("libmmal.so", EntryPoint = "mmal_encoding_width_to_stride", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int EncodingWidthToStride(int encoding, int width);
-
         [DllImport("libmmal.so", EntryPoint = "mmal_port_pool_create", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe MmalPoolType* PoolCreate(MmalPortType* port, int headers, int payload_size);
     }
