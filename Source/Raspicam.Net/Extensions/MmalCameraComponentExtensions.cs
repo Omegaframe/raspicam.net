@@ -105,7 +105,7 @@ namespace Raspicam.Net.Extensions
             var text = sb.ToString() + char.MinValue;
             var arr = new byte[MmalCameraAnnotateMaxTextLenV3];
             var bytes = Encoding.ASCII.GetBytes(text);
-            
+
             Array.Copy(bytes, arr, bytes.Length);
 
             var strV4 = new MmalParameterCameraAnnotateV4Type(
@@ -392,6 +392,26 @@ namespace Raspicam.Net.Extensions
             var num = (int)digitalGain * 65536;
 
             camera.Control.SetParameter(MmalParameterDigitalGain, new MmalRational(num, 65536));
+        }
+
+        internal static double GetAnalogGain(this MmalCameraComponent camera)
+        {
+            return (double)camera.Control.GetParameter(MmalParameterAnalogGain);
+        }
+
+        internal static double GetDigitalGain(this MmalCameraComponent camera)
+        {
+            return camera.Control.GetParameter(MmalParameterDigitalGain);
+        }
+
+        internal static int GetShutterSpeed(this MmalCameraComponent camera)
+        {
+            return camera.Control.GetParameter(MmalParameterShutterSpeed);
+        }
+
+        internal static int GetIso(this MmalCameraComponent camera)
+        {
+            return camera.Control.GetParameter(MmalParameterIso);
         }
     }
 }

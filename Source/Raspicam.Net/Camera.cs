@@ -24,12 +24,15 @@ namespace Raspicam.Net
         readonly MmalCameraComponent _camera;
         readonly List<IDisposable> _cameraDisposables;
 
+        public CurrentState CurrentState { get; }
+
         public Camera()
         {
             BcmHost.Initialize();
 
             _camera = new MmalCameraComponent();
             _cameraDisposables = new List<IDisposable>();
+            CurrentState = new CurrentState(_camera);
         }
 
         public async Task Capture(Action<byte[]> onVideoDataAvailable, Action<Stream> onFullFrameAvailable, CancellationToken cancellationToken, int videoQuantisation = 0, int videoBitrate = 2386093, int jpegQuality = 80)
