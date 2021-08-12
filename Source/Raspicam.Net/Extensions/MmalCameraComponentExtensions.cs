@@ -409,7 +409,7 @@ namespace Raspicam.Net.Extensions
             return camera.Control.GetParameter(MmalParameterShutterSpeed);
         }
 
-        internal static int GetIso(this MmalCameraComponent camera)
+        internal static uint GetIso(this MmalCameraComponent camera)
         {
             return camera.Control.GetParameter(MmalParameterIso);
         }
