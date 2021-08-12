@@ -212,7 +212,7 @@ namespace Raspicam.Net.Extensions
                 throw new Exception("Invalid brightness value");
         }
 
-        internal static void SetIso(this MmalCameraComponent camera, int iso)
+        internal static void SetIso(this MmalCameraComponent camera, uint iso)
         {
             MmalLog.Logger.LogDebug($"Setting Iso: {iso}");
 
