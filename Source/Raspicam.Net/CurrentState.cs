@@ -15,6 +15,6 @@ namespace Raspicam.Net
         public double AnalogGain  => _camera.GetAnalogGain();
         public double DigitalGain => _camera.GetDigitalGain();
         public int ShuttderSpeedMs => _camera.GetShutterSpeed();
-        public int Iso => _camera.GetIso();
+        public uint Iso => _camera.GetIso();
     }
 }
